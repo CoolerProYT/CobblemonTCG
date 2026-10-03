@@ -1,6 +1,7 @@
 plugins {
     id 'multiloader-loader'
-    id 'fabric-loom'
+    id 'net.fabricmc.fabric-loom-remap'
+    id 'org.jetbrains.kotlin.jvm'
 }
 dependencies {
     minecraft "com.mojang:minecraft:${minecraft_version}"
@@ -14,12 +15,16 @@ dependencies {
 
     // required: this is a Cobblemon addon, see CobblemonCardRenderer and the Cobblemon bridge in compat/
     modCompileOnly("com.cobblemon:fabric:${cobblemon_version}") { transitive = false }
-    compileOnly "org.jetbrains.kotlin:kotlin-stdlib:${kotlin_version}"
-    if (project.findProperty('cobblemon_runtime') == 'true') {
-        // needs fabric loader 0.17.2+ and fabric api 0.116.6+; nested jars are not loaded in dev, so add kotlin
-        modLocalRuntime("com.cobblemon:fabric:${cobblemon_version}") { transitive = false }
-        modLocalRuntime "net.fabricmc:fabric-language-kotlin:${fabric_kotlin_version}"
-    }
+    modLocalRuntime("com.cobblemon:fabric:${cobblemon_version}")
+    modLocalRuntime "net.fabricmc:fabric-language-kotlin:${fabric_kotlin_version}"
+
+    runtimeOnly "org.graalvm.js:js:22.3.0"
+    runtimeOnly "org.graalvm.sdk:graal-sdk:22.3.0"
+    runtimeOnly "org.graalvm.regex:regex:22.3.0"
+    runtimeOnly "org.graalvm.truffle:truffle-api:22.3.0"
+    runtimeOnly "com.ibm.icu:icu4j:71.1"
+    runtimeOnly "org.mongodb:mongodb-driver-core:4.10.2"
+    runtimeOnly "org.mongodb:mongodb-driver-sync:4.10.2"
 }
 
 loom {
