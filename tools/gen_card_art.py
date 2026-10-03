@@ -15,9 +15,13 @@ Writes into common/src/main/resources/assets/cobblemontcg/textures/tcg/:
   <set>/evolution/<number>.png
                             the previous stage in the portrait window, evolution cards only (32x32)
   card_back.png             back of every card (256x352)
-  pack/<set>_<wrapper>.png  booster pack fronts listed in the set json (240x368)
+  pack/<set>_<wrapper>.png  booster pack fronts listed in the set json: foil and light burst (240x368),
+  pack/<set>_<wrapper>_mascot.png
+                            the mascot, drawn at y 96 of the pack (240x208)
+  pack/<set>_<wrapper>_overlay.png
+                            set name plate, badges, seals and foil sheen over the mascot (240x368)
   pack/back.png             back of every pack (240x368)
-  pack/default.png          pack without set data (240x368)
+  pack/default*.png         pack without set data (same three layers)
 and the mod icon common/src/main/resources/cobblemontcg.png.
 
 Card text (attacks, costs, damage, rules) is read from tools/<set>_text.json.
@@ -37,7 +41,7 @@ from PIL import Image, ImageDraw
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from art import layout as L  # noqa: E402
 from art.cards import card_layers  # noqa: E402
-from art.wrapper import WRAPPERS, make_card_back, make_pack_back, make_wrapper  # noqa: E402
+from art.wrapper import WRAPPERS, make_card_back, make_pack_back, make_wrapper, make_wrapper_layers  # noqa: E402
 
 NAMESPACE = "cobblemontcg"
 TOOLS = Path(__file__).resolve().parent
@@ -64,6 +68,13 @@ def make_icon(frames: dict) -> Image.Image:
 def save(img: Image.Image, path: Path) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     img.save(path, optimize=True)
+
+
+def save_pack(layers: dict, name: str) -> None:
+    """A pack front is three textures: <name>.png (foil), <name>_mascot.png and <name>_overlay.png."""
+    save(layers["base"], TCG / "pack" / f"{name}.png")
+    save(layers["mascot"], TCG / "pack" / f"{name}_mascot.png")
+    save(layers["overlay"], TCG / "pack" / f"{name}_overlay.png")
 
 
 def read_cards(csv_path: Path):
@@ -98,7 +109,7 @@ def main() -> None:
 
     save(make_card_back(), TCG / "card_back.png")
     save(make_pack_back(), TCG / "pack" / "back.png")
-    save(make_wrapper(next(iter(WRAPPERS))), TCG / "pack" / "default.png")
+    save_pack(make_wrapper_layers(next(iter(WRAPPERS))), "default")
     save(make_icon(frames), RESOURCES / f"{NAMESPACE}.png")
 
     for csv_path in sorted(TOOLS.glob("*.csv")):
@@ -108,7 +119,7 @@ def main() -> None:
         total = set_def["total"]
         for wrapper in set_def.get("wrappers", []):
             if wrapper in WRAPPERS:
-                save(make_wrapper(wrapper), TCG / "pack" / f"{set_name}_{wrapper}.png")
+                save_pack(make_wrapper_layers(wrapper), f"{set_name}_{wrapper}")
             else:
                 print(f"warning: no artwork for wrapper {wrapper!r}, add it to tools/art/wrapper.py")
         text_file = TOOLS / f"{set_name}_text.json"

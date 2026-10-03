@@ -76,6 +76,18 @@ def _sheen(img: Image.Image, seed: int) -> Image.Image:
     return Image.fromarray(np.clip(arr, 0, 255).astype(np.uint8), "RGBA")
 
 
+def _sheen_layer(w: int, h: int, seed: int) -> Image.Image:
+    """The foil reflections of _sheen as translucent white, to lay over the mascot layer too."""
+    yy, xx = np.mgrid[0:h, 0:w].astype(np.float32)
+    crinkle = F.noise(w, h, 22, seed + 5, 4)
+    d = (xx * 0.9 - yy * 0.45) / w + (crinkle - 0.5) * 0.05
+    band = np.clip(np.cos((d - 0.05) * 2 * np.pi * 1.3), 0, 1) ** 24 * 0.32 + np.clip(np.cos((d + 0.3) * 2 * np.pi * 2.4), 0, 1) ** 30 * 0.16
+    arr = np.zeros((h, w, 4), np.uint8)
+    arr[..., :3] = 255
+    arr[..., 3] = np.clip(band * 255, 0, 255).astype(np.uint8)
+    return Image.fromarray(arr, "RGBA")
+
+
 def _seals(img: Image.Image, seed: int):
     """Crimped silver seals at the top and bottom: vertical ridges with a metallic gradient."""
     w, h = img.size
@@ -91,6 +103,7 @@ def _seals(img: Image.Image, seed: int):
             arr[y, :, 0] = row * 0.97
             arr[y, :, 1] = row * 0.98
             arr[y, :, 2] = row * 1.04
+            arr[y, :, 3] = 255
     img2 = Image.fromarray(np.clip(arr, 0, 255).astype(np.uint8), "RGBA")
     d = ImageDraw.Draw(img2, "RGBA")
     d.line((0, SEAL, w, SEAL), fill=(60, 60, 76, 200), width=2)
@@ -110,13 +123,21 @@ def _finish(img: Image.Image) -> Image.Image:
     return F.grain(edge, 3)
 
 
-def make_wrapper(name: str) -> Image.Image:
+MASCOT_Y = 96          # the mascot layer covers the pack from y 96 to 304 (240x208 texture)
+MASCOT_H = 208
+
+
+def make_wrapper_layers(name: str) -> dict:
+    """A pack front as three layers, back to front, so the mascot can be swapped out at runtime:
+    'base' (foil and light burst), 'mascot' (240x208, placed at y MASCOT_Y) and 'overlay'
+    (set name plate, badges, seals and the foil sheen, which also lies over the mascot)."""
     number, kind, top_col, bottom_col, accent = WRAPPERS[name]
     w, h = PACK_W, PACK_H
     seed = sum(map(ord, name))
-    img = _foil(top_col, bottom_col, seed)
+    inner = _pack_mask().filter(ImageFilter.MinFilter(3))
 
-    # light burst behind the mascot
+    # base: foil with a light burst behind the mascot
+    img = _foil(top_col, bottom_col, seed)
     burst = Image.new("RGBA", (w * SS, h * SS), (0, 0, 0, 0))
     bd = ImageDraw.Draw(burst)
     cx, cy = w / 2 * SS, 196 * SS
@@ -129,33 +150,47 @@ def make_wrapper(name: str) -> Image.Image:
     glow = Image.new("RGBA", (w, h), (0, 0, 0, 0))
     ImageDraw.Draw(glow).ellipse((w / 2 - 90, 120, w / 2 + 90, 280), fill=(*accent, 110))
     img.alpha_composite(glow.filter(ImageFilter.GaussianBlur(28)))
+    base = _finish(img)
 
-    # the mascot, much bigger than on the card, bursting out of the frame
+    # mascot: much bigger than on the card, bursting out of the frame
     sprite = Sprite(300, 200)
     POKEMON[number](sprite)
-    mascot = sprite.render()
-    img.alpha_composite(mascot, (int(w / 2 - 150), 104))
+    mascot = Image.new("RGBA", (w, MASCOT_H), (0, 0, 0, 0))
+    mascot.alpha_composite(sprite.render(), (int(w / 2 - 150), 104 - MASCOT_Y))
+    mascot = F.clip_to(mascot, inner.crop((0, MASCOT_Y, w, MASCOT_Y + MASCOT_H)))
 
-    # set name plate
+    # overlay: set name plate, "11 cards" badge, booster banner, sheen and seals
+    overlay = Image.new("RGBA", (w, h), (0, 0, 0, 0))
     plate = (22, SEAL + 12, w - 22, SEAL + 64)
-    d = ImageDraw.Draw(img, "RGBA")
+    d = ImageDraw.Draw(overlay, "RGBA")
     d.rounded_rectangle((plate[0] - 2, plate[1] - 2, plate[2] + 2, plate[3] + 2), radius=10, fill=(250, 214, 80, 255))
     d.rounded_rectangle(plate, radius=8, fill=(16, 20, 58, 235))
-    F.draw(img, (w / 2, plate[1] + 6), "BASE SET", F.font("Bold", 30), (252, 214, 64), anchor="ma", stroke=2, stroke_color=(28, 50, 150))
-    F.draw(img, (w / 2, plate[1] + 40), "TRADING CARD GAME", F.font("CondensedBold", 10), (255, 255, 255), anchor="ma")
-
-    # "11 cards" badge and booster banner at the bottom
+    F.draw(overlay, (w / 2, plate[1] + 6), "BASE SET", F.font("Bold", 30), (252, 214, 64), anchor="ma", stroke=2, stroke_color=(28, 50, 150))
+    F.draw(overlay, (w / 2, plate[1] + 40), "TRADING CARD GAME", F.font("CondensedBold", 10), (255, 255, 255), anchor="ma")
     by = h - SEAL - 44
-    d = ImageDraw.Draw(img, "RGBA")
+    d = ImageDraw.Draw(overlay, "RGBA")
     d.ellipse((14, by - 2, 58, by + 42), fill=(250, 214, 64, 255), outline=(28, 46, 130, 255), width=3)
-    F.draw(img, (36, by + 5), "11", F.font("Bold", 20), (28, 40, 100), anchor="ma")
-    F.draw(img, (36, by + 27), "CARDS", F.font("CondensedBold", 7), (28, 40, 100), anchor="ma")
+    F.draw(overlay, (36, by + 5), "11", F.font("Bold", 20), (28, 40, 100), anchor="ma")
+    F.draw(overlay, (36, by + 27), "CARDS", F.font("CondensedBold", 7), (28, 40, 100), anchor="ma")
     d.rounded_rectangle((66, by + 10, w - 16, by + 32), radius=4, fill=(250, 250, 255, 230), outline=(28, 46, 130, 255), width=2)
-    F.draw(img, ((66 + w - 16) / 2, by + 21), "BOOSTER PACK", F.font("Bold", 12), (200, 36, 40), anchor="mm")
+    F.draw(overlay, ((66 + w - 16) / 2, by + 21), "BOOSTER PACK", F.font("Bold", 12), (200, 36, 40), anchor="mm")
+    sheen = _sheen_layer(w, h, seed)
+    sheen.alpha_composite(overlay)
+    overlay = _seals(sheen, seed)
+    overlay = F.grain(F.clip_to(overlay, inner), 3, seed=seed)
+    return {"base": base, "mascot": mascot, "overlay": overlay}
 
-    img = _sheen(img, seed)
-    img = _seals(img, seed)
-    return _finish(img)
+
+def flatten(layers: dict) -> Image.Image:
+    img = layers["base"].copy()
+    img.alpha_composite(layers["mascot"], (0, MASCOT_Y))
+    img.alpha_composite(layers["overlay"])
+    return img
+
+
+def make_wrapper(name: str) -> Image.Image:
+    """The whole pack front in one image (mod icon, previews)."""
+    return flatten(make_wrapper_layers(name))
 
 
 def make_pack_back() -> Image.Image:

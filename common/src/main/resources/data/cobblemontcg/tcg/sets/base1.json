@@ -7,6 +7,11 @@
     "blastoise",
     "venusaur"
   ],
+  "wrapper_pokedex": {
+    "charizard": 6,
+    "blastoise": 9,
+    "venusaur": 3
+  },
   "pack_slots": [
     {
       "count": 1,
