@@ -1,6 +1,8 @@
 package com.coolerpromc.cobblemontcg.tcg.pack;
 
 import com.coolerpromc.cobblemontcg.config.TcgConfig;
+import com.coolerpromc.cobblemontcg.network.ClientboundPackOpenedPacket;
+import com.coolerpromc.cobblemontcg.platform.Services;
 import com.coolerpromc.cobblemontcg.reward.PackRewardService;
 import com.coolerpromc.cobblemontcg.sound.ModSounds;
 import com.coolerpromc.cobblemontcg.tcg.card.CardRarity;
@@ -20,14 +22,18 @@ public final class PackOpener {
 
     /**
      * Rolls a pack of {@code set}, puts the cards in the player's inventory (overflow is dropped at
-     * their feet) and plays the opening effects.
+     * their feet), plays the opening effects and tells the player's client to show the opening animation.
+     * The cards are given right away, so closing the animation or disconnecting never loses a pull.
      */
-    public static List<RolledCard> open(ServerPlayer player, TcgSet set) {
+    public static List<RolledCard> open(ServerPlayer player, TcgSet set, String wrapper) {
         List<RolledCard> cards = PackRoller.roll(set, player.getRandom(), TcgConfig.holoChance(), TcgConfig.packSize());
         for (RolledCard rolled : cards) {
             PackRewardService.giveOrDrop(player, TcgStacks.card(set, rolled.card().number(), rolled.holo()));
         }
         playEffects(player, cards.stream().anyMatch(RolledCard::holo), cards.stream().anyMatch(c -> c.card().rarity() == CardRarity.RARE));
+
+        List<ClientboundPackOpenedPacket.Pull> pulls = cards.stream().map(c -> new ClientboundPackOpenedPacket.Pull(c.card().number(), c.holo())).toList();
+        Services.NETWORK.sendToPlayer(player, new ClientboundPackOpenedPacket(set.id(), wrapper, pulls, TcgConfig.soundsEnabled()));
         return cards;
     }
 
@@ -38,8 +44,9 @@ public final class PackOpener {
         double z = player.getZ();
 
         if (TcgConfig.soundsEnabled()) {
+            // The opener hears the sounds from their own client, timed with the animation; this is for everyone else.
             SoundEvent sound = holo ? ModSounds.BOOSTER_PACK_OPEN_RARE.get() : ModSounds.BOOSTER_PACK_OPEN.get();
-            level.playSound(null, x, y, z, sound, SoundSource.PLAYERS, 1.0F, 0.9F + level.getRandom().nextFloat() * 0.2F);
+            level.playSound(player, x, y, z, sound, SoundSource.PLAYERS, 1.0F, 0.9F + level.getRandom().nextFloat() * 0.2F);
         }
 
         level.sendParticles(ParticleTypes.ENCHANT, x, y, z, 24, 0.4, 0.4, 0.4, 0.6);

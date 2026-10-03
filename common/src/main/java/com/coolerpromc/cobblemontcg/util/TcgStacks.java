@@ -6,7 +6,6 @@ import com.coolerpromc.cobblemontcg.component.custom.TcgCardData;
 import com.coolerpromc.cobblemontcg.item.ModItems;
 import com.coolerpromc.cobblemontcg.tcg.set.TcgSet;
 import net.minecraft.core.component.DataComponents;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.CustomModelData;
 
@@ -17,9 +16,10 @@ public final class TcgStacks {
     private TcgStacks() {
     }
 
-    public static ItemStack pack(ResourceLocation setId, String variant, int count) {
+    public static ItemStack pack(TcgSet set, String variant, int count) {
         ItemStack stack = new ItemStack(ModItems.BOOSTER_PACK, count);
-        stack.set(ModDataComponents.BOOSTER_PACK.get(), new BoosterPackData(setId, variant));
+        stack.set(ModDataComponents.BOOSTER_PACK.get(), new BoosterPackData(set.id(), variant));
+        stack.set(DataComponents.CUSTOM_MODEL_DATA, new CustomModelData(set.packModelData(variant)));
         return stack;
     }
 

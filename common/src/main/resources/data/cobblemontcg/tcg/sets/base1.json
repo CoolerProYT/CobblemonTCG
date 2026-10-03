@@ -3,7 +3,9 @@
   "total": 102,
   "model_data_base": 1000,
   "wrappers": [
-    "default"
+    "charizard",
+    "blastoise",
+    "venusaur"
   ],
   "pack_slots": [
     {

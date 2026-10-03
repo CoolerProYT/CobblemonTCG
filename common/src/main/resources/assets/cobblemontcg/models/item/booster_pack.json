@@ -2,5 +2,25 @@
   "parent": "minecraft:item/generated",
   "textures": {
     "layer0": "cobblemontcg:item/booster_pack"
-  }
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "custom_model_data": 1000
+      },
+      "model": "cobblemontcg:item/booster_pack/base1_charizard"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 1001
+      },
+      "model": "cobblemontcg:item/booster_pack/base1_blastoise"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 1002
+      },
+      "model": "cobblemontcg:item/booster_pack/base1_venusaur"
+    }
+  ]
 }
