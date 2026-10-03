@@ -24,8 +24,8 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 /**
- * Turns Cobblemon's events into the Pokémon reward triggers. Only loaded when Cobblemon is installed
- * (see {@code NeoForgeCobblemonTCG}); written against Cobblemon 1.8.1.
+ * Turns Cobblemon's events into the Pokémon reward triggers, set up by {@code NeoForgeCobblemonTCG};
+ * written against Cobblemon 1.8.1.
  * <p>
  * Cobblemon adds a caught Pokémon to the party, which updates the Pokédex, before it posts
  * {@code POKEMON_CAPTURED}. So a new species is spotted on the Pokédex change (its knowledge goes to

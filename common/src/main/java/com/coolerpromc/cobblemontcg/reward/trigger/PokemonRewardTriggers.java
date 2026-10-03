@@ -10,9 +10,8 @@ import net.minecraft.server.level.ServerPlayer;
 import java.util.function.BooleanSupplier;
 
 /**
- * The Pokémon reward triggers. They are only registered by a loader's Cobblemon bridge when Cobblemon is
- * installed; the bridge turns Cobblemon's events into the calls below, so this class knows nothing about
- * Cobblemon itself.
+ * The Pokémon reward triggers, registered by each loader's Cobblemon bridge; the bridge turns
+ * Cobblemon's events into the calls below, so this class knows nothing about Cobblemon itself.
  */
 public final class PokemonRewardTriggers {
     /** Conditions: {@code species}, {@code shiny}, {@code min_level}, {@code first_catch_of_species}. */

@@ -24,10 +24,6 @@ public class FabricCobblemonTCG implements ModInitializer {
 
         CommandRegistrationCallback.EVENT.register((dispatcher, context, selection) -> TcgCommands.register(dispatcher));
         ServerLifecycleEvents.SYNC_DATA_PACK_CONTENTS.register((player, joined) -> CobblemonTCG.syncTcgData(player));
-
-        // the bridge is the only class that touches Cobblemon, so it must not load without it
-        if (Services.PLATFORM.isModLoaded("cobblemon")) {
-            FabricCobblemonBridge.init();
-        }
+        FabricCobblemonBridge.init();
     }
 }

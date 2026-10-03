@@ -1,7 +1,9 @@
 # Cobblemon: TCG
 
-A trading card mod for Minecraft 1.21.1 (Fabric and NeoForge). Open booster packs and collect cards.
-The first set is the 1999 Base Set: 102 cards, with real pack odds.
+A trading card addon for [Cobblemon](https://cobblemon.com) on Minecraft 1.21.1 (Fabric and NeoForge).
+Open booster packs and collect cards. The first set is the 1999 Base Set: 102 cards, with real pack odds.
+
+**Requires Cobblemon 1.8.1 or newer**: the game will not start if Cobblemon is missing.
 
 ## Disclaimer
 
@@ -87,7 +89,7 @@ Everything about a set is data driven, so new sets need no code.
 
 `supertype` is `pokemon`, `trainer` or `energy`; `rarity` is `common`, `uncommon`, `rare` or `rare_holo`.
 `type`, `hp`, `pokedex` and `evolves_from_pokedex` are optional. The last two are National Pokédex
-numbers, used to draw Cobblemon's models on the card when Cobblemon is installed.
+numbers, used to draw Cobblemon's models on the card.
 
 ### Reward rules: `data/<namespace>/tcg/rewards/*.json`
 
@@ -107,9 +109,9 @@ player gets `amount` packs of `set` with probability `chance` (default `1`):
 Rules only fire when `rewards.enabled` and the trigger's toggle are on, and are limited by
 `rewards.dailyPackCap`.
 
-#### Pokémon rewards (needs Cobblemon)
+#### Pokémon rewards
 
-With Cobblemon installed these triggers are registered (without it they do nothing):
+These triggers come from Cobblemon's events:
 
 | Trigger | When | Conditions |
 | --- | --- | --- |
@@ -157,14 +159,13 @@ down and flips over. A card model stacks these layers on its front, back to fron
 | Card text | `assets/cobblemontcg/textures/tcg/<set>/<number>.png`, 256×352 | one per card: name, HP, attacks, number, rarity; trainer and energy art |
 | Evolution portrait (evolution cards only) | `assets/cobblemontcg/textures/tcg/<set>/evolution/<number>.png`, 32×32 (picture in the top 32×24) | one per card: the previous stage |
 
-### With Cobblemon
+### Cobblemon models
 
-Cobblemon is optional. When [Cobblemon](https://cobblemon.com) (1.8.1 or newer) is installed, the
-client draws Cobblemon's own models into the illustration and evolution portrait of every card that
+The client draws Cobblemon's own models into the illustration and evolution portrait of every card that
 has a `pokedex` / `evolves_from_pokedex` number, and into the mascot of every pack wrapper listed in
 the set's `wrapper_pokedex`, posed like in Cobblemon's Pokédex. This happens a few
 cards per tick after joining a world (Cobblemon's species arrive then) and again after a resource
-reload. Without Cobblemon, or for species Cobblemon has not implemented, the drawn art is shown.
+reload. Until then, and for species Cobblemon has not implemented, the drawn art is shown.
 Nothing from Cobblemon is copied into this mod.
 
 The texture is the whole card (63 × 88 mm); the art window is x 24 to 231, y 40 to 183.
@@ -214,7 +215,8 @@ for the holo print, so give every set its own `model_data_base` range. Packs use
 
 ```
 ./gradlew build
-./gradlew :fabric:runClient
-./gradlew :neoforge:runClient
-./gradlew :fabric:runClient -Pcobblemon_runtime=true   # dev client with Cobblemon installed
+./gradlew :neoforge:runClient   # dev client, with Cobblemon
 ```
+
+The NeoForge dev runs include Cobblemon. The Fabric dev client does not start: the mod requires
+Cobblemon, and Cobblemon's Fabric build does not run in a Fabric dev environment, so test on NeoForge.
