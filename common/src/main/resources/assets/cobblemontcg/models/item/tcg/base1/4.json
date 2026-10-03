@@ -1,7 +1,7 @@
 {
-  "parent": "minecraft:item/generated",
+  "parent": "cobblemontcg:item/tcg/card",
   "textures": {
-    "layer0": "cobblemontcg:tcg/frame/pokemon_fire",
-    "layer1": "cobblemontcg:tcg/base1/4"
+    "frame": "cobblemontcg:tcg/frame/pokemon_fire",
+    "art": "cobblemontcg:tcg/base1/4"
   }
 }

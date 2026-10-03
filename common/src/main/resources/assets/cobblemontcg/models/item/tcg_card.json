@@ -1,8 +1,5 @@
 {
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "cobblemontcg:item/tcg_card"
-  },
+  "parent": "cobblemontcg:item/tcg/card_face_down",
   "overrides": [
     {
       "predicate": {

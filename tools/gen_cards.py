@@ -10,9 +10,14 @@ and finally assets/cobblemontcg/models/item/tcg_card.json with one
 custom_model_data override per model, for all sets, plus one model per pack wrapper
 and their overrides in assets/cobblemontcg/models/item/booster_pack.json.
 
+Cards and packs are thin 3D models (models/item/tcg/card*.json, pack.json) with a real back,
+so a held, dropped or framed card shows the card back instead of a mirrored front.
+
 The set itself (name, pack slots, model_data_base) lives in
 data/cobblemontcg/tcg/sets/<set>.json and is read, not written, by this script.
-Card art is expected at assets/cobblemontcg/textures/tcg/<set>/<number>.png, frames at\ntextures/tcg/frame/<pokemon_type|trainer|energy>.png (see gen_card_art.py).
+Card art is expected at assets/cobblemontcg/textures/tcg/<set>/<number>.png, frames at
+textures/tcg/frame/<pokemon_type|trainer|energy>.png and pack wrappers at
+textures/tcg/pack/<set>_<wrapper>.png (see gen_card_art.py).
 
 Usage: python tools/gen_cards.py
 """
@@ -76,13 +81,85 @@ def frame_name(card: dict) -> str:
     return f"pokemon_{card['type']}" if card["supertype"] == "pokemon" else card["supertype"]
 
 
+# Texture sizes in pixels; models use the same proportions so nothing is stretched.
+CARD_PX = (256, 352)
+ART_PX = (24, 40, 232, 184)          # art window (holo foil area), see tools/art/layout.py
+PACK_PX = (240, 368)
+
+# Same hand / ground / frame placement as minecraft:item/generated.
+DISPLAY = {
+    "ground": {"rotation": [0, 0, 0], "translation": [0, 2, 0], "scale": [0.5, 0.5, 0.5]},
+    "head": {"rotation": [0, 180, 0], "translation": [0, 13, 7], "scale": [1, 1, 1]},
+    "thirdperson_righthand": {"rotation": [0, 0, 0], "translation": [0, 3, 1], "scale": [0.55, 0.55, 0.55]},
+    "firstperson_righthand": {"rotation": [0, -90, 25], "translation": [1.13, 3.2, 1.13], "scale": [0.68, 0.68, 0.68]},
+    "fixed": {"rotation": [0, 180, 0], "scale": [1, 1, 1]},
+}
+
+
+def r(v: float) -> float:
+    return round(v, 4)
+
+
+def body(width_px: int, height_px: int, thickness: float, front: str, back: str) -> dict:
+    """A thin box filling the model height: front texture facing south (the side shown in the
+    inventory), back texture facing north, edges sampled from the back texture's border."""
+    w = 16 * width_px / height_px
+    x0, x1 = 8 - w / 2, 8 + w / 2
+    z0, z1 = 8 - thickness / 2, 8 + thickness / 2
+    edge = {"uv": [0, 1, 0.1, 15], "texture": back}
+    return {
+        "from": [r(x0), 0, r(z0)], "to": [r(x1), 16, r(z1)],
+        "faces": {
+            "south": {"uv": [0, 0, 16, 16], "texture": front},
+            "north": {"uv": [0, 0, 16, 16], "texture": back},
+            "east": edge, "west": edge,
+            "up": {"uv": [4, 0.2, 12, 0.3], "texture": back},
+            "down": {"uv": [4, 15.7, 12, 15.8], "texture": back},
+        },
+    }
+
+
+def plane(x0_px, y0_px, x1_px, y1_px, z: float, texture: str) -> dict:
+    """A flat layer just in front of the card face, covering a pixel rectangle of the card."""
+    k = 16 / CARD_PX[1]
+    left = 8 - 16 * CARD_PX[0] / CARD_PX[1] / 2
+    return {
+        "from": [r(left + x0_px * k), r(16 - y1_px * k), r(z)], "to": [r(left + x1_px * k), r(16 - y0_px * k), r(z)],
+        "faces": {"south": {"uv": [0, 0, 16, 16], "texture": texture}},
+    }
+
+
+def template(textures: dict, elements: list) -> dict:
+    return {"gui_light": "front", "ambientocclusion": False, "textures": textures, "elements": elements, "display": DISPLAY}
+
+
+CARD_THICKNESS = 0.2
+LAYER_GAP = 0.04   # between the stacked layers on the card face, large enough to avoid z-fighting
+
+
+def write_templates() -> None:
+    """Parent models shared by every card print and pack wrapper."""
+    front_z = 8 + CARD_THICKNESS / 2
+    back = f"{NAMESPACE}:tcg/card_back"
+    card = body(*CARD_PX, CARD_THICKNESS, "#frame", "#back")
+    art = plane(0, 0, *CARD_PX, front_z + LAYER_GAP * 2, "#art")
+    holo = plane(*ART_PX, front_z + LAYER_GAP, "#holo")
+    write_json(MODELS / "tcg" / "card.json", template({"back": back, "particle": "#frame"}, [card, art]))
+    write_json(MODELS / "tcg" / "card_holo.json", template(
+        {"back": back, "holo": f"{NAMESPACE}:tcg/holo_overlay", "particle": "#frame"}, [card, holo, art]))
+    # a card without data: face down on both sides
+    write_json(MODELS / "tcg" / "card_face_down.json", template(
+        {"back": back, "particle": back}, [body(*CARD_PX, CARD_THICKNESS, "#back", "#back")]))
+    write_json(MODELS / "tcg" / "pack.json", template(
+        {"back": f"{NAMESPACE}:tcg/pack/back", "particle": "#front"}, [body(*PACK_PX, 0.8, "#front", "#back")]))
+
+
 def card_model(set_name: str, card: dict, holo: bool) -> dict:
     """Frame (shared per type), then the holo foil for holo prints, then the card's own art on top."""
-    layers = [f"{NAMESPACE}:tcg/frame/{frame_name(card)}"]
-    if holo:
-        layers.append(f"{NAMESPACE}:tcg/holo_overlay")
-    layers.append(f"{NAMESPACE}:tcg/{set_name}/{card['number']}")
-    return {"parent": "minecraft:item/generated", "textures": {f"layer{i}": tex for i, tex in enumerate(layers)}}
+    return {
+        "parent": f"{NAMESPACE}:item/tcg/card_holo" if holo else f"{NAMESPACE}:item/tcg/card",
+        "textures": {"frame": f"{NAMESPACE}:tcg/frame/{frame_name(card)}", "art": f"{NAMESPACE}:tcg/{set_name}/{card['number']}"},
+    }
 
 
 def generate_wrappers(set_name: str, set_def: dict) -> list[tuple[int, str]]:
@@ -91,8 +168,8 @@ def generate_wrappers(set_name: str, set_def: dict) -> list[tuple[int, str]]:
     overrides = []
     for i, wrapper in enumerate(set_def.get("wrappers", [])):
         write_json(folder / f"{set_name}_{wrapper}.json", {
-            "parent": "minecraft:item/generated",
-            "textures": {"layer0": f"{NAMESPACE}:item/booster_pack/{set_name}_{wrapper}"},
+            "parent": f"{NAMESPACE}:item/tcg/pack",
+            "textures": {"front": f"{NAMESPACE}:tcg/pack/{set_name}_{wrapper}"},
         })
         overrides.append((int(set_def["model_data_base"]) + i, f"{NAMESPACE}:item/booster_pack/{set_name}_{wrapper}"))
     return overrides
@@ -129,6 +206,7 @@ def generate_set(csv_path: Path) -> list[tuple[int, str]]:
 
 
 def main() -> None:
+    write_templates()
     overrides = []
     pack_overrides = []
     for csv_path in sorted(TOOLS.glob("*.csv")):
@@ -143,16 +221,15 @@ def main() -> None:
     # Overrides are matched in order and the last match wins, so they must be sorted ascending.
     overrides.sort()
     write_json(MODELS / "tcg_card.json", {
-        "parent": "minecraft:item/generated",
-        "textures": {"layer0": f"{NAMESPACE}:item/tcg_card"},
+        "parent": f"{NAMESPACE}:item/tcg/card_face_down",
         "overrides": [{"predicate": {"custom_model_data": value}, "model": model} for value, model in overrides],
     })
     print(f"tcg_card.json: {len(overrides)} overrides")
 
     pack_overrides.sort()
     write_json(MODELS / "booster_pack.json", {
-        "parent": "minecraft:item/generated",
-        "textures": {"layer0": f"{NAMESPACE}:item/booster_pack"},
+        "parent": f"{NAMESPACE}:item/tcg/pack",
+        "textures": {"front": f"{NAMESPACE}:tcg/pack/default"},
         "overrides": [{"predicate": {"custom_model_data": value}, "model": model} for value, model in pack_overrides],
     })
     print(f"booster_pack.json: {len(pack_overrides)} wrapper overrides")

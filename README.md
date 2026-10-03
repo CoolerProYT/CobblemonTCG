@@ -7,9 +7,10 @@ The first set is the 1999 Base Set: 102 cards, with real pack odds.
 
 This is an unofficial fan project. It is not affiliated with, endorsed, sponsored or approved by
 Nintendo, The Pokémon Company, Game Freak or Creatures Inc. Pokémon and all related names are
-trademarks of their respective owners. The mod contains card metadata only (names, numbers, types,
-HP, rarities). All textures are original fan illustrations drawn for this mod; no official card
-scans, card art, card text, pack wrappers, set logos or expansion symbols are included.
+trademarks of their respective owners. The mod contains card metadata and game text (names,
+numbers, types, HP, rarities, attacks, costs, damage, weakness / resistance / retreat and rules
+text). All textures are original fan illustrations drawn for this mod; no official card scans,
+card art, flavour text, pack wrappers, set logos, card backs or expansion symbols are included.
 
 ## Features
 
@@ -69,7 +70,7 @@ Everything about a set is data driven, so new sets need no code.
 ```
 
 `wrappers` lists the pack designs; each name needs a texture at
-`assets/cobblemontcg/textures/item/booster_pack/<set>_<wrapper>.png` (and a model, written by
+`assets/cobblemontcg/textures/tcg/pack/<set>_<wrapper>.png` (and a model, written by
 `tools/gen_cards.py`). Each slot rolls a rarity from its weight table, then a card of that rarity. With
 `use_config_holo_chance`, the `rare_holo` chance comes from `packs.holoChance` instead.
 
@@ -101,39 +102,56 @@ Triggers are registered in code through `RewardTriggerRegistry`; none are regist
 
 ## Art
 
-Cards follow the layout of a 1999 Base Set card (yellow border, face coloured by type, name and HP,
-framed art window, attack rows, weakness / resistance / retreat, number and rarity symbol), drawn
-from scratch. Each card model stacks up to three 256×256 layers:
+Cards follow the layout of a 1999 Base Set card (yellow border, face coloured by type, stage line,
+name and HP, framed art window, Pokémon Powers and attacks with energy costs and damage,
+weakness / resistance / retreat, level, number and rarity symbol), drawn from scratch.
+
+Cards and packs are thin 3D models with a real back: a held, dropped or framed card shows the card
+back, and a pack shows the back of the wrapper. In the opening animation each card is dealt face
+down and flips over. A card model stacks up to three 256×352 layers on its front:
 
 | Layer | Texture | Shared |
 | --- | --- | --- |
 | Frame | `assets/cobblemontcg/textures/tcg/frame/<pokemon_<type>\|trainer\|energy>.png` | per type: border, face, art window background, labels |
-| Holo foil (holo prints only) | `assets/cobblemontcg/textures/tcg/holo_overlay.png` (+ `.mcmeta`) | all cards, animated |
-| Card art | `assets/cobblemontcg/textures/tcg/<set>/<number>.png` | one per card: name, HP, illustration, costs, number, rarity |
+| Holo foil (holo prints only) | `assets/cobblemontcg/textures/tcg/holo_overlay.png` (+ `.mcmeta`), 208×144 per frame | all cards, animated, covers the art window only |
+| Card art | `assets/cobblemontcg/textures/tcg/<set>/<number>.png` | one per card: name, HP, illustration, attacks, number, rarity |
 
-The card sits in the middle of the texture (x 36 to 219); the art window is x 51 to 204, y 29 to 120.
+The texture is the whole card (63 × 88 mm); the art window is x 24 to 231, y 40 to 183.
 On a holo print the foil shows through wherever the card art is transparent, so leave the art
 window background transparent to keep the holo effect, or paint over it for a full-art card.
-Replace any texture with your own drawing of the same size and name, no code changes needed.
+Replace any texture with your own drawing of the same size and name (for example in a resource
+pack), no code changes needed.
 
 | Other texture | Size |
 | --- | --- |
-| `assets/cobblemontcg/textures/item/booster_pack/<set>_<wrapper>.png` (pack wrappers) | 128×128 |
-| `assets/cobblemontcg/textures/item/booster_pack.png` (pack without set data) | 128×128 |
-| `assets/cobblemontcg/textures/item/tcg_card.png` (card back, also used in the opening animation) | 128×128 |
+| `assets/cobblemontcg/textures/tcg/card_back.png` (back of every card, and cards without data) | 256×352 |
+| `assets/cobblemontcg/textures/tcg/pack/<set>_<wrapper>.png` (pack fronts) | 240×368 |
+| `assets/cobblemontcg/textures/tcg/pack/back.png` (back of every pack) | 240×368 |
+| `assets/cobblemontcg/textures/tcg/pack/default.png` (pack without set data) | 240×368 |
+
+The model templates live in `assets/cobblemontcg/models/item/tcg/` (`card.json`, `card_holo.json`,
+`card_face_down.json`, `pack.json`) and are written by `tools/gen_cards.py`.
 
 ## Tools
 
 Requires Python 3.10+, Pillow 10.1+ and numpy (`pip install pillow numpy`).
 
 - `tools/<set>.csv`: the card list (`number,name,supertype,type,hp,rarity`).
+- `tools/<set>_text.json`: game text drawn on the cards (stage, evolves from, level, Pokédex number,
+  Pokémon Powers, attacks, weakness, resistance, retreat cost, trainer and energy rules).
+  For `base1` it was taken from the community card database
+  [PokemonTCG/pokemon-tcg-data](https://github.com/PokemonTCG/pokemon-tcg-data).
+- `tools/fonts/`: Cabin by Pablo Impallari and Rodrigo Fuenzalida, under the SIL Open Font License
+  (`tools/fonts/OFL.txt`), used only to draw the textures.
 - `python tools/gen_cards.py`: writes the card JSONs, one model per card print and the
   `custom_model_data` overrides in `models/item/tcg_card.json` for every CSV, plus one model per
   pack wrapper and their overrides in `models/item/booster_pack.json`.
 - `python tools/gen_card_art.py [--skip-existing-art] [--only 4,58]`: draws the frames, holo foil,
-  card art, pack wrappers (`tools/art/wrapper.py`), card back and mod icon. `--skip-existing-art` keeps card art you have
+  card art, pack fronts and back (`tools/art/wrapper.py`), card back and mod icon (about 1.5 minutes). `--skip-existing-art` keeps card art you have
   already replaced. The illustrations live in `tools/art/pokemon_base1.py` and
-  `tools/art/trainers_base1.py`, one small function per card; the layout is in `tools/art/layout.py`.
+  `tools/art/trainers_base1.py`, one small function per card, lit and shaded by
+  `tools/art/canvas.py`; the layout is in `tools/art/layout.py`, the per-card text in
+  `tools/art/cards.py`.
 
 Card stacks use `custom_model_data = model_data_base + number * 2` for the regular print and `+ 1`
 for the holo print, so give every set its own `model_data_base` range. Packs use

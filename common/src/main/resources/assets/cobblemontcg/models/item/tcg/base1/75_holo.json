@@ -1,8 +1,7 @@
 {
-  "parent": "minecraft:item/generated",
+  "parent": "cobblemontcg:item/tcg/card_holo",
   "textures": {
-    "layer0": "cobblemontcg:tcg/frame/trainer",
-    "layer1": "cobblemontcg:tcg/holo_overlay",
-    "layer2": "cobblemontcg:tcg/base1/75"
+    "frame": "cobblemontcg:tcg/frame/trainer",
+    "art": "cobblemontcg:tcg/base1/75"
   }
 }
