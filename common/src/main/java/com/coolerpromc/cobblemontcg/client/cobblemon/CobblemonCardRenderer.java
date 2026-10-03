@@ -21,7 +21,6 @@ import java.util.Optional;
 
 /**
  * Draws Cobblemon's own Pokémon models for the card art, the way Cobblemon's Pokédex shows them.
- * Only loaded when Cobblemon is installed; nothing else in the mod references Cobblemon.
  */
 public final class CobblemonCardRenderer implements CardArtPatcher.PortraitRenderer {
     // the Pokédex portrait is 137 x 68 GUI units with the model at scale 2 and its origin 12 units above

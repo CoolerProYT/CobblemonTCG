@@ -27,9 +27,7 @@
         "fabric-api": "*",
         "coolerconfig": ">=21.1.1",
         "minecraft": "${minecraft_version}",
-        "java": ">=${java_version}"
-    },
-    "suggests": {
+        "java": ">=${java_version}",
         "cobblemon": ">=1.8.1"
     }
 }

@@ -6,7 +6,6 @@ import com.coolerpromc.cobblemontcg.client.cobblemon.CobblemonCardRenderer;
 import com.coolerpromc.cobblemontcg.config.TcgClientConfig;
 import com.coolerpromc.cobblemontcg.creativetab.ModCreativeTabs;
 import com.coolerpromc.cobblemontcg.network.ClientPacketHooks;
-import com.coolerpromc.cobblemontcg.platform.Services;
 import com.coolerpromc.cobblemontcg.tcg.data.TcgDataManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.item.CreativeModeTab;
@@ -19,10 +18,8 @@ public class CobblemonTCGClient {
         TcgClientConfig.init();
         TcgDataManager.CLIENT.addListener(CobblemonTCGClient::rebuildCreativeTab);
         ClientPacketHooks.packOpened = PackOpeningScreen::show;
-        if (Services.PLATFORM.isModLoaded("cobblemon")) {
-            // draw Cobblemon's models into the card art instead of the built-in drawings
-            CardArtPatcher.INSTANCE.setRenderer(CobblemonCardRenderer.create());
-        }
+        // draw Cobblemon's models into the card art instead of the built-in drawings
+        CardArtPatcher.INSTANCE.setRenderer(CobblemonCardRenderer.create());
     }
 
     /**
