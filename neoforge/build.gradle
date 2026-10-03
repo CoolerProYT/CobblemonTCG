@@ -42,3 +42,7 @@ neoForge {
 }
 
 sourceSets.main.resources { srcDir 'src/generated/resources' }
+
+dependencies {
+    jarJar(implementation("com.coolerpromc.coolerconfig:coolerconfig-neoforge-${minecraft_version}:${cooler_config_version}"))
+}

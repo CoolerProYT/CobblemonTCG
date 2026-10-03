@@ -1,0 +1,9 @@
+{
+  "id": "base1-18",
+  "number": 18,
+  "name": "Dragonair",
+  "supertype": "pokemon",
+  "type": "colorless",
+  "hp": 80,
+  "rarity": "rare"
+}

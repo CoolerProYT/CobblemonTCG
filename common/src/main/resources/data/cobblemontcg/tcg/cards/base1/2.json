@@ -1,0 +1,9 @@
+{
+  "id": "base1-2",
+  "number": 2,
+  "name": "Blastoise",
+  "supertype": "pokemon",
+  "type": "water",
+  "hp": 100,
+  "rarity": "rare_holo"
+}

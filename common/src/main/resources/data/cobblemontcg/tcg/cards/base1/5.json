@@ -1,0 +1,9 @@
+{
+  "id": "base1-5",
+  "number": 5,
+  "name": "Clefairy",
+  "supertype": "pokemon",
+  "type": "colorless",
+  "hp": 40,
+  "rarity": "rare_holo"
+}

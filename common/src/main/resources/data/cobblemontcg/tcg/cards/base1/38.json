@@ -1,0 +1,9 @@
+{
+  "id": "base1-38",
+  "number": 38,
+  "name": "Poliwhirl",
+  "supertype": "pokemon",
+  "type": "water",
+  "hp": 60,
+  "rarity": "uncommon"
+}

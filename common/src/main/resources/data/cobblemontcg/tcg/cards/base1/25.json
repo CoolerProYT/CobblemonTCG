@@ -1,0 +1,9 @@
+{
+  "id": "base1-25",
+  "number": 25,
+  "name": "Dewgong",
+  "supertype": "pokemon",
+  "type": "water",
+  "hp": 80,
+  "rarity": "uncommon"
+}

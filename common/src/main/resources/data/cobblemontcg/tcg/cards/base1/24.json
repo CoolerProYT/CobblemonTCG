@@ -1,0 +1,9 @@
+{
+  "id": "base1-24",
+  "number": 24,
+  "name": "Charmeleon",
+  "supertype": "pokemon",
+  "type": "fire",
+  "hp": 80,
+  "rarity": "uncommon"
+}

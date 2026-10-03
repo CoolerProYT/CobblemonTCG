@@ -1,0 +1,9 @@
+{
+  "id": "base1-29",
+  "number": 29,
+  "name": "Haunter",
+  "supertype": "pokemon",
+  "type": "psychic",
+  "hp": 60,
+  "rarity": "uncommon"
+}

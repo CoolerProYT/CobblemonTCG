@@ -1,0 +1,9 @@
+{
+  "id": "base1-52",
+  "number": 52,
+  "name": "Machop",
+  "supertype": "pokemon",
+  "type": "fighting",
+  "hp": 50,
+  "rarity": "common"
+}

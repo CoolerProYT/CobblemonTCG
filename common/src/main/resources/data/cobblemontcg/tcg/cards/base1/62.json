@@ -1,0 +1,9 @@
+{
+  "id": "base1-62",
+  "number": 62,
+  "name": "Sandshrew",
+  "supertype": "pokemon",
+  "type": "fighting",
+  "hp": 40,
+  "rarity": "common"
+}

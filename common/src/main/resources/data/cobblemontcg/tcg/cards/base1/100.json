@@ -1,0 +1,8 @@
+{
+  "id": "base1-100",
+  "number": 100,
+  "name": "Lightning Energy",
+  "supertype": "energy",
+  "type": "lightning",
+  "rarity": "common"
+}

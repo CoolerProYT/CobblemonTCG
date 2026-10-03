@@ -1,0 +1,9 @@
+{
+  "id": "base1-1",
+  "number": 1,
+  "name": "Alakazam",
+  "supertype": "pokemon",
+  "type": "psychic",
+  "hp": 80,
+  "rarity": "rare_holo"
+}

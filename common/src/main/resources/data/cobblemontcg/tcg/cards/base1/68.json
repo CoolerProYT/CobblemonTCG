@@ -1,0 +1,9 @@
+{
+  "id": "base1-68",
+  "number": 68,
+  "name": "Vulpix",
+  "supertype": "pokemon",
+  "type": "fire",
+  "hp": 50,
+  "rarity": "common"
+}

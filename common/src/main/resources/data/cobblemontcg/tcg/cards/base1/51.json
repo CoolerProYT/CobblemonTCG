@@ -1,0 +1,9 @@
+{
+  "id": "base1-51",
+  "number": 51,
+  "name": "Koffing",
+  "supertype": "pokemon",
+  "type": "grass",
+  "hp": 50,
+  "rarity": "common"
+}

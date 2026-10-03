@@ -1,0 +1,9 @@
+{
+  "id": "base1-57",
+  "number": 57,
+  "name": "Pidgey",
+  "supertype": "pokemon",
+  "type": "colorless",
+  "hp": 40,
+  "rarity": "common"
+}

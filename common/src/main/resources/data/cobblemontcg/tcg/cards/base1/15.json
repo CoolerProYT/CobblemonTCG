@@ -1,0 +1,9 @@
+{
+  "id": "base1-15",
+  "number": 15,
+  "name": "Venusaur",
+  "supertype": "pokemon",
+  "type": "grass",
+  "hp": 100,
+  "rarity": "rare_holo"
+}

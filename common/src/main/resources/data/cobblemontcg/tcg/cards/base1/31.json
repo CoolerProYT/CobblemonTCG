@@ -1,0 +1,9 @@
+{
+  "id": "base1-31",
+  "number": 31,
+  "name": "Jynx",
+  "supertype": "pokemon",
+  "type": "psychic",
+  "hp": 70,
+  "rarity": "uncommon"
+}

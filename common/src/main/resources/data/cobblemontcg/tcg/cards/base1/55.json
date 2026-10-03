@@ -1,0 +1,9 @@
+{
+  "id": "base1-55",
+  "number": 55,
+  "name": "Nidoran ♂",
+  "supertype": "pokemon",
+  "type": "grass",
+  "hp": 40,
+  "rarity": "common"
+}

@@ -1,0 +1,9 @@
+{
+  "id": "base1-32",
+  "number": 32,
+  "name": "Kadabra",
+  "supertype": "pokemon",
+  "type": "psychic",
+  "hp": 60,
+  "rarity": "uncommon"
+}

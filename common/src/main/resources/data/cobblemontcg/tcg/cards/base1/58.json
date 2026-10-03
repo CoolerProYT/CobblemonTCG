@@ -1,0 +1,9 @@
+{
+  "id": "base1-58",
+  "number": 58,
+  "name": "Pikachu",
+  "supertype": "pokemon",
+  "type": "lightning",
+  "hp": 40,
+  "rarity": "common"
+}

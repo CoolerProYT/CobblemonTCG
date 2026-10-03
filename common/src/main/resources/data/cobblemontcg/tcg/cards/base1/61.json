@@ -1,0 +1,9 @@
+{
+  "id": "base1-61",
+  "number": 61,
+  "name": "Rattata",
+  "supertype": "pokemon",
+  "type": "colorless",
+  "hp": 30,
+  "rarity": "common"
+}

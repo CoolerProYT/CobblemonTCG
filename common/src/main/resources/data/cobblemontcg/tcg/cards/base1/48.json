@@ -1,0 +1,9 @@
+{
+  "id": "base1-48",
+  "number": 48,
+  "name": "Doduo",
+  "supertype": "pokemon",
+  "type": "colorless",
+  "hp": 50,
+  "rarity": "common"
+}

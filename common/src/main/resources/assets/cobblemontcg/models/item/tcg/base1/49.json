@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "cobblemontcg:tcg/frame/pokemon_psychic",
+    "layer1": "cobblemontcg:tcg/base1/49"
+  }
+}

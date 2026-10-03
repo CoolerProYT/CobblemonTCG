@@ -1,0 +1,9 @@
+{
+  "id": "base1-6",
+  "number": 6,
+  "name": "Gyarados",
+  "supertype": "pokemon",
+  "type": "water",
+  "hp": 100,
+  "rarity": "rare_holo"
+}

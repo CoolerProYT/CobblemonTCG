@@ -1,0 +1,9 @@
+{
+  "id": "base1-64",
+  "number": 64,
+  "name": "Starmie",
+  "supertype": "pokemon",
+  "type": "water",
+  "hp": 60,
+  "rarity": "common"
+}

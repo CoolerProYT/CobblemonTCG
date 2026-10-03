@@ -1,0 +1,9 @@
+{
+  "id": "base1-20",
+  "number": 20,
+  "name": "Electabuzz",
+  "supertype": "pokemon",
+  "type": "lightning",
+  "hp": 70,
+  "rarity": "rare"
+}

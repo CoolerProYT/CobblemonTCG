@@ -1,0 +1,8 @@
+{
+  "id": "base1-98",
+  "number": 98,
+  "name": "Fire Energy",
+  "supertype": "energy",
+  "type": "fire",
+  "rarity": "common"
+}

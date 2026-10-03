@@ -1,0 +1,9 @@
+{
+  "id": "base1-27",
+  "number": 27,
+  "name": "Farfetch'd",
+  "supertype": "pokemon",
+  "type": "colorless",
+  "hp": 50,
+  "rarity": "uncommon"
+}

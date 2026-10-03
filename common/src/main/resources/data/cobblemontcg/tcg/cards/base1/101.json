@@ -1,0 +1,8 @@
+{
+  "id": "base1-101",
+  "number": 101,
+  "name": "Psychic Energy",
+  "supertype": "energy",
+  "type": "psychic",
+  "rarity": "common"
+}

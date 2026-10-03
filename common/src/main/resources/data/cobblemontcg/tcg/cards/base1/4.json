@@ -1,0 +1,9 @@
+{
+  "id": "base1-4",
+  "number": 4,
+  "name": "Charizard",
+  "supertype": "pokemon",
+  "type": "fire",
+  "hp": 120,
+  "rarity": "rare_holo"
+}

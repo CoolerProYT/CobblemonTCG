@@ -1,0 +1,9 @@
+{
+  "id": "base1-35",
+  "number": 35,
+  "name": "Magikarp",
+  "supertype": "pokemon",
+  "type": "water",
+  "hp": 30,
+  "rarity": "uncommon"
+}

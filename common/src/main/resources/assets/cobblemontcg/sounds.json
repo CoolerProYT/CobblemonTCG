@@ -1,0 +1,20 @@
+{
+  "item.booster_pack.open": {
+    "subtitle": "subtitles.cobblemontcg.item.booster_pack.open",
+    "sounds": [
+      "minecraft:item/bundle/drop_contents1",
+      "minecraft:item/bundle/drop_contents2",
+      "minecraft:item/bundle/drop_contents3"
+    ]
+  },
+  "item.booster_pack.open_rare": {
+    "subtitle": "subtitles.cobblemontcg.item.booster_pack.open_rare",
+    "sounds": [
+      {
+        "name": "minecraft:random/levelup",
+        "volume": 0.6,
+        "pitch": 1.4
+      }
+    ]
+  }
+}

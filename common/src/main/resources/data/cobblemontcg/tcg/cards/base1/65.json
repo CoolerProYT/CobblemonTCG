@@ -1,0 +1,9 @@
+{
+  "id": "base1-65",
+  "number": 65,
+  "name": "Staryu",
+  "supertype": "pokemon",
+  "type": "water",
+  "hp": 40,
+  "rarity": "common"
+}

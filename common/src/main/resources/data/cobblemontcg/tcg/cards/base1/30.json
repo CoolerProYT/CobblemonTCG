@@ -1,0 +1,9 @@
+{
+  "id": "base1-30",
+  "number": 30,
+  "name": "Ivysaur",
+  "supertype": "pokemon",
+  "type": "grass",
+  "hp": 60,
+  "rarity": "uncommon"
+}

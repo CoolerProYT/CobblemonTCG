@@ -1,0 +1,9 @@
+{
+  "id": "base1-3",
+  "number": 3,
+  "name": "Chansey",
+  "supertype": "pokemon",
+  "type": "colorless",
+  "hp": 120,
+  "rarity": "rare_holo"
+}
