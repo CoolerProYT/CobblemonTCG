@@ -1,0 +1,15 @@
+[
+  {
+    "trigger": "cobblemontcg:capture",
+    "set": "cobblemontcg:base1",
+    "amount": 1,
+    "chance": 0.1,
+    "conditions": { "first_catch_of_species": true }
+  },
+  {
+    "trigger": "cobblemontcg:capture",
+    "set": "cobblemontcg:base1",
+    "amount": 1,
+    "conditions": { "shiny": true }
+  }
+]

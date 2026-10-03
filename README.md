@@ -40,8 +40,11 @@ card art, flavour text, pack wrappers, set logos, card backs or expansion symbol
 | `packs.holoChance` | `0.333` | Chance that the rare slot is a holo rare |
 | `packs.packSize` | `11` | Cards per pack; the difference is applied to the last slots (commons) |
 | `effects.soundsEnabled` | `true` | Pack opening sounds |
-| `rewards.enabled` | `false` | Allow reward triggers to hand out packs |
+| `rewards.enabled` | `true` | Allow reward triggers to hand out packs |
 | `rewards.dailyPackCap` | `10` | Reward packs per player per day (UTC), `0` = unlimited. Commands are not limited |
+| `rewards.triggers.capture` | `true` | Packs for catching Pokémon (Cobblemon) |
+| `rewards.triggers.levelUp` | `true` | Packs for level milestones (Cobblemon) |
+| `rewards.triggers.dexProgress` | `true` | Packs for Pokédex milestones (Cobblemon) |
 
 `config/cobblemontcg-client.toml`:
 
@@ -88,7 +91,8 @@ numbers, used to draw Cobblemon's models on the card when Cobblemon is installed
 
 ### Reward rules: `data/<namespace>/tcg/rewards/*.json`
 
-No rules ship with the mod. A file holds one rule or a list of rules:
+A file holds one rule or a list of rules. When the rule's trigger fires and its conditions pass, the
+player gets `amount` packs of `set` with probability `chance` (default `1`):
 
 ```json
 {
@@ -100,8 +104,40 @@ No rules ship with the mod. A file holds one rule or a list of rules:
 }
 ```
 
-Rules only fire when `rewards.enabled` is true and are limited by `rewards.dailyPackCap`.
-Triggers are registered in code through `RewardTriggerRegistry`; none are registered yet.
+Rules only fire when `rewards.enabled` and the trigger's toggle are on, and are limited by
+`rewards.dailyPackCap`.
+
+#### Pokémon rewards (needs Cobblemon)
+
+With Cobblemon installed these triggers are registered (without it they do nothing):
+
+| Trigger | When | Conditions |
+| --- | --- | --- |
+| `cobblemontcg:capture` | the player catches a Pokémon | `species`, `shiny`, `min_level`, `first_catch_of_species` |
+| `cobblemontcg:level_up` | one of the player's Pokémon levels up | `level`, `species`, `shiny` |
+| `cobblemontcg:dex_progress` | the player owns a new species in the Pokédex | `dex_every`, `dex_percent` |
+
+- `species`: species names like `pikachu` (any of them matches).
+- `first_catch_of_species: true`: the player has never owned this species before.
+- `level: 25`: a Pokémon of the player reached level 25 or higher.
+- `dex_every: 10`: the player now owns a multiple of 10 species.
+- `dex_percent: 50`: the player owns at least 50% of the species in Cobblemon's Pokédex.
+
+`level`, `dex_every`, `dex_percent` and `first_catch_of_species: true` are milestones: each pays out
+at most once per player (claimed milestones are saved on the player). A milestone is claimed when its
+rule rolls its chance, win or lose; when no pack can be given because of the daily cap it stays open for
+the next event. Other rules (like shiny catches) pay out every time.
+
+Default rules shipped in `data/cobblemontcg/tcg/rewards/` (override a file with the same path in a
+data pack, or replace it with `[]`, to change or remove them):
+
+| File | Rule |
+| --- | --- |
+| `capture.json` | first catch of a species: 10% chance of 1 pack; shiny catch: 1 pack |
+| `level_up.json` | level 10, 25, 50 and 100: 1 pack each |
+| `dex_progress.json` | 25% and 50% of the Pokédex: 1 pack; 75% and 100%: 2 packs |
+
+Other mods can add triggers through `RewardTriggerRegistry`.
 
 ## Art
 

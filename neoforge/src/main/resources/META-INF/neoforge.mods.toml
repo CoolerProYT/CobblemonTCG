@@ -28,10 +28,10 @@ type="required"
 versionRange = "[21.1.1,)"
 ordering = "AFTER"
 side = "BOTH"
-# optional: with Cobblemon installed, cards show Cobblemon's Pokemon models
+# optional: with Cobblemon installed, cards show Cobblemon's Pokemon models and Pokemon rewards give packs
 [[dependencies.${mod_id}]]
 modId = "cobblemon"
 type="optional"
 versionRange = "[1.8.1,)"
 ordering = "AFTER"
-side = "CLIENT"
+side = "BOTH"

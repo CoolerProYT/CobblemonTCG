@@ -21,6 +21,9 @@ public final class TcgConfig {
     private static ConfigValue<Boolean> soundsEnabled;
     private static ConfigValue<Boolean> rewardsEnabled;
     private static ConfigValue<Integer> dailyPackCap;
+    private static ConfigValue<Boolean> captureRewards;
+    private static ConfigValue<Boolean> levelUpRewards;
+    private static ConfigValue<Boolean> dexRewards;
 
     private TcgConfig() {
     }
@@ -35,8 +38,12 @@ public final class TcgConfig {
         holoChance = builder.defineDouble("packs.holoChance", DEFAULT_HOLO_CHANCE, 0.0, 1.0, "Chance that the rare slot of a pack is a holo rare (0 to 1). Default is about 1 in 3, like the real Base Set");
         packSize = builder.defineInt("packs.packSize", DEFAULT_PACK_SIZE, 1, 64, "Cards per pack. Extra cards come from, and missing cards are taken from, the last slot of the set (commons)");
         soundsEnabled = builder.defineBoolean("effects.soundsEnabled", true, "Play a sound when a pack is opened");
-        rewardsEnabled = builder.defineBoolean("rewards.enabled", false, "Allow reward triggers (loot, capture, level up...) to give packs. Commands always work");
+        rewardsEnabled = builder.defineBoolean("rewards.enabled", true, "Allow reward triggers (capture, level up, Pokédex progress) to give packs. Commands always work");
         dailyPackCap = builder.defineInt("rewards.dailyPackCap", DEFAULT_DAILY_PACK_CAP, 0, 10000, "Maximum reward packs a player can receive per day (UTC). 0 means no limit. Commands are not limited");
+
+        captureRewards = builder.defineBoolean("rewards.triggers.capture", true, "Give packs for catching Pokémon (needs Cobblemon)");
+        levelUpRewards = builder.defineBoolean("rewards.triggers.levelUp", true, "Give packs for Pokémon level milestones (needs Cobblemon)");
+        dexRewards = builder.defineBoolean("rewards.triggers.dexProgress", true, "Give packs for Pokédex progress milestones (needs Cobblemon)");
 
         CONFIG_SPEC = builder.build();
     }
@@ -54,10 +61,22 @@ public final class TcgConfig {
     }
 
     public static boolean rewardsEnabled() {
-        return rewardsEnabled != null && rewardsEnabled.get();
+        return rewardsEnabled == null || rewardsEnabled.get();
     }
 
     public static int dailyPackCap() {
         return dailyPackCap == null ? DEFAULT_DAILY_PACK_CAP : dailyPackCap.get();
+    }
+
+    public static boolean captureRewardsEnabled() {
+        return captureRewards == null || captureRewards.get();
+    }
+
+    public static boolean levelUpRewardsEnabled() {
+        return levelUpRewards == null || levelUpRewards.get();
+    }
+
+    public static boolean dexRewardsEnabled() {
+        return dexRewards == null || dexRewards.get();
     }
 }

@@ -1,6 +1,7 @@
 package com.coolerpromc.cobblemontcg;
 
 import com.coolerpromc.cobblemontcg.command.TcgCommands;
+import com.coolerpromc.cobblemontcg.compat.FabricCobblemonBridge;
 import com.coolerpromc.cobblemontcg.platform.Services;
 import com.coolerpromc.cobblemontcg.platform.util.FabricIdentifiableReloadListener;
 import net.fabricmc.api.ModInitializer;
@@ -23,5 +24,10 @@ public class FabricCobblemonTCG implements ModInitializer {
 
         CommandRegistrationCallback.EVENT.register((dispatcher, context, selection) -> TcgCommands.register(dispatcher));
         ServerLifecycleEvents.SYNC_DATA_PACK_CONTENTS.register((player, joined) -> CobblemonTCG.syncTcgData(player));
+
+        // the bridge is the only class that touches Cobblemon, so it must not load without it
+        if (Services.PLATFORM.isModLoaded("cobblemon")) {
+            FabricCobblemonBridge.init();
+        }
     }
 }

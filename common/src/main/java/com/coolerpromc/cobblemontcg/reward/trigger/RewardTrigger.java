@@ -14,6 +14,13 @@ public interface RewardTrigger {
 
     PackSource source();
 
+    /**
+     * Lets a trigger be switched off in the config; a disabled trigger gives nothing.
+     */
+    default boolean enabled() {
+        return true;
+    }
+
     default int fire(RewardContext context) {
         return RewardRules.fire(this, context);
     }
