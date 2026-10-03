@@ -4,6 +4,7 @@ import com.coolerpromc.cobblemontcg.component.ModDataComponents;
 import com.coolerpromc.cobblemontcg.config.TcgConfig;
 import com.coolerpromc.cobblemontcg.creativetab.ModCreativeTabs;
 import com.coolerpromc.cobblemontcg.item.ModItems;
+import com.coolerpromc.cobblemontcg.network.ClientboundPackOpenedPacket;
 import com.coolerpromc.cobblemontcg.network.ClientboundTcgDataSyncPacket;
 import com.coolerpromc.cobblemontcg.platform.Services;
 import com.coolerpromc.cobblemontcg.reward.RewardRuleReloadListener;
@@ -33,6 +34,7 @@ public class CobblemonTCG {
 
     public static void initPayloadType() {
         Services.REGISTRY.registerClientboundPayload(ClientboundTcgDataSyncPacket.TYPE, ClientboundTcgDataSyncPacket.STREAM_CODEC);
+        Services.REGISTRY.registerClientboundPayload(ClientboundPackOpenedPacket.TYPE, ClientboundPackOpenedPacket.STREAM_CODEC);
     }
 
     public static void syncTcgData(ServerPlayer player) {

@@ -7,7 +7,8 @@ For every tools/<set>.csv (e.g. base1.csv) it writes:
   assets/cobblemontcg/models/item/tcg/<set>/<number>.json        regular print model
   assets/cobblemontcg/models/item/tcg/<set>/<number>_holo.json   holo print model
 and finally assets/cobblemontcg/models/item/tcg_card.json with one
-custom_model_data override per model, for all sets.
+custom_model_data override per model, for all sets, plus one model per pack wrapper
+and their overrides in assets/cobblemontcg/models/item/booster_pack.json.
 
 The set itself (name, pack slots, model_data_base) lives in
 data/cobblemontcg/tcg/sets/<set>.json and is read, not written, by this script.
@@ -84,6 +85,19 @@ def card_model(set_name: str, card: dict, holo: bool) -> dict:
     return {"parent": "minecraft:item/generated", "textures": {f"layer{i}": tex for i, tex in enumerate(layers)}}
 
 
+def generate_wrappers(set_name: str, set_def: dict) -> list[tuple[int, str]]:
+    """One model per pack wrapper; must match TcgSet#packModelData: base + wrapper index."""
+    folder = MODELS / "booster_pack"
+    overrides = []
+    for i, wrapper in enumerate(set_def.get("wrappers", [])):
+        write_json(folder / f"{set_name}_{wrapper}.json", {
+            "parent": "minecraft:item/generated",
+            "textures": {"layer0": f"{NAMESPACE}:item/booster_pack/{set_name}_{wrapper}"},
+        })
+        overrides.append((int(set_def["model_data_base"]) + i, f"{NAMESPACE}:item/booster_pack/{set_name}_{wrapper}"))
+    return overrides
+
+
 def generate_set(csv_path: Path) -> list[tuple[int, str]]:
     set_name = csv_path.stem
     set_file = DATA / "sets" / f"{set_name}.json"
@@ -116,8 +130,11 @@ def generate_set(csv_path: Path) -> list[tuple[int, str]]:
 
 def main() -> None:
     overrides = []
+    pack_overrides = []
     for csv_path in sorted(TOOLS.glob("*.csv")):
         overrides.extend(generate_set(csv_path))
+        set_def = json.loads((DATA / "sets" / f"{csv_path.stem}.json").read_text(encoding="utf-8"))
+        pack_overrides.extend(generate_wrappers(csv_path.stem, set_def))
 
     values = [value for value, _ in overrides]
     if len(values) != len(set(values)):
@@ -131,6 +148,14 @@ def main() -> None:
         "overrides": [{"predicate": {"custom_model_data": value}, "model": model} for value, model in overrides],
     })
     print(f"tcg_card.json: {len(overrides)} overrides")
+
+    pack_overrides.sort()
+    write_json(MODELS / "booster_pack.json", {
+        "parent": "minecraft:item/generated",
+        "textures": {"layer0": f"{NAMESPACE}:item/booster_pack"},
+        "overrides": [{"predicate": {"custom_model_data": value}, "model": model} for value, model in pack_overrides],
+    })
+    print(f"booster_pack.json: {len(pack_overrides)} wrapper overrides")
 
 
 if __name__ == "__main__":

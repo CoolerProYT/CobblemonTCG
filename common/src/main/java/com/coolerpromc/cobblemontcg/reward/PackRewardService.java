@@ -3,7 +3,6 @@ package com.coolerpromc.cobblemontcg.reward;
 import com.coolerpromc.cobblemontcg.config.TcgConfig;
 import com.coolerpromc.cobblemontcg.platform.Services;
 import com.coolerpromc.cobblemontcg.tcg.data.TcgDataManager;
-import com.coolerpromc.cobblemontcg.tcg.set.SetDefinition;
 import com.coolerpromc.cobblemontcg.tcg.set.TcgSet;
 import com.coolerpromc.cobblemontcg.util.TcgStacks;
 import net.minecraft.resources.ResourceLocation;
@@ -12,6 +11,9 @@ import net.minecraft.world.item.ItemStack;
 
 import java.time.LocalDate;
 import java.time.ZoneOffset;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -41,15 +43,22 @@ public final class PackRewardService {
             }
         }
 
-        String variant = set.get().definition().wrappers().stream().findFirst().orElse(SetDefinition.DEFAULT_WRAPPER);
-        int remaining = granted;
-        while (remaining > 0) {
-            ItemStack stack = TcgStacks.pack(setId, variant, 1);
-            int count = Math.min(remaining, stack.getMaxStackSize());
-            stack.setCount(count);
-            giveOrDrop(player, stack);
-            remaining -= count;
+        // Like real packs, every pack gets a random wrapper; packs with the same wrapper stack.
+        List<String> wrappers = set.get().wrappers();
+        Map<String, Integer> perWrapper = new LinkedHashMap<>();
+        for (int i = 0; i < granted; i++) {
+            perWrapper.merge(wrappers.get(player.getRandom().nextInt(wrappers.size())), 1, Integer::sum);
         }
+        perWrapper.forEach((wrapper, count) -> {
+            int remaining = count;
+            while (remaining > 0) {
+                ItemStack stack = TcgStacks.pack(set.get(), wrapper, 1);
+                int size = Math.min(remaining, stack.getMaxStackSize());
+                stack.setCount(size);
+                giveOrDrop(player, stack);
+                remaining -= size;
+            }
+        });
         return granted;
     }
 

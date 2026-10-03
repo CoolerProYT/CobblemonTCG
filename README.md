@@ -13,9 +13,14 @@ scans, card art, card text, pack wrappers, set logos or expansion symbols are in
 
 ## Features
 
-- **Booster packs**: right-click to open. A pack holds 11 cards, like a real Base Set pack:
-  1 rare slot (holo rare about 1 in 3 packs, configurable), 3 uncommons and 7 commons
-  (basic Energy is part of the commons). No card appears twice in the same pack.
+- **Booster packs**: a pack holds 11 cards, like a real Base Set pack: 1 rare slot (holo rare
+  about 1 in 3 packs, configurable), 3 uncommons and 7 commons (basic Energy is part of the
+  commons). No card appears twice in the same pack. Like the real set, every pack comes in one of
+  three wrappers (Charizard, Blastoise or Venusaur art), picked at random.
+- **Opening animation**: right-click a pack and it tears open; swipe the cards away one by one
+  (drag, click, or Space / arrow keys). Commons come first and the rare last, with a burst of light
+  and a sound for rares and holos, then a summary of every pull. The cards are already in your
+  inventory when the animation starts, so closing it early never loses anything.
 - **Cards**: 102 Base Set cards, each with a regular and a holo print. Holo prints have an animated
   shimmer. Tooltips show number, rarity, card type, HP, energy type and holo.
 - **Commands** (operators only):
@@ -37,6 +42,12 @@ scans, card art, card text, pack wrappers, set logos or expansion symbols are in
 | `rewards.enabled` | `false` | Allow reward triggers to hand out packs |
 | `rewards.dailyPackCap` | `10` | Reward packs per player per day (UTC), `0` = unlimited. Commands are not limited |
 
+`config/cobblemontcg-client.toml`:
+
+| Key | Default | Description |
+| --- | --- | --- |
+| `packOpening.animation` | `true` | Show the opening animation; when off, cards go straight to the inventory |
+
 ## Data packs
 
 Everything about a set is data driven, so new sets need no code.
@@ -48,7 +59,7 @@ Everything about a set is data driven, so new sets need no code.
   "name": "Base Set",
   "total": 102,
   "model_data_base": 1000,
-  "wrappers": ["default"],
+  "wrappers": ["charizard", "blastoise", "venusaur"],
   "pack_slots": [
     { "count": 1, "rarities": { "rare_holo": 1, "rare": 2 }, "use_config_holo_chance": true },
     { "count": 3, "rarities": { "uncommon": 1 } },
@@ -57,7 +68,9 @@ Everything about a set is data driven, so new sets need no code.
 }
 ```
 
-Each slot rolls a rarity from its weight table, then a card of that rarity. With
+`wrappers` lists the pack designs; each name needs a texture at
+`assets/cobblemontcg/textures/item/booster_pack/<set>_<wrapper>.png` (and a model, written by
+`tools/gen_cards.py`). Each slot rolls a rarity from its weight table, then a card of that rarity. With
 `use_config_holo_chance`, the `rare_holo` chance comes from `packs.holoChance` instead.
 
 ### Cards: `data/<namespace>/tcg/cards/<set>/<number>.json`
@@ -105,8 +118,9 @@ Replace any texture with your own drawing of the same size and name, no code cha
 
 | Other texture | Size |
 | --- | --- |
-| `assets/cobblemontcg/textures/item/booster_pack.png` (pack wrapper) | 32×32 |
-| `assets/cobblemontcg/textures/item/tcg_card.png` (card back, cards without a model) | 32×32 |
+| `assets/cobblemontcg/textures/item/booster_pack/<set>_<wrapper>.png` (pack wrappers) | 128×128 |
+| `assets/cobblemontcg/textures/item/booster_pack.png` (pack without set data) | 128×128 |
+| `assets/cobblemontcg/textures/item/tcg_card.png` (card back, also used in the opening animation) | 128×128 |
 
 ## Tools
 
@@ -114,14 +128,16 @@ Requires Python 3.10+, Pillow 10.1+ and numpy (`pip install pillow numpy`).
 
 - `tools/<set>.csv`: the card list (`number,name,supertype,type,hp,rarity`).
 - `python tools/gen_cards.py`: writes the card JSONs, one model per card print and the
-  `custom_model_data` overrides in `models/item/tcg_card.json` for every CSV.
+  `custom_model_data` overrides in `models/item/tcg_card.json` for every CSV, plus one model per
+  pack wrapper and their overrides in `models/item/booster_pack.json`.
 - `python tools/gen_card_art.py [--skip-existing-art] [--only 4,58]`: draws the frames, holo foil,
-  card art, pack wrapper, card back and mod icon. `--skip-existing-art` keeps card art you have
+  card art, pack wrappers (`tools/art/wrapper.py`), card back and mod icon. `--skip-existing-art` keeps card art you have
   already replaced. The illustrations live in `tools/art/pokemon_base1.py` and
   `tools/art/trainers_base1.py`, one small function per card; the layout is in `tools/art/layout.py`.
 
 Card stacks use `custom_model_data = model_data_base + number * 2` for the regular print and `+ 1`
-for the holo print, so give every set its own `model_data_base` range.
+for the holo print, so give every set its own `model_data_base` range. Packs use
+`model_data_base + wrapper index`.
 
 ## Building
 

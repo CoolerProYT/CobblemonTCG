@@ -1,6 +1,9 @@
 package com.coolerpromc.cobblemontcg;
 
+import com.coolerpromc.cobblemontcg.client.PackOpeningScreen;
+import com.coolerpromc.cobblemontcg.config.TcgClientConfig;
 import com.coolerpromc.cobblemontcg.creativetab.ModCreativeTabs;
+import com.coolerpromc.cobblemontcg.network.ClientPacketHooks;
 import com.coolerpromc.cobblemontcg.tcg.data.TcgDataManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.item.CreativeModeTab;
@@ -10,7 +13,9 @@ import net.minecraft.world.item.CreativeModeTab;
  */
 public class CobblemonTCGClient {
     public static void init() {
+        TcgClientConfig.init();
         TcgDataManager.CLIENT.addListener(CobblemonTCGClient::rebuildCreativeTab);
+        ClientPacketHooks.packOpened = PackOpeningScreen::show;
     }
 
     /**

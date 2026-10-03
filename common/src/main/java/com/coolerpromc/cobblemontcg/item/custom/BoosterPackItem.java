@@ -44,7 +44,7 @@ public class BoosterPackItem extends Item {
             return InteractionResultHolder.fail(stack);
         }
 
-        PackOpener.open((ServerPlayer) player, set.get());
+        PackOpener.open((ServerPlayer) player, set.get(), data.variant());
         player.getCooldowns().addCooldown(this, OPEN_COOLDOWN_TICKS);
         stack.consume(1, player);
         return InteractionResultHolder.success(stack);

@@ -1,10 +1,8 @@
 {
   "itemGroup.cobblemontcg": "Cobblemon: TCG",
-
   "item.cobblemontcg.booster_pack": "Booster Pack",
   "item.cobblemontcg.booster_pack.named": "%s Booster Pack",
   "item.cobblemontcg.tcg_card": "Trading Card",
-
   "tooltip.cobblemontcg.booster_pack.open": "Right-click to open",
   "tooltip.cobblemontcg.unknown_set": "Unknown card set",
   "tooltip.cobblemontcg.card.unknown": "Unknown card",
@@ -14,16 +12,13 @@
   "tooltip.cobblemontcg.card.hp": "HP: %s",
   "tooltip.cobblemontcg.card.type": "Type: %s",
   "tooltip.cobblemontcg.card.holo": "✦ Holo",
-
   "rarity.cobblemontcg.common": "Common",
   "rarity.cobblemontcg.uncommon": "Uncommon",
   "rarity.cobblemontcg.rare": "Rare",
   "rarity.cobblemontcg.rare_holo": "Rare Holo",
-
   "supertype.cobblemontcg.pokemon": "Pokémon",
   "supertype.cobblemontcg.trainer": "Trainer",
   "supertype.cobblemontcg.energy": "Energy",
-
   "type.cobblemontcg.grass": "Grass",
   "type.cobblemontcg.fire": "Fire",
   "type.cobblemontcg.water": "Water",
@@ -31,15 +26,19 @@
   "type.cobblemontcg.psychic": "Psychic",
   "type.cobblemontcg.fighting": "Fighting",
   "type.cobblemontcg.colorless": "Colorless",
-
   "message.cobblemontcg.unknown_set": "This pack belongs to an unknown set (%s)",
-
   "commands.cobblemontcg.unknown_set": "Unknown set: %s",
   "commands.cobblemontcg.unknown_card": "Set %s has no card number %s",
   "commands.cobblemontcg.give.pack": "Gave %s %s booster pack(s) to %s",
   "commands.cobblemontcg.give.card": "Gave %s (%s/%s) to %s",
   "commands.cobblemontcg.give.card_holo": "Gave holo %s (%s/%s) to %s",
-
   "subtitles.cobblemontcg.item.booster_pack.open": "Booster pack opens",
-  "subtitles.cobblemontcg.item.booster_pack.open_rare": "Holo pulled"
+  "subtitles.cobblemontcg.item.booster_pack.open_rare": "Holo pulled",
+  "screen.cobblemontcg.pack_opening.title": "Opening Booster Pack",
+  "screen.cobblemontcg.pack_opening.open": "Click to open",
+  "screen.cobblemontcg.pack_opening.holo": "✦ Holo",
+  "screen.cobblemontcg.pack_opening.counter": "%s / %s",
+  "screen.cobblemontcg.pack_opening.swipe": "Drag or click to swipe · Space for next",
+  "screen.cobblemontcg.pack_opening.summary": "Your pulls",
+  "screen.cobblemontcg.pack_opening.close": "Click or press Esc to close"
 }
