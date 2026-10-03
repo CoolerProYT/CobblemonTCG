@@ -1,0 +1,9 @@
+{
+  "id": "base1-59",
+  "number": 59,
+  "name": "Poliwag",
+  "supertype": "pokemon",
+  "type": "water",
+  "hp": 40,
+  "rarity": "common"
+}

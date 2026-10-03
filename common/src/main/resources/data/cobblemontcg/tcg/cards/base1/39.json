@@ -1,0 +1,9 @@
+{
+  "id": "base1-39",
+  "number": 39,
+  "name": "Porygon",
+  "supertype": "pokemon",
+  "type": "colorless",
+  "hp": 30,
+  "rarity": "uncommon"
+}

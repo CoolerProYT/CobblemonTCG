@@ -1,0 +1,9 @@
+{
+  "id": "base1-7",
+  "number": 7,
+  "name": "Hitmonchan",
+  "supertype": "pokemon",
+  "type": "fighting",
+  "hp": 70,
+  "rarity": "rare_holo"
+}

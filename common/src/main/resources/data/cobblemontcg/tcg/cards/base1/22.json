@@ -1,0 +1,9 @@
+{
+  "id": "base1-22",
+  "number": 22,
+  "name": "Pidgeotto",
+  "supertype": "pokemon",
+  "type": "colorless",
+  "hp": 60,
+  "rarity": "rare"
+}

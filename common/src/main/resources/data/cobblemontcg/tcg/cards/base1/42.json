@@ -1,0 +1,9 @@
+{
+  "id": "base1-42",
+  "number": 42,
+  "name": "Wartortle",
+  "supertype": "pokemon",
+  "type": "water",
+  "hp": 70,
+  "rarity": "uncommon"
+}

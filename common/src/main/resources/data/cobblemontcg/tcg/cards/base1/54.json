@@ -1,0 +1,9 @@
+{
+  "id": "base1-54",
+  "number": 54,
+  "name": "Metapod",
+  "supertype": "pokemon",
+  "type": "grass",
+  "hp": 70,
+  "rarity": "common"
+}

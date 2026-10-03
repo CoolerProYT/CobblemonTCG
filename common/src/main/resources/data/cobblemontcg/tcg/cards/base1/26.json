@@ -1,0 +1,9 @@
+{
+  "id": "base1-26",
+  "number": 26,
+  "name": "Dratini",
+  "supertype": "pokemon",
+  "type": "colorless",
+  "hp": 40,
+  "rarity": "uncommon"
+}

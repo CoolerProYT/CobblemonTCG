@@ -1,0 +1,9 @@
+{
+  "id": "base1-28",
+  "number": 28,
+  "name": "Growlithe",
+  "supertype": "pokemon",
+  "type": "fire",
+  "hp": 60,
+  "rarity": "uncommon"
+}

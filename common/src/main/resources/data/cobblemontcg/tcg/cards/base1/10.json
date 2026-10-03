@@ -1,0 +1,9 @@
+{
+  "id": "base1-10",
+  "number": 10,
+  "name": "Mewtwo",
+  "supertype": "pokemon",
+  "type": "psychic",
+  "hp": 60,
+  "rarity": "rare_holo"
+}

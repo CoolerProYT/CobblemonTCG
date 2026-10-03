@@ -1,0 +1,9 @@
+{
+  "id": "base1-11",
+  "number": 11,
+  "name": "Nidoking",
+  "supertype": "pokemon",
+  "type": "grass",
+  "hp": 90,
+  "rarity": "rare_holo"
+}

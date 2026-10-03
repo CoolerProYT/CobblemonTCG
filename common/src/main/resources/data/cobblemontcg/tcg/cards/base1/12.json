@@ -1,0 +1,9 @@
+{
+  "id": "base1-12",
+  "number": 12,
+  "name": "Ninetales",
+  "supertype": "pokemon",
+  "type": "fire",
+  "hp": 80,
+  "rarity": "rare_holo"
+}

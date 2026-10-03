@@ -1,0 +1,9 @@
+{
+  "id": "base1-36",
+  "number": 36,
+  "name": "Magmar",
+  "supertype": "pokemon",
+  "type": "fire",
+  "hp": 50,
+  "rarity": "uncommon"
+}

@@ -1,0 +1,9 @@
+{
+  "id": "base1-45",
+  "number": 45,
+  "name": "Caterpie",
+  "supertype": "pokemon",
+  "type": "grass",
+  "hp": 40,
+  "rarity": "common"
+}

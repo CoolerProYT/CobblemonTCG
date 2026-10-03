@@ -1,0 +1,9 @@
+{
+  "id": "base1-17",
+  "number": 17,
+  "name": "Beedrill",
+  "supertype": "pokemon",
+  "type": "grass",
+  "hp": 80,
+  "rarity": "rare"
+}

@@ -1,0 +1,103 @@
+number,name,supertype,type,hp,rarity
+1,Alakazam,pokemon,psychic,80,rare_holo
+2,Blastoise,pokemon,water,100,rare_holo
+3,Chansey,pokemon,colorless,120,rare_holo
+4,Charizard,pokemon,fire,120,rare_holo
+5,Clefairy,pokemon,colorless,40,rare_holo
+6,Gyarados,pokemon,water,100,rare_holo
+7,Hitmonchan,pokemon,fighting,70,rare_holo
+8,Machamp,pokemon,fighting,100,rare_holo
+9,Magneton,pokemon,lightning,60,rare_holo
+10,Mewtwo,pokemon,psychic,60,rare_holo
+11,Nidoking,pokemon,grass,90,rare_holo
+12,Ninetales,pokemon,fire,80,rare_holo
+13,Poliwrath,pokemon,water,90,rare_holo
+14,Raichu,pokemon,lightning,80,rare_holo
+15,Venusaur,pokemon,grass,100,rare_holo
+16,Zapdos,pokemon,lightning,90,rare_holo
+17,Beedrill,pokemon,grass,80,rare
+18,Dragonair,pokemon,colorless,80,rare
+19,Dugtrio,pokemon,fighting,70,rare
+20,Electabuzz,pokemon,lightning,70,rare
+21,Electrode,pokemon,lightning,80,rare
+22,Pidgeotto,pokemon,colorless,60,rare
+23,Arcanine,pokemon,fire,100,uncommon
+24,Charmeleon,pokemon,fire,80,uncommon
+25,Dewgong,pokemon,water,80,uncommon
+26,Dratini,pokemon,colorless,40,uncommon
+27,Farfetch'd,pokemon,colorless,50,uncommon
+28,Growlithe,pokemon,fire,60,uncommon
+29,Haunter,pokemon,psychic,60,uncommon
+30,Ivysaur,pokemon,grass,60,uncommon
+31,Jynx,pokemon,psychic,70,uncommon
+32,Kadabra,pokemon,psychic,60,uncommon
+33,Kakuna,pokemon,grass,80,uncommon
+34,Machoke,pokemon,fighting,80,uncommon
+35,Magikarp,pokemon,water,30,uncommon
+36,Magmar,pokemon,fire,50,uncommon
+37,Nidorino,pokemon,grass,60,uncommon
+38,Poliwhirl,pokemon,water,60,uncommon
+39,Porygon,pokemon,colorless,30,uncommon
+40,Raticate,pokemon,colorless,60,uncommon
+41,Seel,pokemon,water,60,uncommon
+42,Wartortle,pokemon,water,70,uncommon
+43,Abra,pokemon,psychic,30,common
+44,Bulbasaur,pokemon,grass,40,common
+45,Caterpie,pokemon,grass,40,common
+46,Charmander,pokemon,fire,50,common
+47,Diglett,pokemon,fighting,30,common
+48,Doduo,pokemon,colorless,50,common
+49,Drowzee,pokemon,psychic,50,common
+50,Gastly,pokemon,psychic,30,common
+51,Koffing,pokemon,grass,50,common
+52,Machop,pokemon,fighting,50,common
+53,Magnemite,pokemon,lightning,40,common
+54,Metapod,pokemon,grass,70,common
+55,Nidoran ♂,pokemon,grass,40,common
+56,Onix,pokemon,fighting,90,common
+57,Pidgey,pokemon,colorless,40,common
+58,Pikachu,pokemon,lightning,40,common
+59,Poliwag,pokemon,water,40,common
+60,Ponyta,pokemon,fire,40,common
+61,Rattata,pokemon,colorless,30,common
+62,Sandshrew,pokemon,fighting,40,common
+63,Squirtle,pokemon,water,40,common
+64,Starmie,pokemon,water,60,common
+65,Staryu,pokemon,water,40,common
+66,Tangela,pokemon,grass,50,common
+67,Voltorb,pokemon,lightning,40,common
+68,Vulpix,pokemon,fire,50,common
+69,Weedle,pokemon,grass,40,common
+70,Clefairy Doll,trainer,,,rare
+71,Computer Search,trainer,,,rare
+72,Devolution Spray,trainer,,,rare
+73,Impostor Professor Oak,trainer,,,rare
+74,Item Finder,trainer,,,rare
+75,Lass,trainer,,,rare
+76,Pokémon Breeder,trainer,,,rare
+77,Pokémon Trader,trainer,,,rare
+78,Scoop Up,trainer,,,rare
+79,Super Energy Removal,trainer,,,rare
+80,Defender,trainer,,,uncommon
+81,Energy Retrieval,trainer,,,uncommon
+82,Full Heal,trainer,,,uncommon
+83,Maintenance,trainer,,,uncommon
+84,PlusPower,trainer,,,uncommon
+85,Pokémon Center,trainer,,,uncommon
+86,Pokémon Flute,trainer,,,uncommon
+87,Pokédex,trainer,,,uncommon
+88,Professor Oak,trainer,,,uncommon
+89,Revive,trainer,,,uncommon
+90,Super Potion,trainer,,,uncommon
+91,Bill,trainer,,,common
+92,Energy Removal,trainer,,,common
+93,Gust of Wind,trainer,,,common
+94,Potion,trainer,,,common
+95,Switch,trainer,,,common
+96,Double Colorless Energy,energy,colorless,,uncommon
+97,Fighting Energy,energy,fighting,,common
+98,Fire Energy,energy,fire,,common
+99,Grass Energy,energy,grass,,common
+100,Lightning Energy,energy,lightning,,common
+101,Psychic Energy,energy,psychic,,common
+102,Water Energy,energy,water,,common

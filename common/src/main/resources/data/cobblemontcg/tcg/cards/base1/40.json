@@ -1,0 +1,9 @@
+{
+  "id": "base1-40",
+  "number": 40,
+  "name": "Raticate",
+  "supertype": "pokemon",
+  "type": "colorless",
+  "hp": 60,
+  "rarity": "uncommon"
+}

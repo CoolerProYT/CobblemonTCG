@@ -1,0 +1,9 @@
+{
+  "id": "base1-33",
+  "number": 33,
+  "name": "Kakuna",
+  "supertype": "pokemon",
+  "type": "grass",
+  "hp": 80,
+  "rarity": "uncommon"
+}

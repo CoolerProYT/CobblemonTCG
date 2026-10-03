@@ -1,0 +1,9 @@
+{
+  "id": "base1-46",
+  "number": 46,
+  "name": "Charmander",
+  "supertype": "pokemon",
+  "type": "fire",
+  "hp": 50,
+  "rarity": "common"
+}

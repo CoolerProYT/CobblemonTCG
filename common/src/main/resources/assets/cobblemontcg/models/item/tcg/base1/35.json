@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "cobblemontcg:tcg/frame/pokemon_water",
+    "layer1": "cobblemontcg:tcg/base1/35"
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "itemGroup.cobblemontcg": "Cobblemon: TCG",
+
+  "item.cobblemontcg.booster_pack": "Booster Pack",
+  "item.cobblemontcg.booster_pack.named": "%s Booster Pack",
+  "item.cobblemontcg.tcg_card": "Trading Card",
+
+  "tooltip.cobblemontcg.booster_pack.open": "Right-click to open",
+  "tooltip.cobblemontcg.unknown_set": "Unknown card set",
+  "tooltip.cobblemontcg.card.unknown": "Unknown card",
+  "tooltip.cobblemontcg.card.number": "%s/%s · %s",
+  "tooltip.cobblemontcg.card.rarity": "Rarity: %s",
+  "tooltip.cobblemontcg.card.supertype": "Card: %s",
+  "tooltip.cobblemontcg.card.hp": "HP: %s",
+  "tooltip.cobblemontcg.card.type": "Type: %s",
+  "tooltip.cobblemontcg.card.holo": "✦ Holo",
+
+  "rarity.cobblemontcg.common": "Common",
+  "rarity.cobblemontcg.uncommon": "Uncommon",
+  "rarity.cobblemontcg.rare": "Rare",
+  "rarity.cobblemontcg.rare_holo": "Rare Holo",
+
+  "supertype.cobblemontcg.pokemon": "Pokémon",
+  "supertype.cobblemontcg.trainer": "Trainer",
+  "supertype.cobblemontcg.energy": "Energy",
+
+  "type.cobblemontcg.grass": "Grass",
+  "type.cobblemontcg.fire": "Fire",
+  "type.cobblemontcg.water": "Water",
+  "type.cobblemontcg.lightning": "Lightning",
+  "type.cobblemontcg.psychic": "Psychic",
+  "type.cobblemontcg.fighting": "Fighting",
+  "type.cobblemontcg.colorless": "Colorless",
+
+  "message.cobblemontcg.unknown_set": "This pack belongs to an unknown set (%s)",
+
+  "commands.cobblemontcg.unknown_set": "Unknown set: %s",
+  "commands.cobblemontcg.unknown_card": "Set %s has no card number %s",
+  "commands.cobblemontcg.give.pack": "Gave %s %s booster pack(s) to %s",
+  "commands.cobblemontcg.give.card": "Gave %s (%s/%s) to %s",
+  "commands.cobblemontcg.give.card_holo": "Gave holo %s (%s/%s) to %s",
+
+  "subtitles.cobblemontcg.item.booster_pack.open": "Booster pack opens",
+  "subtitles.cobblemontcg.item.booster_pack.open_rare": "Holo pulled"
+}

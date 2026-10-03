@@ -1,0 +1,8 @@
+{
+  "id": "base1-99",
+  "number": 99,
+  "name": "Grass Energy",
+  "supertype": "energy",
+  "type": "grass",
+  "rarity": "common"
+}

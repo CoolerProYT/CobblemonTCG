@@ -1,0 +1,9 @@
+{
+  "id": "base1-23",
+  "number": 23,
+  "name": "Arcanine",
+  "supertype": "pokemon",
+  "type": "fire",
+  "hp": 100,
+  "rarity": "uncommon"
+}

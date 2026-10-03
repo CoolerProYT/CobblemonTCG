@@ -1,0 +1,9 @@
+{
+  "id": "base1-56",
+  "number": 56,
+  "name": "Onix",
+  "supertype": "pokemon",
+  "type": "fighting",
+  "hp": 90,
+  "rarity": "common"
+}

@@ -1,0 +1,9 @@
+{
+  "id": "base1-34",
+  "number": 34,
+  "name": "Machoke",
+  "supertype": "pokemon",
+  "type": "fighting",
+  "hp": 80,
+  "rarity": "uncommon"
+}

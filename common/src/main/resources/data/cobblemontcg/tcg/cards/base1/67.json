@@ -1,0 +1,9 @@
+{
+  "id": "base1-67",
+  "number": 67,
+  "name": "Voltorb",
+  "supertype": "pokemon",
+  "type": "lightning",
+  "hp": 40,
+  "rarity": "common"
+}

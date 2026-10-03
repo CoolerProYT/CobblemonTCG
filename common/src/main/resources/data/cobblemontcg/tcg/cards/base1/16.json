@@ -1,0 +1,9 @@
+{
+  "id": "base1-16",
+  "number": 16,
+  "name": "Zapdos",
+  "supertype": "pokemon",
+  "type": "lightning",
+  "hp": 90,
+  "rarity": "rare_holo"
+}

@@ -1,0 +1,9 @@
+{
+  "id": "base1-8",
+  "number": 8,
+  "name": "Machamp",
+  "supertype": "pokemon",
+  "type": "fighting",
+  "hp": 100,
+  "rarity": "rare_holo"
+}
