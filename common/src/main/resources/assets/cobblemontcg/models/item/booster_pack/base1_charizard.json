@@ -1,6 +1,8 @@
 {
   "parent": "cobblemontcg:item/tcg/pack",
   "textures": {
-    "front": "cobblemontcg:tcg/pack/base1_charizard"
+    "front": "cobblemontcg:tcg/pack/base1_charizard",
+    "mascot": "cobblemontcg:tcg/pack/base1_charizard_mascot",
+    "overlay": "cobblemontcg:tcg/pack/base1_charizard_overlay"
   }
 }

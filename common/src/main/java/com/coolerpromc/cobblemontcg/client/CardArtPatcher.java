@@ -24,8 +24,9 @@ import java.util.Optional;
 /**
  * Replaces the drawn Pokémon on card textures with renders from another mod (Cobblemon) at runtime.
  * <p>
- * Every Pokémon card has its illustration in its own sprite ({@code tcg/<set>/illustration/<number>}) and
- * evolution cards the previous stage in {@code tcg/<set>/evolution/<number>}. Once a {@link PortraitRenderer}
+ * Every Pokémon card has its illustration in its own sprite ({@code tcg/<set>/illustration/<number>}),
+ * evolution cards the previous stage in {@code tcg/<set>/evolution/<number>} and every pack wrapper its
+ * mascot in {@code tcg/pack/<set>_<wrapper>_mascot}. Once a {@link PortraitRenderer}
  * is ready, each of those sprites is redrawn and uploaded straight into the block atlas, so cards show the
  * new art everywhere (inventory, hand, item frames, the opening animation). A resource reload restores the
  * drawn art; it is redrawn on the next ticks. Only a few sprites are redrawn per tick to avoid a hitch.
@@ -54,7 +55,9 @@ public final class CardArtPatcher {
         Optional<NativeImage> render(int pokedex, int width, int height);
     }
 
-    private record Job(ResourceLocation sprite, int pokedex, boolean portrait) {
+    private enum Framing { ILLUSTRATION, PORTRAIT, PACK }
+
+    private record Job(ResourceLocation sprite, int pokedex, Framing framing) {
     }
 
     private PortraitRenderer renderer;
@@ -104,10 +107,12 @@ public final class CardArtPatcher {
             for (CardDefinition card : set.cards()) {
                 String base = "tcg/" + id.getPath() + "/";
                 card.pokedex().ifPresent(dex -> list.add(new Job(
-                        ResourceLocation.fromNamespaceAndPath(id.getNamespace(), base + "illustration/" + card.number()), dex, false)));
+                        ResourceLocation.fromNamespaceAndPath(id.getNamespace(), base + "illustration/" + card.number()), dex, Framing.ILLUSTRATION)));
                 card.evolvesFromPokedex().ifPresent(dex -> list.add(new Job(
-                        ResourceLocation.fromNamespaceAndPath(id.getNamespace(), base + "evolution/" + card.number()), dex, true)));
+                        ResourceLocation.fromNamespaceAndPath(id.getNamespace(), base + "evolution/" + card.number()), dex, Framing.PORTRAIT)));
             }
+            set.definition().wrapperPokedex().forEach((wrapper, dex) -> list.add(new Job(
+                    ResourceLocation.fromNamespaceAndPath(id.getNamespace(), "tcg/pack/" + id.getPath() + "_" + wrapper + "_mascot"), dex, Framing.PACK)));
         }
         return list;
     }
@@ -118,8 +123,9 @@ public final class CardArtPatcher {
         int width = sprite.contents().width();
         int height = sprite.contents().height();
         // portraits are a close up of a full body render the size of a card illustration
-        int renderW = job.portrait() ? 208 : width;
-        int renderH = job.portrait() ? 144 : height;
+        boolean portrait = job.framing() == Framing.PORTRAIT;
+        int renderW = portrait ? 208 : width;
+        int renderH = portrait ? 144 : height;
         Optional<NativeImage> rendered;
         try {
             rendered = renderer.render(job.pokedex(), renderW * SUPERSAMPLE, renderH * SUPERSAMPLE);
@@ -137,10 +143,11 @@ public final class CardArtPatcher {
             }
             NativeImage image = new NativeImage(width, height, true);
             try {
-                if (job.portrait()) {
-                    portrait(big, bounds, image);
-                } else {
-                    illustration(big, bounds, image);
+                switch (job.framing()) {
+                    case PORTRAIT -> portrait(big, bounds, image);
+                    case ILLUSTRATION -> fit(big, bounds, image, 0.74F, 0.9F, 0.88F, true);
+                    // the mascot is much bigger on the pack and stands on the booster banner, without a shadow
+                    case PACK -> fit(big, bounds, image, 0.86F, 0.98F, 0.97F, false);
                 }
                 upload(atlas, sprite, image);
             } finally {
@@ -163,23 +170,25 @@ public final class CardArtPatcher {
     }
 
     /**
-     * Fits the Pokémon into the art window the same way for every species: as large as fits in about
-     * three quarters of the height and nine tenths of the width, centred, feet near the bottom, standing
-     * on a soft contact shadow like the drawn art.
+     * Fits the Pokémon into the image the same way for every species: as large as fits in {@code heightShare}
+     * of the height and {@code widthShare} of the width, centred, feet at {@code feetAt} of the height,
+     * optionally standing on a soft contact shadow like the drawn art.
      */
-    private static void illustration(NativeImage big, int[] b, NativeImage out) {
+    private static void fit(NativeImage big, int[] b, NativeImage out, float heightShare, float widthShare, float feetAt, boolean withShadow) {
         float w = out.getWidth();
         float h = out.getHeight();
         float bodyW = b[2] - b[0];
         float bodyH = b[3] - b[1];
-        // output pixels per source pixel; never enlarge past 1.5x the size Cobblemon drew it at
-        float scale = Math.min(Math.min(h * 0.74F / bodyH, w * 0.9F / bodyW), 1.5F / SUPERSAMPLE);
-        float feetY = h * 0.88F;
+        // output pixels per source pixel; never above 1, so the supersampled render is only ever scaled down
+        float scale = Math.min(Math.min(h * heightShare / bodyH, w * widthShare / bodyW), 1.0F);
+        float feetY = h * feetAt;
         float cx = (b[0] + b[2]) / 2.0F;
-        // the source region that lands on the whole window
+        // the source region that lands on the whole image
         float sx = cx - w / 2 / scale;
         float sy = b[3] - feetY / scale;
-        shadow(out, w / 2, feetY - 1, Math.max(bodyW * scale * 0.42F, 6));
+        if (withShadow) {
+            shadow(out, w / 2, feetY - 1, Math.max(bodyW * scale * 0.42F, 6));
+        }
         downscale(big, sx, sy, w / scale, h / scale, out, 0, 0, (int) w, (int) h);
     }
 

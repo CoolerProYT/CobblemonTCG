@@ -1,7 +1,9 @@
 {
   "parent": "cobblemontcg:item/tcg/pack",
   "textures": {
-    "front": "cobblemontcg:tcg/pack/default"
+    "front": "cobblemontcg:tcg/pack/default",
+    "mascot": "cobblemontcg:tcg/pack/default_mascot",
+    "overlay": "cobblemontcg:tcg/pack/default_overlay"
   },
   "overrides": [
     {

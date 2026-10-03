@@ -131,10 +131,10 @@ def body(width_px: int, height_px: int, thickness: float, front: str, back: str)
     }
 
 
-def plane(x0_px, y0_px, x1_px, y1_px, z: float, texture: str) -> dict:
-    """A flat layer just in front of the card face, covering a pixel rectangle of the card."""
-    k = 16 / CARD_PX[1]
-    left = 8 - 16 * CARD_PX[0] / CARD_PX[1] / 2
+def plane(x0_px, y0_px, x1_px, y1_px, z: float, texture: str, size_px=CARD_PX) -> dict:
+    """A flat layer just in front of the card (or pack) face, covering a pixel rectangle of it."""
+    k = 16 / size_px[1]
+    left = 8 - 16 * size_px[0] / size_px[1] / 2
     return {
         "from": [r(left + x0_px * k), r(16 - y1_px * k), r(z)], "to": [r(left + x1_px * k), r(16 - y0_px * k), r(z)],
         "faces": {"south": {"uv": [0, 0, 16, 16], "texture": texture}},
@@ -146,6 +146,8 @@ def template(textures: dict, elements: list) -> dict:
 
 
 CARD_THICKNESS = 0.2
+PACK_THICKNESS = 0.8
+MASCOT_Y_PX = 96   # the pack mascot layer starts at this pixel row, see tools/art/wrapper.py
 LAYER_GAP = 0.03   # between the stacked layers on the card face, large enough to avoid z-fighting
 EVOLUTION_PX = (14, 13, 46, 37)   # previous stage portrait window, see tools/art/layout.py
 
@@ -175,8 +177,15 @@ def write_templates() -> None:
     # a card without data: face down on both sides
     write_json(MODELS / "tcg" / "card_face_down.json", template(
         {"back": back, "particle": back}, [body(*CARD_PX, CARD_THICKNESS, "#back", "#back")]))
+    # pack front, back to front: foil (#front), mascot (#mascot, swapped for Cobblemon's model at
+    # runtime), then set name plate, badges, seals and sheen (#overlay)
+    pack_front_z = 8 + PACK_THICKNESS / 2
     write_json(MODELS / "tcg" / "pack.json", template(
-        {"back": f"{NAMESPACE}:tcg/pack/back", "particle": "#front"}, [body(*PACK_PX, 0.8, "#front", "#back")]))
+        {"back": f"{NAMESPACE}:tcg/pack/back", "particle": "#front"}, [
+            body(*PACK_PX, PACK_THICKNESS, "#front", "#back"),
+            plane(0, MASCOT_Y_PX, PACK_PX[0], MASCOT_Y_PX + 208, pack_front_z + LAYER_GAP, "#mascot", PACK_PX),
+            plane(0, 0, *PACK_PX, pack_front_z + LAYER_GAP * 2, "#overlay", PACK_PX),
+        ]))
 
 
 def card_model(set_name: str, card: dict, holo: bool) -> dict:
@@ -194,6 +203,10 @@ def card_model(set_name: str, card: dict, holo: bool) -> dict:
     return {"parent": f"{NAMESPACE}:item/tcg/{parent}" + ("_holo" if holo else ""), "textures": textures}
 
 
+def pack_textures(base: str) -> dict:
+    return {"front": base, "mascot": f"{base}_mascot", "overlay": f"{base}_overlay"}
+
+
 def generate_wrappers(set_name: str, set_def: dict) -> list[tuple[int, str]]:
     """One model per pack wrapper; must match TcgSet#packModelData: base + wrapper index."""
     folder = MODELS / "booster_pack"
@@ -201,7 +214,7 @@ def generate_wrappers(set_name: str, set_def: dict) -> list[tuple[int, str]]:
     for i, wrapper in enumerate(set_def.get("wrappers", [])):
         write_json(folder / f"{set_name}_{wrapper}.json", {
             "parent": f"{NAMESPACE}:item/tcg/pack",
-            "textures": {"front": f"{NAMESPACE}:tcg/pack/{set_name}_{wrapper}"},
+            "textures": pack_textures(f"{NAMESPACE}:tcg/pack/{set_name}_{wrapper}"),
         })
         overrides.append((int(set_def["model_data_base"]) + i, f"{NAMESPACE}:item/booster_pack/{set_name}_{wrapper}"))
     return overrides
@@ -268,7 +281,7 @@ def main() -> None:
     pack_overrides.sort()
     write_json(MODELS / "booster_pack.json", {
         "parent": f"{NAMESPACE}:item/tcg/pack",
-        "textures": {"front": f"{NAMESPACE}:tcg/pack/default"},
+        "textures": pack_textures(f"{NAMESPACE}:tcg/pack/default"),
         "overrides": [{"predicate": {"custom_model_data": value}, "model": model} for value, model in pack_overrides],
     })
     print(f"booster_pack.json: {len(pack_overrides)} wrapper overrides")

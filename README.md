@@ -61,6 +61,7 @@ Everything about a set is data driven, so new sets need no code.
   "total": 102,
   "model_data_base": 1000,
   "wrappers": ["charizard", "blastoise", "venusaur"],
+  "wrapper_pokedex": { "charizard": 6, "blastoise": 9, "venusaur": 3 },
   "pack_slots": [
     { "count": 1, "rarities": { "rare_holo": 1, "rare": 2 }, "use_config_holo_chance": true },
     { "count": 3, "rarities": { "uncommon": 1 } },
@@ -69,8 +70,9 @@ Everything about a set is data driven, so new sets need no code.
 }
 ```
 
-`wrappers` lists the pack designs; each name needs a texture at
-`assets/cobblemontcg/textures/tcg/pack/<set>_<wrapper>.png` (and a model, written by
+`wrappers` lists the pack designs; each name needs textures at
+`assets/cobblemontcg/textures/tcg/pack/<set>_<wrapper>.png`, `<set>_<wrapper>_mascot.png` and
+`<set>_<wrapper>_overlay.png` (and a model, written by
 `tools/gen_cards.py`). Each slot rolls a rarity from its weight table, then a card of that rarity. With
 `use_config_holo_chance`, the `rare_holo` chance comes from `packs.holoChance` instead.
 
@@ -123,7 +125,8 @@ down and flips over. A card model stacks these layers on its front, back to fron
 
 Cobblemon is optional. When [Cobblemon](https://cobblemon.com) (1.8.1 or newer) is installed, the
 client draws Cobblemon's own models into the illustration and evolution portrait of every card that
-has a `pokedex` / `evolves_from_pokedex` number, posed like in Cobblemon's Pokédex. This happens a few
+has a `pokedex` / `evolves_from_pokedex` number, and into the mascot of every pack wrapper listed in
+the set's `wrapper_pokedex`, posed like in Cobblemon's Pokédex. This happens a few
 cards per tick after joining a world (Cobblemon's species arrive then) and again after a resource
 reload. Without Cobblemon, or for species Cobblemon has not implemented, the drawn art is shown.
 Nothing from Cobblemon is copied into this mod.
@@ -137,9 +140,11 @@ pack), no code changes needed.
 | Other texture | Size |
 | --- | --- |
 | `assets/cobblemontcg/textures/tcg/card_back.png` (back of every card, and cards without data) | 256×352 |
-| `assets/cobblemontcg/textures/tcg/pack/<set>_<wrapper>.png` (pack fronts) | 240×368 |
+| `assets/cobblemontcg/textures/tcg/pack/<set>_<wrapper>.png` (pack front: foil and light burst) | 240×368 |
+| `assets/cobblemontcg/textures/tcg/pack/<set>_<wrapper>_mascot.png` (pack mascot, drawn from y 96 of the pack) | 240×208 |
+| `assets/cobblemontcg/textures/tcg/pack/<set>_<wrapper>_overlay.png` (set name plate, badges, seals and foil sheen, over the mascot) | 240×368 |
 | `assets/cobblemontcg/textures/tcg/pack/back.png` (back of every pack) | 240×368 |
-| `assets/cobblemontcg/textures/tcg/pack/default.png` (pack without set data) | 240×368 |
+| `assets/cobblemontcg/textures/tcg/pack/default.png`, `default_mascot.png`, `default_overlay.png` (pack without set data) | as above |
 
 The model templates live in `assets/cobblemontcg/models/item/tcg/` (`card.json`, `card_holo.json`,
 `card_face_down.json`, `pack.json`) and are written by `tools/gen_cards.py`.
