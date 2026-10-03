@@ -11,6 +11,7 @@ public class Services {
     public static final IReloadListenerRegistrar RELOAD_LISTENERS = load(IReloadListenerRegistrar.class);
     public static final IPlayerDataHelper PLAYER_DATA = load(IPlayerDataHelper.class);
     public static final INetworkHelper NETWORK = load(INetworkHelper.class);
+    public static final IVillagerTradeRegistrar VILLAGER_TRADES = load(IVillagerTradeRegistrar.class);
 
     public static <T> T load(Class<T> clazz) {
         final T loadedService = ServiceLoader.load(clazz, Services.class.getClassLoader())

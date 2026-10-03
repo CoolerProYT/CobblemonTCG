@@ -31,6 +31,9 @@ card art, flavour text, pack wrappers, set logos, card backs or expansion symbol
   - `/tcg give card <set> <number> [holo]`
 
   `<set>` accepts `cobblemontcg:base1` or just `base1`.
+- **Card Dealer**: a villager profession whose job site is the Card Dealer Table (2 paper, 1
+  booster pack, 5 planks: paper / pack / paper on top, planks below in a table shape). The novice
+  trade sells a booster pack for 5 emeralds, 3 times per restock (configurable).
 - **Creative tab** "Cobblemon: TCG" with every pack and card.
 
 ## Configuration
@@ -47,6 +50,10 @@ card art, flavour text, pack wrappers, set logos, card backs or expansion symbol
 | `rewards.triggers.capture` | `true` | Packs for catching Pokémon (Cobblemon) |
 | `rewards.triggers.levelUp` | `true` | Packs for level milestones (Cobblemon) |
 | `rewards.triggers.dexProgress` | `true` | Packs for Pokédex milestones (Cobblemon) |
+| `shop.setId` | `cobblemontcg:base1` | Set of the booster packs villagers sell |
+| `shop.cardDealer.enabled` | `true` | Card Dealer villagers sell booster packs |
+| `shop.cardDealer.price` | `5` | Emeralds per pack at the Card Dealer |
+| `shop.cardDealer.maxUses` | `3` | Packs a Card Dealer sells before restocking |
 
 `config/cobblemontcg-client.toml`:
 

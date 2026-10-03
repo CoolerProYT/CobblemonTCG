@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/orientable_with_bottom",
+  "textures": {
+    "top": "cobblemontcg:block/card_dealer_table_top",
+    "front": "cobblemontcg:block/card_dealer_table_front",
+    "side": "minecraft:block/oak_planks",
+    "bottom": "minecraft:block/oak_planks"
+  }
+}

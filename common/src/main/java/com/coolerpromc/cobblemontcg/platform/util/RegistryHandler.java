@@ -7,6 +7,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.block.Block;
 
 import java.util.function.Supplier;
 
@@ -36,6 +37,9 @@ public interface RegistryHandler<R, T extends R> extends Supplier<T> {
         default ItemStack toStack(){
             return new ItemStack(asItem());
         }
+    }
+
+    interface Blocks<B extends Block> extends RegistryHandler<Block, B>{
     }
 
     interface Components<T> extends RegistryHandler<DataComponentType<?>, DataComponentType<T>>{

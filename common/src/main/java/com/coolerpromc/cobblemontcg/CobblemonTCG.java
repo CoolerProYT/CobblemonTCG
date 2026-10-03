@@ -1,5 +1,6 @@
 package com.coolerpromc.cobblemontcg;
 
+import com.coolerpromc.cobblemontcg.block.ModBlocks;
 import com.coolerpromc.cobblemontcg.component.ModDataComponents;
 import com.coolerpromc.cobblemontcg.config.TcgConfig;
 import com.coolerpromc.cobblemontcg.creativetab.ModCreativeTabs;
@@ -9,8 +10,10 @@ import com.coolerpromc.cobblemontcg.network.ClientboundPackOpenedPacket;
 import com.coolerpromc.cobblemontcg.network.ClientboundTcgDataSyncPacket;
 import com.coolerpromc.cobblemontcg.platform.Services;
 import com.coolerpromc.cobblemontcg.reward.RewardRuleReloadListener;
+import com.coolerpromc.cobblemontcg.shop.PackTrades;
 import com.coolerpromc.cobblemontcg.sound.ModSounds;
 import com.coolerpromc.cobblemontcg.tcg.data.TcgDataReloadListener;
+import com.coolerpromc.cobblemontcg.villager.ModVillagers;
 import net.minecraft.server.level.ServerPlayer;
 
 public class CobblemonTCG {
@@ -19,10 +22,13 @@ public class CobblemonTCG {
     public static void init() {
         TcgConfig.init();
         ModDataComponents.init();
+        ModBlocks.init();
         ModItems.init();
+        ModVillagers.init();
         ModMenuTypes.init();
         ModSounds.init();
         ModCreativeTabs.init();
+        PackTrades.init();
     }
 
     public static void initReloadListener() {
