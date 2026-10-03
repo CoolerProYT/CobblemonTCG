@@ -16,6 +16,9 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.flag.FeatureFlags;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -46,6 +49,12 @@ public class FabricRegistryHelper implements IRegistryHelper {
     public RegistryHandler<SoundEvent, SoundEvent> registerSoundEvent(String name) {
         ResourceLocation id = Constants.id(name);
         Holder<SoundEvent> holder = Registry.registerForHolder(BuiltInRegistries.SOUND_EVENT, id, SoundEvent.createVariableRangeEvent(id));
+        return () -> holder;
+    }
+
+    @Override
+    public <T extends AbstractContainerMenu> RegistryHandler<MenuType<?>, MenuType<T>> registerMenuType(String name, MenuFactory<T> factory) {
+        Holder<MenuType<?>> holder = Registry.registerForHolder(BuiltInRegistries.MENU, Constants.id(name), new MenuType<>(factory::create, FeatureFlags.VANILLA_SET));
         return () -> holder;
     }
 

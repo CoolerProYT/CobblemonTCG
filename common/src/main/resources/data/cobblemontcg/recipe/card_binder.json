@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "minecraft:book"
+    },
+    {
+      "item": "minecraft:leather"
+    },
+    {
+      "item": "minecraft:iron_nugget"
+    },
+    {
+      "item": "minecraft:iron_nugget"
+    },
+    {
+      "item": "minecraft:iron_nugget"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "cobblemontcg:card_binder"
+  }
+}
