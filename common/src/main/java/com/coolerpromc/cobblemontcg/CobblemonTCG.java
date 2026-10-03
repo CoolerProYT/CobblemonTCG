@@ -4,6 +4,7 @@ import com.coolerpromc.cobblemontcg.component.ModDataComponents;
 import com.coolerpromc.cobblemontcg.config.TcgConfig;
 import com.coolerpromc.cobblemontcg.creativetab.ModCreativeTabs;
 import com.coolerpromc.cobblemontcg.item.ModItems;
+import com.coolerpromc.cobblemontcg.menu.ModMenuTypes;
 import com.coolerpromc.cobblemontcg.network.ClientboundPackOpenedPacket;
 import com.coolerpromc.cobblemontcg.network.ClientboundTcgDataSyncPacket;
 import com.coolerpromc.cobblemontcg.platform.Services;
@@ -19,6 +20,7 @@ public class CobblemonTCG {
         TcgConfig.init();
         ModDataComponents.init();
         ModItems.init();
+        ModMenuTypes.init();
         ModSounds.init();
         ModCreativeTabs.init();
     }

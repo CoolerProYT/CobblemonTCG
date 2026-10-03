@@ -13,6 +13,9 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.flag.FeatureFlags;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -32,6 +35,7 @@ public class NeoForgeRegistryHelper implements IRegistryHelper {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(Constants.MODID);
     public static final DeferredRegister<DataComponentType<?>> DATA_COMPONENTS = DeferredRegister.create(Registries.DATA_COMPONENT_TYPE, Constants.MODID);
     public static final DeferredRegister<SoundEvent> SOUND_EVENTS = DeferredRegister.create(BuiltInRegistries.SOUND_EVENT, Constants.MODID);
+    public static final DeferredRegister<MenuType<?>> MENU_TYPES = DeferredRegister.create(Registries.MENU, Constants.MODID);
     public static final DeferredRegister<CreativeModeTab> CREATIVE_TABS = DeferredRegister.create(BuiltInRegistries.CREATIVE_MODE_TAB, Constants.MODID);
 
     private final List<PayloadEntry<?>> clientboundPayloads = new ArrayList<>();
@@ -51,6 +55,12 @@ public class NeoForgeRegistryHelper implements IRegistryHelper {
     @Override
     public RegistryHandler<SoundEvent, SoundEvent> registerSoundEvent(String name) {
         DeferredHolder<SoundEvent, SoundEvent> deferredHolder = SOUND_EVENTS.register(name, () -> SoundEvent.createVariableRangeEvent(Constants.id(name)));
+        return () -> deferredHolder;
+    }
+
+    @Override
+    public <T extends AbstractContainerMenu> RegistryHandler<MenuType<?>, MenuType<T>> registerMenuType(String name, MenuFactory<T> factory) {
+        DeferredHolder<MenuType<?>, MenuType<T>> deferredHolder = MENU_TYPES.register(name, () -> new MenuType<>(factory::create, FeatureFlags.VANILLA_SET));
         return () -> deferredHolder;
     }
 
@@ -82,6 +92,7 @@ public class NeoForgeRegistryHelper implements IRegistryHelper {
         ITEMS.register(eventBus);
         DATA_COMPONENTS.register(eventBus);
         SOUND_EVENTS.register(eventBus);
+        MENU_TYPES.register(eventBus);
         CREATIVE_TABS.register(eventBus);
     }
 }

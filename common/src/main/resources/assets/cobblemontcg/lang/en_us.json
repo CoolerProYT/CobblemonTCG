@@ -3,6 +3,7 @@
   "item.cobblemontcg.booster_pack": "Booster Pack",
   "item.cobblemontcg.booster_pack.named": "%s Booster Pack",
   "item.cobblemontcg.tcg_card": "Trading Card",
+  "item.cobblemontcg.card_binder": "Card Binder",
   "tooltip.cobblemontcg.booster_pack.open": "Right-click to open",
   "tooltip.cobblemontcg.unknown_set": "Unknown card set",
   "tooltip.cobblemontcg.card.unknown": "Unknown card",
@@ -12,6 +13,8 @@
   "tooltip.cobblemontcg.card.hp": "HP: %s",
   "tooltip.cobblemontcg.card.type": "Type: %s",
   "tooltip.cobblemontcg.card.holo": "✦ Holo",
+  "tooltip.cobblemontcg.card_binder.cards": "%s cards in %s/%s pockets",
+  "tooltip.cobblemontcg.card_binder.open": "Right-click to open",
   "rarity.cobblemontcg.common": "Common",
   "rarity.cobblemontcg.uncommon": "Uncommon",
   "rarity.cobblemontcg.rare": "Rare",
@@ -40,5 +43,7 @@
   "screen.cobblemontcg.pack_opening.counter": "%s / %s",
   "screen.cobblemontcg.pack_opening.swipe": "Drag or click to swipe · Space for next",
   "screen.cobblemontcg.pack_opening.summary": "Your pulls",
-  "screen.cobblemontcg.pack_opening.close": "Click or press Esc to close"
+  "screen.cobblemontcg.pack_opening.close": "Click or press Esc to close",
+  "screen.cobblemontcg.card_binder.page": "%s / %s",
+  "screen.cobblemontcg.card_binder.sort": "Sort by set and number"
 }

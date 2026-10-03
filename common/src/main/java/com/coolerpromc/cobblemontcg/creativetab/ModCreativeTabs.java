@@ -13,6 +13,7 @@ import net.minecraft.world.item.CreativeModeTab;
 
 public class ModCreativeTabs {
     public static final RegistryHandler<CreativeModeTab, CreativeModeTab> TAB = Services.REGISTRY.registerCreativeTab(Constants.MODID, ModItems.BOOSTER_PACK::toStack, Component.translatable("itemGroup." + Constants.MODID), (output, parameters) -> {
+        output.accept(ModItems.CARD_BINDER.toStack());
         for (TcgSet set : TcgDataManager.forDisplay().sets()) {
             for (String wrapper : set.wrappers()) {
                 output.accept(TcgStacks.pack(set, wrapper, 1));
