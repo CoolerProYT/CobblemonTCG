@@ -5,5 +5,7 @@
   "supertype": "pokemon",
   "type": "fighting",
   "hp": 100,
-  "rarity": "rare_holo"
+  "rarity": "rare_holo",
+  "pokedex": 68,
+  "evolves_from_pokedex": 67
 }

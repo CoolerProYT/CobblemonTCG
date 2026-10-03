@@ -28,5 +28,8 @@
         "coolerconfig": ">=21.1.1",
         "minecraft": "${minecraft_version}",
         "java": ">=${java_version}"
+    },
+    "suggests": {
+        "cobblemon": ">=1.8.1"
     }
 }

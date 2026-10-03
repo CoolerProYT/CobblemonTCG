@@ -5,5 +5,7 @@
   "supertype": "pokemon",
   "type": "water",
   "hp": 80,
-  "rarity": "uncommon"
+  "rarity": "uncommon",
+  "pokedex": 87,
+  "evolves_from_pokedex": 86
 }

@@ -5,5 +5,7 @@
   "supertype": "pokemon",
   "type": "grass",
   "hp": 100,
-  "rarity": "rare_holo"
+  "rarity": "rare_holo",
+  "pokedex": 3,
+  "evolves_from_pokedex": 2
 }

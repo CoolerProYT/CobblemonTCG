@@ -1,7 +1,9 @@
 {
-  "parent": "cobblemontcg:item/tcg/card",
+  "parent": "cobblemontcg:item/tcg/card_evolution",
   "textures": {
     "frame": "cobblemontcg:tcg/frame/pokemon_lightning",
-    "art": "cobblemontcg:tcg/base1/14"
+    "art": "cobblemontcg:tcg/base1/14",
+    "illustration": "cobblemontcg:tcg/base1/illustration/14",
+    "evolution": "cobblemontcg:tcg/base1/evolution/14"
   }
 }

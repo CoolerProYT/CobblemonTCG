@@ -37,7 +37,7 @@ def illustration(drawings: dict, number: int, w=None, h=None) -> Image.Image:
 def _footer(img, card, total, face):
     small = F.font("Regular", 6)
     muted = L.mix(L.TEXT, face, 0.3)
-    F.draw(img, (L.FACE[0] + 9, L.FOOTER_Y), "Illus. Cobblemon: TCG", small, muted)
+    F.draw(img, (L.FACE[0] + 9, L.FOOTER_Y), "Cobblemon: TCG", small, muted)
     F.draw(img, ((L.FACE[0] + L.FACE[2]) / 2 + 6, L.FOOTER_Y), "Fan-made card, not official", small, muted, anchor="ma")
     F.draw(img, (L.FACE[2] - 18, L.FOOTER_Y - 0.5), f"{card['number']}/{total}", F.font("Bold", 6.5), L.TEXT, anchor="ra")
     L.rarity_symbol(img, card["rarity"], L.FACE[2] - 10, L.FOOTER_Y + 4, 7)
@@ -49,23 +49,19 @@ def _symbol(img, kind, cx, cy, size):
 
 # ---------------------------------------------------------------- pokemon
 
-def _header(img, card, text, by_name):
+def _header(img, card, text, by_name):  # noqa: ARG001 (by_name kept for custom sets)
     face = L.FACE_COLORS[card["type"]]
     stage = (text.get("subtypes") or ["Basic"])[0]
     evolves = text.get("evolvesFrom")
     x = L.FACE[0] + 7
     if evolves:
-        # portrait of the previous stage, like the little window on real evolution cards
-        box = (L.FACE[0] + 3, L.FACE[1] + 3, L.FACE[0] + 33, L.FACE[1] + 25)
+        # portrait of the previous stage, like the little window on real evolution cards; the
+        # creature itself is its own layer on top (evolution_portrait), so it can be swapped out
+        box = L.EVOLUTION_BOX
         d = ImageDraw.Draw(img, "RGBA")
         d.rectangle((box[0] - 1, box[1] - 1, box[2] + 1, box[3] + 1), fill=L.rgba((232, 198, 92)))
-        prev = by_name.get(evolves)
         bw, bh = box[2] - box[0] + 1, box[3] - box[1] + 1
-        portrait = L.background(card["type"]).resize((bw, bh), Image.LANCZOS)
-        if prev is not None and prev in POKEMON:
-            art = illustration(POKEMON, prev, bw * 2, bh * 2).resize((bw * 2, bh * 2), Image.LANCZOS)
-            portrait.alpha_composite(art.crop((bw * 0.5, bh * 0.25, bw * 1.5, bh * 1.25)).resize((bw, bh), Image.LANCZOS))
-        img.alpha_composite(portrait, box[:2])
+        img.alpha_composite(L.background(card["type"]).resize((bw, bh), Image.LANCZOS), box[:2])
         d.rectangle((box[0] - 1, box[1] - 1, box[2] + 1, box[3] + 1), outline=L.rgba((150, 116, 40)))
         x = box[2] + 6
         label = stage.upper()
@@ -144,12 +140,22 @@ def _layout_body(img, card, text, size, draw_it):
     return y
 
 
+def evolution_portrait(prev: int) -> Image.Image:
+    """The previous stage, close up, for the portrait window (32x32 texture, picture in the top 32x24)."""
+    box = L.EVOLUTION_BOX
+    bw, bh = box[2] - box[0] + 1, box[3] - box[1] + 1
+    out = Image.new("RGBA", (32, 32), (0, 0, 0, 0))
+    if prev in POKEMON:
+        art = illustration(POKEMON, prev, bw * 2, bh * 2)
+        out.alpha_composite(art.crop((bw * 0.5, bh * 0.25, bw * 1.5, bh * 1.25)).resize((bw, bh), Image.LANCZOS))
+    return out
+
+
 def pokemon_card(card: dict, total: int, text: dict, by_name: dict) -> Image.Image:
     kind = card["type"]
     face = L.FACE_COLORS[kind]
     img = Image.new("RGBA", (L.W, L.H), (0, 0, 0, 0))
 
-    img.alpha_composite(illustration(POKEMON, card["number"]), (L.ART[0], L.ART[1]))
     _header(img, card, text, by_name)
 
     dex = text.get("dex")
@@ -182,8 +188,6 @@ def pokemon_card(card: dict, total: int, text: dict, by_name: dict) -> Image.Ima
     level = text.get("level")
     if level:
         F.draw(img, (L.FLAVOR[2] - 6, (L.FLAVOR[1] + L.FLAVOR[3]) / 2), f"LV. {level}   #{dex}", F.font("Bold", 7), L.TEXT, anchor="rm")
-    F.draw(img, (L.FLAVOR[0] + 6, (L.FLAVOR[1] + L.FLAVOR[3]) / 2), f"{card['name']}, as drawn for Cobblemon: TCG.",
-           F.font("Italic", 6.5), L.mix(L.TEXT, face, 0.25), anchor="lm")
 
     _footer(img, card, total, face)
     return F.grain(img, 3, seed=card["number"])
@@ -246,6 +250,19 @@ def energy_card(card: dict, total: int, text: dict) -> Image.Image:
         L.paste_symbol(img, kind, L.W / 2, 176, 132)
     _footer(img, card, total, face)
     return F.grain(img, 3, seed=card["number"])
+
+
+def card_layers(card: dict, total: int, text: dict, by_name: dict) -> dict:
+    """Every texture of one card: 'card' always, plus 'illustration' (the Pokemon in the art
+    window, 208x144) and 'evolution' (the previous stage in the portrait window) for Pokemon.
+    Those two are separate layers so the mod can swap in Cobblemon's models at runtime."""
+    layers = {"card": card_art(card, total, text, by_name)}
+    if card["supertype"] == "pokemon":
+        layers["illustration"] = illustration(POKEMON, card["number"])
+        prev = by_name.get(text.get("evolvesFrom"))
+        if prev is not None:
+            layers["evolution"] = evolution_portrait(prev)
+    return layers
 
 
 def card_art(card: dict, total: int, text: dict, by_name: dict) -> Image.Image:

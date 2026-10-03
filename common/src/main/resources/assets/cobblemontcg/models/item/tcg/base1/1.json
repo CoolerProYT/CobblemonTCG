@@ -1,7 +1,9 @@
 {
-  "parent": "cobblemontcg:item/tcg/card",
+  "parent": "cobblemontcg:item/tcg/card_evolution",
   "textures": {
     "frame": "cobblemontcg:tcg/frame/pokemon_psychic",
-    "art": "cobblemontcg:tcg/base1/1"
+    "art": "cobblemontcg:tcg/base1/1",
+    "illustration": "cobblemontcg:tcg/base1/illustration/1",
+    "evolution": "cobblemontcg:tcg/base1/evolution/1"
   }
 }

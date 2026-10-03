@@ -29,6 +29,7 @@ WRR = (18, 296, 237, 311)            # weakness / resistance / retreat
 FLAVOR = (22, 314, 233, 328)
 FOOTER_Y = 332
 RULES = (22, 194, 233, 326)          # trainer / special energy text box
+EVOLUTION_BOX = (14, 13, 45, 36)     # previous stage portrait on evolution cards, inclusive (32 x 24)
 
 YELLOW = (246, 212, 70)
 YELLOW_LIGHT = (255, 236, 130)

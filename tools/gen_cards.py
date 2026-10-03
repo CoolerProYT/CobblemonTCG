@@ -62,6 +62,14 @@ def read_cards(csv_path: Path) -> list[dict]:
     return cards
 
 
+def read_text(set_name: str) -> dict[int, dict]:
+    """Game text per card number from tools/<set>_text.json (optional)."""
+    path = TOOLS / f"{set_name}_text.json"
+    if not path.exists():
+        return {}
+    return {e["number"]: e for e in json.loads(path.read_text(encoding="utf-8"))}
+
+
 def card_json(set_name: str, card: dict) -> dict:
     data = {
         "id": f"{set_name}-{card['number']}",
@@ -74,6 +82,10 @@ def card_json(set_name: str, card: dict) -> dict:
     if card["hp"]:
         data["hp"] = card["hp"]
     data["rarity"] = card["rarity"]
+    if card.get("pokedex"):
+        data["pokedex"] = card["pokedex"]
+    if card.get("evolves_from_pokedex"):
+        data["evolves_from_pokedex"] = card["evolves_from_pokedex"]
     return data
 
 
@@ -134,19 +146,32 @@ def template(textures: dict, elements: list) -> dict:
 
 
 CARD_THICKNESS = 0.2
-LAYER_GAP = 0.04   # between the stacked layers on the card face, large enough to avoid z-fighting
+LAYER_GAP = 0.03   # between the stacked layers on the card face, large enough to avoid z-fighting
+EVOLUTION_PX = (14, 13, 46, 37)   # previous stage portrait window, see tools/art/layout.py
 
 
 def write_templates() -> None:
-    """Parent models shared by every card print and pack wrapper."""
+    """Parent models shared by every card print and pack wrapper. Layers on the card face, back to
+    front: frame, holo foil (holo prints), illustration (Pokemon), card text, evolution portrait."""
     front_z = 8 + CARD_THICKNESS / 2
     back = f"{NAMESPACE}:tcg/card_back"
-    card = body(*CARD_PX, CARD_THICKNESS, "#frame", "#back")
-    art = plane(0, 0, *CARD_PX, front_z + LAYER_GAP * 2, "#art")
-    holo = plane(*ART_PX, front_z + LAYER_GAP, "#holo")
-    write_json(MODELS / "tcg" / "card.json", template({"back": back, "particle": "#frame"}, [card, art]))
-    write_json(MODELS / "tcg" / "card_holo.json", template(
-        {"back": back, "holo": f"{NAMESPACE}:tcg/holo_overlay", "particle": "#frame"}, [card, holo, art]))
+    for pokemon in (False, True):
+        for evolution in ((False, True) if pokemon else (False,)):
+            for holo in (False, True):
+                elements = [body(*CARD_PX, CARD_THICKNESS, "#frame", "#back")]
+                textures = {"back": back, "particle": "#frame"}
+                if holo:
+                    elements.append(plane(*ART_PX, front_z + LAYER_GAP, "#holo"))
+                    textures["holo"] = f"{NAMESPACE}:tcg/holo_overlay"
+                if pokemon:
+                    elements.append(plane(*ART_PX, front_z + LAYER_GAP * 2, "#illustration"))
+                elements.append(plane(0, 0, *CARD_PX, front_z + LAYER_GAP * 3, "#art"))
+                if evolution:
+                    portrait = plane(*EVOLUTION_PX, front_z + LAYER_GAP * 4, "#evolution")
+                    portrait["faces"]["south"]["uv"] = [0, 0, 16, 12]   # 32x24 picture in a 32x32 texture
+                    elements.append(portrait)
+                name = "card" + ("_evolution" if evolution else "_pokemon" if pokemon else "") + ("_holo" if holo else "")
+                write_json(MODELS / "tcg" / f"{name}.json", template(textures, elements))
     # a card without data: face down on both sides
     write_json(MODELS / "tcg" / "card_face_down.json", template(
         {"back": back, "particle": back}, [body(*CARD_PX, CARD_THICKNESS, "#back", "#back")]))
@@ -155,11 +180,18 @@ def write_templates() -> None:
 
 
 def card_model(set_name: str, card: dict, holo: bool) -> dict:
-    """Frame (shared per type), then the holo foil for holo prints, then the card's own art on top."""
-    return {
-        "parent": f"{NAMESPACE}:item/tcg/card_holo" if holo else f"{NAMESPACE}:item/tcg/card",
-        "textures": {"frame": f"{NAMESPACE}:tcg/frame/{frame_name(card)}", "art": f"{NAMESPACE}:tcg/{set_name}/{card['number']}"},
-    }
+    """Frame (shared per type), then the holo foil for holo prints, the Pokemon illustration and the
+    card's own text layer, and the previous stage's portrait on evolution cards."""
+    base = f"{NAMESPACE}:tcg/{set_name}"
+    textures = {"frame": f"{NAMESPACE}:tcg/frame/{frame_name(card)}", "art": f"{base}/{card['number']}"}
+    parent = "card"
+    if card["supertype"] == "pokemon":
+        textures["illustration"] = f"{base}/illustration/{card['number']}"
+        parent = "card_pokemon"
+        if card.get("evolves_from_pokedex"):
+            textures["evolution"] = f"{base}/evolution/{card['number']}"
+            parent = "card_evolution"
+    return {"parent": f"{NAMESPACE}:item/tcg/{parent}" + ("_holo" if holo else ""), "textures": textures}
 
 
 def generate_wrappers(set_name: str, set_def: dict) -> list[tuple[int, str]]:
@@ -184,6 +216,13 @@ def generate_set(csv_path: Path) -> list[tuple[int, str]]:
     base = int(set_def["model_data_base"])
 
     cards = read_cards(csv_path)
+    text = read_text(set_name)
+    dex_by_name = {card["name"]: text.get(card["number"], {}).get("dex") for card in cards}
+    for card in cards:
+        entry = text.get(card["number"], {})
+        if card["supertype"] == "pokemon":
+            card["pokedex"] = entry.get("dex")
+            card["evolves_from_pokedex"] = dex_by_name.get(entry.get("evolvesFrom"))
     if len(cards) != set_def["total"]:
         print(f"warning: {set_name}.csv has {len(cards)} cards, set declares {set_def['total']}")
 

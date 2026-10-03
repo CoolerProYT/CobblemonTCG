@@ -77,11 +77,12 @@ Everything about a set is data driven, so new sets need no code.
 ### Cards: `data/<namespace>/tcg/cards/<set>/<number>.json`
 
 ```json
-{ "id": "base1-4", "number": 4, "name": "Charizard", "supertype": "pokemon", "type": "fire", "hp": 120, "rarity": "rare_holo" }
+{ "id": "base1-4", "number": 4, "name": "Charizard", "supertype": "pokemon", "type": "fire", "hp": 120, "rarity": "rare_holo", "pokedex": 6, "evolves_from_pokedex": 5 }
 ```
 
 `supertype` is `pokemon`, `trainer` or `energy`; `rarity` is `common`, `uncommon`, `rare` or `rare_holo`.
-`type` and `hp` are optional.
+`type`, `hp`, `pokedex` and `evolves_from_pokedex` are optional. The last two are National Pokédex
+numbers, used to draw Cobblemon's models on the card when Cobblemon is installed.
 
 ### Reward rules: `data/<namespace>/tcg/rewards/*.json`
 
@@ -108,13 +109,24 @@ weakness / resistance / retreat, level, number and rarity symbol), drawn from sc
 
 Cards and packs are thin 3D models with a real back: a held, dropped or framed card shows the card
 back, and a pack shows the back of the wrapper. In the opening animation each card is dealt face
-down and flips over. A card model stacks up to three 256×352 layers on its front:
+down and flips over. A card model stacks these layers on its front, back to front:
 
 | Layer | Texture | Shared |
 | --- | --- | --- |
-| Frame | `assets/cobblemontcg/textures/tcg/frame/<pokemon_<type>\|trainer\|energy>.png` | per type: border, face, art window background, labels |
+| Frame | `assets/cobblemontcg/textures/tcg/frame/<pokemon_<type>\|trainer\|energy>.png`, 256×352 | per type: border, face, art window background, labels |
 | Holo foil (holo prints only) | `assets/cobblemontcg/textures/tcg/holo_overlay.png` (+ `.mcmeta`), 208×144 per frame | all cards, animated, covers the art window only |
-| Card art | `assets/cobblemontcg/textures/tcg/<set>/<number>.png` | one per card: name, HP, illustration, attacks, number, rarity |
+| Illustration (Pokémon only) | `assets/cobblemontcg/textures/tcg/<set>/illustration/<number>.png`, 208×144 | one per card: the Pokémon in the art window |
+| Card text | `assets/cobblemontcg/textures/tcg/<set>/<number>.png`, 256×352 | one per card: name, HP, attacks, number, rarity; trainer and energy art |
+| Evolution portrait (evolution cards only) | `assets/cobblemontcg/textures/tcg/<set>/evolution/<number>.png`, 32×32 (picture in the top 32×24) | one per card: the previous stage |
+
+### With Cobblemon
+
+Cobblemon is optional. When [Cobblemon](https://cobblemon.com) (1.8.1 or newer) is installed, the
+client draws Cobblemon's own models into the illustration and evolution portrait of every card that
+has a `pokedex` / `evolves_from_pokedex` number, posed like in Cobblemon's Pokédex. This happens a few
+cards per tick after joining a world (Cobblemon's species arrive then) and again after a resource
+reload. Without Cobblemon, or for species Cobblemon has not implemented, the drawn art is shown.
+Nothing from Cobblemon is copied into this mod.
 
 The texture is the whole card (63 × 88 mm); the art window is x 24 to 231, y 40 to 183.
 On a holo print the foil shows through wherever the card art is transparent, so leave the art
@@ -163,4 +175,5 @@ for the holo print, so give every set its own `model_data_base` range. Packs use
 ./gradlew build
 ./gradlew :fabric:runClient
 ./gradlew :neoforge:runClient
+./gradlew :fabric:runClient -Pcobblemon_runtime=true   # dev client with Cobblemon installed
 ```

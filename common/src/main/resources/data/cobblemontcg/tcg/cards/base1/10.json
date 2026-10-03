@@ -5,5 +5,6 @@
   "supertype": "pokemon",
   "type": "psychic",
   "hp": 60,
-  "rarity": "rare_holo"
+  "rarity": "rare_holo",
+  "pokedex": 150
 }

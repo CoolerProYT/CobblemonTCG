@@ -8,8 +8,12 @@ Writes into common/src/main/resources/assets/cobblemontcg/textures/tcg/:
   frame/pokemon_<type>.png, trainer.png, energy.png
                             card frame, face and art window background (256x352)
   holo_overlay.png(.mcmeta) animated foil over the art window, holo prints only (208x144 per frame)
-  <set>/<number>.png        everything specific to one card: name, HP, illustration, attacks,
-                            weakness / resistance / retreat, number, rarity (256x352)
+  <set>/<number>.png        everything specific to one card: name, HP, attacks, weakness /
+                            resistance / retreat, number, rarity; trainer and energy art (256x352)
+  <set>/illustration/<number>.png
+                            the Pokemon in the art window, Pokemon cards only (208x144)
+  <set>/evolution/<number>.png
+                            the previous stage in the portrait window, evolution cards only (32x32)
   card_back.png             back of every card (256x352)
   pack/<set>_<wrapper>.png  booster pack fronts listed in the set json (240x368)
   pack/back.png             back of every pack (240x368)
@@ -32,7 +36,7 @@ from PIL import Image, ImageDraw
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from art import layout as L  # noqa: E402
-from art.cards import card_art  # noqa: E402
+from art.cards import card_layers  # noqa: E402
 from art.wrapper import WRAPPERS, make_card_back, make_pack_back, make_wrapper  # noqa: E402
 
 NAMESPACE = "cobblemontcg"
@@ -118,7 +122,11 @@ def main() -> None:
             path = TCG / set_name / f"{card['number']}.png"
             if args.skip_existing_art and path.exists():
                 continue
-            save(card_art(card, total, texts.get(card["number"], {}), by_name), path)
+            layers = card_layers(card, total, texts.get(card["number"], {}), by_name)
+            save(layers["card"], path)
+            for name in ("illustration", "evolution"):
+                if name in layers:
+                    save(layers[name], TCG / set_name / name / f"{card['number']}.png")
             written += 1
         print(f"{set_name}: {written} card textures")
 

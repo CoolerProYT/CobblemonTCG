@@ -5,5 +5,7 @@
   "supertype": "pokemon",
   "type": "fire",
   "hp": 100,
-  "rarity": "uncommon"
+  "rarity": "uncommon",
+  "pokedex": 59,
+  "evolves_from_pokedex": 58
 }

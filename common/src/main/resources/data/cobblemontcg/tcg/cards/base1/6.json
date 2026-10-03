@@ -5,5 +5,7 @@
   "supertype": "pokemon",
   "type": "water",
   "hp": 100,
-  "rarity": "rare_holo"
+  "rarity": "rare_holo",
+  "pokedex": 130,
+  "evolves_from_pokedex": 129
 }

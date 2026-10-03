@@ -9,8 +9,11 @@ import java.util.Optional;
 /**
  * One card as defined in {@code data/<namespace>/tcg/cards/<set>/<number>.json}.
  * The set a card belongs to comes from the folder it is in, not from the JSON.
+ * {@code pokedex} and {@code evolves_from_pokedex} are National Pokédex numbers; with Cobblemon
+ * installed the client draws those species' models into the card art.
  */
-public record CardDefinition(String id, int number, String name, CardSupertype supertype, Optional<String> type, Optional<Integer> hp, CardRarity rarity) {
+public record CardDefinition(String id, int number, String name, CardSupertype supertype, Optional<String> type, Optional<Integer> hp, CardRarity rarity,
+                             Optional<Integer> pokedex, Optional<Integer> evolvesFromPokedex) {
     public static final Codec<CardDefinition> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             Codec.STRING.fieldOf("id").forGetter(CardDefinition::id),
             ExtraCodecs.POSITIVE_INT.fieldOf("number").forGetter(CardDefinition::number),
@@ -18,6 +21,8 @@ public record CardDefinition(String id, int number, String name, CardSupertype s
             CardSupertype.CODEC.fieldOf("supertype").forGetter(CardDefinition::supertype),
             Codec.STRING.optionalFieldOf("type").forGetter(CardDefinition::type),
             ExtraCodecs.POSITIVE_INT.optionalFieldOf("hp").forGetter(CardDefinition::hp),
-            CardRarity.CODEC.fieldOf("rarity").forGetter(CardDefinition::rarity)
+            CardRarity.CODEC.fieldOf("rarity").forGetter(CardDefinition::rarity),
+            ExtraCodecs.POSITIVE_INT.optionalFieldOf("pokedex").forGetter(CardDefinition::pokedex),
+            ExtraCodecs.POSITIVE_INT.optionalFieldOf("evolves_from_pokedex").forGetter(CardDefinition::evolvesFromPokedex)
     ).apply(instance, CardDefinition::new));
 }

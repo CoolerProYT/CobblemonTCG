@@ -5,5 +5,7 @@
   "supertype": "pokemon",
   "type": "lightning",
   "hp": 80,
-  "rarity": "rare_holo"
+  "rarity": "rare_holo",
+  "pokedex": 26,
+  "evolves_from_pokedex": 25
 }

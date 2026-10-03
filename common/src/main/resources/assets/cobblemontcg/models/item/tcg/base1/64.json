@@ -1,7 +1,9 @@
 {
-  "parent": "cobblemontcg:item/tcg/card",
+  "parent": "cobblemontcg:item/tcg/card_evolution",
   "textures": {
     "frame": "cobblemontcg:tcg/frame/pokemon_water",
-    "art": "cobblemontcg:tcg/base1/64"
+    "art": "cobblemontcg:tcg/base1/64",
+    "illustration": "cobblemontcg:tcg/base1/illustration/64",
+    "evolution": "cobblemontcg:tcg/base1/evolution/64"
   }
 }

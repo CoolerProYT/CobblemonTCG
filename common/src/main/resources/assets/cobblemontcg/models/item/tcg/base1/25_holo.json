@@ -1,7 +1,9 @@
 {
-  "parent": "cobblemontcg:item/tcg/card_holo",
+  "parent": "cobblemontcg:item/tcg/card_evolution_holo",
   "textures": {
     "frame": "cobblemontcg:tcg/frame/pokemon_water",
-    "art": "cobblemontcg:tcg/base1/25"
+    "art": "cobblemontcg:tcg/base1/25",
+    "illustration": "cobblemontcg:tcg/base1/illustration/25",
+    "evolution": "cobblemontcg:tcg/base1/evolution/25"
   }
 }

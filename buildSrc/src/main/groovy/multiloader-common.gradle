@@ -38,6 +38,24 @@ repositories {
         )
         filter { includeGroup('org.parchmentmc.data') }
     }
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = 'Cobblemon'
+                url = 'https://maven.impactdev.net/repository/development/'
+            }
+        }
+        filter { includeGroup('com.cobblemon') }
+    }
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = 'KotlinForForge'
+                url = 'https://thedarkcolour.github.io/KotlinForForge/'
+            }
+        }
+        filter { includeGroup('thedarkcolour') }
+    }
     maven {
         name = 'BlameJared'
         url = 'https://maven.blamejared.com'
