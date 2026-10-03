@@ -5,5 +5,6 @@
   "supertype": "pokemon",
   "type": "colorless",
   "hp": 50,
-  "rarity": "uncommon"
+  "rarity": "uncommon",
+  "pokedex": 83
 }

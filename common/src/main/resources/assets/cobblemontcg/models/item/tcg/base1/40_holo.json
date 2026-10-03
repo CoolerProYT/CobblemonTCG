@@ -1,8 +1,9 @@
 {
-  "parent": "minecraft:item/generated",
+  "parent": "cobblemontcg:item/tcg/card_evolution_holo",
   "textures": {
-    "layer0": "cobblemontcg:tcg/frame/pokemon_colorless",
-    "layer1": "cobblemontcg:tcg/holo_overlay",
-    "layer2": "cobblemontcg:tcg/base1/40"
+    "frame": "cobblemontcg:tcg/frame/pokemon_colorless",
+    "art": "cobblemontcg:tcg/base1/40",
+    "illustration": "cobblemontcg:tcg/base1/illustration/40",
+    "evolution": "cobblemontcg:tcg/base1/evolution/40"
   }
 }

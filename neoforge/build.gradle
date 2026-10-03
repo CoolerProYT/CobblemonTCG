@@ -45,4 +45,12 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 dependencies {
     jarJar(implementation("com.coolerpromc.coolerconfig:coolerconfig-neoforge-${minecraft_version}:${cooler_config_version}"))
+
+    // optional integration, see CobblemonCardRenderer
+    compileOnly("com.cobblemon:neoforge:${cobblemon_version}") { transitive = false }
+    compileOnly "org.jetbrains.kotlin:kotlin-stdlib:${kotlin_version}"
+    if (project.findProperty('cobblemon_runtime') == 'true') {
+        runtimeOnly("com.cobblemon:neoforge:${cobblemon_version}") { transitive = false }
+        runtimeOnly "thedarkcolour:kotlinforforge-neoforge:${kotlin_for_forge_version}"
+    }
 }

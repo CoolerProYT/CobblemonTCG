@@ -2,8 +2,8 @@
 Small vector drawing kit for card illustrations.
 
 Shapes are drawn in "units" on a 160 x 100 stage (x right, y down) at 4x resolution and
-downscaled at the end, which gives smooth, painted-looking edges. Shapes are grouped in parts;
-each part gets its own dark outline and soft top-left lighting, so overlapping limbs stay readable.
+downscaled at the end. Shapes are grouped in parts; each part is lit as a rounded volume, casts a
+soft shadow on the parts behind it and gets a thin outline, so overlapping limbs stay readable.
 """
 import math
 from contextlib import contextmanager
@@ -190,39 +190,74 @@ class Sprite:
     # ------------------------------------------------------------ render
 
     def render(self) -> Image.Image:
+        """Each part is lit like a rounded volume (light from the top left), casts a soft shadow
+        on the parts below it and gets a thin outline in a darker shade of its own colour."""
         out = Image.new("RGBA", (self.w, self.h), (0, 0, 0, 0))
-        outline_px = max(3, round(self.k * 1.1))
+        outline_px = max(2, round(self.k * 0.55))
         for part in self.parts:
             img = part["img"]
             alpha = img.getchannel("A")
             if alpha.getbbox() is None:
                 continue
             if part["shade"]:
-                img = _shade(img)
+                img = _shade(img, self.k)
+            if part["shade"] and out.getbbox() is not None:
+                out = _occlude(out, alpha, self.k)
             if part["outline"]:
                 grown = alpha.point(lambda v: 255 if v > 40 else 0).filter(ImageFilter.MaxFilter(outline_px * 2 + 1))
-                ring = Image.new("RGBA", img.size, (*OUTLINE, 0))
-                ring.putalpha(grown)
+                ring = Image.new("RGBA", img.size, (*_edge_colour(img), 0))
+                ring.putalpha(grown.point(lambda v: v * 0.9))
                 out.alpha_composite(ring)
             out.alpha_composite(img)
         return out.resize(self.out_size, Image.LANCZOS)
 
 
-def _shade(img: Image.Image) -> Image.Image:
-    """Soft light from the top left, shadow towards the bottom right, inside the part's own bounds."""
+def _edge_colour(img: Image.Image):
     arr = np.asarray(img).astype(np.float32)
-    alpha = arr[..., 3]
-    ys, xs = np.nonzero(alpha > 0)
-    if len(xs) == 0:
-        return img
-    x0, x1, y0, y1 = xs.min(), xs.max(), ys.min(), ys.max()
-    h, w = alpha.shape
-    yy, xx = np.mgrid[0:h, 0:w].astype(np.float32)
-    u = np.clip((xx - x0) / max(x1 - x0, 1), 0, 1)
-    v = np.clip((yy - y0) / max(y1 - y0, 1), 0, 1)
-    t = (u * 0.35 + v * 0.65)              # 0 at top left, 1 at bottom right
-    light = np.clip(0.22 - t * 0.55, -0.30, 0.22)[..., None]
-    rgb = arr[..., :3]
-    rgb = np.where(light > 0, rgb + (255 - rgb) * light, rgb * (1 + light))
+    a = arr[..., 3] > 128
+    if not a.any():
+        return OUTLINE
+    mean = arr[a][:, :3].mean(axis=0)
+    return tuple(int(v) for v in mix(tuple(mean), OUTLINE, 0.78))
+
+
+def _shade(img: Image.Image, k: float) -> Image.Image:
+    """Treats the blurred silhouette as a height field and lights it: soft diffuse light from the
+    top left, a core shadow towards the bottom right, a faint specular highlight and bounce light."""
+    arr = np.asarray(img).astype(np.float32)
+    alpha = arr[..., 3] / 255
+    bbox = img.getchannel("A").getbbox()
+    x0, y0, x1, y1 = bbox
+    size = max(x1 - x0, y1 - y0)
+    radius = max(2.0, min(size * 0.22, k * 9))
+    height = np.asarray(img.getchannel("A").filter(ImageFilter.GaussianBlur(radius)), np.float32) / 255
+    gy, gx = np.gradient(height)
+    strength = radius * 1.6
+    nx, ny, nz = -gx * strength, -gy * strength, np.ones_like(gx)
+    norm = np.sqrt(nx * nx + ny * ny + nz * nz)
+    nx, ny, nz = nx / norm, ny / norm, nz / norm
+    lx, ly, lz = -0.55, -0.65, 0.52
+    ll = math.sqrt(lx * lx + ly * ly + lz * lz)
+    diffuse = np.clip((nx * lx + ny * ly + nz * lz) / ll, 0, 1)
+    hx, hy, hz = lx / ll, ly / ll, lz / ll + 1
+    hl = math.sqrt(hx * hx + hy * hy + hz * hz)
+    spec = np.clip((nx * hx + ny * hy + nz * hz) / hl, 0, 1) ** 28
+    bounce = np.clip(nx * 0.4 + ny * 0.7, 0, 1) * 0.12      # warm light bouncing up from the ground
+    light = 0.62 + 0.5 * diffuse + bounce
+    rgb = arr[..., :3] * light[..., None]
+    rgb = rgb + (255 - np.clip(rgb, 0, 255)) * (spec * 0.35)[..., None]
     arr[..., :3] = np.clip(rgb, 0, 255)
+    arr[..., 3] = alpha * 255
+    return Image.fromarray(arr.astype(np.uint8), "RGBA")
+
+
+def _occlude(below: Image.Image, alpha: Image.Image, k: float) -> Image.Image:
+    """Soft contact shadow of a part onto everything drawn before it."""
+    off = round(k * 0.9)
+    shadow = Image.new("L", alpha.size, 0)
+    shadow.paste(alpha, (off, off))
+    shadow = shadow.filter(ImageFilter.GaussianBlur(k * 1.4))
+    arr = np.asarray(below).astype(np.float32)
+    s = np.asarray(shadow, np.float32) / 255 * (1 - np.asarray(alpha, np.float32) / 255) * 0.32
+    arr[..., :3] *= (1 - s)[..., None]
     return Image.fromarray(arr.astype(np.uint8), "RGBA")

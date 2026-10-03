@@ -24,3 +24,6 @@ run
 runs
 logs
 __pycache__
+
+# test screenshots
+.playwright-mcp/

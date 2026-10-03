@@ -1,8 +1,9 @@
 {
-  "parent": "minecraft:item/generated",
+  "parent": "cobblemontcg:item/tcg/card_evolution_holo",
   "textures": {
-    "layer0": "cobblemontcg:tcg/frame/pokemon_fire",
-    "layer1": "cobblemontcg:tcg/holo_overlay",
-    "layer2": "cobblemontcg:tcg/base1/24"
+    "frame": "cobblemontcg:tcg/frame/pokemon_fire",
+    "art": "cobblemontcg:tcg/base1/24",
+    "illustration": "cobblemontcg:tcg/base1/illustration/24",
+    "evolution": "cobblemontcg:tcg/base1/evolution/24"
   }
 }

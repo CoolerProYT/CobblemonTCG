@@ -5,5 +5,7 @@
   "supertype": "pokemon",
   "type": "psychic",
   "hp": 60,
-  "rarity": "uncommon"
+  "rarity": "uncommon",
+  "pokedex": 93,
+  "evolves_from_pokedex": 92
 }

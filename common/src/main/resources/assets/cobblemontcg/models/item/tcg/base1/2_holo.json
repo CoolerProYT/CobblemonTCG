@@ -1,8 +1,9 @@
 {
-  "parent": "minecraft:item/generated",
+  "parent": "cobblemontcg:item/tcg/card_evolution_holo",
   "textures": {
-    "layer0": "cobblemontcg:tcg/frame/pokemon_water",
-    "layer1": "cobblemontcg:tcg/holo_overlay",
-    "layer2": "cobblemontcg:tcg/base1/2"
+    "frame": "cobblemontcg:tcg/frame/pokemon_water",
+    "art": "cobblemontcg:tcg/base1/2",
+    "illustration": "cobblemontcg:tcg/base1/illustration/2",
+    "evolution": "cobblemontcg:tcg/base1/evolution/2"
   }
 }

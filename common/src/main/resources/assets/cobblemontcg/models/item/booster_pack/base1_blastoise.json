@@ -1,6 +1,6 @@
 {
-  "parent": "minecraft:item/generated",
+  "parent": "cobblemontcg:item/tcg/pack",
   "textures": {
-    "layer0": "cobblemontcg:item/booster_pack/base1_blastoise"
+    "front": "cobblemontcg:tcg/pack/base1_blastoise"
   }
 }

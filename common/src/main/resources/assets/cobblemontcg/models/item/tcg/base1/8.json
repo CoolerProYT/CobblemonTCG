@@ -1,7 +1,9 @@
 {
-  "parent": "minecraft:item/generated",
+  "parent": "cobblemontcg:item/tcg/card_evolution",
   "textures": {
-    "layer0": "cobblemontcg:tcg/frame/pokemon_fighting",
-    "layer1": "cobblemontcg:tcg/base1/8"
+    "frame": "cobblemontcg:tcg/frame/pokemon_fighting",
+    "art": "cobblemontcg:tcg/base1/8",
+    "illustration": "cobblemontcg:tcg/base1/illustration/8",
+    "evolution": "cobblemontcg:tcg/base1/evolution/8"
   }
 }

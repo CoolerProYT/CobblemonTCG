@@ -38,6 +38,8 @@ public class PackOpeningScreen extends Screen {
     private static final long PACK_IN_MS = 380;
     private static final long TEAR_MS = 900;
     private static final long FLY_MS = 280;
+    private static final long FLIP_MS = 320;
+    private static final float ITEM_DEPTH = 150.0F;  // z offset GuiGraphics#renderItem adds
     private static final float SWIPE_DISTANCE = 50.0F;
 
     private enum Phase { PACK, TEARING, REVEAL, SUMMARY }
@@ -184,9 +186,12 @@ public class PackOpeningScreen extends Screen {
         float h = cardHeight();
         Reveal top = reveals.get(index);
 
-        // rarity glow behind the top card
+        // the top card is dealt face down and flips over; the model's back face shows the card back
+        float flip = easeOutCubic(Mth.clamp((now - revealStart) / (float) FLIP_MS, 0, 1));
+
+        // rarity glow behind the top card, once it is face up
         if (top.holo() || top.rarity() == CardRarity.RARE) {
-            float grow = easeOutCubic(Mth.clamp((now - revealStart) / 400.0F, 0, 1));
+            float grow = easeOutCubic(Mth.clamp((now - revealStart - FLIP_MS / 2) / 400.0F, 0, 1));
             int color = top.holo() ? 0xFFD54A : 0x7FD0FF;
             rays(graphics, centerX(), centerY(), h * 0.85F * grow, now / 40.0F, color, top.holo() ? 16 : 10);
         }
@@ -197,7 +202,7 @@ public class PackOpeningScreen extends Screen {
             drawItem(graphics, cardBack, centerX() + i * 3.0F, centerY() + i * 3.0F, 0, h, 40 + (3 - i) * 10);
         }
 
-        drawItem(graphics, top.stack(), centerX() + dragX, centerY() + dragY, dragX * 0.08F, h, 120);
+        drawItem(graphics, top.stack(), centerX() + dragX, centerY() + dragY, dragX * 0.08F, 180.0F * (1 - flip), h, 120);
 
         float textY = centerY() + h / 2 + 6;
         label(graphics, top.stack().getHoverName(), textY, 0xFFFFFF);
@@ -379,15 +384,28 @@ public class PackOpeningScreen extends Screen {
 
     // ------------------------------------------------------------------ helpers
 
-    /**
-     * Draws an item model centred at (x, y), {@code size} pixels tall, rotated by {@code rot} degrees.
-     */
     private void drawItem(GuiGraphics graphics, ItemStack stack, float x, float y, float rot, float size, float z) {
+        drawItem(graphics, stack, x, y, rot, 0, size, z);
+    }
+
+    /**
+     * Draws an item model centred at (x, y), {@code size} pixels tall, rotated by {@code rot} degrees
+     * in the screen plane and turned by {@code turn} degrees around its vertical axis (180 shows its back).
+     */
+    private void drawItem(GuiGraphics graphics, ItemStack stack, float x, float y, float rot, float turn, float size, float z) {
         graphics.pose().pushPose();
         graphics.pose().translate(x, y, z);
         graphics.pose().mulPose(Axis.ZP.rotationDegrees(rot));
         float scale = size / 16.0F;
-        graphics.pose().scale(scale, scale, 1.0F);
+        if (turn != 0) {
+            // renderItem pushes the model 150 deep; do that before turning so the card turns in place
+            graphics.pose().translate(0, 0, ITEM_DEPTH);
+            graphics.pose().mulPose(Axis.YP.rotationDegrees(turn));
+            graphics.pose().scale(scale, scale, 1.0F);
+            graphics.pose().translate(0, 0, -ITEM_DEPTH);
+        } else {
+            graphics.pose().scale(scale, scale, 1.0F);
+        }
         graphics.renderItem(stack, -8, -8);
         graphics.pose().popPose();
     }
