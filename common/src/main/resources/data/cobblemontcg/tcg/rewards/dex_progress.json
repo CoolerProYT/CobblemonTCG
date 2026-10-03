@@ -1,0 +1,6 @@
+[
+  { "trigger": "cobblemontcg:dex_progress", "set": "cobblemontcg:base1", "amount": 1, "conditions": { "dex_percent": 25 } },
+  { "trigger": "cobblemontcg:dex_progress", "set": "cobblemontcg:base1", "amount": 1, "conditions": { "dex_percent": 50 } },
+  { "trigger": "cobblemontcg:dex_progress", "set": "cobblemontcg:base1", "amount": 2, "conditions": { "dex_percent": 75 } },
+  { "trigger": "cobblemontcg:dex_progress", "set": "cobblemontcg:base1", "amount": 2, "conditions": { "dex_percent": 100 } }
+]

@@ -2,10 +2,13 @@ package com.coolerpromc.cobblemontcg.reward;
 
 import com.google.gson.JsonParser;
 import com.mojang.serialization.JsonOps;
+import net.minecraft.resources.ResourceLocation;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -41,8 +44,8 @@ class RewardRuleTest {
         assertFalse(conditions.test(context(10, "pikachu", true)), "level too low");
         assertFalse(conditions.test(context(25, "eevee", true)), "wrong species");
         assertFalse(conditions.test(context(25, "pikachu", false)), "not shiny");
-        assertFalse(conditions.test(new RewardContext(null, Optional.empty(), Optional.of("pikachu"), Optional.of(true))), "unknown level fails");
-        assertTrue(RewardConditions.NONE.test(new RewardContext(null, Optional.empty(), Optional.empty(), Optional.empty())));
+        assertFalse(conditions.test(new RewardContext(null, Optional.empty(), Optional.of("pikachu"), Optional.of(true), Optional.empty(), Optional.empty(), Optional.empty())), "unknown level fails");
+        assertTrue(RewardConditions.NONE.test(RewardContext.of(null)));
     }
 
     @Test
@@ -51,8 +54,104 @@ class RewardRuleTest {
                 "[{\"trigger\": \"a:b\", \"set\": \"a:c\", \"chance\": 2}]")).isError());
     }
 
+    @Test
+    void levelMilestonesAreReachedAtOrAboveTheLevel() {
+        RewardConditions conditions = parse("{\"trigger\": \"a:b\", \"set\": \"a:c\", \"conditions\": {\"level\": 25}}").conditions();
+        assertTrue(conditions.isMilestone());
+        assertFalse(conditions.test(context(24, "eevee", false)));
+        assertTrue(conditions.test(context(25, "eevee", false)));
+        assertTrue(conditions.test(context(60, "eevee", false)));
+        assertEquals(Optional.of("level/25"), conditions.milestone(context(60, "eevee", false)));
+    }
+
+    @Test
+    void firstCatchMilestoneIsPerSpecies() {
+        RewardConditions conditions = parse("{\"trigger\": \"a:b\", \"set\": \"a:c\", \"conditions\": {\"first_catch_of_species\": true}}").conditions();
+        RewardContext first = RewardContext.capture(null, "Eevee", 5, false, true);
+        assertTrue(conditions.test(first));
+        assertFalse(conditions.test(RewardContext.capture(null, "eevee", 5, false, false)));
+        assertEquals(Optional.of("first_catch/eevee"), conditions.milestone(first));
+
+        RewardConditions shiny = parse("{\"trigger\": \"a:b\", \"set\": \"a:c\", \"conditions\": {\"shiny\": true}}").conditions();
+        assertFalse(shiny.isMilestone(), "shiny catches pay every time");
+    }
+
+    @Test
+    void dexMilestones() {
+        RewardConditions every = parse("{\"trigger\": \"a:b\", \"set\": \"a:c\", \"conditions\": {\"dex_every\": 10}}").conditions();
+        assertTrue(every.test(RewardContext.dexProgress(null, "eevee", 30, 1025)));
+        assertFalse(every.test(RewardContext.dexProgress(null, "eevee", 31, 1025)));
+        assertEquals(Optional.of("dex_every/10/30"), every.milestone(RewardContext.dexProgress(null, "eevee", 30, 1025)));
+
+        RewardConditions quarter = parse("{\"trigger\": \"a:b\", \"set\": \"a:c\", \"conditions\": {\"dex_percent\": 25}}").conditions();
+        assertFalse(quarter.test(RewardContext.dexProgress(null, "eevee", 24, 100)));
+        assertTrue(quarter.test(RewardContext.dexProgress(null, "eevee", 25, 100)));
+        assertTrue(quarter.test(RewardContext.dexProgress(null, "eevee", 90, 100)));
+        assertFalse(quarter.test(RewardContext.dexProgress(null, "eevee", 5, 0)), "unknown total");
+        assertTrue(RewardRule.CODEC.listOf().parse(JsonOps.INSTANCE, JsonParser.parseString(
+                "[{\"trigger\": \"a:b\", \"set\": \"a:c\", \"conditions\": {\"dex_percent\": 101}}]")).isError());
+    }
+
+    @Test
+    void milestonesPayOutOnce() {
+        ResourceLocation trigger = ResourceLocation.parse("cobblemontcg:level_up");
+        List<RewardRule> rules = List.of(
+                parse("{\"trigger\": \"cobblemontcg:level_up\", \"set\": \"a:c\", \"conditions\": {\"level\": 10}}"),
+                parse("{\"trigger\": \"cobblemontcg:level_up\", \"set\": \"a:c\", \"conditions\": {\"level\": 25}}"),
+                parse("{\"trigger\": \"cobblemontcg:level_up\", \"set\": \"a:c\", \"amount\": 3}"));
+        RewardContext context = context(30, "eevee", false);
+
+        Set<String> claimed = new HashSet<>();
+        int granted = RewardRules.evaluate(trigger, rules, context, MilestoneData.EMPTY, claimed, rule -> true, () -> 0.0, RewardRule::amount);
+        assertEquals(5, granted, "both milestones and the repeatable rule");
+        assertEquals(Set.of("cobblemontcg:level_up/level/10", "cobblemontcg:level_up/level/25"), claimed);
+
+        Set<String> again = new HashSet<>();
+        MilestoneData stored = MilestoneData.EMPTY.with(claimed);
+        assertEquals(3, RewardRules.evaluate(trigger, rules, context, stored, again, rule -> true, () -> 0.0, RewardRule::amount),
+                "only the repeatable rule pays again");
+        assertTrue(again.isEmpty());
+    }
+
+    @Test
+    void lostChanceRollStillClaimsButBlockedRewardDoesNot() {
+        ResourceLocation trigger = ResourceLocation.parse("cobblemontcg:capture");
+        List<RewardRule> rules = List.of(parse(
+                "{\"trigger\": \"cobblemontcg:capture\", \"set\": \"a:c\", \"chance\": 0.1, \"conditions\": {\"first_catch_of_species\": true}}"));
+        RewardContext context = RewardContext.capture(null, "eevee", 5, false, true);
+
+        Set<String> claimed = new HashSet<>();
+        assertEquals(0, RewardRules.evaluate(trigger, rules, context, MilestoneData.EMPTY, claimed, rule -> true, () -> 0.5, RewardRule::amount));
+        assertEquals(Set.of("cobblemontcg:capture/first_catch/eevee"), claimed);
+
+        Set<String> blocked = new HashSet<>();
+        assertEquals(0, RewardRules.evaluate(trigger, rules, context, MilestoneData.EMPTY, blocked, rule -> false, () -> 0.0, RewardRule::amount));
+        assertTrue(blocked.isEmpty(), "daily cap or rewards off keep the milestone open");
+    }
+
+    @Test
+    void milestoneDataRoundTrips() {
+        MilestoneData data = MilestoneData.EMPTY.with(Set.of("a:b/level/10", "a:b/dex_percent/25"));
+        MilestoneData decoded = MilestoneData.CODEC.parse(JsonOps.INSTANCE, MilestoneData.CODEC.encodeStart(JsonOps.INSTANCE, data).getOrThrow()).getOrThrow();
+        assertEquals(data, decoded);
+    }
+
+    @Test
+    void shippedRulesParse() throws Exception {
+        java.nio.file.Path dir = java.nio.file.Path.of("src/main/resources/data/cobblemontcg/tcg/rewards");
+        int total = 0;
+        try (var files = java.nio.file.Files.list(dir)) {
+            for (java.nio.file.Path file : files.toList()) {
+                List<RewardRule> rules = RewardRule.CODEC.listOf().parse(JsonOps.INSTANCE, JsonParser.parseString(java.nio.file.Files.readString(file))).getOrThrow();
+                assertFalse(rules.isEmpty(), file.toString());
+                total += rules.size();
+            }
+        }
+        assertEquals(10, total);
+    }
+
     private static RewardContext context(int level, String species, boolean shiny) {
-        return new RewardContext(null, Optional.of(level), Optional.of(species), Optional.of(shiny));
+        return RewardContext.levelUp(null, species, level, shiny);
     }
 
     private static RewardRule parse(String json) {

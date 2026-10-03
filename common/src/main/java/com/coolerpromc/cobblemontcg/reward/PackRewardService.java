@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
- * Single entry point for handing booster packs to players, used by commands and future reward triggers.
+ * Single entry point for handing booster packs to players, used by commands and reward triggers.
  */
 public final class PackRewardService {
     private PackRewardService() {
@@ -60,6 +60,18 @@ public final class PackRewardService {
             }
         });
         return granted;
+    }
+
+    /**
+     * Whether a reward pack of {@code setId} could be given to the player right now: rewards are enabled,
+     * the set exists and the player has not reached the daily cap.
+     */
+    public static boolean canReward(ServerPlayer player, ResourceLocation setId) {
+        if (!TcgConfig.rewardsEnabled() || TcgDataManager.SERVER.set(setId).isEmpty()) {
+            return false;
+        }
+        int cap = TcgConfig.dailyPackCap();
+        return cap <= 0 || Services.PLAYER_DATA.getDailyPackData(player).countOn(today()) < cap;
     }
 
     public static void giveOrDrop(ServerPlayer player, ItemStack stack) {

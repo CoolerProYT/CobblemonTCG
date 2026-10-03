@@ -1,6 +1,7 @@
 package com.coolerpromc.cobblemontcg;
 
 import com.coolerpromc.cobblemontcg.command.TcgCommands;
+import com.coolerpromc.cobblemontcg.compat.NeoForgeCobblemonBridge;
 import com.coolerpromc.cobblemontcg.network.HandledCustomPacketPayload;
 import com.coolerpromc.cobblemontcg.platform.NeoForgePlayerDataHelper;
 import com.coolerpromc.cobblemontcg.platform.NeoForgeRegistryHelper;
@@ -29,6 +30,11 @@ public class NeoForgeCobblemonTCG {
         NeoForge.EVENT_BUS.addListener(NeoForgeCobblemonTCG::onAddReloadListeners);
         NeoForge.EVENT_BUS.addListener(NeoForgeCobblemonTCG::onRegisterCommands);
         NeoForge.EVENT_BUS.addListener(NeoForgeCobblemonTCG::onDatapackSync);
+
+        // the bridge is the only class that touches Cobblemon, so it must not load without it
+        if (Services.PLATFORM.isModLoaded("cobblemon")) {
+            NeoForgeCobblemonBridge.init();
+        }
     }
 
     private static void onRegisterPayloadHandlers(RegisterPayloadHandlersEvent event) {

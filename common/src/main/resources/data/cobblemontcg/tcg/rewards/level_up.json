@@ -1,0 +1,6 @@
+[
+  { "trigger": "cobblemontcg:level_up", "set": "cobblemontcg:base1", "amount": 1, "conditions": { "level": 10 } },
+  { "trigger": "cobblemontcg:level_up", "set": "cobblemontcg:base1", "amount": 1, "conditions": { "level": 25 } },
+  { "trigger": "cobblemontcg:level_up", "set": "cobblemontcg:base1", "amount": 1, "conditions": { "level": 50 } },
+  { "trigger": "cobblemontcg:level_up", "set": "cobblemontcg:base1", "amount": 1, "conditions": { "level": 100 } }
+]
