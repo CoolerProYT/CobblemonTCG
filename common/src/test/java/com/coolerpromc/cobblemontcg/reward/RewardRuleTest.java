@@ -147,7 +147,37 @@ class RewardRuleTest {
                 total += rules.size();
             }
         }
-        assertEquals(10, total);
+        assertEquals(12, total);
+    }
+
+    @Test
+    void excludedSpeciesDoNotMatch() {
+        RewardConditions conditions = parse("{\"trigger\": \"a:b\", \"set\": \"a:c\", \"conditions\": {\"exclude_species\": [\"scyther\"]}}").conditions();
+        assertFalse(conditions.test(context(5, "Scyther", false)));
+        assertTrue(conditions.test(context(5, "pikachu", false)));
+        assertTrue(conditions.test(RewardContext.of(null)), "no species, nothing to exclude");
+    }
+
+    @Test
+    void jungleSpeciesGiveJunglePacksAndOthersBaseSet() throws Exception {
+        ResourceLocation trigger = ResourceLocation.parse("cobblemontcg:capture");
+        List<RewardRule> rules = RewardRule.CODEC.listOf().parse(JsonOps.INSTANCE, JsonParser.parseString(java.nio.file.Files.readString(
+                java.nio.file.Path.of("src/main/resources/data/cobblemontcg/tcg/rewards/capture.json")))).getOrThrow();
+        assertEquals(List.of(ResourceLocation.parse("cobblemontcg:base2")), paidSets(trigger, rules, RewardContext.capture(null, "scyther", 5, false, true)));
+        assertEquals(List.of(ResourceLocation.parse("cobblemontcg:base1")), paidSets(trigger, rules, RewardContext.capture(null, "pikachu", 5, false, true)));
+        assertEquals(List.of(ResourceLocation.parse("cobblemontcg:base2")), paidSets(trigger, rules, RewardContext.capture(null, "mrmime", 5, true, false)),
+                "a shiny Jungle Pokemon pays one Jungle pack");
+        assertEquals(List.of(ResourceLocation.parse("cobblemontcg:base1"), ResourceLocation.parse("cobblemontcg:base1")),
+                paidSets(trigger, rules, RewardContext.capture(null, "charmander", 5, true, true)), "first shiny catch pays both Base Set rules");
+    }
+
+    private static List<ResourceLocation> paidSets(ResourceLocation trigger, List<RewardRule> rules, RewardContext context) {
+        List<ResourceLocation> sets = new java.util.ArrayList<>();
+        RewardRules.evaluate(trigger, rules, context, MilestoneData.EMPTY, new HashSet<>(), rule -> true, () -> 0.0, rule -> {
+            sets.add(rule.set());
+            return rule.amount();
+        });
+        return sets;
     }
 
     private static RewardContext context(int level, String species, boolean shiny) {
