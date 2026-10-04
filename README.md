@@ -6,6 +6,8 @@ and Jungle (64 cards).
 
 **Requires Cobblemon 1.8.1 or newer**: the game will not start if Cobblemon is missing.
 
+**Wiki:** [coolerproyt.github.io/CobblemonTCG](https://coolerproyt.github.io/CobblemonTCG/) (source in [`docs/`](docs)).
+
 ## Disclaimer
 
 This is an unofficial fan project. It is not affiliated with, endorsed, sponsored or approved by
