@@ -1,0 +1,2447 @@
+[
+ {
+  "number": 1,
+  "name": "Clefable",
+  "subtypes": [
+   "Stage 1"
+  ],
+  "level": "34",
+  "evolvesFrom": "Clefairy",
+  "dex": 36,
+  "attacks": [
+   {
+    "name": "Metronome",
+    "cost": [
+     "colorless"
+    ],
+    "damage": "",
+    "text": "Choose 1 of the Defending Pokémon's attacks. Metronome copies that attack except for its Energy costs and anything else required in order to use that attack, such as discarding Energy cards. (No matter what type the Defending Pokémon is, Clefable's type is still Colorless.)"
+   },
+   {
+    "name": "Minimize",
+    "cost": [
+     "colorless",
+     "colorless"
+    ],
+    "damage": "",
+    "text": "All damage done by attacks to Clefable during your opponent's next turn is reduced by 20 (after applying Weakness and Resistance)."
+   }
+  ],
+  "weakness": [
+   {
+    "type": "fighting",
+    "value": "×2"
+   }
+  ],
+  "resistance": [
+   {
+    "type": "psychic",
+    "value": "-30"
+   }
+  ],
+  "retreat": 2
+ },
+ {
+  "number": 2,
+  "name": "Electrode",
+  "subtypes": [
+   "Stage 1"
+  ],
+  "level": "42",
+  "evolvesFrom": "Voltorb",
+  "dex": 101,
+  "attacks": [
+   {
+    "name": "Tackle",
+    "cost": [
+     "colorless",
+     "colorless"
+    ],
+    "damage": "20",
+    "text": ""
+   },
+   {
+    "name": "Chain Lightning",
+    "cost": [
+     "lightning",
+     "lightning",
+     "lightning"
+    ],
+    "damage": "20",
+    "text": "If the Defending Pokémon isn't Colorless, this attack does 10 damage to each Benched Pokémon of the same type as the Defending Pokémon (including your own)."
+   }
+  ],
+  "weakness": [
+   {
+    "type": "fighting",
+    "value": "×2"
+   }
+  ],
+  "retreat": 1
+ },
+ {
+  "number": 3,
+  "name": "Flareon",
+  "subtypes": [
+   "Stage 1"
+  ],
+  "level": "28",
+  "evolvesFrom": "Eevee",
+  "dex": 136,
+  "attacks": [
+   {
+    "name": "Quick Attack",
+    "cost": [
+     "colorless",
+     "colorless"
+    ],
+    "damage": "10+",
+    "text": "Flip a coin. If heads, this attack does 10 damage plus 20 more damage; if tails, this attack does 10 damage."
+   },
+   {
+    "name": "Flamethrower",
+    "cost": [
+     "fire",
+     "fire",
+     "colorless",
+     "colorless"
+    ],
+    "damage": "60",
+    "text": "Discard 1 Fire Energy card attached to Flareon in order to use this attack."
+   }
+  ],
+  "weakness": [
+   {
+    "type": "water",
+    "value": "×2"
+   }
+  ],
+  "retreat": 1
+ },
+ {
+  "number": 4,
+  "name": "Jolteon",
+  "subtypes": [
+   "Stage 1"
+  ],
+  "level": "29",
+  "evolvesFrom": "Eevee",
+  "dex": 135,
+  "attacks": [
+   {
+    "name": "Quick Attack",
+    "cost": [
+     "colorless",
+     "colorless"
+    ],
+    "damage": "10+",
+    "text": "Flip a coin. If heads, this attack does 10 damage plus 20 more damage; if tails, this attack does 10 damage."
+   },
+   {
+    "name": "Pin Missile",
+    "cost": [
+     "lightning",
+     "lightning",
+     "colorless"
+    ],
+    "damage": "20×",
+    "text": "Flip 4 coins. This attack does 20 damage times the number of heads."
+   }
+  ],
+  "weakness": [
+   {
+    "type": "fighting",
+    "value": "×2"
+   }
+  ],
+  "retreat": 1
+ },
+ {
+  "number": 5,
+  "name": "Kangaskhan",
+  "subtypes": [
+   "Basic"
+  ],
+  "level": "40",
+  "dex": 115,
+  "attacks": [
+   {
+    "name": "Fetch",
+    "cost": [
+     "colorless"
+    ],
+    "damage": "",
+    "text": "Draw a card."
+   },
+   {
+    "name": "Comet Punch",
+    "cost": [
+     "colorless",
+     "colorless",
+     "colorless",
+     "colorless"
+    ],
+    "damage": "20×",
+    "text": "Flip 4 coins. This attack does 20 damage times the number of heads."
+   }
+  ],
+  "weakness": [
+   {
+    "type": "fighting",
+    "value": "×2"
+   }
+  ],
+  "resistance": [
+   {
+    "type": "psychic",
+    "value": "-30"
+   }
+  ],
+  "retreat": 3
+ },
+ {
+  "number": 6,
+  "name": "Mr. Mime",
+  "subtypes": [
+   "Basic"
+  ],
+  "level": "28",
+  "dex": 122,
+  "powers": [
+   {
+    "name": "Invisible Wall",
+    "text": "Whenever an attack (including your own) does 30 or more damage to Mr. Mime (after applying Weakness and Resistance), prevent that damage. (Any other effects of attacks still happen.) This power can't be used if Mr. Mime is Asleep, Confused, or Paralyzed."
+   }
+  ],
+  "attacks": [
+   {
+    "name": "Meditate",
+    "cost": [
+     "psychic",
+     "colorless"
+    ],
+    "damage": "10+",
+    "text": "Does 10 damage plus 10 more damage for each damage counter on the Defending Pokémon."
+   }
+  ],
+  "weakness": [
+   {
+    "type": "psychic",
+    "value": "×2"
+   }
+  ],
+  "retreat": 1
+ },
+ {
+  "number": 7,
+  "name": "Nidoqueen",
+  "subtypes": [
+   "Stage 2"
+  ],
+  "level": "43",
+  "evolvesFrom": "Nidorina",
+  "dex": 31,
+  "attacks": [
+   {
+    "name": "Boyfriends",
+    "cost": [
+     "grass",
+     "colorless"
+    ],
+    "damage": "20+",
+    "text": "Does 20 damage plus 20 more damage for each Nidoking you have in play."
+   },
+   {
+    "name": "Mega Punch",
+    "cost": [
+     "grass",
+     "grass",
+     "colorless",
+     "colorless"
+    ],
+    "damage": "50",
+    "text": ""
+   }
+  ],
+  "weakness": [
+   {
+    "type": "psychic",
+    "value": "×2"
+   }
+  ],
+  "retreat": 3
+ },
+ {
+  "number": 8,
+  "name": "Pidgeot",
+  "subtypes": [
+   "Stage 2"
+  ],
+  "level": "40",
+  "evolvesFrom": "Pidgeotto",
+  "dex": 18,
+  "attacks": [
+   {
+    "name": "Wing Attack",
+    "cost": [
+     "colorless",
+     "colorless"
+    ],
+    "damage": "20",
+    "text": ""
+   },
+   {
+    "name": "Hurricane",
+    "cost": [
+     "colorless",
+     "colorless",
+     "colorless"
+    ],
+    "damage": "30",
+    "text": "Unless this attack Knocks Out the Defending Pokémon, return the Defending Pokémon and all cards attached to it to your opponent's hand."
+   }
+  ],
+  "weakness": [
+   {
+    "type": "lightning",
+    "value": "×2"
+   }
+  ],
+  "resistance": [
+   {
+    "type": "fighting",
+    "value": "-30"
+   }
+  ],
+  "retreat": 0
+ },
+ {
+  "number": 9,
+  "name": "Pinsir",
+  "subtypes": [
+   "Basic"
+  ],
+  "level": "24",
+  "dex": 127,
+  "attacks": [
+   {
+    "name": "Irongrip",
+    "cost": [
+     "grass",
+     "grass"
+    ],
+    "damage": "20",
+    "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+   },
+   {
+    "name": "Guillotine",
+    "cost": [
+     "grass",
+     "grass",
+     "colorless",
+     "colorless"
+    ],
+    "damage": "50",
+    "text": ""
+   }
+  ],
+  "weakness": [
+   {
+    "type": "fire",
+    "value": "×2"
+   }
+  ],
+  "retreat": 1
+ },
+ {
+  "number": 10,
+  "name": "Scyther",
+  "subtypes": [
+   "Basic"
+  ],
+  "level": "25",
+  "dex": 123,
+  "attacks": [
+   {
+    "name": "Swords Dance",
+    "cost": [
+     "grass"
+    ],
+    "damage": "",
+    "text": "During your next turn, Scyther's Slash attack's base damage is 60 instead of 30."
+   },
+   {
+    "name": "Slash",
+    "cost": [
+     "colorless",
+     "colorless",
+     "colorless"
+    ],
+    "damage": "30",
+    "text": ""
+   }
+  ],
+  "weakness": [
+   {
+    "type": "fire",
+    "value": "×2"
+   }
+  ],
+  "resistance": [
+   {
+    "type": "fighting",
+    "value": "-30"
+   }
+  ],
+  "retreat": 0
+ },
+ {
+  "number": 11,
+  "name": "Snorlax",
+  "subtypes": [
+   "Basic"
+  ],
+  "level": "20",
+  "dex": 143,
+  "powers": [
+   {
+    "name": "Thick Skinned",
+    "text": "Snorlax can't become Asleep, Confused, Paralyzed, or Poisoned. This power can't be used if Snorlax is already Asleep, Confused, or Paralyzed."
+   }
+  ],
+  "attacks": [
+   {
+    "name": "Body Slam",
+    "cost": [
+     "colorless",
+     "colorless",
+     "colorless",
+     "colorless"
+    ],
+    "damage": "30",
+    "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+   }
+  ],
+  "weakness": [
+   {
+    "type": "fighting",
+    "value": "×2"
+   }
+  ],
+  "resistance": [
+   {
+    "type": "psychic",
+    "value": "-30"
+   }
+  ],
+  "retreat": 4
+ },
+ {
+  "number": 12,
+  "name": "Vaporeon",
+  "subtypes": [
+   "Stage 1"
+  ],
+  "level": "42",
+  "evolvesFrom": "Eevee",
+  "dex": 134,
+  "attacks": [
+   {
+    "name": "Quick Attack",
+    "cost": [
+     "colorless",
+     "colorless"
+    ],
+    "damage": "10+",
+    "text": "Flip a coin. If heads, this attack does 10 damage plus 20 more damage; if tails, this attack does 10 damage."
+   },
+   {
+    "name": "Water Gun",
+    "cost": [
+     "water",
+     "water",
+     "colorless"
+    ],
+    "damage": "30+",
+    "text": "Does 30 damage plus 10 more damage for each Water Energy attached to Vaporeon but not used to pay for this attack's Energy cost. Extra Water Energy after the 2nd doesn't count."
+   }
+  ],
+  "weakness": [
+   {
+    "type": "lightning",
+    "value": "×2"
+   }
+  ],
+  "retreat": 1
+ },
+ {
+  "number": 13,
+  "name": "Venomoth",
+  "subtypes": [
+   "Stage 1"
+  ],
+  "level": "28",
+  "evolvesFrom": "Venonat",
+  "dex": 49,
+  "powers": [
+   {
+    "name": "Shift",
+    "text": "Once during your turn (before your attack), you may change the type of Venomoth to the type of any other Pokémon in play other than Colorless. This power can't be used if Venomoth is Asleep, Confused, or Paralyzed."
+   }
+  ],
+  "attacks": [
+   {
+    "name": "Venom Powder",
+    "cost": [
+     "grass",
+     "grass"
+    ],
+    "damage": "10",
+    "text": "Flip a coin. If heads, the Defending Pokémon is now Confused and Poisoned."
+   }
+  ],
+  "weakness": [
+   {
+    "type": "fire",
+    "value": "×2"
+   }
+  ],
+  "resistance": [
+   {
+    "type": "fighting",
+    "value": "-30"
+   }
+  ],
+  "retreat": 0
+ },
+ {
+  "number": 14,
+  "name": "Victreebel",
+  "subtypes": [
+   "Stage 2"
+  ],
+  "level": "42",
+  "evolvesFrom": "Weepinbell",
+  "dex": 71,
+  "attacks": [
+   {
+    "name": "Lure",
+    "cost": [
+     "grass"
+    ],
+    "damage": "",
+    "text": "If your opponent has any Benched Pokémon, choose 1 of them and switch it with his or her Active Pokémon."
+   },
+   {
+    "name": "Acid",
+    "cost": [
+     "grass",
+     "grass"
+    ],
+    "damage": "20",
+    "text": "Flip a coin. If heads, the Defending Pokémon can't retreat during your next turn."
+   }
+  ],
+  "weakness": [
+   {
+    "type": "fire",
+    "value": "×2"
+   }
+  ],
+  "retreat": 2
+ },
+ {
+  "number": 15,
+  "name": "Vileplume",
+  "subtypes": [
+   "Stage 2"
+  ],
+  "level": "35",
+  "evolvesFrom": "Gloom",
+  "dex": 45,
+  "powers": [
+   {
+    "name": "Heal",
+    "text": "Once during your turn (before your attack), you may flip a coin. If heads, remove 1 damage counter from 1 of your Pokémon. This power can't be used if Vileplume is Asleep, Confused, or Paralyzed."
+   }
+  ],
+  "attacks": [
+   {
+    "name": "Petal Dance",
+    "cost": [
+     "grass",
+     "grass",
+     "grass"
+    ],
+    "damage": "40×",
+    "text": "Flip 3 coins. This attack does 40 damage times the number of heads. Vileplume is now Confused (after doing damage)."
+   }
+  ],
+  "weakness": [
+   {
+    "type": "fire",
+    "value": "×2"
+   }
+  ],
+  "retreat": 2
+ },
+ {
+  "number": 16,
+  "name": "Wigglytuff",
+  "subtypes": [
+   "Stage 1"
+  ],
+  "level": "36",
+  "evolvesFrom": "Jigglypuff",
+  "dex": 40,
+  "attacks": [
+   {
+    "name": "Lullaby",
+    "cost": [
+     "colorless"
+    ],
+    "damage": "",
+    "text": "The Defending Pokémon is now Asleep."
+   },
+   {
+    "name": "Do the Wave",
+    "cost": [
+     "colorless",
+     "colorless",
+     "colorless"
+    ],
+    "damage": "10+",
+    "text": "Does 10 damage plus 10 more damage for each of your Benched Pokémon."
+   }
+  ],
+  "weakness": [
+   {
+    "type": "fighting",
+    "value": "×2"
+   }
+  ],
+  "resistance": [
+   {
+    "type": "psychic",
+    "value": "-30"
+   }
+  ],
+  "retreat": 2
+ },
+ {
+  "number": 17,
+  "name": "Clefable",
+  "subtypes": [
+   "Stage 1"
+  ],
+  "level": "34",
+  "evolvesFrom": "Clefairy",
+  "dex": 36,
+  "attacks": [
+   {
+    "name": "Metronome",
+    "cost": [
+     "colorless"
+    ],
+    "damage": "",
+    "text": "Choose 1 of the Defending Pokémon's attacks. Metronome copies that attack except for its Energy costs and anything else required in order to use that attack, such as discarding Energy cards. (No matter what type the Defending Pokémon is, Clefable's type is still Colorless.)"
+   },
+   {
+    "name": "Minimize",
+    "cost": [
+     "colorless",
+     "colorless"
+    ],
+    "damage": "",
+    "text": "All damage done by attacks to Clefable during your opponent's next turn is reduced by 20 (after applying Weakness and Resistance)."
+   }
+  ],
+  "weakness": [
+   {
+    "type": "fighting",
+    "value": "×2"
+   }
+  ],
+  "resistance": [
+   {
+    "type": "psychic",
+    "value": "-30"
+   }
+  ],
+  "retreat": 2
+ },
+ {
+  "number": 18,
+  "name": "Electrode",
+  "subtypes": [
+   "Stage 1"
+  ],
+  "level": "42",
+  "evolvesFrom": "Voltorb",
+  "dex": 101,
+  "attacks": [
+   {
+    "name": "Tackle",
+    "cost": [
+     "colorless",
+     "colorless"
+    ],
+    "damage": "20",
+    "text": ""
+   },
+   {
+    "name": "Chain Lightning",
+    "cost": [
+     "lightning",
+     "lightning",
+     "lightning"
+    ],
+    "damage": "20",
+    "text": "If the Defending Pokémon isn't Colorless, this attack does 10 damage to each Benched Pokémon of the same type as the Defending Pokémon (including your own)."
+   }
+  ],
+  "weakness": [
+   {
+    "type": "fighting",
+    "value": "×2"
+   }
+  ],
+  "retreat": 1
+ },
+ {
+  "number": 19,
+  "name": "Flareon",
+  "subtypes": [
+   "Stage 1"
+  ],
+  "level": "28",
+  "evolvesFrom": "Eevee",
+  "dex": 136,
+  "attacks": [
+   {
+    "name": "Quick Attack",
+    "cost": [
+     "colorless",
+     "colorless"
+    ],
+    "damage": "10+",
+    "text": "Flip a coin. If heads, this attack does 10 damage plus 20 more damage; if tails, this attack does 10 damage."
+   },
+   {
+    "name": "Flamethrower",
+    "cost": [
+     "fire",
+     "fire",
+     "colorless",
+     "colorless"
+    ],
+    "damage": "60",
+    "text": "Discard 1 Fire Energy card attached to Flareon in order to use this attack."
+   }
+  ],
+  "weakness": [
+   {
+    "type": "water",
+    "value": "×2"
+   }
+  ],
+  "retreat": 1
+ },
+ {
+  "number": 20,
+  "name": "Jolteon",
+  "subtypes": [
+   "Stage 1"
+  ],
+  "level": "29",
+  "evolvesFrom": "Eevee",
+  "dex": 135,
+  "attacks": [
+   {
+    "name": "Quick Attack",
+    "cost": [
+     "colorless",
+     "colorless"
+    ],
+    "damage": "10+",
+    "text": "Flip a coin. If heads, this attack does 10 damage plus 20 more damage; if tails, this attack does 10 damage."
+   },
+   {
+    "name": "Pin Missile",
+    "cost": [
+     "lightning",
+     "lightning",
+     "colorless"
+    ],
+    "damage": "20×",
+    "text": "Flip 4 coins. This attack does 20 damage times the number of heads."
+   }
+  ],
+  "weakness": [
+   {
+    "type": "fighting",
+    "value": "×2"
+   }
+  ],
+  "retreat": 1
+ },
+ {
+  "number": 21,
+  "name": "Kangaskhan",
+  "subtypes": [
+   "Basic"
+  ],
+  "level": "40",
+  "dex": 115,
+  "attacks": [
+   {
+    "name": "Fetch",
+    "cost": [
+     "colorless"
+    ],
+    "damage": "",
+    "text": "Draw a card."
+   },
+   {
+    "name": "Comet Punch",
+    "cost": [
+     "colorless",
+     "colorless",
+     "colorless",
+     "colorless"
+    ],
+    "damage": "20×",
+    "text": "Flip 4 coins. This attack does 20 damage times the number of heads."
+   }
+  ],
+  "weakness": [
+   {
+    "type": "fighting",
+    "value": "×2"
+   }
+  ],
+  "resistance": [
+   {
+    "type": "psychic",
+    "value": "-30"
+   }
+  ],
+  "retreat": 3
+ },
+ {
+  "number": 22,
+  "name": "Mr. Mime",
+  "subtypes": [
+   "Basic"
+  ],
+  "level": "28",
+  "dex": 122,
+  "powers": [
+   {
+    "name": "Invisible Wall",
+    "text": "Whenever an attack (including your own) does 30 or more damage to Mr. Mime (after applying Weakness and Resistance), prevent that damage. (Any other effects of attacks still happen.) This power can't be used if Mr. Mime is Asleep, Confused, or Paralyzed."
+   }
+  ],
+  "attacks": [
+   {
+    "name": "Meditate",
+    "cost": [
+     "psychic",
+     "colorless"
+    ],
+    "damage": "10+",
+    "text": "Does 10 damage plus 10 more damage for each damage counter on the Defending Pokémon."
+   }
+  ],
+  "weakness": [
+   {
+    "type": "psychic",
+    "value": "×2"
+   }
+  ],
+  "retreat": 1
+ },
+ {
+  "number": 23,
+  "name": "Nidoqueen",
+  "subtypes": [
+   "Stage 2"
+  ],
+  "level": "43",
+  "evolvesFrom": "Nidorina",
+  "dex": 31,
+  "attacks": [
+   {
+    "name": "Boyfriends",
+    "cost": [
+     "grass",
+     "colorless"
+    ],
+    "damage": "20+",
+    "text": "Does 20 damage plus 20 more damage for each Nidoking you have in play."
+   },
+   {
+    "name": "Mega Punch",
+    "cost": [
+     "grass",
+     "grass",
+     "colorless",
+     "colorless"
+    ],
+    "damage": "50",
+    "text": ""
+   }
+  ],
+  "weakness": [
+   {
+    "type": "psychic",
+    "value": "×2"
+   }
+  ],
+  "retreat": 3
+ },
+ {
+  "number": 24,
+  "name": "Pidgeot",
+  "subtypes": [
+   "Stage 2"
+  ],
+  "level": "40",
+  "evolvesFrom": "Pidgeotto",
+  "dex": 18,
+  "attacks": [
+   {
+    "name": "Wing Attack",
+    "cost": [
+     "colorless",
+     "colorless"
+    ],
+    "damage": "20",
+    "text": ""
+   },
+   {
+    "name": "Hurricane",
+    "cost": [
+     "colorless",
+     "colorless",
+     "colorless"
+    ],
+    "damage": "30",
+    "text": "Unless this attack Knocks Out the Defending Pokémon, return the Defending Pokémon and all cards attached to it to your opponent's hand."
+   }
+  ],
+  "weakness": [
+   {
+    "type": "lightning",
+    "value": "×2"
+   }
+  ],
+  "resistance": [
+   {
+    "type": "fighting",
+    "value": "-30"
+   }
+  ],
+  "retreat": 0
+ },
+ {
+  "number": 25,
+  "name": "Pinsir",
+  "subtypes": [
+   "Basic"
+  ],
+  "level": "24",
+  "dex": 127,
+  "attacks": [
+   {
+    "name": "Irongrip",
+    "cost": [
+     "grass",
+     "grass"
+    ],
+    "damage": "20",
+    "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+   },
+   {
+    "name": "Guillotine",
+    "cost": [
+     "grass",
+     "grass",
+     "colorless",
+     "colorless"
+    ],
+    "damage": "50",
+    "text": ""
+   }
+  ],
+  "weakness": [
+   {
+    "type": "fire",
+    "value": "×2"
+   }
+  ],
+  "retreat": 1
+ },
+ {
+  "number": 26,
+  "name": "Scyther",
+  "subtypes": [
+   "Basic"
+  ],
+  "level": "25",
+  "dex": 123,
+  "attacks": [
+   {
+    "name": "Swords Dance",
+    "cost": [
+     "grass"
+    ],
+    "damage": "",
+    "text": "During your next turn, Scyther's Slash attack's base damage is 60 instead of 30."
+   },
+   {
+    "name": "Slash",
+    "cost": [
+     "colorless",
+     "colorless",
+     "colorless"
+    ],
+    "damage": "30",
+    "text": ""
+   }
+  ],
+  "weakness": [
+   {
+    "type": "fire",
+    "value": "×2"
+   }
+  ],
+  "resistance": [
+   {
+    "type": "fighting",
+    "value": "-30"
+   }
+  ],
+  "retreat": 0
+ },
+ {
+  "number": 27,
+  "name": "Snorlax",
+  "subtypes": [
+   "Basic"
+  ],
+  "level": "20",
+  "dex": 143,
+  "powers": [
+   {
+    "name": "Thick Skinned",
+    "text": "Snorlax can't become Asleep, Confused, Paralyzed, or Poisoned. This power can't be used if Snorlax is already Asleep, Confused, or Paralyzed."
+   }
+  ],
+  "attacks": [
+   {
+    "name": "Body Slam",
+    "cost": [
+     "colorless",
+     "colorless",
+     "colorless",
+     "colorless"
+    ],
+    "damage": "30",
+    "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+   }
+  ],
+  "weakness": [
+   {
+    "type": "fighting",
+    "value": "×2"
+   }
+  ],
+  "resistance": [
+   {
+    "type": "psychic",
+    "value": "-30"
+   }
+  ],
+  "retreat": 4
+ },
+ {
+  "number": 28,
+  "name": "Vaporeon",
+  "subtypes": [
+   "Stage 1"
+  ],
+  "level": "42",
+  "evolvesFrom": "Eevee",
+  "dex": 134,
+  "attacks": [
+   {
+    "name": "Quick Attack",
+    "cost": [
+     "colorless",
+     "colorless"
+    ],
+    "damage": "10+",
+    "text": "Flip a coin. If heads, this attack does 10 damage plus 20 more damage; if tails, this attack does 10 damage."
+   },
+   {
+    "name": "Water Gun",
+    "cost": [
+     "water",
+     "water",
+     "colorless"
+    ],
+    "damage": "30+",
+    "text": "Does 30 damage plus 10 more damage for each Water Energy attached to Vaporeon but not used to pay for this attack's Energy cost. Extra Water Energy after the 2nd doesn't count."
+   }
+  ],
+  "weakness": [
+   {
+    "type": "lightning",
+    "value": "×2"
+   }
+  ],
+  "retreat": 1
+ },
+ {
+  "number": 29,
+  "name": "Venomoth",
+  "subtypes": [
+   "Stage 1"
+  ],
+  "level": "28",
+  "evolvesFrom": "Venonat",
+  "dex": 49,
+  "powers": [
+   {
+    "name": "Shift",
+    "text": "Once during your turn (before your attack), you may change the type of Venomoth to the type of any other Pokémon in play other than Colorless. This power can't be used if Venomoth is Asleep, Confused, or Paralyzed."
+   }
+  ],
+  "attacks": [
+   {
+    "name": "Venom Powder",
+    "cost": [
+     "grass",
+     "grass"
+    ],
+    "damage": "10",
+    "text": "Flip a coin. If heads, the Defending Pokémon is now Confused and Poisoned."
+   }
+  ],
+  "weakness": [
+   {
+    "type": "fire",
+    "value": "×2"
+   }
+  ],
+  "resistance": [
+   {
+    "type": "fighting",
+    "value": "-30"
+   }
+  ],
+  "retreat": 0
+ },
+ {
+  "number": 30,
+  "name": "Victreebel",
+  "subtypes": [
+   "Stage 2"
+  ],
+  "level": "42",
+  "evolvesFrom": "Weepinbell",
+  "dex": 71,
+  "attacks": [
+   {
+    "name": "Lure",
+    "cost": [
+     "grass"
+    ],
+    "damage": "",
+    "text": "If your opponent has any Benched Pokémon, choose 1 of them and switch it with his or her Active Pokémon."
+   },
+   {
+    "name": "Acid",
+    "cost": [
+     "grass",
+     "grass"
+    ],
+    "damage": "20",
+    "text": "Flip a coin. If heads, the Defending Pokémon can't retreat during your next turn."
+   }
+  ],
+  "weakness": [
+   {
+    "type": "fire",
+    "value": "×2"
+   }
+  ],
+  "retreat": 2
+ },
+ {
+  "number": 31,
+  "name": "Vileplume",
+  "subtypes": [
+   "Stage 2"
+  ],
+  "level": "35",
+  "evolvesFrom": "Gloom",
+  "dex": 45,
+  "powers": [
+   {
+    "name": "Heal",
+    "text": "Once during your turn (before your attack), you may flip a coin. If heads, remove 1 damage counter from 1 of your Pokémon. This power can't be used if Vileplume is Asleep, Confused, or Paralyzed."
+   }
+  ],
+  "attacks": [
+   {
+    "name": "Petal Dance",
+    "cost": [
+     "grass",
+     "grass",
+     "grass"
+    ],
+    "damage": "40×",
+    "text": "Flip 3 coins. This attack does 40 damage times the number of heads. Vileplume is now Confused (after doing damage)."
+   }
+  ],
+  "weakness": [
+   {
+    "type": "fire",
+    "value": "×2"
+   }
+  ],
+  "retreat": 2
+ },
+ {
+  "number": 32,
+  "name": "Wigglytuff",
+  "subtypes": [
+   "Stage 1"
+  ],
+  "level": "36",
+  "evolvesFrom": "Jigglypuff",
+  "dex": 40,
+  "attacks": [
+   {
+    "name": "Lullaby",
+    "cost": [
+     "colorless"
+    ],
+    "damage": "",
+    "text": "The Defending Pokémon is now Asleep."
+   },
+   {
+    "name": "Do the Wave",
+    "cost": [
+     "colorless",
+     "colorless",
+     "colorless"
+    ],
+    "damage": "10+",
+    "text": "Does 10 damage plus 10 more damage for each of your Benched Pokémon."
+   }
+  ],
+  "weakness": [
+   {
+    "type": "fighting",
+    "value": "×2"
+   }
+  ],
+  "resistance": [
+   {
+    "type": "psychic",
+    "value": "-30"
+   }
+  ],
+  "retreat": 2
+ },
+ {
+  "number": 33,
+  "name": "Butterfree",
+  "subtypes": [
+   "Stage 2"
+  ],
+  "level": "28",
+  "evolvesFrom": "Metapod",
+  "dex": 12,
+  "attacks": [
+   {
+    "name": "Whirlwind",
+    "cost": [
+     "colorless",
+     "colorless"
+    ],
+    "damage": "20",
+    "text": "If your opponent has any Benched Pokémon, he or she chooses 1 of them and switches it with the Defending Pokémon. (Do the damage before switching the Pokémon.)"
+   },
+   {
+    "name": "Mega Drain",
+    "cost": [
+     "grass",
+     "grass",
+     "grass",
+     "grass"
+    ],
+    "damage": "40",
+    "text": "Remove a number of damage counters from Butterfree equal to half the damage done to the Defending Pokémon (after applying Weakness and Resistance) (rounded up to the nearest 10)."
+   }
+  ],
+  "weakness": [
+   {
+    "type": "fire",
+    "value": "×2"
+   }
+  ],
+  "resistance": [
+   {
+    "type": "fighting",
+    "value": "-30"
+   }
+  ],
+  "retreat": 0
+ },
+ {
+  "number": 34,
+  "name": "Dodrio",
+  "subtypes": [
+   "Stage 1"
+  ],
+  "level": "28",
+  "evolvesFrom": "Doduo",
+  "dex": 85,
+  "powers": [
+   {
+    "name": "Retreat Aid",
+    "text": "As long as Dodrio is Benched, pay {colorless} less to retreat your Active Pokémon."
+   }
+  ],
+  "attacks": [
+   {
+    "name": "Rage",
+    "cost": [
+     "colorless",
+     "colorless",
+     "colorless"
+    ],
+    "damage": "10+",
+    "text": "Does 10 damage plus 10 more damage for each damage counter on Dodrio."
+   }
+  ],
+  "weakness": [
+   {
+    "type": "lightning",
+    "value": "×2"
+   }
+  ],
+  "resistance": [
+   {
+    "type": "fighting",
+    "value": "-30"
+   }
+  ],
+  "retreat": 0
+ },
+ {
+  "number": 35,
+  "name": "Exeggutor",
+  "subtypes": [
+   "Stage 1"
+  ],
+  "level": "35",
+  "evolvesFrom": "Exeggcute",
+  "dex": 103,
+  "attacks": [
+   {
+    "name": "Teleport",
+    "cost": [
+     "psychic"
+    ],
+    "damage": "",
+    "text": "Switch Exeggutor with 1 of your Benched Pokémon."
+   },
+   {
+    "name": "Big Eggsplosion",
+    "cost": [
+     "colorless"
+    ],
+    "damage": "20×",
+    "text": "Flip a number of coins equal to the number of Energy attached to Exeggutor. This attack does 20 damage times the number of heads."
+   }
+  ],
+  "weakness": [
+   {
+    "type": "fire",
+    "value": "×2"
+   }
+  ],
+  "retreat": 3
+ },
+ {
+  "number": 36,
+  "name": "Fearow",
+  "subtypes": [
+   "Stage 1"
+  ],
+  "level": "27",
+  "evolvesFrom": "Spearow",
+  "dex": 22,
+  "attacks": [
+   {
+    "name": "Agility",
+    "cost": [
+     "colorless",
+     "colorless",
+     "colorless"
+    ],
+    "damage": "20",
+    "text": "Flip a coin. If heads, during your opponent's next turn, prevent all effects of attacks, including damage, done to Fearow."
+   },
+   {
+    "name": "Drill Peck",
+    "cost": [
+     "colorless",
+     "colorless",
+     "colorless",
+     "colorless"
+    ],
+    "damage": "40",
+    "text": ""
+   }
+  ],
+  "weakness": [
+   {
+    "type": "lightning",
+    "value": "×2"
+   }
+  ],
+  "resistance": [
+   {
+    "type": "fighting",
+    "value": "-30"
+   }
+  ],
+  "retreat": 0
+ },
+ {
+  "number": 37,
+  "name": "Gloom",
+  "subtypes": [
+   "Stage 1"
+  ],
+  "level": "35",
+  "evolvesFrom": "Oddish",
+  "dex": 44,
+  "attacks": [
+   {
+    "name": "Poisonpowder",
+    "cost": [
+     "grass"
+    ],
+    "damage": "",
+    "text": "The Defending Pokémon is now Poisoned."
+   },
+   {
+    "name": "Foul Odor",
+    "cost": [
+     "grass",
+     "grass"
+    ],
+    "damage": "20",
+    "text": "Both the Defending Pokémon and Gloom are now Confused (after doing damage)."
+   }
+  ],
+  "weakness": [
+   {
+    "type": "fire",
+    "value": "×2"
+   }
+  ],
+  "retreat": 1
+ },
+ {
+  "number": 38,
+  "name": "Lickitung",
+  "subtypes": [
+   "Basic"
+  ],
+  "level": "10",
+  "dex": 108,
+  "attacks": [
+   {
+    "name": "Tongue Wrap",
+    "cost": [
+     "colorless"
+    ],
+    "damage": "10",
+    "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+   },
+   {
+    "name": "Supersonic",
+    "cost": [
+     "colorless",
+     "colorless"
+    ],
+    "damage": "",
+    "text": "Flip a coin. If heads, the Defending Pokémon is now Confused."
+   }
+  ],
+  "weakness": [
+   {
+    "type": "fighting",
+    "value": "×2"
+   }
+  ],
+  "resistance": [
+   {
+    "type": "psychic",
+    "value": "-30"
+   }
+  ],
+  "retreat": 3
+ },
+ {
+  "number": 39,
+  "name": "Marowak",
+  "subtypes": [
+   "Stage 1"
+  ],
+  "level": "26",
+  "evolvesFrom": "Cubone",
+  "dex": 105,
+  "attacks": [
+   {
+    "name": "Bonemerang",
+    "cost": [
+     "fighting",
+     "fighting"
+    ],
+    "damage": "30×",
+    "text": "Flip 2 coins. This attack does 30 damage times the number of heads."
+   },
+   {
+    "name": "Call for Friend",
+    "cost": [
+     "fighting",
+     "fighting",
+     "colorless"
+    ],
+    "damage": "",
+    "text": "Search your deck for a Fighting Basic Pokémon card and put it onto your Bench. Shuffle your deck afterward. (You can't use this attack if your Bench is full.)"
+   }
+  ],
+  "weakness": [
+   {
+    "type": "grass",
+    "value": "×2"
+   }
+  ],
+  "resistance": [
+   {
+    "type": "lightning",
+    "value": "-30"
+   }
+  ],
+  "retreat": 1
+ },
+ {
+  "number": 40,
+  "name": "Nidorina",
+  "subtypes": [
+   "Stage 1"
+  ],
+  "level": "24",
+  "evolvesFrom": "Nidoran ♀",
+  "dex": 30,
+  "attacks": [
+   {
+    "name": "Supersonic",
+    "cost": [
+     "grass"
+    ],
+    "damage": "",
+    "text": "Flip a coin. If heads, the Defending Pokémon is now Confused."
+   },
+   {
+    "name": "Double Kick",
+    "cost": [
+     "grass",
+     "colorless",
+     "colorless"
+    ],
+    "damage": "30×",
+    "text": "Flip 2 coins. This attack does 30 damage times the number of heads."
+   }
+  ],
+  "weakness": [
+   {
+    "type": "psychic",
+    "value": "×2"
+   }
+  ],
+  "retreat": 1
+ },
+ {
+  "number": 41,
+  "name": "Parasect",
+  "subtypes": [
+   "Stage 1"
+  ],
+  "level": "28",
+  "evolvesFrom": "Paras",
+  "dex": 47,
+  "attacks": [
+   {
+    "name": "Spore",
+    "cost": [
+     "grass",
+     "grass"
+    ],
+    "damage": "",
+    "text": "The Defending Pokémon is now Asleep."
+   },
+   {
+    "name": "Slash",
+    "cost": [
+     "colorless",
+     "colorless",
+     "colorless"
+    ],
+    "damage": "30",
+    "text": ""
+   }
+  ],
+  "weakness": [
+   {
+    "type": "fire",
+    "value": "×2"
+   }
+  ],
+  "retreat": 1
+ },
+ {
+  "number": 42,
+  "name": "Persian",
+  "subtypes": [
+   "Stage 1"
+  ],
+  "level": "25",
+  "evolvesFrom": "Meowth",
+  "dex": 53,
+  "attacks": [
+   {
+    "name": "Scratch",
+    "cost": [
+     "colorless",
+     "colorless"
+    ],
+    "damage": "20",
+    "text": ""
+   },
+   {
+    "name": "Pounce",
+    "cost": [
+     "colorless",
+     "colorless",
+     "colorless"
+    ],
+    "damage": "30",
+    "text": "If the Defending Pokémon attacks Persian during your next turn, any damage done by the attack is reduced by 10 (after applying Weakness and Resistance). (Benching either Pokémon ends this effect.)"
+   }
+  ],
+  "weakness": [
+   {
+    "type": "fighting",
+    "value": "×2"
+   }
+  ],
+  "resistance": [
+   {
+    "type": "psychic",
+    "value": "-30"
+   }
+  ],
+  "retreat": 0
+ },
+ {
+  "number": 43,
+  "name": "Primeape",
+  "subtypes": [
+   "Stage 1"
+  ],
+  "level": "45",
+  "evolvesFrom": "Mankey",
+  "dex": 57,
+  "attacks": [
+   {
+    "name": "Fury Swipes",
+    "cost": [
+     "fighting",
+     "fighting"
+    ],
+    "damage": "20×",
+    "text": "Flip 3 coins. This attack does 20 damage times the number of heads."
+   },
+   {
+    "name": "Tantrum",
+    "cost": [
+     "fighting",
+     "fighting",
+     "colorless"
+    ],
+    "damage": "50",
+    "text": "Flip a coin. If tails, Primeape is now Confused (after doing damage)."
+   }
+  ],
+  "weakness": [
+   {
+    "type": "psychic",
+    "value": "×2"
+   }
+  ],
+  "retreat": 1
+ },
+ {
+  "number": 44,
+  "name": "Rapidash",
+  "subtypes": [
+   "Stage 1"
+  ],
+  "level": "33",
+  "evolvesFrom": "Ponyta",
+  "dex": 78,
+  "attacks": [
+   {
+    "name": "Stomp",
+    "cost": [
+     "colorless",
+     "colorless"
+    ],
+    "damage": "20+",
+    "text": "Flip a coin. If heads, this attack does 20 damage plus 10 more damage; if tails, this attack does 20 damage."
+   },
+   {
+    "name": "Agility",
+    "cost": [
+     "fire",
+     "fire",
+     "colorless"
+    ],
+    "damage": "30",
+    "text": "Flip a coin. If heads, during your opponent's next turn, prevent all effects of attacks, including damage, done to Rapidash."
+   }
+  ],
+  "weakness": [
+   {
+    "type": "water",
+    "value": "×2"
+   }
+  ],
+  "retreat": 0
+ },
+ {
+  "number": 45,
+  "name": "Rhydon",
+  "subtypes": [
+   "Stage 1"
+  ],
+  "level": "48",
+  "evolvesFrom": "Rhyhorn",
+  "dex": 112,
+  "attacks": [
+   {
+    "name": "Horn Attack",
+    "cost": [
+     "fighting",
+     "colorless",
+     "colorless"
+    ],
+    "damage": "30",
+    "text": ""
+   },
+   {
+    "name": "Ram",
+    "cost": [
+     "fighting",
+     "fighting",
+     "fighting",
+     "fighting"
+    ],
+    "damage": "50",
+    "text": "Rhydon does 20 damage to itself. If your opponent has any Benched Pokémon, he or she chooses 1 of them and switches it with the Defending Pokémon. (Do the damage before switching the Pokémon. Switch the Pokémon even if Rhydon is knocked out.)"
+   }
+  ],
+  "weakness": [
+   {
+    "type": "grass",
+    "value": "×2"
+   }
+  ],
+  "resistance": [
+   {
+    "type": "lightning",
+    "value": "-30"
+   }
+  ],
+  "retreat": 3
+ },
+ {
+  "number": 46,
+  "name": "Seaking",
+  "subtypes": [
+   "Stage 1"
+  ],
+  "level": "28",
+  "evolvesFrom": "Goldeen",
+  "dex": 119,
+  "attacks": [
+   {
+    "name": "Horn Attack",
+    "cost": [
+     "water"
+    ],
+    "damage": "10",
+    "text": ""
+   },
+   {
+    "name": "Waterfall",
+    "cost": [
+     "water",
+     "colorless"
+    ],
+    "damage": "30",
+    "text": ""
+   }
+  ],
+  "weakness": [
+   {
+    "type": "lightning",
+    "value": "×2"
+   }
+  ],
+  "retreat": 1
+ },
+ {
+  "number": 47,
+  "name": "Tauros",
+  "subtypes": [
+   "Basic"
+  ],
+  "level": "24",
+  "dex": 128,
+  "attacks": [
+   {
+    "name": "Stomp",
+    "cost": [
+     "colorless",
+     "colorless"
+    ],
+    "damage": "20+",
+    "text": "Flip a coin. If heads, this attack does 20 damage plus 10 more damage; if tails, this attack does 20 damage."
+   },
+   {
+    "name": "Rampage",
+    "cost": [
+     "colorless",
+     "colorless",
+     "colorless"
+    ],
+    "damage": "20+",
+    "text": "Does 20 damage plus 10 more damage for each damage counter on Tauros. Flip a coin. If tails, Tauros is now Confused (after doing damage)."
+   }
+  ],
+  "weakness": [
+   {
+    "type": "fighting",
+    "value": "×2"
+   }
+  ],
+  "resistance": [
+   {
+    "type": "psychic",
+    "value": "-30"
+   }
+  ],
+  "retreat": 2
+ },
+ {
+  "number": 48,
+  "name": "Weepinbell",
+  "subtypes": [
+   "Stage 1"
+  ],
+  "level": "28",
+  "evolvesFrom": "Bellsprout",
+  "dex": 70,
+  "attacks": [
+   {
+    "name": "Poisonpowder",
+    "cost": [
+     "grass"
+    ],
+    "damage": "10",
+    "text": "Flip a coin. If heads, the Defending Pokémon is now Poisoned."
+   },
+   {
+    "name": "Razor Leaf",
+    "cost": [
+     "grass",
+     "grass"
+    ],
+    "damage": "30",
+    "text": ""
+   }
+  ],
+  "weakness": [
+   {
+    "type": "fire",
+    "value": "×2"
+   }
+  ],
+  "retreat": 1
+ },
+ {
+  "number": 49,
+  "name": "Bellsprout",
+  "subtypes": [
+   "Basic"
+  ],
+  "level": "11",
+  "dex": 69,
+  "attacks": [
+   {
+    "name": "Vine Whip",
+    "cost": [
+     "grass"
+    ],
+    "damage": "10",
+    "text": ""
+   },
+   {
+    "name": "Call for Family",
+    "cost": [
+     "grass"
+    ],
+    "damage": "",
+    "text": "Search your deck for a Basic Pokémon named Bellsprout and put it onto your Bench. Shuffle your deck afterward. (You can't use this attack if your Bench is full.)"
+   }
+  ],
+  "weakness": [
+   {
+    "type": "fire",
+    "value": "×2"
+   }
+  ],
+  "retreat": 1
+ },
+ {
+  "number": 50,
+  "name": "Cubone",
+  "subtypes": [
+   "Basic"
+  ],
+  "level": "13",
+  "dex": 104,
+  "attacks": [
+   {
+    "name": "Snivel",
+    "cost": [
+     "colorless"
+    ],
+    "damage": "",
+    "text": "If the Defending Pokémon attacks Cubone during your opponent's next turn, any damage done by the attack is reduced by 20 (after applying Weakness and Resistance). (Benching either Pokémon ends this effect.)"
+   },
+   {
+    "name": "Rage",
+    "cost": [
+     "fighting",
+     "fighting"
+    ],
+    "damage": "10+",
+    "text": "Does 10 damage plus 10 more damage for each damage counter on Cubone."
+   }
+  ],
+  "weakness": [
+   {
+    "type": "grass",
+    "value": "×2"
+   }
+  ],
+  "resistance": [
+   {
+    "type": "lightning",
+    "value": "-30"
+   }
+  ],
+  "retreat": 1
+ },
+ {
+  "number": 51,
+  "name": "Eevee",
+  "subtypes": [
+   "Basic"
+  ],
+  "level": "12",
+  "dex": 133,
+  "attacks": [
+   {
+    "name": "Tail Wag",
+    "cost": [
+     "colorless"
+    ],
+    "damage": "",
+    "text": "Flip a coin. If heads, the Defending Pokémon can't attack Eevee during your opponent's next turn. (Benching either Pokémon ends this effect.)"
+   },
+   {
+    "name": "Quick Attack",
+    "cost": [
+     "colorless",
+     "colorless"
+    ],
+    "damage": "10+",
+    "text": "Flip a coin. If heads, this attack does 10 damage plus 20 more damage; if tails, this attack does 10 damage."
+   }
+  ],
+  "weakness": [
+   {
+    "type": "fighting",
+    "value": "×2"
+   }
+  ],
+  "resistance": [
+   {
+    "type": "psychic",
+    "value": "-30"
+   }
+  ],
+  "retreat": 1
+ },
+ {
+  "number": 52,
+  "name": "Exeggcute",
+  "subtypes": [
+   "Basic"
+  ],
+  "level": "14",
+  "dex": 102,
+  "attacks": [
+   {
+    "name": "Hypnosis",
+    "cost": [
+     "psychic"
+    ],
+    "damage": "",
+    "text": "The Defending Pokémon is now Asleep."
+   },
+   {
+    "name": "Leech Seed",
+    "cost": [
+     "grass",
+     "grass"
+    ],
+    "damage": "20",
+    "text": "Unless all damage from this attack is prevented, you may remove 1 damage counter from Exeggcute."
+   }
+  ],
+  "weakness": [
+   {
+    "type": "fire",
+    "value": "×2"
+   }
+  ],
+  "retreat": 1
+ },
+ {
+  "number": 53,
+  "name": "Goldeen",
+  "subtypes": [
+   "Basic"
+  ],
+  "level": "12",
+  "dex": 118,
+  "attacks": [
+   {
+    "name": "Horn Attack",
+    "cost": [
+     "water"
+    ],
+    "damage": "10",
+    "text": ""
+   }
+  ],
+  "weakness": [
+   {
+    "type": "lightning",
+    "value": "×2"
+   }
+  ],
+  "retreat": 0
+ },
+ {
+  "number": 54,
+  "name": "Jigglypuff",
+  "subtypes": [
+   "Basic"
+  ],
+  "level": "14",
+  "dex": 39,
+  "attacks": [
+   {
+    "name": "Lullaby",
+    "cost": [
+     "colorless"
+    ],
+    "damage": "",
+    "text": "The Defending Pokémon is now Asleep."
+   },
+   {
+    "name": "Pound",
+    "cost": [
+     "colorless",
+     "colorless"
+    ],
+    "damage": "20",
+    "text": ""
+   }
+  ],
+  "weakness": [
+   {
+    "type": "fighting",
+    "value": "×2"
+   }
+  ],
+  "resistance": [
+   {
+    "type": "psychic",
+    "value": "-30"
+   }
+  ],
+  "retreat": 1
+ },
+ {
+  "number": 55,
+  "name": "Mankey",
+  "subtypes": [
+   "Basic"
+  ],
+  "level": "7",
+  "dex": 56,
+  "powers": [
+   {
+    "name": "Peek",
+    "text": "Once during your turn (before your attack), you may look at one of the following: the top card of either player's deck, a random card from your opponent's hand, or one of either player's Prizes. This power can't be used if Mankey is Asleep, Confused, or Paralyzed."
+   }
+  ],
+  "attacks": [
+   {
+    "name": "Scratch",
+    "cost": [
+     "colorless"
+    ],
+    "damage": "10",
+    "text": ""
+   }
+  ],
+  "weakness": [
+   {
+    "type": "psychic",
+    "value": "×2"
+   }
+  ],
+  "retreat": 0
+ },
+ {
+  "number": 56,
+  "name": "Meowth",
+  "subtypes": [
+   "Basic"
+  ],
+  "level": "15",
+  "dex": 52,
+  "attacks": [
+   {
+    "name": "Pay Day",
+    "cost": [
+     "colorless",
+     "colorless"
+    ],
+    "damage": "10",
+    "text": "Flip a coin. If heads, draw a card."
+   }
+  ],
+  "weakness": [
+   {
+    "type": "fighting",
+    "value": "×2"
+   }
+  ],
+  "resistance": [
+   {
+    "type": "psychic",
+    "value": "-30"
+   }
+  ],
+  "retreat": 1
+ },
+ {
+  "number": 57,
+  "name": "Nidoran ♀",
+  "subtypes": [
+   "Basic"
+  ],
+  "level": "13",
+  "dex": 29,
+  "attacks": [
+   {
+    "name": "Fury Swipes",
+    "cost": [
+     "grass"
+    ],
+    "damage": "10×",
+    "text": "Flip 3 coins. This attack does 10 damage times the number of heads."
+   },
+   {
+    "name": "Call for Family",
+    "cost": [
+     "grass",
+     "grass"
+    ],
+    "damage": "",
+    "text": "Search your deck for a Basic Pokémon named Nidoran ♂ or Nidoran ♀ and put it onto your Bench. Shuffle your deck afterward. (You can't use this attack if your Bench is full.)"
+   }
+  ],
+  "weakness": [
+   {
+    "type": "psychic",
+    "value": "×2"
+   }
+  ],
+  "retreat": 1
+ },
+ {
+  "number": 58,
+  "name": "Oddish",
+  "subtypes": [
+   "Basic"
+  ],
+  "level": "8",
+  "dex": 43,
+  "attacks": [
+   {
+    "name": "Stun Spore",
+    "cost": [
+     "grass"
+    ],
+    "damage": "10",
+    "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+   },
+   {
+    "name": "Sprout",
+    "cost": [
+     "grass",
+     "grass"
+    ],
+    "damage": "",
+    "text": "Search your deck for a Basic Pokémon named Oddish and put it onto your Bench. Shuffle your deck afterward. (You can't use this attack if your Bench is full.)"
+   }
+  ],
+  "weakness": [
+   {
+    "type": "fire",
+    "value": "×2"
+   }
+  ],
+  "retreat": 1
+ },
+ {
+  "number": 59,
+  "name": "Paras",
+  "subtypes": [
+   "Basic"
+  ],
+  "level": "8",
+  "dex": 46,
+  "attacks": [
+   {
+    "name": "Scratch",
+    "cost": [
+     "colorless",
+     "colorless"
+    ],
+    "damage": "20",
+    "text": ""
+   },
+   {
+    "name": "Spore",
+    "cost": [
+     "grass",
+     "grass"
+    ],
+    "damage": "",
+    "text": "The Defending Pokémon is now Asleep."
+   }
+  ],
+  "weakness": [
+   {
+    "type": "fire",
+    "value": "×2"
+   }
+  ],
+  "retreat": 1
+ },
+ {
+  "number": 60,
+  "name": "Pikachu",
+  "subtypes": [
+   "Basic"
+  ],
+  "level": "14",
+  "dex": 25,
+  "attacks": [
+   {
+    "name": "Spark",
+    "cost": [
+     "lightning",
+     "lightning"
+    ],
+    "damage": "20",
+    "text": "If your opponent has any Benched Pokémon, choose 1 of them and this attack does 10 damage to it. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+   }
+  ],
+  "weakness": [
+   {
+    "type": "fighting",
+    "value": "×2"
+   }
+  ],
+  "retreat": 1
+ },
+ {
+  "number": 61,
+  "name": "Rhyhorn",
+  "subtypes": [
+   "Basic"
+  ],
+  "level": "18",
+  "dex": 111,
+  "attacks": [
+   {
+    "name": "Leer",
+    "cost": [
+     "colorless"
+    ],
+    "damage": "",
+    "text": "Flip a coin. If heads, the Defending Pokémon can't attack Rhyhorn during your opponent's next turn. (Benching either Pokémon ends this effect.)"
+   },
+   {
+    "name": "Horn Attack",
+    "cost": [
+     "fighting",
+     "colorless",
+     "colorless"
+    ],
+    "damage": "30",
+    "text": ""
+   }
+  ],
+  "weakness": [
+   {
+    "type": "grass",
+    "value": "×2"
+   }
+  ],
+  "resistance": [
+   {
+    "type": "lightning",
+    "value": "-30"
+   }
+  ],
+  "retreat": 3
+ },
+ {
+  "number": 62,
+  "name": "Spearow",
+  "subtypes": [
+   "Basic"
+  ],
+  "level": "13",
+  "dex": 21,
+  "attacks": [
+   {
+    "name": "Peck",
+    "cost": [
+     "colorless"
+    ],
+    "damage": "10",
+    "text": ""
+   },
+   {
+    "name": "Mirror Move",
+    "cost": [
+     "colorless",
+     "colorless",
+     "colorless"
+    ],
+    "damage": "",
+    "text": "If Spearow was attacked last turn, do the final result of that attack on Spearow to the Defending Pokémon."
+   }
+  ],
+  "weakness": [
+   {
+    "type": "lightning",
+    "value": "×2"
+   }
+  ],
+  "resistance": [
+   {
+    "type": "fighting",
+    "value": "-30"
+   }
+  ],
+  "retreat": 0
+ },
+ {
+  "number": 63,
+  "name": "Venonat",
+  "subtypes": [
+   "Basic"
+  ],
+  "level": "12",
+  "dex": 48,
+  "attacks": [
+   {
+    "name": "Stun Spore",
+    "cost": [
+     "grass"
+    ],
+    "damage": "10",
+    "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+   },
+   {
+    "name": "Leech Life",
+    "cost": [
+     "grass",
+     "colorless"
+    ],
+    "damage": "10",
+    "text": "Remove a number of damage counters from Venonat equal to the damage done to the Defending Pokémon (after applying Weakness and Resistance)."
+   }
+  ],
+  "weakness": [
+   {
+    "type": "fire",
+    "value": "×2"
+   }
+  ],
+  "retreat": 1
+ },
+ {
+  "number": 64,
+  "name": "Poké Ball",
+  "subtypes": [],
+  "rules": [
+   "Flip a coin. If heads, you may search your deck for any Basic Pokémon or Evolution card. Show that card to your opponent, then put it into your hand. Shuffle your deck afterward."
+  ]
+ }
+]

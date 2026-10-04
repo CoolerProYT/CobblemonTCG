@@ -1,0 +1,10 @@
+{
+  "id": "base2-11",
+  "number": 11,
+  "name": "Snorlax",
+  "supertype": "pokemon",
+  "type": "colorless",
+  "hp": 90,
+  "rarity": "rare_holo",
+  "pokedex": 143
+}

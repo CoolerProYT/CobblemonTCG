@@ -1,0 +1,10 @@
+{
+  "id": "base2-63",
+  "number": 63,
+  "name": "Venonat",
+  "supertype": "pokemon",
+  "type": "grass",
+  "hp": 40,
+  "rarity": "common",
+  "pokedex": 48
+}

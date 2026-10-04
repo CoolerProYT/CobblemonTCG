@@ -220,7 +220,20 @@ def generate_wrappers(set_name: str, set_def: dict) -> list[tuple[int, str]]:
     return overrides
 
 
-def generate_set(csv_path: Path) -> list[tuple[int, str]]:
+def dex_numbers(csv_paths: list[Path]) -> dict[str, int]:
+    """Pokemon name -> National Pokedex number over every set, so a card can evolve from a Pokemon
+    printed in an earlier set (Jungle's Clefable evolves from Base Set's Clefairy)."""
+    dex = {}
+    for csv_path in csv_paths:
+        text = read_text(csv_path.stem)
+        for card in read_cards(csv_path):
+            number = text.get(card["number"], {}).get("dex")
+            if card["supertype"] == "pokemon" and number:
+                dex.setdefault(card["name"], number)
+    return dex
+
+
+def generate_set(csv_path: Path, dex_by_name: dict[str, int]) -> list[tuple[int, str]]:
     set_name = csv_path.stem
     set_file = DATA / "sets" / f"{set_name}.json"
     if not set_file.exists():
@@ -230,7 +243,6 @@ def generate_set(csv_path: Path) -> list[tuple[int, str]]:
 
     cards = read_cards(csv_path)
     text = read_text(set_name)
-    dex_by_name = {card["name"]: text.get(card["number"], {}).get("dex") for card in cards}
     for card in cards:
         entry = text.get(card["number"], {})
         if card["supertype"] == "pokemon":
@@ -261,8 +273,10 @@ def main() -> None:
     write_templates()
     overrides = []
     pack_overrides = []
-    for csv_path in sorted(TOOLS.glob("*.csv")):
-        overrides.extend(generate_set(csv_path))
+    csv_paths = sorted(TOOLS.glob("*.csv"))
+    dex_by_name = dex_numbers(csv_paths)
+    for csv_path in csv_paths:
+        overrides.extend(generate_set(csv_path, dex_by_name))
         set_def = json.loads((DATA / "sets" / f"{csv_path.stem}.json").read_text(encoding="utf-8"))
         pack_overrides.extend(generate_wrappers(csv_path.stem, set_def))
 

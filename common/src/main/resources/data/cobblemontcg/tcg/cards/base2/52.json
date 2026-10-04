@@ -1,0 +1,10 @@
+{
+  "id": "base2-52",
+  "number": 52,
+  "name": "Exeggcute",
+  "supertype": "pokemon",
+  "type": "grass",
+  "hp": 50,
+  "rarity": "common",
+  "pokedex": 102
+}

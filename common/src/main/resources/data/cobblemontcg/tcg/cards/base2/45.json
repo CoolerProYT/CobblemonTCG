@@ -1,0 +1,11 @@
+{
+  "id": "base2-45",
+  "number": 45,
+  "name": "Rhydon",
+  "supertype": "pokemon",
+  "type": "fighting",
+  "hp": 100,
+  "rarity": "uncommon",
+  "pokedex": 112,
+  "evolves_from_pokedex": 111
+}

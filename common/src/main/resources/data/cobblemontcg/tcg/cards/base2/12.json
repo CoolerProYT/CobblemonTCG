@@ -1,0 +1,11 @@
+{
+  "id": "base2-12",
+  "number": 12,
+  "name": "Vaporeon",
+  "supertype": "pokemon",
+  "type": "water",
+  "hp": 80,
+  "rarity": "rare_holo",
+  "pokedex": 134,
+  "evolves_from_pokedex": 133
+}

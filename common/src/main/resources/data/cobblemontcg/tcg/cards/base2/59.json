@@ -1,0 +1,10 @@
+{
+  "id": "base2-59",
+  "number": 59,
+  "name": "Paras",
+  "supertype": "pokemon",
+  "type": "grass",
+  "hp": 40,
+  "rarity": "common",
+  "pokedex": 46
+}

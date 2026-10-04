@@ -1,0 +1,11 @@
+{
+  "id": "base2-4",
+  "number": 4,
+  "name": "Jolteon",
+  "supertype": "pokemon",
+  "type": "lightning",
+  "hp": 70,
+  "rarity": "rare_holo",
+  "pokedex": 135,
+  "evolves_from_pokedex": 133
+}

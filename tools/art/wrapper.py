@@ -11,19 +11,27 @@ from PIL import Image, ImageDraw, ImageFilter
 from . import finish as F
 from . import layout as L
 from .canvas import Sprite
-from .pokemon_base1 import DRAW as POKEMON
+from .cards import POKEMON
 
 PACK_W, PACK_H = 240, 368          # whole texture is the pack
 SS = 4
 SEAL = 26                          # height of the crimped seals
 TOOTH = 6                          # zig-zag width at the crimped edge
 
-# wrapper name -> (mascot card number, background type, top colour, bottom colour, accent)
-WRAPPERS = {
-    "charizard": (4, "fire", (34, 38, 104), (196, 66, 34), (255, 170, 60)),
-    "blastoise": (2, "water", (20, 44, 112), (36, 118, 204), (130, 210, 255)),
-    "venusaur": (15, "grass", (18, 64, 60), (64, 150, 84), (190, 240, 140)),
+# set -> (name on the pack, {wrapper name -> (mascot card number, background type, top colour, bottom colour, accent)})
+SETS = {
+    "base1": ("BASE SET", {
+        "charizard": (4, "fire", (34, 38, 104), (196, 66, 34), (255, 170, 60)),
+        "blastoise": (2, "water", (20, 44, 112), (36, 118, 204), (130, 210, 255)),
+        "venusaur": (15, "grass", (18, 64, 60), (64, 150, 84), (190, 240, 140)),
+    }),
+    "base2": ("JUNGLE", {
+        "scyther": (10, "grass", (16, 52, 30), (88, 156, 62), (210, 244, 120)),
+        "wigglytuff": (16, "colorless", (92, 40, 96), (228, 128, 168), (255, 214, 232)),
+        "flareon": (3, "fire", (74, 26, 30), (226, 108, 40), (255, 206, 96)),
+    }),
 }
+DEFAULT = ("base1", "charizard")   # wrapper used for packs without set data and the mod icon
 BACK = ((26, 34, 96), (40, 70, 150), (250, 214, 64))
 
 
@@ -127,11 +135,12 @@ MASCOT_Y = 96          # the mascot layer covers the pack from y 96 to 304 (240x
 MASCOT_H = 208
 
 
-def make_wrapper_layers(name: str) -> dict:
+def make_wrapper_layers(set_name: str, name: str) -> dict:
     """A pack front as three layers, back to front, so the mascot can be swapped out at runtime:
     'base' (foil and light burst), 'mascot' (240x208, placed at y MASCOT_Y) and 'overlay'
     (set name plate, badges, seals and the foil sheen, which also lies over the mascot)."""
-    number, kind, top_col, bottom_col, accent = WRAPPERS[name]
+    title, wrappers = SETS[set_name]
+    number, kind, top_col, bottom_col, accent = wrappers[name]
     w, h = PACK_W, PACK_H
     seed = sum(map(ord, name))
     inner = _pack_mask().filter(ImageFilter.MinFilter(3))
@@ -154,7 +163,7 @@ def make_wrapper_layers(name: str) -> dict:
 
     # mascot: much bigger than on the card, bursting out of the frame
     sprite = Sprite(300, 200)
-    POKEMON[number](sprite)
+    POKEMON[set_name][number](sprite)
     mascot = Image.new("RGBA", (w, MASCOT_H), (0, 0, 0, 0))
     mascot.alpha_composite(sprite.render(), (int(w / 2 - 150), 104 - MASCOT_Y))
     mascot = F.clip_to(mascot, inner.crop((0, MASCOT_Y, w, MASCOT_Y + MASCOT_H)))
@@ -165,7 +174,7 @@ def make_wrapper_layers(name: str) -> dict:
     d = ImageDraw.Draw(overlay, "RGBA")
     d.rounded_rectangle((plate[0] - 2, plate[1] - 2, plate[2] + 2, plate[3] + 2), radius=10, fill=(250, 214, 80, 255))
     d.rounded_rectangle(plate, radius=8, fill=(16, 20, 58, 235))
-    F.draw(overlay, (w / 2, plate[1] + 6), "BASE SET", F.font("Bold", 30), (252, 214, 64), anchor="ma", stroke=2, stroke_color=(28, 50, 150))
+    F.draw(overlay, (w / 2, plate[1] + 6), title, F.fit("Bold", 30, title, plate[2] - plate[0] - 16), (252, 214, 64), anchor="ma", stroke=2, stroke_color=(28, 50, 150))
     F.draw(overlay, (w / 2, plate[1] + 40), "TRADING CARD GAME", F.font("CondensedBold", 10), (255, 255, 255), anchor="ma")
     by = h - SEAL - 44
     d = ImageDraw.Draw(overlay, "RGBA")
@@ -188,13 +197,13 @@ def flatten(layers: dict) -> Image.Image:
     return img
 
 
-def make_wrapper(name: str) -> Image.Image:
+def make_wrapper(set_name: str, name: str) -> Image.Image:
     """The whole pack front in one image (mod icon, previews)."""
-    return flatten(make_wrapper_layers(name))
+    return flatten(make_wrapper_layers(set_name, name))
 
 
 def make_pack_back() -> Image.Image:
-    """Back of every pack: vertical glued seam, a short blurb and a barcode panel."""
+    """Back of every pack, shared by all sets: vertical glued seam, a short blurb and a barcode panel."""
     top_col, bottom_col, accent = BACK
     w, h = PACK_W, PACK_H
     img = _foil(top_col, bottom_col, 404)
@@ -211,10 +220,10 @@ def make_pack_back() -> Image.Image:
     # blurb panel on the left half
     panel = (16, SEAL + 22, int(sx) - 16, SEAL + 196)
     d.rounded_rectangle(panel, radius=6, fill=(12, 16, 50, 190), outline=(*accent, 255), width=2)
-    F.draw(img, ((panel[0] + panel[2]) / 2, panel[1] + 8), "BASE SET", F.font("Bold", 14), accent, anchor="ma")
+    F.draw(img, ((panel[0] + panel[2]) / 2, panel[1] + 8), "BOOSTER", F.font("Bold", 14), accent, anchor="ma")
     F.paragraph(img, (panel[0] + 8, panel[1] + 30, panel[2] - 8, panel[3] - 8),
                 "Each pack holds 11 cards: 1 rare, 3 uncommons and 7 commons. About 1 pack in 3 has a "
-                "holo rare instead! Collect all 102 cards of the Base Set.",
+                "holo rare instead! Collect every card of every set.",
                 "Regular", 8, (236, 236, 250), L.paste_symbol)
 
     # right half: card fan and barcode

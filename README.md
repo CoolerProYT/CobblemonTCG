@@ -1,7 +1,8 @@
 # Cobblemon: TCG
 
 A trading card addon for [Cobblemon](https://cobblemon.com) on Minecraft 1.21.1 (Fabric and NeoForge).
-Open booster packs and collect cards. The first set is the 1999 Base Set: 102 cards, with real pack odds.
+Open booster packs and collect cards. Two sets so far, with real pack odds: the 1999 Base Set (102 cards)
+and Jungle (64 cards).
 
 **Requires Cobblemon 1.8.1 or newer**: the game will not start if Cobblemon is missing.
 
@@ -18,24 +19,27 @@ card art, flavour text, pack wrappers, set logos, card backs or expansion symbol
 
 - **Booster packs**: a pack holds 11 cards, like a real Base Set pack: 1 rare slot (holo rare
   about 1 in 3 packs, configurable), 3 uncommons and 7 commons (basic Energy is part of the
-  commons). No card appears twice in the same pack. Like the real set, every pack comes in one of
-  three wrappers (Charizard, Blastoise or Venusaur art), picked at random.
+  commons). No card appears twice in the same pack. Like the real sets, every pack comes in one of
+  three wrappers, picked at random: Charizard, Blastoise or Venusaur art for Base Set, Scyther,
+  Wigglytuff or Flareon art for Jungle.
 - **Opening animation**: right-click a pack and it tears open; swipe the cards away one by one
   (drag, click, or Space / arrow keys). Commons come first and the rare last, with a burst of light
   and a sound for rares and holos, then a summary of every pull. The cards are already in your
   inventory when the animation starts, so closing it early never loses anything.
-- **Cards**: 102 Base Set cards, each with a regular and a holo print. Holo prints have an animated
+- **Cards**: 102 Base Set cards and 64 Jungle cards, each with a regular and a holo print. Holo prints have an animated
   shimmer. Tooltips show number, rarity, card type, HP, energy type and holo.
 - **Commands** (operators only):
   - `/tcg give pack <set> [amount]`
   - `/tcg give card <set> <number> [holo]`
 
-  `<set>` accepts `cobblemontcg:base1` or just `base1`.
+  `<set>` accepts `cobblemontcg:base1` or just `base1` (Base Set), `base2` for Jungle.
 - **Card Dealer**: a villager profession whose job site is the Card Dealer Table (2 paper, 1
-  booster pack, 5 planks: paper / pack / paper on top, planks below in a table shape). The novice
-  trade sells a booster pack for 5 emeralds, 3 times per restock (configurable).
-- **Wandering trader**: may offer one booster pack for 8 emeralds (configurable). The pack offer
-  joins the trader's common pool, so not every trader has it.
+  booster pack, 5 planks: paper / pack / paper on top, planks below in a table shape). It sells
+  booster packs for 5 emeralds, 3 times per restock (configurable), and unlocks newer sets as it levels
+  up, like the real sets came out: Base Set packs as a Novice, Jungle packs from Apprentice (about 5
+  pack purchases). The sets and their order come from `shop.sets`.
+- **Wandering trader**: may offer one booster pack of a random `shop.sets` set for 8 emeralds
+  (configurable). The pack offer joins the trader's common pool, so not every trader has it.
 - **Creative tab** "Cobblemon: TCG" with every pack and card.
 
 ## Configuration
@@ -52,7 +56,7 @@ card art, flavour text, pack wrappers, set logos, card backs or expansion symbol
 | `rewards.triggers.capture` | `true` | Packs for catching Pokémon (Cobblemon) |
 | `rewards.triggers.levelUp` | `true` | Packs for level milestones (Cobblemon) |
 | `rewards.triggers.dexProgress` | `true` | Packs for Pokédex milestones (Cobblemon) |
-| `shop.setId` | `cobblemontcg:base1` | Set of the booster packs villagers sell |
+| `shop.sets` | `["cobblemontcg:base1", "cobblemontcg:base2"]` | Sets villagers sell, oldest first: the Card Dealer unlocks one per villager level (Novice to Master, up to 5 sets) |
 | `shop.cardDealer.enabled` | `true` | Card Dealer villagers sell booster packs |
 | `shop.cardDealer.price` | `5` | Emeralds per pack at the Card Dealer |
 | `shop.cardDealer.maxUses` | `3` | Packs a Card Dealer sells before restocking |
@@ -89,8 +93,14 @@ or bundled. Its merchants can sell booster packs through its own shop config, te
 ```
 
 The `cobblemontcg:booster_pack` component is required: a pack without it does not open. `variant` is
-the wrapper (`charizard`, `blastoise` or `venusaur` for Base Set) and `custom_model_data` picks its
-texture (`1000`, `1001` and `1002` in the same order). Add one offer per wrapper to sell all three.
+the wrapper and `custom_model_data` picks its texture:
+
+| Set | `set` | `variant` → `custom_model_data` |
+| --- | --- | --- |
+| Base Set | `cobblemontcg:base1` | `charizard` 1000, `blastoise` 1001, `venusaur` 1002 |
+| Jungle | `cobblemontcg:base2` | `scyther` 2000, `wigglytuff` 2001, `flareon` 2002 |
+
+Add one offer per wrapper to sell them all.
 
 ## Data packs
 
@@ -153,11 +163,12 @@ These triggers come from Cobblemon's events:
 
 | Trigger | When | Conditions |
 | --- | --- | --- |
-| `cobblemontcg:capture` | the player catches a Pokémon | `species`, `shiny`, `min_level`, `first_catch_of_species` |
-| `cobblemontcg:level_up` | one of the player's Pokémon levels up | `level`, `species`, `shiny` |
+| `cobblemontcg:capture` | the player catches a Pokémon | `species`, `exclude_species`, `shiny`, `min_level`, `first_catch_of_species` |
+| `cobblemontcg:level_up` | one of the player's Pokémon levels up | `level`, `species`, `exclude_species`, `shiny` |
 | `cobblemontcg:dex_progress` | the player owns a new species in the Pokédex | `dex_every`, `dex_percent` |
 
 - `species`: species names like `pikachu` (any of them matches).
+- `exclude_species`: species names that never match, so two rules can split the species between them.
 - `first_catch_of_species: true`: the player has never owned this species before.
 - `level: 25`: a Pokémon of the player reached level 25 or higher.
 - `dex_every: 10`: the player now owns a multiple of 10 species.
@@ -173,9 +184,9 @@ data pack, or replace it with `[]`, to change or remove them):
 
 | File | Rule |
 | --- | --- |
-| `capture.json` | first catch of a species: 10% chance of 1 pack; shiny catch: 1 pack |
-| `level_up.json` | level 10, 25, 50 and 100: 1 pack each |
-| `dex_progress.json` | 25% and 50% of the Pokédex: 1 pack; 75% and 100%: 2 packs |
+| `capture.json` | first catch of a species: 10% chance of 1 pack; shiny catch: 1 pack. Pokémon that are in Jungle but not in Base Set (Scyther, Snorlax, Eevee and its evolutions...) give Jungle packs, every other species gives Base Set packs |
+| `level_up.json` | level 10, 25, 50 and 100: 1 Base Set pack each |
+| `dex_progress.json` | 25% and 50% of the Pokédex: 1 Base Set pack; 75% and 100%: 2 Base Set packs |
 
 Other mods can add triggers through `RewardTriggerRegistry`.
 
@@ -231,22 +242,23 @@ Requires Python 3.10+, Pillow 10.1+ and numpy (`pip install pillow numpy`).
 - `tools/<set>.csv`: the card list (`number,name,supertype,type,hp,rarity`).
 - `tools/<set>_text.json`: game text drawn on the cards (stage, evolves from, level, Pokédex number,
   Pokémon Powers, attacks, weakness, resistance, retreat cost, trainer and energy rules).
-  For `base1` it was taken from the community card database
+  For `base1` (Base Set) and `base2` (Jungle) it was taken from the community card database
   [PokemonTCG/pokemon-tcg-data](https://github.com/PokemonTCG/pokemon-tcg-data).
 - `tools/fonts/`: Cabin by Pablo Impallari and Rodrigo Fuenzalida, under the SIL Open Font License
   (`tools/fonts/OFL.txt`), used only to draw the textures.
 - `python tools/gen_cards.py`: writes the card JSONs, one model per card print and the
   `custom_model_data` overrides in `models/item/tcg_card.json` for every CSV, plus one model per
-  pack wrapper and their overrides in `models/item/booster_pack.json`.
-- `python tools/gen_card_art.py [--skip-existing-art] [--only 4,58]`: draws the frames, holo foil,
-  card art, pack fronts and back (`tools/art/wrapper.py`), card back and mod icon (about 1.5 minutes). `--skip-existing-art` keeps card art you have
-  already replaced. The illustrations live in `tools/art/pokemon_base1.py` and
-  `tools/art/trainers_base1.py`, one small function per card, lit and shaded by
+  pack wrapper and their overrides in `models/item/booster_pack.json`. A card can evolve from a
+  Pokémon of an earlier set (Jungle's Clefable from Base Set's Clefairy).
+- `python tools/gen_card_art.py [--skip-existing-art] [--set base2] [--only 4,58]`: draws the frames, holo foil,
+  card art, pack fronts and back (`tools/art/wrapper.py`), card back and mod icon (about 3 minutes). `--skip-existing-art` keeps card art you have
+  already replaced, `--set` and `--only` redraw only one set or some card numbers. The illustrations live in
+  `tools/art/pokemon_<set>.py` and `tools/art/trainers_<set>.py`, one small function per card, lit and shaded by
   `tools/art/canvas.py`; the layout is in `tools/art/layout.py`, the per-card text in
   `tools/art/cards.py`.
 
 Card stacks use `custom_model_data = model_data_base + number * 2` for the regular print and `+ 1`
-for the holo print, so give every set its own `model_data_base` range. Packs use
+for the holo print, so give every set its own `model_data_base` range (Base Set uses 1000, Jungle 2000). Packs use
 `model_data_base + wrapper index`.
 
 ## Building

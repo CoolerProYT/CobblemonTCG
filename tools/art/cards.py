@@ -4,7 +4,8 @@ illustration, Pokemon Powers and attacks, weakness / resistance / retreat, level
 rarity. The frame layer (border, face, art window background, static labels) comes from
 layout.py and is shared per type.
 
-Game text (attack names, costs, damage, rules) comes from tools/<set>_text.json.
+Game text (attack names, costs, damage, rules) comes from tools/<set>_text.json. Drawings come from
+art/pokemon_<set>.py and art/trainers_<set>.py, one function per card number.
 """
 import math
 
@@ -13,8 +14,11 @@ from PIL import Image, ImageDraw
 from . import finish as F
 from . import layout as L
 from .canvas import Sprite
-from .pokemon_base1 import DRAW as POKEMON
-from .trainers_base1 import DRAW as TRAINERS
+from . import pokemon_base1, pokemon_base2, trainers_base1, trainers_base2
+
+# set -> card number -> drawing
+POKEMON = {"base1": pokemon_base1.DRAW, "base2": pokemon_base2.DRAW}
+TRAINERS = {"base1": trainers_base1.DRAW, "base2": trainers_base2.DRAW}
 
 HP_RED = (198, 34, 30)
 POWER_RED = (188, 34, 30)
@@ -140,13 +144,16 @@ def _layout_body(img, card, text, size, draw_it):
     return y
 
 
-def evolution_portrait(prev: int) -> Image.Image:
-    """The previous stage, close up, for the portrait window (32x32 texture, picture in the top 32x24)."""
+def evolution_portrait(prev: tuple[str, int]) -> Image.Image:
+    """The previous stage, close up, for the portrait window (32x32 texture, picture in the top 32x24).
+    prev is the (set, number) of a card showing it, which may be in an earlier set."""
     box = L.EVOLUTION_BOX
     bw, bh = box[2] - box[0] + 1, box[3] - box[1] + 1
     out = Image.new("RGBA", (32, 32), (0, 0, 0, 0))
-    if prev in POKEMON:
-        art = illustration(POKEMON, prev, bw * 2, bh * 2)
+    set_name, number = prev
+    drawings = POKEMON.get(set_name, {})
+    if number in drawings:
+        art = illustration(drawings, number, bw * 2, bh * 2)
         out.alpha_composite(art.crop((bw * 0.5, bh * 0.25, bw * 1.5, bh * 1.25)).resize((bw, bh), Image.LANCZOS))
     return out
 
@@ -159,7 +166,7 @@ def pokemon_card(card: dict, total: int, text: dict, by_name: dict) -> Image.Ima
     _header(img, card, text, by_name)
 
     dex = text.get("dex")
-    strip = f"No. {dex:03d}   {card['name']}   Base Set" if dex else card["name"]
+    strip = f"No. {dex:03d}   {card['name']}   {card['set_title']}" if dex else card["name"]
     F.draw(img, ((L.STRIP[0] + L.STRIP[2]) / 2, (L.STRIP[1] + L.STRIP[3]) / 2 + 0.5), strip, F.font("Italic", 7),
            (70, 52, 20), anchor="mm")
 
@@ -204,7 +211,7 @@ def _rules(img, text, box, size=9.0):
 def trainer_card(card: dict, total: int, text: dict) -> Image.Image:
     img = Image.new("RGBA", (L.W, L.H), (0, 0, 0, 0))
     face = L.FACE_COLORS["trainer"]
-    img.alpha_composite(illustration(TRAINERS, card["number"]), (L.ART[0], L.ART[1]))
+    img.alpha_composite(illustration(TRAINERS[card["set"]], card["number"]), (L.ART[0], L.ART[1]))
     F.draw(img, (L.FACE[2] - 7, L.STAGE_Y - 1), "TRAINER", F.font("Bold", 8), (196, 30, 36), anchor="ra")
     name_font = F.fit("Bold", 16, card["name"], L.FACE[2] - L.FACE[0] - 20)
     F.draw(img, (L.FACE[0] + 7, L.NAME_Y), card["name"], name_font, L.TEXT, anchor="ls")
@@ -255,10 +262,12 @@ def energy_card(card: dict, total: int, text: dict) -> Image.Image:
 def card_layers(card: dict, total: int, text: dict, by_name: dict) -> dict:
     """Every texture of one card: 'card' always, plus 'illustration' (the Pokemon in the art
     window, 208x144) and 'evolution' (the previous stage in the portrait window) for Pokemon.
-    Those two are separate layers so the mod can swap in Cobblemon's models at runtime."""
+    Those two are separate layers so the mod can swap in Cobblemon's models at runtime.
+    card holds 'set' (e.g. base1) and 'set_title' (e.g. Base Set) next to the CSV columns;
+    by_name maps a Pokemon name to the (set, number) of a card that shows it."""
     layers = {"card": card_art(card, total, text, by_name)}
     if card["supertype"] == "pokemon":
-        layers["illustration"] = illustration(POKEMON, card["number"])
+        layers["illustration"] = illustration(POKEMON[card["set"]], card["number"])
         prev = by_name.get(text.get("evolvesFrom"))
         if prev is not None:
             layers["evolution"] = evolution_portrait(prev)

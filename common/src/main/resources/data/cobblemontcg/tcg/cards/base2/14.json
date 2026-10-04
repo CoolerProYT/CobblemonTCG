@@ -1,0 +1,11 @@
+{
+  "id": "base2-14",
+  "number": 14,
+  "name": "Victreebel",
+  "supertype": "pokemon",
+  "type": "grass",
+  "hp": 80,
+  "rarity": "rare_holo",
+  "pokedex": 71,
+  "evolves_from_pokedex": 70
+}

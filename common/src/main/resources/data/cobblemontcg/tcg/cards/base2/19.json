@@ -1,0 +1,11 @@
+{
+  "id": "base2-19",
+  "number": 19,
+  "name": "Flareon",
+  "supertype": "pokemon",
+  "type": "fire",
+  "hp": 70,
+  "rarity": "rare",
+  "pokedex": 136,
+  "evolves_from_pokedex": 133
+}

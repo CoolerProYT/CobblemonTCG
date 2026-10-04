@@ -1,0 +1,11 @@
+{
+  "id": "base2-33",
+  "number": 33,
+  "name": "Butterfree",
+  "supertype": "pokemon",
+  "type": "grass",
+  "hp": 70,
+  "rarity": "uncommon",
+  "pokedex": 12,
+  "evolves_from_pokedex": 11
+}

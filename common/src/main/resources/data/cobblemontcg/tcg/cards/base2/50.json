@@ -1,0 +1,10 @@
+{
+  "id": "base2-50",
+  "number": 50,
+  "name": "Cubone",
+  "supertype": "pokemon",
+  "type": "fighting",
+  "hp": 40,
+  "rarity": "common",
+  "pokedex": 104
+}

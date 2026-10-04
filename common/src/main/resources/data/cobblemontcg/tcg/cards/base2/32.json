@@ -1,0 +1,11 @@
+{
+  "id": "base2-32",
+  "number": 32,
+  "name": "Wigglytuff",
+  "supertype": "pokemon",
+  "type": "colorless",
+  "hp": 80,
+  "rarity": "rare",
+  "pokedex": 40,
+  "evolves_from_pokedex": 39
+}

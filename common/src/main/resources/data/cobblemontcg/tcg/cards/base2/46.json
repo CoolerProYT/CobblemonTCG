@@ -1,0 +1,11 @@
+{
+  "id": "base2-46",
+  "number": 46,
+  "name": "Seaking",
+  "supertype": "pokemon",
+  "type": "water",
+  "hp": 70,
+  "rarity": "uncommon",
+  "pokedex": 119,
+  "evolves_from_pokedex": 118
+}

@@ -1,0 +1,11 @@
+{
+  "id": "base2-34",
+  "number": 34,
+  "name": "Dodrio",
+  "supertype": "pokemon",
+  "type": "colorless",
+  "hp": 70,
+  "rarity": "uncommon",
+  "pokedex": 85,
+  "evolves_from_pokedex": 84
+}

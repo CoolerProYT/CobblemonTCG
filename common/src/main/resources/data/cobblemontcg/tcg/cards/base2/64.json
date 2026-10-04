@@ -1,0 +1,7 @@
+{
+  "id": "base2-64",
+  "number": 64,
+  "name": "Poké Ball",
+  "supertype": "trainer",
+  "rarity": "common"
+}

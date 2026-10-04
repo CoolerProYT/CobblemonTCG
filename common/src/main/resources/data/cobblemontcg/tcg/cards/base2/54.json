@@ -1,0 +1,10 @@
+{
+  "id": "base2-54",
+  "number": 54,
+  "name": "Jigglypuff",
+  "supertype": "pokemon",
+  "type": "colorless",
+  "hp": 60,
+  "rarity": "common",
+  "pokedex": 39
+}

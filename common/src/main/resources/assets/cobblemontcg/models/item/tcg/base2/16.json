@@ -1,0 +1,9 @@
+{
+  "parent": "cobblemontcg:item/tcg/card_evolution",
+  "textures": {
+    "frame": "cobblemontcg:tcg/frame/pokemon_colorless",
+    "art": "cobblemontcg:tcg/base2/16",
+    "illustration": "cobblemontcg:tcg/base2/illustration/16",
+    "evolution": "cobblemontcg:tcg/base2/evolution/16"
+  }
+}
