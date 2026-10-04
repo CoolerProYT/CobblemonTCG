@@ -1,0 +1,7 @@
+node_modules/
+.vitepress/cache/
+.vitepress/dist/
+# Regenerated from the mod's resources by `npm run sync`.
+.vitepress/data/
+public/tcg/
+public/items/
