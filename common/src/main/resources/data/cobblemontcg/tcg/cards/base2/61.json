@@ -1,0 +1,10 @@
+{
+  "id": "base2-61",
+  "number": 61,
+  "name": "Rhyhorn",
+  "supertype": "pokemon",
+  "type": "fighting",
+  "hp": 70,
+  "rarity": "common",
+  "pokedex": 111
+}

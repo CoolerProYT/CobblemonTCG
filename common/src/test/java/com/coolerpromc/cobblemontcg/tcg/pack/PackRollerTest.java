@@ -24,22 +24,28 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Rolls packs from the real Base Set data shipped in src/main/resources.
+ * Rolls packs from the real Base Set and Jungle data shipped in src/main/resources.
  */
 class PackRollerTest {
     private static final Path DATA = Path.of("src/main/resources/data/cobblemontcg/tcg");
     private static final int PACKS = 20_000;
 
     private static TcgSet base1;
+    private static TcgSet base2;
 
     @BeforeAll
-    static void loadBaseSet() throws IOException {
-        SetDefinition definition = read(DATA.resolve("sets/base1.json"), SetDefinition.CODEC);
+    static void loadSets() throws IOException {
+        base1 = loadSet("base1");
+        base2 = loadSet("base2");
+    }
+
+    private static TcgSet loadSet(String name) throws IOException {
+        SetDefinition definition = read(DATA.resolve("sets/" + name + ".json"), SetDefinition.CODEC);
         List<CardDefinition> cards;
-        try (Stream<Path> files = Files.list(DATA.resolve("cards/base1"))) {
+        try (Stream<Path> files = Files.list(DATA.resolve("cards/" + name))) {
             cards = files.map(path -> read(path, CardDefinition.CODEC)).toList();
         }
-        base1 = new TcgSet(Constants.id("base1"), definition, cards);
+        return new TcgSet(Constants.id(name), definition, cards);
     }
 
     @Test
@@ -50,6 +56,37 @@ class PackRollerTest {
         assertEquals(32, base1.cardsOfRarity(CardRarity.UNCOMMON).size());
         assertEquals(38, base1.cardsOfRarity(CardRarity.COMMON).size());
         assertEquals(11, base1.definition().packSize());
+    }
+
+    @Test
+    void jungleMatchesTheRealSetList() {
+        assertEquals(64, base2.cards().size());
+        assertEquals(16, base2.cardsOfRarity(CardRarity.RARE_HOLO).size());
+        assertEquals(16, base2.cardsOfRarity(CardRarity.RARE).size());
+        assertEquals(16, base2.cardsOfRarity(CardRarity.UNCOMMON).size());
+        assertEquals(16, base2.cardsOfRarity(CardRarity.COMMON).size());
+        assertEquals(11, base2.definition().packSize());
+        assertEquals(List.of("scyther", "wigglytuff", "flareon"), base2.wrappers());
+    }
+
+    @Test
+    void setsUseSeparateModelDataRanges() {
+        int base1Last = base1.modelData(base1.definition().total(), true);
+        int base2First = base2.modelData(1, false);
+        assertTrue(base1Last < base2First, "Jungle's custom_model_data range overlaps Base Set's");
+    }
+
+    @Test
+    void junglePacksHaveNoDuplicates() {
+        RandomSource random = RandomSource.create(7L);
+        for (int i = 0; i < PACKS; i++) {
+            List<RolledCard> pack = PackRoller.roll(base2, random, 1.0 / 3.0, 11);
+            assertEquals(11, pack.size());
+            Set<Integer> numbers = new HashSet<>();
+            for (RolledCard card : pack) {
+                assertTrue(numbers.add(card.card().number()), "duplicate card in a Jungle pack");
+            }
+        }
     }
 
     @Test

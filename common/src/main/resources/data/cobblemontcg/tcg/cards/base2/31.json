@@ -1,0 +1,11 @@
+{
+  "id": "base2-31",
+  "number": 31,
+  "name": "Vileplume",
+  "supertype": "pokemon",
+  "type": "grass",
+  "hp": 80,
+  "rarity": "rare",
+  "pokedex": 45,
+  "evolves_from_pokedex": 44
+}

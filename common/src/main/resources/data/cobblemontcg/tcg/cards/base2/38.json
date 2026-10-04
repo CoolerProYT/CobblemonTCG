@@ -1,0 +1,10 @@
+{
+  "id": "base2-38",
+  "number": 38,
+  "name": "Lickitung",
+  "supertype": "pokemon",
+  "type": "colorless",
+  "hp": 90,
+  "rarity": "uncommon",
+  "pokedex": 108
+}

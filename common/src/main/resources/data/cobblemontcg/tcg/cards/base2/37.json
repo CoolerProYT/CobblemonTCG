@@ -1,0 +1,11 @@
+{
+  "id": "base2-37",
+  "number": 37,
+  "name": "Gloom",
+  "supertype": "pokemon",
+  "type": "grass",
+  "hp": 60,
+  "rarity": "uncommon",
+  "pokedex": 44,
+  "evolves_from_pokedex": 43
+}

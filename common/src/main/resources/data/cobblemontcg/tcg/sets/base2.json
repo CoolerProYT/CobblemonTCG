@@ -1,0 +1,37 @@
+{
+  "name": "Jungle",
+  "total": 64,
+  "model_data_base": 2000,
+  "wrappers": [
+    "scyther",
+    "wigglytuff",
+    "flareon"
+  ],
+  "wrapper_pokedex": {
+    "scyther": 123,
+    "wigglytuff": 40,
+    "flareon": 136
+  },
+  "pack_slots": [
+    {
+      "count": 1,
+      "rarities": {
+        "rare_holo": 1,
+        "rare": 2
+      },
+      "use_config_holo_chance": true
+    },
+    {
+      "count": 3,
+      "rarities": {
+        "uncommon": 1
+      }
+    },
+    {
+      "count": 7,
+      "rarities": {
+        "common": 1
+      }
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "parent": "cobblemontcg:item/tcg/card_evolution",
+  "textures": {
+    "frame": "cobblemontcg:tcg/frame/pokemon_fire",
+    "art": "cobblemontcg:tcg/base2/44",
+    "illustration": "cobblemontcg:tcg/base2/illustration/44",
+    "evolution": "cobblemontcg:tcg/base2/evolution/44"
+  }
+}

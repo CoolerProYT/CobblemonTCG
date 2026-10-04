@@ -1,0 +1,10 @@
+{
+  "id": "base2-9",
+  "number": 9,
+  "name": "Pinsir",
+  "supertype": "pokemon",
+  "type": "grass",
+  "hp": 60,
+  "rarity": "rare_holo",
+  "pokedex": 127
+}

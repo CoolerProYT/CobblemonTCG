@@ -1,0 +1,11 @@
+{
+  "id": "base2-23",
+  "number": 23,
+  "name": "Nidoqueen",
+  "supertype": "pokemon",
+  "type": "grass",
+  "hp": 90,
+  "rarity": "rare",
+  "pokedex": 31,
+  "evolves_from_pokedex": 30
+}

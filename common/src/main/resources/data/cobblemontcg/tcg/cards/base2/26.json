@@ -1,0 +1,10 @@
+{
+  "id": "base2-26",
+  "number": 26,
+  "name": "Scyther",
+  "supertype": "pokemon",
+  "type": "grass",
+  "hp": 70,
+  "rarity": "rare",
+  "pokedex": 123
+}

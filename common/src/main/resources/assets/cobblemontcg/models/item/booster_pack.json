@@ -23,6 +23,24 @@
         "custom_model_data": 1002
       },
       "model": "cobblemontcg:item/booster_pack/base1_venusaur"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2000
+      },
+      "model": "cobblemontcg:item/booster_pack/base2_scyther"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2001
+      },
+      "model": "cobblemontcg:item/booster_pack/base2_wigglytuff"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2002
+      },
+      "model": "cobblemontcg:item/booster_pack/base2_flareon"
     }
   ]
 }

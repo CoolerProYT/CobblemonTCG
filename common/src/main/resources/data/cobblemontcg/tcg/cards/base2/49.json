@@ -1,0 +1,10 @@
+{
+  "id": "base2-49",
+  "number": 49,
+  "name": "Bellsprout",
+  "supertype": "pokemon",
+  "type": "grass",
+  "hp": 40,
+  "rarity": "common",
+  "pokedex": 69
+}

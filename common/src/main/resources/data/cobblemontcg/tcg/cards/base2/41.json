@@ -1,0 +1,11 @@
+{
+  "id": "base2-41",
+  "number": 41,
+  "name": "Parasect",
+  "supertype": "pokemon",
+  "type": "grass",
+  "hp": 60,
+  "rarity": "uncommon",
+  "pokedex": 47,
+  "evolves_from_pokedex": 46
+}

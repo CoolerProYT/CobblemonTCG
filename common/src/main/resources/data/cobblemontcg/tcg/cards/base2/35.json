@@ -1,0 +1,11 @@
+{
+  "id": "base2-35",
+  "number": 35,
+  "name": "Exeggutor",
+  "supertype": "pokemon",
+  "type": "grass",
+  "hp": 80,
+  "rarity": "uncommon",
+  "pokedex": 103,
+  "evolves_from_pokedex": 102
+}

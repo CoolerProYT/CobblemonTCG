@@ -1,0 +1,11 @@
+{
+  "id": "base2-24",
+  "number": 24,
+  "name": "Pidgeot",
+  "supertype": "pokemon",
+  "type": "colorless",
+  "hp": 80,
+  "rarity": "rare",
+  "pokedex": 18,
+  "evolves_from_pokedex": 17
+}

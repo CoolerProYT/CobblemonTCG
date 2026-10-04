@@ -1,0 +1,11 @@
+{
+  "id": "base2-42",
+  "number": 42,
+  "name": "Persian",
+  "supertype": "pokemon",
+  "type": "colorless",
+  "hp": 70,
+  "rarity": "uncommon",
+  "pokedex": 53,
+  "evolves_from_pokedex": 52
+}

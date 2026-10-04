@@ -1,0 +1,10 @@
+{
+  "id": "base2-51",
+  "number": 51,
+  "name": "Eevee",
+  "supertype": "pokemon",
+  "type": "colorless",
+  "hp": 50,
+  "rarity": "common",
+  "pokedex": 133
+}

@@ -26,8 +26,9 @@ and the mod icon common/src/main/resources/cobblemontcg.png.
 
 Card text (attacks, costs, damage, rules) is read from tools/<set>_text.json.
 
-Usage: python tools/gen_card_art.py [--skip-existing-art] [--only 4,58]
+Usage: python tools/gen_card_art.py [--skip-existing-art] [--set base2] [--only 4,58]
   --skip-existing-art  keep card textures that already exist, so your own drawings are never overwritten
+  --set                only redraw the cards of this set
   --only               only redraw these card numbers
 """
 import argparse
@@ -41,7 +42,7 @@ from PIL import Image, ImageDraw
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from art import layout as L  # noqa: E402
 from art.cards import card_layers  # noqa: E402
-from art.wrapper import WRAPPERS, make_card_back, make_pack_back, make_wrapper, make_wrapper_layers  # noqa: E402
+from art.wrapper import DEFAULT, SETS, make_card_back, make_pack_back, make_wrapper, make_wrapper_layers  # noqa: E402
 
 NAMESPACE = "cobblemontcg"
 TOOLS = Path(__file__).resolve().parent
@@ -60,7 +61,7 @@ def make_icon(frames: dict) -> Image.Image:
         card = frames[kind].resize((40, 55), Image.LANCZOS)
         rotated = card.rotate(25 - i * 25, expand=True, resample=Image.BICUBIC)
         img.alpha_composite(rotated, (12 + i * 26, 8 + abs(i - 1) * 6))
-    pack = make_wrapper(next(iter(WRAPPERS))).resize((42, 64), Image.LANCZOS)
+    pack = make_wrapper(*DEFAULT).resize((42, 64), Image.LANCZOS)
     img.alpha_composite(pack, (43, 56))
     return img
 
@@ -93,6 +94,7 @@ def read_cards(csv_path: Path):
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--skip-existing-art", action="store_true")
+    parser.add_argument("--set", default="")
     parser.add_argument("--only", default="")
     args = parser.parse_args()
     only = {int(n) for n in args.only.split(",") if n}
@@ -109,26 +111,36 @@ def main() -> None:
 
     save(make_card_back(), TCG / "card_back.png")
     save(make_pack_back(), TCG / "pack" / "back.png")
-    save_pack(make_wrapper_layers(next(iter(WRAPPERS))), "default")
+    save_pack(make_wrapper_layers(*DEFAULT), "default")
     save(make_icon(frames), RESOURCES / f"{NAMESPACE}.png")
 
-    for csv_path in sorted(TOOLS.glob("*.csv")):
+    csv_paths = sorted(TOOLS.glob("*.csv"))
+    # Pokemon name -> (set, number) of a card showing it, so an evolution card can show a previous
+    # stage from an earlier set (Jungle's Clefable evolves from Base Set's Clefairy)
+    everywhere = {}
+    for csv_path in csv_paths:
+        for c in read_cards(csv_path):
+            if c["supertype"] == "pokemon":
+                everywhere.setdefault(c["name"], (csv_path.stem, c["number"]))
+
+    for csv_path in csv_paths:
         set_name = csv_path.stem
         set_file = RESOURCES / "data" / NAMESPACE / "tcg" / "sets" / f"{set_name}.json"
         set_def = json.loads(set_file.read_text(encoding="utf-8"))
         total = set_def["total"]
         for wrapper in set_def.get("wrappers", []):
-            if wrapper in WRAPPERS:
-                save_pack(make_wrapper_layers(wrapper), f"{set_name}_{wrapper}")
+            if wrapper in SETS.get(set_name, ("", {}))[1]:
+                save_pack(make_wrapper_layers(set_name, wrapper), f"{set_name}_{wrapper}")
             else:
                 print(f"warning: no artwork for wrapper {wrapper!r}, add it to tools/art/wrapper.py")
         text_file = TOOLS / f"{set_name}_text.json"
         texts = {e["number"]: e for e in json.loads(text_file.read_text(encoding="utf-8"))} if text_file.exists() else {}
         cards = list(read_cards(csv_path))
-        by_name = {c["name"]: c["number"] for c in cards if c["supertype"] == "pokemon"}
+        by_name = {**everywhere, **{c["name"]: (set_name, c["number"]) for c in cards if c["supertype"] == "pokemon"}}
         written = 0
         for card in cards:
-            if only and card["number"] not in only:
+            card["set"], card["set_title"] = set_name, set_def["name"]
+            if (args.set and set_name != args.set) or (only and card["number"] not in only):
                 continue
             path = TCG / set_name / f"{card['number']}.png"
             if args.skip_existing_art and path.exists():

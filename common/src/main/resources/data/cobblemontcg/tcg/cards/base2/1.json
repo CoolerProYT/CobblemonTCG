@@ -1,0 +1,11 @@
+{
+  "id": "base2-1",
+  "number": 1,
+  "name": "Clefable",
+  "supertype": "pokemon",
+  "type": "colorless",
+  "hp": 70,
+  "rarity": "rare_holo",
+  "pokedex": 36,
+  "evolves_from_pokedex": 35
+}

@@ -1,0 +1,10 @@
+{
+  "id": "base2-58",
+  "number": 58,
+  "name": "Oddish",
+  "supertype": "pokemon",
+  "type": "grass",
+  "hp": 50,
+  "rarity": "common",
+  "pokedex": 43
+}

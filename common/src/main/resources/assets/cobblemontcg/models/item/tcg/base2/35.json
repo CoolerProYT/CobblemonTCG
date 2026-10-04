@@ -1,0 +1,9 @@
+{
+  "parent": "cobblemontcg:item/tcg/card_evolution",
+  "textures": {
+    "frame": "cobblemontcg:tcg/frame/pokemon_grass",
+    "art": "cobblemontcg:tcg/base2/35",
+    "illustration": "cobblemontcg:tcg/base2/illustration/35",
+    "evolution": "cobblemontcg:tcg/base2/evolution/35"
+  }
+}

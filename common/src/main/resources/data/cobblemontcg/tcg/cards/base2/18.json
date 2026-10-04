@@ -1,0 +1,11 @@
+{
+  "id": "base2-18",
+  "number": 18,
+  "name": "Electrode",
+  "supertype": "pokemon",
+  "type": "lightning",
+  "hp": 90,
+  "rarity": "rare",
+  "pokedex": 101,
+  "evolves_from_pokedex": 100
+}

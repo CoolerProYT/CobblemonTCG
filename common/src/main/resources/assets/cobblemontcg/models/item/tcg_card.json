@@ -1224,6 +1224,774 @@
         "custom_model_data": 1205
       },
       "model": "cobblemontcg:item/tcg/base1/102_holo"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2002
+      },
+      "model": "cobblemontcg:item/tcg/base2/1"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2003
+      },
+      "model": "cobblemontcg:item/tcg/base2/1_holo"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2004
+      },
+      "model": "cobblemontcg:item/tcg/base2/2"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2005
+      },
+      "model": "cobblemontcg:item/tcg/base2/2_holo"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2006
+      },
+      "model": "cobblemontcg:item/tcg/base2/3"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2007
+      },
+      "model": "cobblemontcg:item/tcg/base2/3_holo"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2008
+      },
+      "model": "cobblemontcg:item/tcg/base2/4"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2009
+      },
+      "model": "cobblemontcg:item/tcg/base2/4_holo"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2010
+      },
+      "model": "cobblemontcg:item/tcg/base2/5"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2011
+      },
+      "model": "cobblemontcg:item/tcg/base2/5_holo"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2012
+      },
+      "model": "cobblemontcg:item/tcg/base2/6"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2013
+      },
+      "model": "cobblemontcg:item/tcg/base2/6_holo"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2014
+      },
+      "model": "cobblemontcg:item/tcg/base2/7"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2015
+      },
+      "model": "cobblemontcg:item/tcg/base2/7_holo"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2016
+      },
+      "model": "cobblemontcg:item/tcg/base2/8"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2017
+      },
+      "model": "cobblemontcg:item/tcg/base2/8_holo"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2018
+      },
+      "model": "cobblemontcg:item/tcg/base2/9"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2019
+      },
+      "model": "cobblemontcg:item/tcg/base2/9_holo"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2020
+      },
+      "model": "cobblemontcg:item/tcg/base2/10"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2021
+      },
+      "model": "cobblemontcg:item/tcg/base2/10_holo"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2022
+      },
+      "model": "cobblemontcg:item/tcg/base2/11"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2023
+      },
+      "model": "cobblemontcg:item/tcg/base2/11_holo"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2024
+      },
+      "model": "cobblemontcg:item/tcg/base2/12"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2025
+      },
+      "model": "cobblemontcg:item/tcg/base2/12_holo"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2026
+      },
+      "model": "cobblemontcg:item/tcg/base2/13"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2027
+      },
+      "model": "cobblemontcg:item/tcg/base2/13_holo"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2028
+      },
+      "model": "cobblemontcg:item/tcg/base2/14"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2029
+      },
+      "model": "cobblemontcg:item/tcg/base2/14_holo"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2030
+      },
+      "model": "cobblemontcg:item/tcg/base2/15"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2031
+      },
+      "model": "cobblemontcg:item/tcg/base2/15_holo"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2032
+      },
+      "model": "cobblemontcg:item/tcg/base2/16"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2033
+      },
+      "model": "cobblemontcg:item/tcg/base2/16_holo"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2034
+      },
+      "model": "cobblemontcg:item/tcg/base2/17"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2035
+      },
+      "model": "cobblemontcg:item/tcg/base2/17_holo"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2036
+      },
+      "model": "cobblemontcg:item/tcg/base2/18"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2037
+      },
+      "model": "cobblemontcg:item/tcg/base2/18_holo"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2038
+      },
+      "model": "cobblemontcg:item/tcg/base2/19"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2039
+      },
+      "model": "cobblemontcg:item/tcg/base2/19_holo"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2040
+      },
+      "model": "cobblemontcg:item/tcg/base2/20"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2041
+      },
+      "model": "cobblemontcg:item/tcg/base2/20_holo"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2042
+      },
+      "model": "cobblemontcg:item/tcg/base2/21"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2043
+      },
+      "model": "cobblemontcg:item/tcg/base2/21_holo"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2044
+      },
+      "model": "cobblemontcg:item/tcg/base2/22"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2045
+      },
+      "model": "cobblemontcg:item/tcg/base2/22_holo"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2046
+      },
+      "model": "cobblemontcg:item/tcg/base2/23"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2047
+      },
+      "model": "cobblemontcg:item/tcg/base2/23_holo"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2048
+      },
+      "model": "cobblemontcg:item/tcg/base2/24"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2049
+      },
+      "model": "cobblemontcg:item/tcg/base2/24_holo"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2050
+      },
+      "model": "cobblemontcg:item/tcg/base2/25"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2051
+      },
+      "model": "cobblemontcg:item/tcg/base2/25_holo"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2052
+      },
+      "model": "cobblemontcg:item/tcg/base2/26"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2053
+      },
+      "model": "cobblemontcg:item/tcg/base2/26_holo"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2054
+      },
+      "model": "cobblemontcg:item/tcg/base2/27"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2055
+      },
+      "model": "cobblemontcg:item/tcg/base2/27_holo"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2056
+      },
+      "model": "cobblemontcg:item/tcg/base2/28"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2057
+      },
+      "model": "cobblemontcg:item/tcg/base2/28_holo"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2058
+      },
+      "model": "cobblemontcg:item/tcg/base2/29"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2059
+      },
+      "model": "cobblemontcg:item/tcg/base2/29_holo"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2060
+      },
+      "model": "cobblemontcg:item/tcg/base2/30"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2061
+      },
+      "model": "cobblemontcg:item/tcg/base2/30_holo"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2062
+      },
+      "model": "cobblemontcg:item/tcg/base2/31"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2063
+      },
+      "model": "cobblemontcg:item/tcg/base2/31_holo"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2064
+      },
+      "model": "cobblemontcg:item/tcg/base2/32"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2065
+      },
+      "model": "cobblemontcg:item/tcg/base2/32_holo"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2066
+      },
+      "model": "cobblemontcg:item/tcg/base2/33"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2067
+      },
+      "model": "cobblemontcg:item/tcg/base2/33_holo"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2068
+      },
+      "model": "cobblemontcg:item/tcg/base2/34"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2069
+      },
+      "model": "cobblemontcg:item/tcg/base2/34_holo"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2070
+      },
+      "model": "cobblemontcg:item/tcg/base2/35"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2071
+      },
+      "model": "cobblemontcg:item/tcg/base2/35_holo"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2072
+      },
+      "model": "cobblemontcg:item/tcg/base2/36"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2073
+      },
+      "model": "cobblemontcg:item/tcg/base2/36_holo"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2074
+      },
+      "model": "cobblemontcg:item/tcg/base2/37"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2075
+      },
+      "model": "cobblemontcg:item/tcg/base2/37_holo"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2076
+      },
+      "model": "cobblemontcg:item/tcg/base2/38"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2077
+      },
+      "model": "cobblemontcg:item/tcg/base2/38_holo"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2078
+      },
+      "model": "cobblemontcg:item/tcg/base2/39"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2079
+      },
+      "model": "cobblemontcg:item/tcg/base2/39_holo"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2080
+      },
+      "model": "cobblemontcg:item/tcg/base2/40"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2081
+      },
+      "model": "cobblemontcg:item/tcg/base2/40_holo"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2082
+      },
+      "model": "cobblemontcg:item/tcg/base2/41"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2083
+      },
+      "model": "cobblemontcg:item/tcg/base2/41_holo"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2084
+      },
+      "model": "cobblemontcg:item/tcg/base2/42"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2085
+      },
+      "model": "cobblemontcg:item/tcg/base2/42_holo"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2086
+      },
+      "model": "cobblemontcg:item/tcg/base2/43"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2087
+      },
+      "model": "cobblemontcg:item/tcg/base2/43_holo"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2088
+      },
+      "model": "cobblemontcg:item/tcg/base2/44"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2089
+      },
+      "model": "cobblemontcg:item/tcg/base2/44_holo"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2090
+      },
+      "model": "cobblemontcg:item/tcg/base2/45"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2091
+      },
+      "model": "cobblemontcg:item/tcg/base2/45_holo"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2092
+      },
+      "model": "cobblemontcg:item/tcg/base2/46"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2093
+      },
+      "model": "cobblemontcg:item/tcg/base2/46_holo"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2094
+      },
+      "model": "cobblemontcg:item/tcg/base2/47"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2095
+      },
+      "model": "cobblemontcg:item/tcg/base2/47_holo"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2096
+      },
+      "model": "cobblemontcg:item/tcg/base2/48"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2097
+      },
+      "model": "cobblemontcg:item/tcg/base2/48_holo"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2098
+      },
+      "model": "cobblemontcg:item/tcg/base2/49"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2099
+      },
+      "model": "cobblemontcg:item/tcg/base2/49_holo"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2100
+      },
+      "model": "cobblemontcg:item/tcg/base2/50"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2101
+      },
+      "model": "cobblemontcg:item/tcg/base2/50_holo"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2102
+      },
+      "model": "cobblemontcg:item/tcg/base2/51"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2103
+      },
+      "model": "cobblemontcg:item/tcg/base2/51_holo"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2104
+      },
+      "model": "cobblemontcg:item/tcg/base2/52"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2105
+      },
+      "model": "cobblemontcg:item/tcg/base2/52_holo"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2106
+      },
+      "model": "cobblemontcg:item/tcg/base2/53"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2107
+      },
+      "model": "cobblemontcg:item/tcg/base2/53_holo"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2108
+      },
+      "model": "cobblemontcg:item/tcg/base2/54"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2109
+      },
+      "model": "cobblemontcg:item/tcg/base2/54_holo"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2110
+      },
+      "model": "cobblemontcg:item/tcg/base2/55"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2111
+      },
+      "model": "cobblemontcg:item/tcg/base2/55_holo"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2112
+      },
+      "model": "cobblemontcg:item/tcg/base2/56"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2113
+      },
+      "model": "cobblemontcg:item/tcg/base2/56_holo"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2114
+      },
+      "model": "cobblemontcg:item/tcg/base2/57"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2115
+      },
+      "model": "cobblemontcg:item/tcg/base2/57_holo"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2116
+      },
+      "model": "cobblemontcg:item/tcg/base2/58"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2117
+      },
+      "model": "cobblemontcg:item/tcg/base2/58_holo"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2118
+      },
+      "model": "cobblemontcg:item/tcg/base2/59"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2119
+      },
+      "model": "cobblemontcg:item/tcg/base2/59_holo"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2120
+      },
+      "model": "cobblemontcg:item/tcg/base2/60"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2121
+      },
+      "model": "cobblemontcg:item/tcg/base2/60_holo"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2122
+      },
+      "model": "cobblemontcg:item/tcg/base2/61"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2123
+      },
+      "model": "cobblemontcg:item/tcg/base2/61_holo"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2124
+      },
+      "model": "cobblemontcg:item/tcg/base2/62"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2125
+      },
+      "model": "cobblemontcg:item/tcg/base2/62_holo"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2126
+      },
+      "model": "cobblemontcg:item/tcg/base2/63"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2127
+      },
+      "model": "cobblemontcg:item/tcg/base2/63_holo"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2128
+      },
+      "model": "cobblemontcg:item/tcg/base2/64"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2129
+      },
+      "model": "cobblemontcg:item/tcg/base2/64_holo"
     }
   ]
 }
