@@ -66,6 +66,32 @@ card art, flavour text, pack wrappers, set logos, card backs or expansion symbol
 | --- | --- | --- |
 | `packOpening.animation` | `true` | Show the opening animation; when off, cards go straight to the inventory |
 
+### CobbleDollars (optional)
+
+[CobbleDollars](https://modrinth.com/mod/cobbledollars) is not required and none of its code is used
+or bundled. Its merchants can sell booster packs through its own shop config, tested with
+2.0.0+Beta-6.1 for 1.21.1. Add this category to the list in `config/cobbledollars/default_shop.json`:
+
+```json
+{
+  "name": "Cobblemon TCG",
+  "offers": [
+    {
+      "item": "cobblemontcg:booster_pack",
+      "price": "2500",
+      "components": {
+        "cobblemontcg:booster_pack": { "set": "cobblemontcg:base1", "variant": "charizard" },
+        "minecraft:custom_model_data": 1000
+      }
+    }
+  ]
+}
+```
+
+The `cobblemontcg:booster_pack` component is required: a pack without it does not open. `variant` is
+the wrapper (`charizard`, `blastoise` or `venusaur` for Base Set) and `custom_model_data` picks its
+texture (`1000`, `1001` and `1002` in the same order). Add one offer per wrapper to sell all three.
+
 ## Data packs
 
 Everything about a set is data driven, so new sets need no code.
