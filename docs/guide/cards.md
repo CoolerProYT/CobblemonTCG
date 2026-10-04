@@ -31,7 +31,7 @@ A holo print has an animated foil that shimmers behind the art. Holo and regular
 
 Each Pokémon card shows **Cobblemon's own model** of that Pokémon in the art window, posed like in Cobblemon's Pokédex, and evolution cards show the previous stage in the small portrait at the top left. Pack wrappers get the same treatment for their mascot.
 
-The models are drawn a few cards per tick after you join a world, and again after a resource reload. Until then, and for species Cobblemon has not added yet, the card shows its drawn art, which is what this wiki shows too. Nothing from Cobblemon is copied into the mod.
+The models are drawn a few cards per tick after you join a world, and again after a resource reload. Until then, and for species Cobblemon has not added yet, the card shows its drawn art. The cards on this wiki use the same renders, exported from the game. Nothing from Cobblemon is copied into the mod.
 
 ## In the world
 

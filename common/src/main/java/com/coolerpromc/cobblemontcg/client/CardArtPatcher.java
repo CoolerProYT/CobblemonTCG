@@ -107,7 +107,7 @@ public final class CardArtPatcher {
                 return;
             }
         }
-        if (EXPORT_DIR != null && budget == PER_TICK && !jobs.isEmpty()) {
+        if (EXPORT_DIR != null && budget == PER_TICK && !jobs.isEmpty() && minecraft.isRunning()) {
             // a whole pass without drawing anything: every sprite is done
             Constants.LOG.info("Exported the card art to {}, quitting", EXPORT_DIR);
             minecraft.stop();

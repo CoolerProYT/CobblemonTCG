@@ -9,8 +9,15 @@ npm run dev     # syncs data, then serves http://localhost:5173/CobblemonTCG/
 npm run build   # syncs data, then builds to .vitepress/dist
 ```
 
-`npm run sync` (run automatically by `dev` and `build`) writes `.vitepress/data/data.json` from `common/src/main/resources` and `tools/<set>_text.json`, and copies the mod's card and pack textures to `public/tcg/` and its item icons to `public/items/`. All three are git-ignored. Vanilla item icons load from the hosted renders at `https://storage.googleapis.com/coolerpromc/textures/`, set in `.vitepress/theme/tcg.ts`.
+`npm run sync` (run automatically by `dev` and `build`) writes `.vitepress/data/data.json` from `common/src/main/resources` and `tools/<set>_text.json`, and copies the mod's card and pack textures to `public/tcg/` and its item icons to `public/items/`. All three are git-ignored.
 
-A new set shows up in the data on its own; give it a page in `sets/` (copy `sets/base2.md`) and a sidebar entry in `.vitepress/config.mts`.
+## Cobblemon renders
 
-The `Docs` workflow (`.github/workflows/docs.yml`) builds the site and deploys it to GitHub Pages on every push to the repository's default branch. One-time setup: repository Settings > Pages > Source: "GitHub Actions".
+In game the cards show Cobblemon's own models, drawn at runtime. The wiki shows the same renders, exported from the game into `renders/` (committed) and copied over the drawn art by `npm run sync`. Re-export them when a set gets new Pokémon cards or Cobblemon adds a species that had none:
+
+```bash
+# from the repository root: runs the NeoForge dev client, joins the world "wiki-renders", saves every render and quits
+./gradlew :neoforge:runClient -PexportArt=docs/renders
+```
+
+The first time, create a world named `wiki-renders` in the dev client (any settings, a superflat world loads fastest); Quick Play only opens existing worlds. Headless (CI, a server), run it under `xvfb-run`. Species Cobblemon has not implemented get no render and keep the drawn art.

@@ -2,7 +2,7 @@
 
 <SetList />
 
-Every set is a datapack of JSON files, so [new sets](/datapacks/) need no code. The set pages show each card's drawn art; in game, Pokémon cards show [Cobblemon's models](/guide/cards#cobblemon-on-the-cards) in the art window instead.
+Every set is a datapack of JSON files, so [new sets](/datapacks/) need no code. Pokémon cards show [Cobblemon's models](/guide/cards#cobblemon-on-the-cards) in the art window, like in game.
 
 ## Collecting a full set
 

@@ -23,7 +23,7 @@ On a holo print the foil shows through wherever the card art is transparent, so 
   <TcgCard set="base2" :number="26" :width="180" />
 </div>
 
-The cards on this wiki are stacked from the same layers.
+The cards on this wiki are stacked from the same layers, with the Cobblemon renders the game draws.
 
 ## Cobblemon models
 
