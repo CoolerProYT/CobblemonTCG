@@ -31,6 +31,11 @@ card art, flavour text, pack wrappers, set logos, card backs or expansion symbol
   - `/tcg give card <set> <number> [holo]`
 
   `<set>` accepts `cobblemontcg:base1` or just `base1`.
+- **Card Dealer**: a villager profession whose job site is the Card Dealer Table (2 paper, 1
+  booster pack, 5 planks: paper / pack / paper on top, planks below in a table shape). The novice
+  trade sells a booster pack for 5 emeralds, 3 times per restock (configurable).
+- **Wandering trader**: may offer one booster pack for 8 emeralds (configurable). The pack offer
+  joins the trader's common pool, so not every trader has it.
 - **Creative tab** "Cobblemon: TCG" with every pack and card.
 
 ## Configuration
@@ -47,12 +52,45 @@ card art, flavour text, pack wrappers, set logos, card backs or expansion symbol
 | `rewards.triggers.capture` | `true` | Packs for catching Pokémon (Cobblemon) |
 | `rewards.triggers.levelUp` | `true` | Packs for level milestones (Cobblemon) |
 | `rewards.triggers.dexProgress` | `true` | Packs for Pokédex milestones (Cobblemon) |
+| `shop.setId` | `cobblemontcg:base1` | Set of the booster packs villagers sell |
+| `shop.cardDealer.enabled` | `true` | Card Dealer villagers sell booster packs |
+| `shop.cardDealer.price` | `5` | Emeralds per pack at the Card Dealer |
+| `shop.cardDealer.maxUses` | `3` | Packs a Card Dealer sells before restocking |
+| `shop.wanderingTrader.enabled` | `true` | Wandering traders can offer a booster pack |
+| `shop.wanderingTrader.price` | `8` | Emeralds per pack at the wandering trader |
+| `shop.wanderingTrader.maxUses` | `1` | Packs a wandering trader sells (they never restock) |
 
 `config/cobblemontcg-client.toml`:
 
 | Key | Default | Description |
 | --- | --- | --- |
 | `packOpening.animation` | `true` | Show the opening animation; when off, cards go straight to the inventory |
+
+### CobbleDollars (optional)
+
+[CobbleDollars](https://modrinth.com/mod/cobbledollars) is not required and none of its code is used
+or bundled. Its merchants can sell booster packs through its own shop config, tested with
+2.0.0+Beta-6.1 for 1.21.1. Add this category to the list in `config/cobbledollars/default_shop.json`:
+
+```json
+{
+  "name": "Cobblemon TCG",
+  "offers": [
+    {
+      "item": "cobblemontcg:booster_pack",
+      "price": "2500",
+      "components": {
+        "cobblemontcg:booster_pack": { "set": "cobblemontcg:base1", "variant": "charizard" },
+        "minecraft:custom_model_data": 1000
+      }
+    }
+  ]
+}
+```
+
+The `cobblemontcg:booster_pack` component is required: a pack without it does not open. `variant` is
+the wrapper (`charizard`, `blastoise` or `venusaur` for Base Set) and `custom_model_data` picks its
+texture (`1000`, `1001` and `1002` in the same order). Add one offer per wrapper to sell all three.
 
 ## Data packs
 

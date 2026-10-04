@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "cobblemontcg:block/card_dealer_table" },
+    "facing=east": { "model": "cobblemontcg:block/card_dealer_table", "y": 90 },
+    "facing=south": { "model": "cobblemontcg:block/card_dealer_table", "y": 180 },
+    "facing=west": { "model": "cobblemontcg:block/card_dealer_table", "y": 270 }
+  }
+}

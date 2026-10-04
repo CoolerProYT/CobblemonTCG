@@ -13,6 +13,11 @@ public final class TcgConfig {
     public static final double DEFAULT_HOLO_CHANCE = 1.0 / 3.0;
     public static final int DEFAULT_PACK_SIZE = 11;
     public static final int DEFAULT_DAILY_PACK_CAP = 10;
+    public static final String DEFAULT_SHOP_SET = "cobblemontcg:base1";
+    public static final int DEFAULT_CARD_DEALER_PRICE = 5;
+    public static final int DEFAULT_CARD_DEALER_MAX_USES = 3;
+    public static final int DEFAULT_WANDERING_TRADER_PRICE = 8;
+    public static final int DEFAULT_WANDERING_TRADER_MAX_USES = 1;
 
     public static ConfigSpec CONFIG_SPEC;
 
@@ -24,6 +29,13 @@ public final class TcgConfig {
     private static ConfigValue<Boolean> captureRewards;
     private static ConfigValue<Boolean> levelUpRewards;
     private static ConfigValue<Boolean> dexRewards;
+    private static ConfigValue<String> shopSetId;
+    private static ConfigValue<Boolean> cardDealerEnabled;
+    private static ConfigValue<Integer> cardDealerPrice;
+    private static ConfigValue<Integer> cardDealerMaxUses;
+    private static ConfigValue<Boolean> wanderingTraderEnabled;
+    private static ConfigValue<Integer> wanderingTraderPrice;
+    private static ConfigValue<Integer> wanderingTraderMaxUses;
 
     private TcgConfig() {
     }
@@ -44,6 +56,14 @@ public final class TcgConfig {
         captureRewards = builder.defineBoolean("rewards.triggers.capture", true, "Give packs for catching Pokémon (needs Cobblemon)");
         levelUpRewards = builder.defineBoolean("rewards.triggers.levelUp", true, "Give packs for Pokémon level milestones (needs Cobblemon)");
         dexRewards = builder.defineBoolean("rewards.triggers.dexProgress", true, "Give packs for Pokédex progress milestones (needs Cobblemon)");
+
+        shopSetId = builder.defineString("shop.setId", DEFAULT_SHOP_SET, "Set of the booster packs sold by villagers, for example cobblemontcg:base1");
+        cardDealerEnabled = builder.defineBoolean("shop.cardDealer.enabled", true, "Card Dealer villagers sell booster packs. Only affects villagers that get their trades after the change");
+        cardDealerPrice = builder.defineInt("shop.cardDealer.price", DEFAULT_CARD_DEALER_PRICE, 1, 64, "Emeralds per booster pack at the Card Dealer");
+        cardDealerMaxUses = builder.defineInt("shop.cardDealer.maxUses", DEFAULT_CARD_DEALER_MAX_USES, 1, 64, "Booster packs a Card Dealer sells before it needs to restock");
+        wanderingTraderEnabled = builder.defineBoolean("shop.wanderingTrader.enabled", true, "Wandering traders can offer a booster pack. Only affects traders that spawn after the change");
+        wanderingTraderPrice = builder.defineInt("shop.wanderingTrader.price", DEFAULT_WANDERING_TRADER_PRICE, 1, 64, "Emeralds per booster pack at the wandering trader");
+        wanderingTraderMaxUses = builder.defineInt("shop.wanderingTrader.maxUses", DEFAULT_WANDERING_TRADER_MAX_USES, 1, 64, "Booster packs a wandering trader sells (wandering traders never restock)");
 
         CONFIG_SPEC = builder.build();
     }
@@ -78,5 +98,33 @@ public final class TcgConfig {
 
     public static boolean dexRewardsEnabled() {
         return dexRewards == null || dexRewards.get();
+    }
+
+    public static String shopSetId() {
+        return shopSetId == null ? DEFAULT_SHOP_SET : shopSetId.get();
+    }
+
+    public static boolean cardDealerEnabled() {
+        return cardDealerEnabled == null || cardDealerEnabled.get();
+    }
+
+    public static int cardDealerPrice() {
+        return cardDealerPrice == null ? DEFAULT_CARD_DEALER_PRICE : cardDealerPrice.get();
+    }
+
+    public static int cardDealerMaxUses() {
+        return cardDealerMaxUses == null ? DEFAULT_CARD_DEALER_MAX_USES : cardDealerMaxUses.get();
+    }
+
+    public static boolean wanderingTraderEnabled() {
+        return wanderingTraderEnabled == null || wanderingTraderEnabled.get();
+    }
+
+    public static int wanderingTraderPrice() {
+        return wanderingTraderPrice == null ? DEFAULT_WANDERING_TRADER_PRICE : wanderingTraderPrice.get();
+    }
+
+    public static int wanderingTraderMaxUses() {
+        return wanderingTraderMaxUses == null ? DEFAULT_WANDERING_TRADER_MAX_USES : wanderingTraderMaxUses.get();
     }
 }

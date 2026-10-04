@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "tag": "minecraft:planks"
+    },
+    "B": {
+      "item": "cobblemontcg:booster_pack"
+    },
+    "P": {
+      "item": "minecraft:paper"
+    }
+  },
+  "pattern": [
+    "PBP",
+    "###",
+    "# #"
+  ],
+  "result": {
+    "count": 1,
+    "id": "cobblemontcg:card_dealer_table"
+  }
+}

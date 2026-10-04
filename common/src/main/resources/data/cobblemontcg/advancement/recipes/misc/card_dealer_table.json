@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_booster_pack": {
+      "conditions": {
+        "items": [
+          {
+            "items": "cobblemontcg:booster_pack"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "cobblemontcg:card_dealer_table"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_booster_pack"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "cobblemontcg:card_dealer_table"
+    ]
+  }
+}
