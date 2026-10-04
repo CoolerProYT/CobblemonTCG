@@ -111,6 +111,10 @@ const recipes = jsonFiles(join(data, 'recipe')).map((file) => {
 const publicTcg = join(docs, 'public/tcg')
 rmSync(publicTcg, { recursive: true, force: true })
 cpSync(join(assets, 'textures/tcg'), publicTcg, { recursive: true, filter: (src) => !src.endsWith('.mcmeta') })
+// Renders of Cobblemon's models, exported from the game (see README.md), replace the drawn art like in game.
+// Species Cobblemon has not implemented have no render and keep the drawn art.
+const renders = join(docs, 'renders/cobblemontcg/tcg')
+if (existsSync(renders)) cpSync(renders, publicTcg, { recursive: true })
 
 const publicItems = join(docs, 'public/items')
 rmSync(publicItems, { recursive: true, force: true })

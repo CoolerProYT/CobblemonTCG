@@ -15,6 +15,9 @@ import net.minecraft.resources.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -39,6 +42,12 @@ public final class CardArtPatcher {
     // the portrait window shows 32x24 of its 32x32 texture, see tools/art/layout.py
     private static final int PORTRAIT_W = 32;
     private static final int PORTRAIT_H = 24;
+    /**
+     * Dev tool: with {@code -Dcobblemontcg.exportArt=<dir>}, every redrawn sprite is also saved to
+     * {@code <dir>/<namespace>/<sprite path>.png} and the game quits once all of them are drawn. The wiki
+     * in {@code docs/} shows these renders on its cards.
+     */
+    private static final String EXPORT_DIR = System.getProperty(Constants.MODID + ".exportArt");
 
     /**
      * Draws one species on a transparent background, full body, centred and standing on the bottom third.
@@ -98,6 +107,11 @@ public final class CardArtPatcher {
                 return;
             }
         }
+        if (EXPORT_DIR != null && budget == PER_TICK && !jobs.isEmpty()) {
+            // a whole pass without drawing anything: every sprite is done
+            Constants.LOG.info("Exported the card art to {}, quitting", EXPORT_DIR);
+            minecraft.stop();
+        }
     }
 
     private static List<Job> buildJobs() {
@@ -150,6 +164,9 @@ public final class CardArtPatcher {
                     case PACK -> fit(big, bounds, image, 0.86F, 0.98F, 0.97F, false);
                 }
                 upload(atlas, sprite, image);
+                if (EXPORT_DIR != null) {
+                    export(job.sprite(), image);
+                }
             } finally {
                 image.close();
             }
@@ -276,6 +293,16 @@ public final class CardArtPatcher {
             }
         }
         return x1 < 0 ? null : new int[]{x0, y0, x1 + 1, y1 + 1};
+    }
+
+    private static void export(ResourceLocation sprite, NativeImage image) {
+        Path file = Path.of(EXPORT_DIR, sprite.getNamespace(), sprite.getPath() + ".png");
+        try {
+            Files.createDirectories(file.getParent());
+            image.writeToFile(file);
+        } catch (IOException e) {
+            Constants.LOG.warn("Could not export {}", sprite, e);
+        }
     }
 
     /**
