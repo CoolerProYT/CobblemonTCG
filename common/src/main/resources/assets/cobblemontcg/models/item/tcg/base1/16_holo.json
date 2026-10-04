@@ -1,7 +1,7 @@
 {
   "parent": "cobblemontcg:item/tcg/card_pokemon_holo",
   "textures": {
-    "frame": "cobblemontcg:tcg/frame/pokemon_lightning",
+    "frame": "cobblemontcg:tcg/frame/base1/pokemon_lightning",
     "art": "cobblemontcg:tcg/base1/16",
     "illustration": "cobblemontcg:tcg/base1/illustration/16"
   }

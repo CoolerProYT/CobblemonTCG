@@ -1,7 +1,7 @@
 {
   "parent": "cobblemontcg:item/tcg/card_holo",
   "textures": {
-    "frame": "cobblemontcg:tcg/frame/energy",
+    "frame": "cobblemontcg:tcg/frame/base1/energy",
     "art": "cobblemontcg:tcg/base1/101"
   }
 }

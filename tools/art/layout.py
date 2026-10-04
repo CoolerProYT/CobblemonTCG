@@ -5,8 +5,11 @@ Pokemon Powers and attacks with energy costs, weakness / resistance / retreat ba
 Pokedex number, card number and rarity at the bottom.
 
 All coordinates are pixels in a 256x352 texture (the card is the whole texture, 63 x 88 mm).
-The frame layer (border, face, art window and its background, static labels) is shared per type;
-everything that differs between cards is drawn by cards.py on a transparent layer on top.
+The frame layer (border, face, art window and its background, static labels) is shared per set and
+type; everything that differs between cards is drawn by cards.py on a transparent layer on top.
+
+Every set has a STYLE so its cards can be told apart at a glance: the colour of the art window rim
+and the Pokedex strip, the scenery in the art window and an optional set mark next to the strip.
 """
 import math
 import random
@@ -56,6 +59,27 @@ FACE_COLORS = {
     "trainer": (226, 226, 230),
     "energy": (240, 236, 222),
 }
+
+
+# set -> look of its cards. Base Set is the plain 1999 look; later sets change the details around the
+# art, like the real expansions did, and carry an original set mark (no official expansion symbols).
+STYLES = {
+    "base1": {
+        "rim": (232, 198, 92), "trainer_rim": (204, 206, 216),
+        "strip": (236, 206, 120), "strip_edge": (178, 140, 60), "strip_shine": (255, 245, 200),
+        "scenery": None, "mark": None,
+    },
+    "base2": {
+        "rim": (150, 164, 92), "trainer_rim": (178, 196, 170),
+        "strip": (188, 214, 138), "strip_edge": (92, 128, 58), "strip_shine": (236, 250, 210),
+        "scenery": "jungle", "mark": "leaf",
+    },
+}
+DEFAULT_STYLE = "base1"
+
+
+def style(set_name: str) -> dict:
+    return STYLES.get(set_name, STYLES[DEFAULT_STYLE])
 
 
 def mix(a, b, t):
@@ -195,10 +219,10 @@ def _card_base(face_color, seed: int) -> Image.Image:
     return img
 
 
-def _art_frame(img, kind, silver=False):
+def _art_frame(img, kind, set_name, silver=False):
     """Bevelled metallic frame around the art window, then the painted background."""
     x0, y0, x1, y1 = ART
-    rim = (204, 206, 216) if silver else (232, 198, 92)
+    rim = style(set_name)["trainer_rim" if silver else "rim"]
     dark = mix(rim, (40, 30, 20), 0.55)
     d = ImageDraw.Draw(img, "RGBA")
     d.rectangle((x0 - 5, y0 - 5, x1 + 5, y1 + 5), fill=rgba(mix(rim, (0, 0, 0), 0.4)))
@@ -211,7 +235,7 @@ def _art_frame(img, kind, silver=False):
     d.line((x0 - 4, y1 + 4, x1 + 4, y1 + 4), fill=(0, 0, 0, 70))
     d.line((x1 + 4, y0 - 4, x1 + 4, y1 + 4), fill=(0, 0, 0, 60))
     d.rectangle((x0 - 1, y0 - 1, x1 + 1, y1 + 1), outline=rgba(dark))
-    img.alpha_composite(background(kind), (x0, y0))
+    img.alpha_composite(background(kind, set_name), (x0, y0))
     # inner shadow at the top of the window so the art sits behind the frame
     sh = Image.new("RGBA", (x1 - x0 + 1, y1 - y0 + 1), (0, 0, 0, 0))
     sd = ImageDraw.Draw(sh)
@@ -220,17 +244,20 @@ def _art_frame(img, kind, silver=False):
     img.alpha_composite(sh, (x0, y0))
 
 
-def pokemon_frame(kind: str) -> Image.Image:
+def pokemon_frame(kind: str, set_name: str = DEFAULT_STYLE) -> Image.Image:
     face = FACE_COLORS[kind]
+    look = style(set_name)
     img = _card_base(face, _seed(kind))
-    _art_frame(img, kind)
+    _art_frame(img, kind, set_name)
     d = ImageDraw.Draw(img, "RGBA")
 
-    # gold Pokedex strip under the art
+    # Pokedex strip under the art, gold on Base Set
     sx0, sy0, sx1, sy1 = STRIP
     d.polygon([(sx0 + 4, sy0), (sx1 - 4, sy0), (sx1, (sy0 + sy1) / 2), (sx1 - 4, sy1), (sx0 + 4, sy1), (sx0, (sy0 + sy1) / 2)],
-              fill=rgba((236, 206, 120)), outline=rgba((178, 140, 60)))
-    d.line((sx0 + 5, sy0 + 1, sx1 - 5, sy0 + 1), fill=(255, 245, 200, 160))
+              fill=rgba(look["strip"]), outline=rgba(look["strip_edge"]))
+    d.line((sx0 + 5, sy0 + 1, sx1 - 5, sy0 + 1), fill=rgba(look["strip_shine"], 160))
+    if look["mark"]:
+        set_mark(img, look["mark"], sx1 + 8, (sy0 + sy1) / 2, 13)
 
     # weakness / resistance / retreat bar
     line_col = rgba(mix(face, (0, 0, 0), 0.35))
@@ -245,20 +272,55 @@ def pokemon_frame(kind: str) -> Image.Image:
     return F.grain(img, 4, seed=_seed(kind))
 
 
-def trainer_frame() -> Image.Image:
+def trainer_frame(set_name: str = DEFAULT_STYLE) -> Image.Image:
     face = FACE_COLORS["trainer"]
     img = _card_base(face, 77)
-    _art_frame(img, "trainer", silver=True)
+    _art_frame(img, "trainer", set_name, silver=True)
     d = ImageDraw.Draw(img, "RGBA")
     d.rounded_rectangle(RULES, radius=3, fill=(250, 250, 252, 255), outline=(150, 150, 160, 255))
+    mark = style(set_name)["mark"]
+    if mark:
+        set_mark(img, mark, RULES[2] - 11, RULES[1] + 11, 13)
     return F.grain(img, 4, seed=77)
 
 
-def energy_frame() -> Image.Image:
+def energy_frame(set_name: str = DEFAULT_STYLE) -> Image.Image:
     img = _card_base(FACE_COLORS["energy"], 91)
     d = ImageDraw.Draw(img, "RGBA")
     d.rounded_rectangle((FACE[0] + 9, FACE[1] + 26, FACE[2] - 9, FACE[3] - 22), radius=3, outline=(200, 186, 140, 255))
+    mark = style(set_name)["mark"]
+    if mark:
+        set_mark(img, mark, FACE[2] - 20, FACE[3] - 34, 13)
     return F.grain(img, 4, seed=91)
+
+
+def _leaf(d, cx, cy, length, width, angle, fill, vein=None):
+    """A pointed leaf centred on (cx, cy), pointing along angle (degrees)."""
+    a = math.radians(angle)
+    ca, sa = math.cos(a), math.sin(a)
+    pts = []
+    for i in range(25):
+        t = i / 24 * 2 - 1
+        pts.append((t * length / 2, (1 - t * t) * width / 2))
+    for i in range(25):
+        t = 1 - i / 24 * 2
+        pts.append((t * length / 2, -(1 - t * t) * width / 2))
+    d.polygon([(cx + x * ca - y * sa, cy + x * sa + y * ca) for x, y in pts], fill=fill)
+    if vein:
+        d.line((cx - length / 2 * ca, cy - length / 2 * sa, cx + length * 0.42 * ca, cy + length * 0.42 * sa), fill=vein, width=max(1, round(width / 6)))
+
+
+def set_mark(img, mark: str, cx, cy, size):
+    """Original set mark (not an official expansion symbol): a dark silhouette on a light disc."""
+    big = Image.new("RGBA", (round(size * SS), round(size * SS)), (0, 0, 0, 0))
+    d = ImageDraw.Draw(big)
+    n = size * SS
+    d.ellipse((0, 0, n - 1, n - 1), fill=(36, 34, 30, 255))
+    d.ellipse((SS * 0.9, SS * 0.9, n - 1 - SS * 0.9, n - 1 - SS * 0.9), fill=(248, 246, 234, 255))
+    if mark == "leaf":
+        _leaf(d, n * 0.5, n * 0.52, n * 0.72, n * 0.36, -50, (34, 70, 38, 255), vein=(248, 246, 234, 255))
+        d.line((n * 0.26, n * 0.8, n * 0.36, n * 0.68), fill=(34, 70, 38, 255), width=round(SS * 0.9))
+    img.alpha_composite(big.resize((round(size), round(size)), Image.LANCZOS), (round(cx - size / 2), round(cy - size / 2)))
 
 
 # ---------------------------------------------------------------- backgrounds
@@ -284,9 +346,74 @@ def _ridge(w, horizon, height, seed, rough=0.5):
     return horizon - height * (0.4 + 0.6 * n) - (r - 0.5) * height * rough
 
 
-def background(kind: str) -> Image.Image:
-    """Painted scenery per type, shared by every card of that type: sky, distant land in
-    atmospheric haze, textured ground, all slightly soft so the creature stands out."""
+def _jungle(arr, w, h, seed):
+    """Jungle scenery laid over a type's background: a canopy of leaves hanging into the top corners,
+    vines, a dense wall of trees on the horizon and ferns in the bottom corners. The middle stays open
+    so the Pokemon stands out."""
+    rng = random.Random(seed * 7 + 3)
+    sky = arr[: int(h * 0.3), :, :3].mean() / 255
+    dark = 0.55 + 0.45 * min(1.0, sky * 1.3)          # night-time types get a darker canopy
+    greens = [tuple(int(c * dark) for c in col) for col in ((30, 86, 44), (44, 112, 52), (62, 136, 60), (24, 70, 40))]
+    layer = Image.new("RGBA", (w * SS // 2, h * SS // 2), (0, 0, 0, 0))
+    k = SS / 2
+    d = ImageDraw.Draw(layer)
+    horizon = h * 0.64
+
+    # wall of jungle trees on the horizon
+    for _ in range(26):
+        x = rng.uniform(-0.05, 1.05) * w
+        r = rng.uniform(h * 0.06, h * 0.12)
+        y = horizon - r * rng.uniform(0.2, 0.9)
+        col = (*greens[rng.randrange(4)], 235)
+        d.ellipse(((x - r * 1.2) * k, (y - r) * k, (x + r * 1.2) * k, (y + r) * k), fill=col)
+    # a palm leaning in from each side
+    for side in (0, 1):
+        bx = w * (0.04 if side == 0 else 0.96)
+        top = (w * (0.16 if side == 0 else 0.84), h * 0.3)
+        d.line((bx * k, horizon * k, top[0] * k, top[1] * k), fill=(int(110 * dark), int(84 * dark), int(56 * dark), 255), width=round(5 * k))
+        for i in range(7):
+            ang = -170 + i * 28 + rng.uniform(-6, 6)
+            r = math.radians(ang)
+            length = rng.uniform(h * 0.16, h * 0.22)
+            _leaf(d, (top[0] + math.cos(r) * length * 0.5) * k, (top[1] + math.sin(r) * length * 0.5) * k,
+                  length * k, length * 0.28 * k, ang, (*greens[(i + side) % 3], 255))
+    # canopy hanging into the top edge, heavier in the corners
+    for _ in range(70):
+        u = rng.random()
+        x = (u ** 1.8 * 0.45 if rng.random() < 0.5 else 1 - u ** 1.8 * 0.45) * w
+        y = rng.uniform(-h * 0.06, h * 0.12) * (1.6 - abs(x / w - 0.5) * 2) + rng.uniform(0, h * 0.05) * (abs(x / w - 0.5) * 2)
+        length = rng.uniform(h * 0.09, h * 0.17)
+        _leaf(d, x * k, y * k, length * k, length * 0.38 * k, rng.uniform(40, 140), (*greens[rng.randrange(4)], 255),
+              vein=(*tuple(int(c * 1.25) for c in greens[2]), 255))
+    # vines
+    for x0 in (w * rng.uniform(0.08, 0.2), w * rng.uniform(0.8, 0.92), w * rng.uniform(0.3, 0.4)):
+        length = rng.uniform(h * 0.22, h * 0.42)
+        pts = [((x0 + math.sin(t / 8 * math.pi + seed) * 4) * k, (t / 16 * length) * k) for t in range(17)]
+        d.line(pts, fill=(*greens[3], 255), width=round(2 * k))
+        for j in range(2, 17, 3):
+            px, py = pts[j]
+            _leaf(d, px + 4 * k * (1 if j % 2 else -1), py, 9 * k, 4 * k, 30 if j % 2 else 150, (*greens[1], 255))
+    # ferns in the bottom corners
+    for cx in (0, w):
+        for i in range(9):
+            ang = (-80 + i * 9) if cx == 0 else (-100 - i * 9)
+            r = math.radians(ang)
+            length = rng.uniform(h * 0.22, h * 0.32)
+            _leaf(d, (cx + math.cos(r) * length * 0.5) * k, (h + math.sin(r) * length * 0.5) * k,
+                  length * k, length * 0.2 * k, ang, (*greens[i % 3], 255), vein=(*greens[3], 255))
+
+    leaves = layer.resize((w, h), Image.LANCZOS)
+    # soft dappled light falling through the canopy
+    light = np.clip((F.noise(w, h, w * 0.06, seed + 21, 3) - 0.6) * 3, 0, 1) * np.clip(1 - np.abs(np.arange(h)[:, None] / h - 0.45) * 2, 0, 1)
+    _paint(arr, light, (255, 250, 210), 0.18)
+    la = np.asarray(leaves).astype(np.float32)
+    a = la[..., 3:] / 255
+    arr[..., :3] = arr[..., :3] * (1 - a) + la[..., :3] * a
+
+
+def background(kind: str, set_name: str = DEFAULT_STYLE) -> Image.Image:
+    """Painted scenery per type and set, shared by every card of that type in the set: sky, distant
+    land in atmospheric haze, textured ground, all slightly soft so the creature stands out."""
     w, h = (ART[2] - ART[0] + 1) * 2, (ART[3] - ART[1] + 1) * 2
     seed = sum(map(ord, kind))
     rng = random.Random(seed)
@@ -389,6 +516,9 @@ def background(kind: str) -> Image.Image:
         soft_clouds(arr, (255, 255, 255), 0.95, 0.48)
         land(arr, (150, 190, 170), h * 0.16, seed, 0.5)
         ground(arr, (132, 184, 96), (166, 204, 122))
+
+    if style(set_name)["scenery"] == "jungle" and kind != "trainer":
+        _jungle(arr, w, h, seed)
 
     # vignette for depth
     v = np.hypot((xx - w / 2) / (w * 0.7), (yy - h / 2) / (h * 0.7))

@@ -1,7 +1,7 @@
 {
   "parent": "cobblemontcg:item/tcg/card_evolution_holo",
   "textures": {
-    "frame": "cobblemontcg:tcg/frame/pokemon_lightning",
+    "frame": "cobblemontcg:tcg/frame/base1/pokemon_lightning",
     "art": "cobblemontcg:tcg/base1/9",
     "illustration": "cobblemontcg:tcg/base1/illustration/9",
     "evolution": "cobblemontcg:tcg/base1/evolution/9"
