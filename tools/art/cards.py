@@ -65,7 +65,7 @@ def _header(img, card, text, by_name):  # noqa: ARG001 (by_name kept for custom 
         d = ImageDraw.Draw(img, "RGBA")
         d.rectangle((box[0] - 1, box[1] - 1, box[2] + 1, box[3] + 1), fill=L.rgba((232, 198, 92)))
         bw, bh = box[2] - box[0] + 1, box[3] - box[1] + 1
-        img.alpha_composite(L.background(card["type"]).resize((bw, bh), Image.LANCZOS), box[:2])
+        img.alpha_composite(L.background(card["type"], card["set"]).resize((bw, bh), Image.LANCZOS), box[:2])
         d.rectangle((box[0] - 1, box[1] - 1, box[2] + 1, box[3] + 1), outline=L.rgba((150, 116, 40)))
         x = box[2] + 6
         label = stage.upper()

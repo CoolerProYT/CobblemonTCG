@@ -16,7 +16,7 @@ so a held, dropped or framed card shows the card back instead of a mirrored fron
 The set itself (name, pack slots, model_data_base) lives in
 data/cobblemontcg/tcg/sets/<set>.json and is read, not written, by this script.
 Card art is expected at assets/cobblemontcg/textures/tcg/<set>/<number>.png, frames at
-textures/tcg/frame/<pokemon_type|trainer|energy>.png and pack wrappers at
+textures/tcg/frame/<set>/<pokemon_type|trainer|energy>.png and pack wrappers at
 textures/tcg/pack/<set>_<wrapper>.png (see gen_card_art.py).
 
 Usage: python tools/gen_cards.py
@@ -189,10 +189,10 @@ def write_templates() -> None:
 
 
 def card_model(set_name: str, card: dict, holo: bool) -> dict:
-    """Frame (shared per type), then the holo foil for holo prints, the Pokemon illustration and the
+    """Frame (shared per set and type), then the holo foil for holo prints, the Pokemon illustration and the
     card's own text layer, and the previous stage's portrait on evolution cards."""
     base = f"{NAMESPACE}:tcg/{set_name}"
-    textures = {"frame": f"{NAMESPACE}:tcg/frame/{frame_name(card)}", "art": f"{base}/{card['number']}"}
+    textures = {"frame": f"{NAMESPACE}:tcg/frame/{set_name}/{frame_name(card)}", "art": f"{base}/{card['number']}"}
     parent = "card"
     if card["supertype"] == "pokemon":
         textures["illustration"] = f"{base}/illustration/{card['number']}"

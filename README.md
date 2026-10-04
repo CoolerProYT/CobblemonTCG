@@ -198,13 +198,22 @@ Cards follow the layout of a 1999 Base Set card (yellow border, face coloured by
 name and HP, framed art window, Pokémon Powers and attacks with energy costs and damage,
 weakness / resistance / retreat, level, number and rarity symbol), drawn from scratch.
 
+Every set has its own card style so its cards can be told apart at a glance:
+
+| Set | Art window rim | Pokédex strip | Scenery | Set mark |
+| --- | --- | --- | --- | --- |
+| Base Set | gold (silver on Trainers) | gold | open landscapes per type | none |
+| Jungle | mossy green | leaf green | the same landscapes overgrown with jungle canopy, vines, palms and ferns | a leaf, right of the strip (top right of the rules box on Trainers) |
+
+The set marks are original drawings, not the official expansion symbols.
+
 Cards and packs are thin 3D models with a real back: a held, dropped or framed card shows the card
 back, and a pack shows the back of the wrapper. In the opening animation each card is dealt face
 down and flips over. A card model stacks these layers on its front, back to front:
 
 | Layer | Texture | Shared |
 | --- | --- | --- |
-| Frame | `assets/cobblemontcg/textures/tcg/frame/<pokemon_<type>\|trainer\|energy>.png`, 256×352 | per type: border, face, art window background, labels |
+| Frame | `assets/cobblemontcg/textures/tcg/frame/<set>/<pokemon_<type>\|trainer\|energy>.png`, 256×352 | per set and type: border, face, art window rim and background, labels, set mark |
 | Holo foil (holo prints only) | `assets/cobblemontcg/textures/tcg/holo_overlay.png` (+ `.mcmeta`), 208×144 per frame | all cards, animated, covers the art window only |
 | Illustration (Pokémon only) | `assets/cobblemontcg/textures/tcg/<set>/illustration/<number>.png`, 208×144 | one per card: the Pokémon in the art window |
 | Card text | `assets/cobblemontcg/textures/tcg/<set>/<number>.png`, 256×352 | one per card: name, HP, attacks, number, rarity; trainer and energy art |
@@ -256,7 +265,7 @@ Requires Python 3.10+, Pillow 10.1+ and numpy (`pip install pillow numpy`).
   card art, pack fronts and back (`tools/art/wrapper.py`), card back and mod icon (about 3 minutes). `--skip-existing-art` keeps card art you have
   already replaced, `--set` and `--only` redraw only one set or some card numbers. The illustrations live in
   `tools/art/pokemon_<set>.py` and `tools/art/trainers_<set>.py`, one small function per card, lit and shaded by
-  `tools/art/canvas.py`; the layout is in `tools/art/layout.py`, the per-card text in
+  `tools/art/canvas.py`; the layout and each set's style (`STYLES`) are in `tools/art/layout.py`, the per-card text in
   `tools/art/cards.py`.
 
 Card stacks use `custom_model_data = model_data_base + number * 2` for the regular print and `+ 1`

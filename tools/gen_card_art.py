@@ -5,8 +5,9 @@ No official card art, scans, logos or set symbols are used. Replace any file wit
 drawing of the same size and name, no code changes needed.
 
 Writes into common/src/main/resources/assets/cobblemontcg/textures/tcg/:
-  frame/pokemon_<type>.png, trainer.png, energy.png
-                            card frame, face and art window background (256x352)
+  frame/<set>/pokemon_<type>.png, trainer.png, energy.png
+                            card frame, face and art window background in the set's style (256x352),
+                            only the kinds the set uses
   holo_overlay.png(.mcmeta) animated foil over the art window, holo prints only (208x144 per frame)
   <set>/<number>.png        everything specific to one card: name, HP, attacks, weakness /
                             resistance / retreat, number, rarity; trainer and energy art (256x352)
@@ -41,7 +42,7 @@ from PIL import Image, ImageDraw
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from art import layout as L  # noqa: E402
-from art.cards import card_layers  # noqa: E402
+from art.cards import card_layers, frame_name  # noqa: E402
 from art.wrapper import DEFAULT, SETS, make_card_back, make_pack_back, make_wrapper, make_wrapper_layers  # noqa: E402
 
 NAMESPACE = "cobblemontcg"
@@ -99,11 +100,7 @@ def main() -> None:
     args = parser.parse_args()
     only = {int(n) for n in args.only.split(",") if n}
 
-    frames = {f"pokemon_{kind}": L.pokemon_frame(kind) for kind in L.TYPE_COLORS}
-    frames["trainer"] = L.trainer_frame()
-    frames["energy"] = L.energy_frame()
-    for name, img in frames.items():
-        save(img, TCG / "frame" / f"{name}.png")
+    frames = {f"pokemon_{kind}": L.pokemon_frame(kind) for kind in L.TYPE_COLORS}   # for the mod icon
 
     overlay, meta = L.holo_overlay()
     save(overlay, TCG / "holo_overlay.png")
@@ -136,6 +133,12 @@ def main() -> None:
         text_file = TOOLS / f"{set_name}_text.json"
         texts = {e["number"]: e for e in json.loads(text_file.read_text(encoding="utf-8"))} if text_file.exists() else {}
         cards = list(read_cards(csv_path))
+        for kind in sorted({frame_name(c) for c in cards} if not args.set or args.set == set_name else ()):
+            if kind.startswith("pokemon_"):
+                frame = L.pokemon_frame(kind[len("pokemon_"):], set_name)
+            else:
+                frame = L.trainer_frame(set_name) if kind == "trainer" else L.energy_frame(set_name)
+            save(frame, TCG / "frame" / set_name / f"{kind}.png")
         by_name = {**everywhere, **{c["name"]: (set_name, c["number"]) for c in cards if c["supertype"] == "pokemon"}}
         written = 0
         for card in cards:
