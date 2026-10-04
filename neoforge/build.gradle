@@ -21,6 +21,12 @@ neoForge {
         }
         client {
             client()
+            // ./gradlew :neoforge:runClient -PexportArt=<dir>: saves the Cobblemon card renders for the wiki
+            // (see docs/README.md), joining a throwaway world on its own and quitting when done
+            if (project.hasProperty('exportArt')) {
+                systemProperty('cobblemontcg.exportArt', rootProject.file(project.property('exportArt')).absolutePath)
+                programArguments.addAll('--quickPlaySingleplayer', 'wiki-renders')
+            }
         }
         data {
             data()
