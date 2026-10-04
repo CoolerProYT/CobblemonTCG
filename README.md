@@ -34,11 +34,12 @@ card art, flavour text, pack wrappers, set logos, card backs or expansion symbol
 
   `<set>` accepts `cobblemontcg:base1` or just `base1` (Base Set), `base2` for Jungle.
 - **Card Dealer**: a villager profession whose job site is the Card Dealer Table (2 paper, 1
-  booster pack, 5 planks: paper / pack / paper on top, planks below in a table shape). The novice
-  trade sells a booster pack for 5 emeralds, 3 times per restock (configurable). Villagers sell packs of
-  the set in `shop.setId` (Base Set by default, `cobblemontcg:base2` for Jungle).
-- **Wandering trader**: may offer one booster pack for 8 emeralds (configurable). The pack offer
-  joins the trader's common pool, so not every trader has it.
+  booster pack, 5 planks: paper / pack / paper on top, planks below in a table shape). It sells
+  booster packs for 5 emeralds, 3 times per restock (configurable), and unlocks newer sets as it levels
+  up, like the real sets came out: Base Set packs as a Novice, Jungle packs from Apprentice (about 5
+  pack purchases). The sets and their order come from `shop.sets`.
+- **Wandering trader**: may offer one booster pack of a random `shop.sets` set for 8 emeralds
+  (configurable). The pack offer joins the trader's common pool, so not every trader has it.
 - **Creative tab** "Cobblemon: TCG" with every pack and card.
 
 ## Configuration
@@ -55,7 +56,7 @@ card art, flavour text, pack wrappers, set logos, card backs or expansion symbol
 | `rewards.triggers.capture` | `true` | Packs for catching Pokémon (Cobblemon) |
 | `rewards.triggers.levelUp` | `true` | Packs for level milestones (Cobblemon) |
 | `rewards.triggers.dexProgress` | `true` | Packs for Pokédex milestones (Cobblemon) |
-| `shop.setId` | `cobblemontcg:base1` | Set of the booster packs villagers sell |
+| `shop.sets` | `["cobblemontcg:base1", "cobblemontcg:base2"]` | Sets villagers sell, oldest first: the Card Dealer unlocks one per villager level (Novice to Master, up to 5 sets) |
 | `shop.cardDealer.enabled` | `true` | Card Dealer villagers sell booster packs |
 | `shop.cardDealer.price` | `5` | Emeralds per pack at the Card Dealer |
 | `shop.cardDealer.maxUses` | `3` | Packs a Card Dealer sells before restocking |
@@ -162,11 +163,12 @@ These triggers come from Cobblemon's events:
 
 | Trigger | When | Conditions |
 | --- | --- | --- |
-| `cobblemontcg:capture` | the player catches a Pokémon | `species`, `shiny`, `min_level`, `first_catch_of_species` |
-| `cobblemontcg:level_up` | one of the player's Pokémon levels up | `level`, `species`, `shiny` |
+| `cobblemontcg:capture` | the player catches a Pokémon | `species`, `exclude_species`, `shiny`, `min_level`, `first_catch_of_species` |
+| `cobblemontcg:level_up` | one of the player's Pokémon levels up | `level`, `species`, `exclude_species`, `shiny` |
 | `cobblemontcg:dex_progress` | the player owns a new species in the Pokédex | `dex_every`, `dex_percent` |
 
 - `species`: species names like `pikachu` (any of them matches).
+- `exclude_species`: species names that never match, so two rules can split the species between them.
 - `first_catch_of_species: true`: the player has never owned this species before.
 - `level: 25`: a Pokémon of the player reached level 25 or higher.
 - `dex_every: 10`: the player now owns a multiple of 10 species.
@@ -178,14 +180,13 @@ rule rolls its chance, win or lose; when no pack can be given because of the dai
 the next event. Other rules (like shiny catches) pay out every time.
 
 Default rules shipped in `data/cobblemontcg/tcg/rewards/` (override a file with the same path in a
-data pack, or replace it with `[]`, to change or remove them). They give Base Set packs; point a rule's
-`set` at `cobblemontcg:base2` for Jungle packs:
+data pack, or replace it with `[]`, to change or remove them):
 
 | File | Rule |
 | --- | --- |
-| `capture.json` | first catch of a species: 10% chance of 1 pack; shiny catch: 1 pack |
-| `level_up.json` | level 10, 25, 50 and 100: 1 pack each |
-| `dex_progress.json` | 25% and 50% of the Pokédex: 1 pack; 75% and 100%: 2 packs |
+| `capture.json` | first catch of a species: 10% chance of 1 pack; shiny catch: 1 pack. Pokémon that are in Jungle but not in Base Set (Scyther, Snorlax, Eevee and its evolutions...) give Jungle packs, every other species gives Base Set packs |
+| `level_up.json` | level 10, 25, 50 and 100: 1 Base Set pack each |
+| `dex_progress.json` | 25% and 50% of the Pokédex: 1 Base Set pack; 75% and 100%: 2 Base Set packs |
 
 Other mods can add triggers through `RewardTriggerRegistry`.
 
