@@ -3,7 +3,7 @@ import { computed } from 'vue'
 import { capitalize, findSet, tcgTexture } from '../tcg'
 
 // A pack front is three layers, like the in-game model: foil, mascot (from y 96) and overlay.
-// In game the mascot is Cobblemon's model of the wrapper's Pokémon; here it is the drawn fallback.
+// The mascot is the Cobblemon render of the wrapper's Pokémon exported from the game (docs/renders/).
 const props = withDefaults(defineProps<{ set?: string | null; wrapper?: string | null; width?: number | string; back?: boolean; caption?: boolean }>(), {
   set: null,
   wrapper: null,

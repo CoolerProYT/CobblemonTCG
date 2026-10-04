@@ -22,7 +22,7 @@ Like the real sets, every pack comes in one of three wrappers, picked at random.
 
 <PackWrappers set="base2" :width="120" back />
 
-In game, the Pokémon on the wrapper is Cobblemon's own model of it, drawn into the pack like on the cards. The art above is the fallback the mod shows until Cobblemon's models are ready.
+The Pokémon on the wrapper is Cobblemon's own model of it, drawn into the pack like on the cards.
 
 ## Opening a pack
 

@@ -3,7 +3,7 @@ import { computed, ref } from 'vue'
 import { findSet, frameTexture, tcgTexture } from '../tcg'
 
 // Stacks the card's layers like the in-game model: frame, holo foil, illustration, card text and
-// evolution portrait. In game the illustration and portrait show Cobblemon's own models instead.
+// evolution portrait. The illustration and portrait are Cobblemon renders exported from the game (docs/renders/).
 const props = withDefaults(
   defineProps<{ set: string; number?: number; holo?: boolean | null; width?: number | string; back?: boolean; tilt?: boolean }>(),
   { number: 0, holo: null, width: 180, back: false, tilt: true },
