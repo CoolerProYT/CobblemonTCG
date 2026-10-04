@@ -34,6 +34,8 @@ card art, flavour text, pack wrappers, set logos, card backs or expansion symbol
 - **Card Dealer**: a villager profession whose job site is the Card Dealer Table (2 paper, 1
   booster pack, 5 planks: paper / pack / paper on top, planks below in a table shape). The novice
   trade sells a booster pack for 5 emeralds, 3 times per restock (configurable).
+- **Wandering trader**: may offer one booster pack for 8 emeralds (configurable). The pack offer
+  joins the trader's common pool, so not every trader has it.
 - **Creative tab** "Cobblemon: TCG" with every pack and card.
 
 ## Configuration
@@ -54,6 +56,9 @@ card art, flavour text, pack wrappers, set logos, card backs or expansion symbol
 | `shop.cardDealer.enabled` | `true` | Card Dealer villagers sell booster packs |
 | `shop.cardDealer.price` | `5` | Emeralds per pack at the Card Dealer |
 | `shop.cardDealer.maxUses` | `3` | Packs a Card Dealer sells before restocking |
+| `shop.wanderingTrader.enabled` | `true` | Wandering traders can offer a booster pack |
+| `shop.wanderingTrader.price` | `8` | Emeralds per pack at the wandering trader |
+| `shop.wanderingTrader.maxUses` | `1` | Packs a wandering trader sells (they never restock) |
 
 `config/cobblemontcg-client.toml`:
 

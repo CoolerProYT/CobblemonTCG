@@ -23,6 +23,7 @@ import java.util.Optional;
  */
 public final class PackTrades {
     private static final int CARD_DEALER_XP = 2;
+    private static final int WANDERING_TRADER_XP = 1;
     private static final float PRICE_MULTIPLIER = 0.05F;
 
     private PackTrades() {
@@ -31,6 +32,15 @@ public final class PackTrades {
     public static void init() {
         Services.VILLAGER_TRADES.registerVillagerTrade(ModVillagers.CARD_DEALER, 1, (trader, random) ->
                 TcgConfig.cardDealerEnabled() ? packOffer(TcgConfig.cardDealerPrice(), TcgConfig.cardDealerMaxUses(), CARD_DEALER_XP, random) : null);
+        Services.VILLAGER_TRADES.registerWanderingTrade(false, (trader, random) -> wanderingTraderOffer(random));
+    }
+
+    /**
+     * The wandering trader's pack offer, shared by both loaders.
+     */
+    @Nullable
+    public static MerchantOffer wanderingTraderOffer(RandomSource random) {
+        return TcgConfig.wanderingTraderEnabled() ? packOffer(TcgConfig.wanderingTraderPrice(), TcgConfig.wanderingTraderMaxUses(), WANDERING_TRADER_XP, random) : null;
     }
 
     /**

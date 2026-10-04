@@ -16,6 +16,8 @@ public final class TcgConfig {
     public static final String DEFAULT_SHOP_SET = "cobblemontcg:base1";
     public static final int DEFAULT_CARD_DEALER_PRICE = 5;
     public static final int DEFAULT_CARD_DEALER_MAX_USES = 3;
+    public static final int DEFAULT_WANDERING_TRADER_PRICE = 8;
+    public static final int DEFAULT_WANDERING_TRADER_MAX_USES = 1;
 
     public static ConfigSpec CONFIG_SPEC;
 
@@ -31,6 +33,9 @@ public final class TcgConfig {
     private static ConfigValue<Boolean> cardDealerEnabled;
     private static ConfigValue<Integer> cardDealerPrice;
     private static ConfigValue<Integer> cardDealerMaxUses;
+    private static ConfigValue<Boolean> wanderingTraderEnabled;
+    private static ConfigValue<Integer> wanderingTraderPrice;
+    private static ConfigValue<Integer> wanderingTraderMaxUses;
 
     private TcgConfig() {
     }
@@ -56,6 +61,9 @@ public final class TcgConfig {
         cardDealerEnabled = builder.defineBoolean("shop.cardDealer.enabled", true, "Card Dealer villagers sell booster packs. Only affects villagers that get their trades after the change");
         cardDealerPrice = builder.defineInt("shop.cardDealer.price", DEFAULT_CARD_DEALER_PRICE, 1, 64, "Emeralds per booster pack at the Card Dealer");
         cardDealerMaxUses = builder.defineInt("shop.cardDealer.maxUses", DEFAULT_CARD_DEALER_MAX_USES, 1, 64, "Booster packs a Card Dealer sells before it needs to restock");
+        wanderingTraderEnabled = builder.defineBoolean("shop.wanderingTrader.enabled", true, "Wandering traders can offer a booster pack. Only affects traders that spawn after the change");
+        wanderingTraderPrice = builder.defineInt("shop.wanderingTrader.price", DEFAULT_WANDERING_TRADER_PRICE, 1, 64, "Emeralds per booster pack at the wandering trader");
+        wanderingTraderMaxUses = builder.defineInt("shop.wanderingTrader.maxUses", DEFAULT_WANDERING_TRADER_MAX_USES, 1, 64, "Booster packs a wandering trader sells (wandering traders never restock)");
 
         CONFIG_SPEC = builder.build();
     }
@@ -106,5 +114,17 @@ public final class TcgConfig {
 
     public static int cardDealerMaxUses() {
         return cardDealerMaxUses == null ? DEFAULT_CARD_DEALER_MAX_USES : cardDealerMaxUses.get();
+    }
+
+    public static boolean wanderingTraderEnabled() {
+        return wanderingTraderEnabled == null || wanderingTraderEnabled.get();
+    }
+
+    public static int wanderingTraderPrice() {
+        return wanderingTraderPrice == null ? DEFAULT_WANDERING_TRADER_PRICE : wanderingTraderPrice.get();
+    }
+
+    public static int wanderingTraderMaxUses() {
+        return wanderingTraderMaxUses == null ? DEFAULT_WANDERING_TRADER_MAX_USES : wanderingTraderMaxUses.get();
     }
 }

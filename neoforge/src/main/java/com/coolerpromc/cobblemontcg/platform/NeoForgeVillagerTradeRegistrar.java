@@ -13,6 +13,7 @@ import java.util.function.Supplier;
  */
 public class NeoForgeVillagerTradeRegistrar implements IVillagerTradeRegistrar {
     private final List<VillagerTradeEntry> villagerTrades = new ArrayList<>();
+    private final List<WanderingTradeEntry> wanderingTrades = new ArrayList<>();
 
     @Override
     public void registerVillagerTrade(Supplier<VillagerProfession> profession, int level, VillagerTrades.ItemListing listing) {
@@ -26,6 +27,21 @@ public class NeoForgeVillagerTradeRegistrar implements IVillagerTradeRegistrar {
         }
     }
 
+    @Override
+    public void registerWanderingTrade(boolean rare, VillagerTrades.ItemListing listing) {
+        this.wanderingTrades.add(new WanderingTradeEntry(rare, listing));
+    }
+
+    @Override
+    public void applyWanderingTradeRegistrations(WanderingTradeRegistrar registrar) {
+        for (WanderingTradeEntry entry : wanderingTrades) {
+            registrar.register(entry.rare(), entry.listing());
+        }
+    }
+
     private record VillagerTradeEntry(Supplier<VillagerProfession> profession, int level, VillagerTrades.ItemListing listing) {
+    }
+
+    private record WanderingTradeEntry(boolean rare, VillagerTrades.ItemListing listing) {
     }
 }

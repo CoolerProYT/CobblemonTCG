@@ -17,6 +17,7 @@ import net.neoforged.neoforge.event.AddReloadListenerEvent;
 import net.neoforged.neoforge.event.OnDatapackSyncEvent;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.event.village.VillagerTradesEvent;
+import net.neoforged.neoforge.event.village.WandererTradesEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 
@@ -32,6 +33,7 @@ public class NeoForgeCobblemonTCG {
         NeoForge.EVENT_BUS.addListener(NeoForgeCobblemonTCG::onRegisterCommands);
         NeoForge.EVENT_BUS.addListener(NeoForgeCobblemonTCG::onDatapackSync);
         NeoForge.EVENT_BUS.addListener(NeoForgeCobblemonTCG::onVillagerTrades);
+        NeoForge.EVENT_BUS.addListener(NeoForgeCobblemonTCG::onWandererTrades);
         NeoForgeCobblemonBridge.init();
     }
 
@@ -60,6 +62,11 @@ public class NeoForgeCobblemonTCG {
                 event.getTrades().get(level).add(listing);
             }
         });
+    }
+
+    private static void onWandererTrades(WandererTradesEvent event) {
+        Services.VILLAGER_TRADES.applyWanderingTradeRegistrations((rare, listing) ->
+                (rare ? event.getRareTrades() : event.getGenericTrades()).add(listing));
     }
 
     private record NeoForgePayloadRegistrar(PayloadRegistrar registrar) {
