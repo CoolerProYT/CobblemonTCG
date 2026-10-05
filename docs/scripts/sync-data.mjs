@@ -22,6 +22,13 @@ for (const [key, value] of Object.entries(lang)) {
   if (match) names[`cobblemontcg:${match[2]}`] = value
 }
 
+// The card's frame comes from its item model, like in game, so the wiki follows any per-set restyle.
+const textureFile = (texture) => (texture ? `${texture.replace(/^cobblemontcg:tcg\//, '')}.png` : null)
+const cardModel = (set, number) => {
+  const file = join(assets, 'models/item/tcg', set, `${number}.json`)
+  return existsSync(file) ? readJson(file) : {}
+}
+
 // Game text (attacks, powers, rules...) lives next to the card list the textures are drawn from.
 const gameText = (set) => {
   const file = join(tools, `${set}_text.json`)
@@ -55,6 +62,7 @@ const sets = jsonFiles(join(data, 'tcg/sets')).map((file) => {
         resistance: extra.resistance ?? [],
         retreat: extra.retreat ?? null,
         rules: extra.rules ?? [],
+        frame: textureFile(cardModel(id, card.number).textures?.frame),
         illustration: existsSync(join(assets, 'textures/tcg', id, 'illustration', `${card.number}.png`)),
         evolution: existsSync(join(assets, 'textures/tcg', id, 'evolution', `${card.number}.png`)),
       }
