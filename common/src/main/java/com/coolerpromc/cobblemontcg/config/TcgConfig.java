@@ -9,10 +9,7 @@ import net.minecraft.resources.ResourceLocation;
 
 import java.util.List;
 
-/**
- * The one place config values are read from. Getters return the defaults until {@link #init()} has run.
- */
-public final class TcgConfig {
+public class TcgConfig {
     public static final double DEFAULT_HOLO_CHANCE = 1.0 / 3.0;
     public static final int DEFAULT_PACK_SIZE = 11;
     public static final int DEFAULT_DAILY_PACK_CAP = 10;
@@ -39,9 +36,6 @@ public final class TcgConfig {
     private static ConfigValue<Boolean> wanderingTraderEnabled;
     private static ConfigValue<Integer> wanderingTraderPrice;
     private static ConfigValue<Integer> wanderingTraderMaxUses;
-
-    private TcgConfig() {
-    }
 
     public static void init() {
         if (CONFIG_SPEC != null) {
@@ -105,9 +99,6 @@ public final class TcgConfig {
         return dexRewards == null || dexRewards.get();
     }
 
-    /**
-     * @return the shop sets in villager level order, as set ids like {@code cobblemontcg:base1}
-     */
     public static List<String> shopSets() {
         return shopSets == null ? DEFAULT_SHOP_SETS : shopSets.get();
     }

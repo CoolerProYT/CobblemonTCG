@@ -7,11 +7,7 @@ import net.minecraft.resources.ResourceLocation;
 
 import java.util.*;
 
-/**
- * Holds every loaded set and card. The server copy is filled by {@link TcgDataReloadListener},
- * the client copy by {@link com.coolerpromc.cobblemontcg.network.ClientboundTcgDataSyncPacket}.
- */
-public final class TcgDataManager {
+public class TcgDataManager {
     public static final TcgDataManager SERVER = new TcgDataManager();
     public static final TcgDataManager CLIENT = new TcgDataManager();
 
@@ -24,17 +20,10 @@ public final class TcgDataManager {
         return clientSide ? CLIENT : SERVER;
     }
 
-    /**
-     * For display code that has no level at hand (item names, tooltips, creative tab): the synced client
-     * copy when there is one, otherwise the server copy (dedicated server).
-     */
     public static TcgDataManager forDisplay() {
         return CLIENT.sets.isEmpty() ? SERVER : CLIENT;
     }
 
-    /**
-     * Runs after every {@link #replace}.
-     */
     public synchronized void addListener(Runnable listener) {
         listeners.add(listener);
     }

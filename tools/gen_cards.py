@@ -1,26 +1,4 @@
 #!/usr/bin/env python3
-"""
-Generates card data and item models from the set CSVs in this folder.
-
-For every tools/<set>.csv (e.g. base1.csv) it writes:
-  data/cobblemontcg/tcg/cards/<set>/<number>.json         card data
-  assets/cobblemontcg/models/item/tcg/<set>/<number>.json        regular print model
-  assets/cobblemontcg/models/item/tcg/<set>/<number>_holo.json   holo print model
-and finally assets/cobblemontcg/models/item/tcg_card.json with one
-custom_model_data override per model, for all sets, plus one model per pack wrapper
-and their overrides in assets/cobblemontcg/models/item/booster_pack.json.
-
-Cards and packs are thin 3D models (models/item/tcg/card*.json, pack.json) with a real back,
-so a held, dropped or framed card shows the card back instead of a mirrored front.
-
-The set itself (name, pack slots, model_data_base) lives in
-data/cobblemontcg/tcg/sets/<set>.json and is read, not written, by this script.
-Card art is expected at assets/cobblemontcg/textures/tcg/<set>/<number>.png, frames at
-textures/tcg/frame/<set>/<pokemon_type|trainer|energy>.png and pack wrappers at
-textures/tcg/pack/<set>_<wrapper>.png (see gen_card_art.py).
-
-Usage: python tools/gen_cards.py
-"""
 import csv
 import json
 import shutil
@@ -63,7 +41,6 @@ def read_cards(csv_path: Path) -> list[dict]:
 
 
 def read_text(set_name: str) -> dict[int, dict]:
-    """Game text per card number from tools/<set>_text.json (optional)."""
     path = TOOLS / f"{set_name}_text.json"
     if not path.exists():
         return {}
@@ -93,12 +70,10 @@ def frame_name(card: dict) -> str:
     return f"pokemon_{card['type']}" if card["supertype"] == "pokemon" else card["supertype"]
 
 
-# Texture sizes in pixels; models use the same proportions so nothing is stretched.
 CARD_PX = (256, 352)
-ART_PX = (24, 40, 232, 184)          # art window (holo foil area), see tools/art/layout.py
+ART_PX = (24, 40, 232, 184)
 PACK_PX = (240, 368)
 
-# Same hand / ground / frame placement as minecraft:item/generated.
 DISPLAY = {
     "ground": {"rotation": [0, 0, 0], "translation": [0, 2, 0], "scale": [0.5, 0.5, 0.5]},
     "head": {"rotation": [0, 180, 0], "translation": [0, 13, 7], "scale": [1, 1, 1]},
@@ -113,8 +88,6 @@ def r(v: float) -> float:
 
 
 def body(width_px: int, height_px: int, thickness: float, front: str, back: str) -> dict:
-    """A thin box filling the model height: front texture facing south (the side shown in the
-    inventory), back texture facing north, edges sampled from the back texture's border."""
     w = 16 * width_px / height_px
     x0, x1 = 8 - w / 2, 8 + w / 2
     z0, z1 = 8 - thickness / 2, 8 + thickness / 2
@@ -132,7 +105,6 @@ def body(width_px: int, height_px: int, thickness: float, front: str, back: str)
 
 
 def plane(x0_px, y0_px, x1_px, y1_px, z: float, texture: str, size_px=CARD_PX) -> dict:
-    """A flat layer just in front of the card (or pack) face, covering a pixel rectangle of it."""
     k = 16 / size_px[1]
     left = 8 - 16 * size_px[0] / size_px[1] / 2
     return {
@@ -147,14 +119,12 @@ def template(textures: dict, elements: list) -> dict:
 
 CARD_THICKNESS = 0.2
 PACK_THICKNESS = 0.8
-MASCOT_Y_PX = 96   # the pack mascot layer starts at this pixel row, see tools/art/wrapper.py
-LAYER_GAP = 0.03   # between the stacked layers on the card face, large enough to avoid z-fighting
-EVOLUTION_PX = (14, 13, 46, 37)   # previous stage portrait window, see tools/art/layout.py
+MASCOT_Y_PX = 96
+LAYER_GAP = 0.03
+EVOLUTION_PX = (14, 13, 46, 37)
 
 
 def write_templates() -> None:
-    """Parent models shared by every card print and pack wrapper. Layers on the card face, back to
-    front: frame, holo foil (holo prints), illustration (Pokemon), card text, evolution portrait."""
     front_z = 8 + CARD_THICKNESS / 2
     back = f"{NAMESPACE}:tcg/card_back"
     for pokemon in (False, True):
@@ -170,15 +140,12 @@ def write_templates() -> None:
                 elements.append(plane(0, 0, *CARD_PX, front_z + LAYER_GAP * 3, "#art"))
                 if evolution:
                     portrait = plane(*EVOLUTION_PX, front_z + LAYER_GAP * 4, "#evolution")
-                    portrait["faces"]["south"]["uv"] = [0, 0, 16, 12]   # 32x24 picture in a 32x32 texture
+                    portrait["faces"]["south"]["uv"] = [0, 0, 16, 12]
                     elements.append(portrait)
                 name = "card" + ("_evolution" if evolution else "_pokemon" if pokemon else "") + ("_holo" if holo else "")
                 write_json(MODELS / "tcg" / f"{name}.json", template(textures, elements))
-    # a card without data: face down on both sides
     write_json(MODELS / "tcg" / "card_face_down.json", template(
         {"back": back, "particle": back}, [body(*CARD_PX, CARD_THICKNESS, "#back", "#back")]))
-    # pack front, back to front: foil (#front), mascot (#mascot, swapped for Cobblemon's model at
-    # runtime), then set name plate, badges, seals and sheen (#overlay)
     pack_front_z = 8 + PACK_THICKNESS / 2
     write_json(MODELS / "tcg" / "pack.json", template(
         {"back": f"{NAMESPACE}:tcg/pack/back", "particle": "#front"}, [
@@ -189,8 +156,6 @@ def write_templates() -> None:
 
 
 def card_model(set_name: str, card: dict, holo: bool) -> dict:
-    """Frame (shared per set and type), then the holo foil for holo prints, the Pokemon illustration and the
-    card's own text layer, and the previous stage's portrait on evolution cards."""
     base = f"{NAMESPACE}:tcg/{set_name}"
     textures = {"frame": f"{NAMESPACE}:tcg/frame/{set_name}/{frame_name(card)}", "art": f"{base}/{card['number']}"}
     parent = "card"
@@ -208,7 +173,6 @@ def pack_textures(base: str) -> dict:
 
 
 def generate_wrappers(set_name: str, set_def: dict) -> list[tuple[int, str]]:
-    """One model per pack wrapper; must match TcgSet#packModelData: base + wrapper index."""
     folder = MODELS / "booster_pack"
     overrides = []
     for i, wrapper in enumerate(set_def.get("wrappers", [])):
@@ -221,8 +185,6 @@ def generate_wrappers(set_name: str, set_def: dict) -> list[tuple[int, str]]:
 
 
 def dex_numbers(csv_paths: list[Path]) -> dict[str, int]:
-    """Pokemon name -> National Pokedex number over every set, so a card can evolve from a Pokemon
-    printed in an earlier set (Jungle's Clefable evolves from Base Set's Clefairy)."""
     dex = {}
     for csv_path in csv_paths:
         text = read_text(csv_path.stem)
@@ -261,7 +223,6 @@ def generate_set(csv_path: Path, dex_by_name: dict[str, int]) -> list[tuple[int,
         write_json(DATA / "cards" / set_name / f"{number}.json", card_json(set_name, card))
         write_json(MODELS / "tcg" / set_name / f"{number}.json", card_model(set_name, card, False))
         write_json(MODELS / "tcg" / set_name / f"{number}_holo.json", card_model(set_name, card, True))
-        # Must match TcgSet#modelData: base + number * 2 (+1 for holo)
         overrides.append((base + number * 2, f"{NAMESPACE}:item/tcg/{set_name}/{number}"))
         overrides.append((base + number * 2 + 1, f"{NAMESPACE}:item/tcg/{set_name}/{number}_holo"))
 
@@ -284,7 +245,6 @@ def main() -> None:
     if len(values) != len(set(values)):
         raise ValueError("custom_model_data ranges of two sets overlap, change model_data_base in a set json")
 
-    # Overrides are matched in order and the last match wins, so they must be sorted ascending.
     overrides.sort()
     write_json(MODELS / "tcg_card.json", {
         "parent": f"{NAMESPACE}:item/tcg/card_face_down",

@@ -44,7 +44,7 @@ class RewardRuleTest {
         assertFalse(conditions.test(context(10, "pikachu", true)), "level too low");
         assertFalse(conditions.test(context(25, "eevee", true)), "wrong species");
         assertFalse(conditions.test(context(25, "pikachu", false)), "not shiny");
-        assertFalse(conditions.test(new RewardContext(null, Optional.empty(), Optional.of("pikachu"), Optional.of(true), Optional.empty(), Optional.empty(), Optional.empty())), "unknown level fails");
+        assertFalse(conditions.test(new RewardContext(null, Optional.empty(), Optional.of("pikachu"), Optional.of(true), Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty())), "unknown level fails");
         assertTrue(RewardConditions.NONE.test(RewardContext.of(null)));
     }
 
@@ -62,6 +62,40 @@ class RewardRuleTest {
         assertTrue(conditions.test(context(25, "eevee", false)));
         assertTrue(conditions.test(context(60, "eevee", false)));
         assertEquals(Optional.of("level/25"), conditions.milestone(context(60, "eevee", false)));
+    }
+
+    @Test
+    void aLevelUpMustCrossTheLevel() {
+        RewardConditions conditions = parse("{\"trigger\": \"a:b\", \"set\": \"a:c\", \"conditions\": {\"level\": 25}}").conditions();
+        assertTrue(conditions.test(RewardContext.levelUp(null, "eevee", 24, 25, false)));
+        assertTrue(conditions.test(RewardContext.levelUp(null, "eevee", 9, 30, false)), "a big jump crosses every level on the way");
+        assertFalse(conditions.test(RewardContext.levelUp(null, "eevee", 25, 26, false)), "already past it");
+        assertFalse(conditions.test(RewardContext.levelUp(null, "eevee", 40, 41, false)), "a high level catch levelling up");
+        assertFalse(conditions.test(RewardContext.levelUp(null, "eevee", 23, 24, false)));
+    }
+
+    @Test
+    void perPokemonLevelsPayForEveryPokemon() {
+        ResourceLocation trigger = ResourceLocation.parse("cobblemontcg:level_up");
+        List<RewardRule> rules = List.of(parse("{\"trigger\": \"cobblemontcg:level_up\", \"set\": \"a:c\", \"conditions\": {\"level\": 10, \"per_pokemon\": true}}"));
+        assertFalse(rules.getFirst().conditions().isMilestone());
+
+        Set<String> claimed = new HashSet<>();
+        assertEquals(1, RewardRules.evaluate(trigger, rules, RewardContext.levelUp(null, "eevee", 9, 10, false), MilestoneData.EMPTY, claimed, rule -> true, () -> 0.0, RewardRule::amount));
+        assertEquals(1, RewardRules.evaluate(trigger, rules, RewardContext.levelUp(null, "pikachu", 8, 11, false), MilestoneData.EMPTY, claimed, rule -> true, () -> 0.0, RewardRule::amount),
+                "a second Pokemon reaching the level pays too");
+        assertTrue(claimed.isEmpty(), "nothing to store, a Pokemon crosses a level only once");
+        assertEquals(0, RewardRules.evaluate(trigger, rules, RewardContext.levelUp(null, "eevee", 10, 11, false), MilestoneData.EMPTY, claimed, rule -> true, () -> 0.0, RewardRule::amount));
+    }
+
+    @Test
+    void shippedLevelRulesPayOnTheWayUp() throws Exception {
+        ResourceLocation trigger = ResourceLocation.parse("cobblemontcg:level_up");
+        List<RewardRule> rules = RewardRule.CODEC.listOf().parse(JsonOps.INSTANCE, JsonParser.parseString(java.nio.file.Files.readString(
+                java.nio.file.Path.of("src/main/resources/data/cobblemontcg/tcg/rewards/level_up.json")))).getOrThrow();
+        assertEquals(List.of(ResourceLocation.parse("cobblemontcg:base1")), paidSets(trigger, rules, RewardContext.levelUp(null, "eevee", 9, 10, false)));
+        assertEquals(List.of(ResourceLocation.parse("cobblemontcg:base1")), paidSets(trigger, rules, RewardContext.levelUp(null, "pikachu", 9, 10, false)));
+        assertEquals(List.of(), paidSets(trigger, rules, RewardContext.levelUp(null, "eevee", 11, 12, false)));
     }
 
     @Test
@@ -147,7 +181,7 @@ class RewardRuleTest {
                 total += rules.size();
             }
         }
-        assertEquals(12, total);
+        assertEquals(15, total);
     }
 
     @Test
@@ -163,12 +197,14 @@ class RewardRuleTest {
         ResourceLocation trigger = ResourceLocation.parse("cobblemontcg:capture");
         List<RewardRule> rules = RewardRule.CODEC.listOf().parse(JsonOps.INSTANCE, JsonParser.parseString(java.nio.file.Files.readString(
                 java.nio.file.Path.of("src/main/resources/data/cobblemontcg/tcg/rewards/capture.json")))).getOrThrow();
-        assertEquals(List.of(ResourceLocation.parse("cobblemontcg:base2")), paidSets(trigger, rules, RewardContext.capture(null, "scyther", 5, false, true)));
-        assertEquals(List.of(ResourceLocation.parse("cobblemontcg:base1")), paidSets(trigger, rules, RewardContext.capture(null, "pikachu", 5, false, true)));
-        assertEquals(List.of(ResourceLocation.parse("cobblemontcg:base2")), paidSets(trigger, rules, RewardContext.capture(null, "mrmime", 5, true, false)),
-                "a shiny Jungle Pokemon pays one Jungle pack");
-        assertEquals(List.of(ResourceLocation.parse("cobblemontcg:base1"), ResourceLocation.parse("cobblemontcg:base1")),
-                paidSets(trigger, rules, RewardContext.capture(null, "charmander", 5, true, true)), "first shiny catch pays both Base Set rules");
+        assertEquals(List.of(ResourceLocation.parse("cobblemontcg:base2"), ResourceLocation.parse("cobblemontcg:base2")), paidSets(trigger, rules, RewardContext.capture(null, "scyther", 5, false, true)));
+        assertEquals(List.of(ResourceLocation.parse("cobblemontcg:base1"), ResourceLocation.parse("cobblemontcg:base1")), paidSets(trigger, rules, RewardContext.capture(null, "pikachu", 5, false, true)));
+        assertEquals(List.of(ResourceLocation.parse("cobblemontcg:base1")), paidSets(trigger, rules, RewardContext.capture(null, "pikachu", 5, false, false)),
+                "a repeat catch still has a chance");
+        assertEquals(List.of(ResourceLocation.parse("cobblemontcg:base2"), ResourceLocation.parse("cobblemontcg:base2")), paidSets(trigger, rules, RewardContext.capture(null, "mrmime", 5, true, false)),
+                "a shiny Jungle Pokemon pays Jungle packs");
+        assertEquals(List.of(ResourceLocation.parse("cobblemontcg:base1"), ResourceLocation.parse("cobblemontcg:base1"), ResourceLocation.parse("cobblemontcg:base1")),
+                paidSets(trigger, rules, RewardContext.capture(null, "charmander", 5, true, true)), "first shiny catch pays every Base Set rule");
     }
 
     private static List<ResourceLocation> paidSets(ResourceLocation trigger, List<RewardRule> rules, RewardContext context) {
@@ -181,7 +217,7 @@ class RewardRuleTest {
     }
 
     private static RewardContext context(int level, String species, boolean shiny) {
-        return RewardContext.levelUp(null, species, level, shiny);
+        return RewardContext.capture(null, species, level, shiny, false);
     }
 
     private static RewardRule parse(String json) {

@@ -1,8 +1,3 @@
-"""
-Original drawings of the Jungle Pokemon, one function per card number.
-Stage is 160 x 100 units, ground line around y = 92. Cards 17 - 32 are the non-holo prints of
-1 - 16 and share their drawings.
-"""
 import math
 
 from . import pokemon_base1 as base1
@@ -24,26 +19,22 @@ def card(*numbers):
     return wrap
 
 
-# ------------------------------------------------------------------ shared builders
-
 def fox(s: Sprite, fur, ruff, tail, ears=(1.0, 1.0)):
-    """Eevee and its evolutions: a sitting fox, head to the left. ruff(s) draws the collar,
-    tail(s) the tail behind the body."""
     s.shadow(82, 93, 30)
     tail(s)
-    with s.part():  # back legs
+    with s.part():
         s.ellipse(102, 86, 10, 7, darker(fur, 0.06))
     with s.part():
         s.ellipse(92, 72, 20, 15, fur)
-    with s.part():  # front legs
+    with s.part():
         s.tube([(72, 74), (70, 90)], 4, 3.6, fur)
         s.tube([(82, 76), (82, 90)], 4, 3.6, fur)
     ruff(s)
-    with s.part():  # ears
+    with s.part():
         s.tri((56, 38), (44 - 4 * ears[0], 14 - 10 * ears[0]), (64, 32), fur)
         s.tri((70, 34), (80 + 2 * ears[1], 10 - 8 * ears[1]), (76, 40), fur)
         s.tri((54, 34), (46 - 3 * ears[0], 18 - 9 * ears[0]), (60, 32), darker(fur, 0.3))
-    with s.part():  # head
+    with s.part():
         s.ellipse(64, 46, 13, 12, fur)
         s.ellipse(54, 52, 8, 6, fur)
         s.eye(58, 44, 2.8, iris=(70, 40, 30))
@@ -53,13 +44,12 @@ def fox(s: Sprite, fur, ruff, tail, ears=(1.0, 1.0)):
 
 
 def puff(s: Sprite, r, cx=80, cy=None, ears=1.0, tuft=True, eyes_blue=True):
-    """Jigglypuff / Wigglytuff: a round pink body with big ears and a curl of hair."""
     cy = cy or 92 - r
     s.shadow(cx, 93, r * 0.9)
     with s.part():
         s.ellipse(cx - r * 0.45, 91, r * 0.3, r * 0.15, PINK)
         s.ellipse(cx + r * 0.45, 91, r * 0.3, r * 0.15, PINK)
-    with s.part():  # ears
+    with s.part():
         e = r * 0.55 * ears
         s.tri((cx - r * 0.75, cy - r * 0.45), (cx - r * 0.75 - e * 0.4, cy - r - e), (cx - r * 0.2, cy - r * 0.85), PINK)
         s.tri((cx + r * 0.75, cy - r * 0.45), (cx + r * 0.75 + e * 0.4, cy - r - e), (cx + r * 0.2, cy - r * 0.85), PINK)
@@ -67,7 +57,7 @@ def puff(s: Sprite, r, cx=80, cy=None, ears=1.0, tuft=True, eyes_blue=True):
         s.tri((cx + r * 0.72, cy - r * 0.6), (cx + r * 0.75 + e * 0.3, cy - r - e * 0.7), (cx + r * 0.4, cy - r * 0.8), (70, 40, 50))
     with s.part():
         s.ellipse(cx, cy, r, r * 0.95, PINK)
-    with s.part():  # arms
+    with s.part():
         s.ellipse(cx - r * 0.95, cy + r * 0.15, r * 0.18, r * 0.26, PINK, rot=-30)
         s.ellipse(cx + r * 0.95, cy + r * 0.15, r * 0.18, r * 0.26, PINK, rot=30)
     if tuft:
@@ -82,25 +72,24 @@ def puff(s: Sprite, r, cx=80, cy=None, ears=1.0, tuft=True, eyes_blue=True):
 
 
 def fish(s: Sprite, body, fins, marks, size=1.0):
-    """Goldeen / Seaking: a white fish with orange markings, a horn and a flowing tail."""
     k = size
-    with s.part(outline=False, shade=False):  # water
+    with s.part(outline=False, shade=False):
         s.ellipse(80, 92, 58, 6, (184, 222, 250))
         for x in (50, 100, 122):
             s.circle(x, 30 + (x % 7) * 3, 2.2, (200, 232, 252))
-    with s.part():  # tail
+    with s.part():
         s.poly([(80 + 26 * k, 56), (80 + 52 * k, 34), (80 + 46 * k, 56), (80 + 54 * k, 80)], fins)
         s.poly([(80 + 30 * k, 56), (80 + 48 * k, 42), (80 + 44 * k, 56), (80 + 50 * k, 72)], lighter(fins, 0.35))
-    with s.part():  # dorsal fin
+    with s.part():
         s.poly([(70, 56 - 16 * k), (92, 56 - 30 * k), (96, 56 - 12 * k)], fins)
     with s.part():
         s.ellipse(78, 56, 30 * k, 18 * k, body)
     with s.part(outline=False):
         s.ellipse(86, 50, 10 * k, 8 * k, marks, rot=20)
         s.ellipse(72, 64, 9 * k, 6 * k, marks, rot=-10)
-    with s.part():  # side fin
+    with s.part():
         s.poly([(74, 62), (66, 80 * k + 4), (84, 70)], fins)
-    with s.part():  # horn
+    with s.part():
         s.tri((54, 48), (32 - 6 * k, 34), (56, 42), (246, 240, 226))
     with s.part(outline=False, shade=False):
         s.eye(60, 50, 3.4 * k, iris=(60, 50, 60))
@@ -108,16 +97,15 @@ def fish(s: Sprite, body, fins, marks, size=1.0):
 
 
 def bell_plant(s: Sprite, cx=80, cy=40, r=12, stem=True):
-    """Bellsprout: a bell-shaped head on a thin stem."""
     yellow = (236, 218, 86)
     if stem:
         s.shadow(cx, 93, 16)
-        with s.part():  # roots
+        with s.part():
             s.curve([(cx, 86), (cx - 10, 90), (cx - 14, 92)], (220, 140, 110), 2)
             s.curve([(cx, 86), (cx + 10, 90), (cx + 14, 92)], (220, 140, 110), 2)
         with s.part():
             s.curve([(cx, 86), (cx + 6, 70), (cx - 4, 56), (cx, cy + r * 0.8)], LEAF, 2)
-        with s.part():  # leaves
+        with s.part():
             s.ellipse(cx - 12, 68, 11, 4, LEAF, rot=20)
             s.ellipse(cx + 14, 62, 11, 4, LEAF, rot=-25)
     with s.part():
@@ -128,11 +116,10 @@ def bell_plant(s: Sprite, cx=80, cy=40, r=12, stem=True):
 
 
 def mushroom_bug(s: Sprite, cx, cy, size, caps):
-    """Paras / Parasect: an orange bug with mushroom caps on its back. caps lists (dx, dy, r)."""
     k = size
     body = (240, 150, 70)
     s.shadow(cx, 93, 26 * k)
-    with s.part():  # legs
+    with s.part():
         for i in range(3):
             x = cx - 14 * k + i * 14 * k
             s.tube([(x, cy + 6 * k), (x - 4 * k, cy + 14 * k), (x - 2 * k, 92)], 2.4 * k, 2 * k, darker(body, 0.08))
@@ -143,39 +130,38 @@ def mushroom_bug(s: Sprite, cx, cy, size, caps):
             s.ellipse(cx + dx * k, cy + dy * k, r * k, r * 0.62 * k, (220, 66, 54))
             for sx, sy in ((-0.4, -0.2), (0.3, -0.35), (0.1, 0.1), (-0.05, -0.45), (0.55, 0.0)):
                 s.circle(cx + (dx + sx * r) * k, cy + (dy + sy * r * 0.62) * k, r * 0.12 * k, (250, 222, 120))
-    with s.part():  # claws
+    with s.part():
         s.tube([(cx - 18 * k, cy + 2 * k), (cx - 28 * k, cy + 4 * k), (cx - 30 * k, cy + 12 * k)], 2.8 * k, 2.2 * k, WHITE)
     with s.part(outline=False, shade=False):
         s.eye(cx - 14 * k, cy - 1 * k, 2.4 * k, iris=(250, 250, 250), sclera=False)
 
 
 def monkey(s: Sprite, size=1.0, angry=False):
-    """Mankey / Primeape: a round ball of fur with a pig snout and brown limbs."""
     k = size
     fur, limbs = (238, 220, 186), (150, 100, 70)
     cy = 92 - 26 * k
     s.shadow(80, 93, 24 * k)
-    with s.part():  # tail
+    with s.part():
         s.curve([(80 + 18 * k, cy + 10 * k), (80 + 34 * k, cy + 8 * k), (80 + 36 * k, cy - 8 * k), (80 + 28 * k, cy - 12 * k)], fur, 3 * k)
-    with s.part():  # legs
+    with s.part():
         s.tube([(80 - 10 * k, cy + 16 * k), (80 - 14 * k, 90)], 4 * k, 4 * k, fur)
         s.tube([(80 + 10 * k, cy + 16 * k), (80 + 14 * k, 90)], 4 * k, 4 * k, fur)
         s.ellipse(80 - 15 * k, 91, 6 * k, 3 * k, limbs)
         s.ellipse(80 + 15 * k, 91, 6 * k, 3 * k, limbs)
-    with s.part():  # fluffy body
+    with s.part():
         for i in range(14):
             a = math.radians(i * 360 / 14)
             s.circle(80 + 20 * k * math.cos(a), cy + 18 * k * math.sin(a), 6 * k, fur)
         s.ellipse(80, cy, 21 * k, 19 * k, fur)
-    with s.part():  # arms, raised like it is about to swing
+    with s.part():
         s.tube([(80 - 18 * k, cy), (80 - 30 * k, cy - 10 * k), (80 - 32 * k, cy - 22 * k)], 3.6 * k, 3.2 * k, fur)
         s.tube([(80 + 18 * k, cy), (80 + 30 * k, cy - 8 * k), (80 + 34 * k, cy - 18 * k)], 3.6 * k, 3.2 * k, fur)
         s.circle(80 - 32 * k, cy - 24 * k, 4.5 * k, limbs)
         s.circle(80 + 34 * k, cy - 20 * k, 4.5 * k, limbs)
-    with s.part():  # ears
+    with s.part():
         s.circle(80 - 18 * k, cy - 14 * k, 5 * k, fur)
         s.circle(80 + 18 * k, cy - 14 * k, 5 * k, fur)
-    with s.part():  # snout
+    with s.part():
         s.ellipse(80, cy + 4 * k, 8 * k, 6 * k, (242, 180, 160))
         s.ellipse(78, cy + 4 * k, 1.2 * k, 1.8 * k, BLACK)
         s.ellipse(82, cy + 4 * k, 1.2 * k, 1.8 * k, BLACK)
@@ -189,10 +175,9 @@ def monkey(s: Sprite, size=1.0, angry=False):
 
 
 def nido(s: Sprite, body, belly, size=1.0, upright=True, spikes=True):
-    """Nidoran female / Nidorina / Nidoqueen: blue with darker spots, big ears and a small horn."""
     k = size
     s.shadow(80, 93, 26 * k)
-    with s.part():  # tail
+    with s.part():
         s.tube([(92, 80), (112, 84), (122 + 6 * k, 74)], 5 * k, 3 * k, body)
     if spikes:
         with s.part():
@@ -213,7 +198,7 @@ def nido(s: Sprite, body, belly, size=1.0, upright=True, spikes=True):
             s.tube([(94, 58), (102, 64), (104, 72)], 4.5 * k, 4 * k, body)
         head = (76, 38)
     else:
-        with s.part():  # four legs
+        with s.part():
             for x in (62, 74, 92, 104):
                 s.tube([(x, 72), (x, 90)], 4.5 * k, 4 * k, body)
         with s.part():
@@ -222,7 +207,7 @@ def nido(s: Sprite, body, belly, size=1.0, upright=True, spikes=True):
                 s.ellipse(x, y, 3, 2, darker(body, 0.3))
         head = (56, 54)
     hx, hy = head
-    with s.part():  # ears
+    with s.part():
         s.ellipse(hx - 9 * k, hy - 12 * k, 5 * k, 9 * k, body, rot=-25)
         s.ellipse(hx + 9 * k, hy - 12 * k, 5 * k, 9 * k, body, rot=25)
         s.ellipse(hx - 9 * k, hy - 12 * k, 2.5 * k, 6 * k, (240, 240, 250), rot=-25)
@@ -237,11 +222,10 @@ def nido(s: Sprite, body, belly, size=1.0, upright=True, spikes=True):
 
 
 def skull_kid(s: Sprite, size=1.0, club=False):
-    """Cubone / Marowak: a little brown biped wearing a skull and holding a bone."""
     k = size
     skin, belly = (180, 132, 90), (238, 222, 180)
     s.shadow(80, 93, 22 * k)
-    with s.part():  # tail
+    with s.part():
         s.tube([(88, 82), (100, 86), (104, 80)], 3 * k, 2 * k, skin)
     with s.part():
         s.ellipse(72, 89, 7 * k, 4.5 * k, skin)
@@ -249,7 +233,7 @@ def skull_kid(s: Sprite, size=1.0, club=False):
     with s.part():
         s.ellipse(80, 74, 14 * k, 15 * k, skin)
         s.ellipse(80, 78, 9 * k, 10 * k, belly)
-    with s.part():  # bone
+    with s.part():
         bx = 108 if club else 104
         s.line([(bx - 4, 82), (bx + 6, 38)], BONE, 3 * k)
         for ex, ey in ((bx - 4, 82), (bx + 6, 38)):
@@ -258,11 +242,11 @@ def skull_kid(s: Sprite, size=1.0, club=False):
     with s.part():
         s.tube([(68, 66), (62, 72), (62, 78)], 3.4 * k, 3 * k, skin)
         s.tube([(92, 66), (100, 64), (104, 62)], 3.4 * k, 3 * k, skin)
-    with s.part():  # face under the skull
+    with s.part():
         s.ellipse(80, 50, 12 * k, 10 * k, skin)
         s.eye(76, 50, 2.2 * k)
         s.eye(85, 50, 2.2 * k)
-    with s.part():  # skull helmet
+    with s.part():
         s.ellipse(80, 40, 15 * k, 11 * k, BONE)
         s.tri((68, 36), (60, 22 if club else 26), (72, 32), BONE)
         s.tri((92, 36), (100, 22 if club else 26), (88, 32), BONE)
@@ -272,7 +256,6 @@ def skull_kid(s: Sprite, size=1.0, club=False):
 
 
 def drill_rhino(s: Sprite, upright=False):
-    """Rhyhorn (on all fours) / Rhydon (standing, with a drill horn)."""
     grey = (166, 160, 170)
     s.shadow(80, 93, 32)
     if upright:
@@ -299,7 +282,7 @@ def drill_rhino(s: Sprite, upright=False):
             s.eye(74, 34, 2.2, iris=(200, 40, 40))
             s.line([(56, 44), (64, 44)], OUTLINE, 0.8)
         return
-    with s.part():  # legs
+    with s.part():
         for x in (62, 74, 98, 110):
             s.tube([(x, 72), (x, 90)], 6, 5.5, darker(grey, 0.05))
     with s.part():
@@ -317,19 +300,17 @@ def drill_rhino(s: Sprite, upright=False):
         s.line([(30, 70), (40, 70)], OUTLINE, 0.8)
 
 
-# ------------------------------------------------------------------ 1 - 16 holo rares, 17 - 32 rares
-
-@card(1, 17)  # Clefable
+@card(1, 17)
 def clefable(s):
     s.shadow(80, 93, 24)
-    with s.part():  # wings
+    with s.part():
         s.ellipse(56, 54, 9, 14, (252, 214, 222), rot=-40)
         s.ellipse(104, 54, 9, 14, (252, 214, 222), rot=40)
         s.line([(54, 48), (60, 60)], darker(PINK, 0.2), 0.6)
         s.line([(106, 48), (100, 60)], darker(PINK, 0.2), 0.6)
-    with s.part():  # tail
+    with s.part():
         s.curve([(96, 84), (110, 86), (112, 74), (104, 72)], PINK, 3)
-    with s.part():  # ears
+    with s.part():
         s.tri((66, 36), (58, 8), (78, 30), PINK)
         s.tri((94, 36), (102, 8), (82, 30), PINK)
         s.tri((60, 14), (58, 8), (64, 16), (110, 70, 60))
@@ -350,10 +331,10 @@ def clefable(s):
         s.ellipse(94, 56, 2.5, 1.4, (240, 130, 150))
 
 
-@card(2, 18)  # Electrode
+@card(2, 18)
 def electrode(s):
     s.shadow(80, 93, 28)
-    with s.part(outline=False, shade=False):  # sparks
+    with s.part(outline=False, shade=False):
         for x, y, rot in ((40, 30, -30), (122, 28, 30), (128, 64, 70), (34, 66, -70)):
             s.bolt(x, y, 7, (250, 220, 70), rot=rot)
     split_ball(s, 80, 62, 29, top=(228, 60, 56), bottom=WHITE, grin=True)
@@ -365,7 +346,7 @@ def _flareon_ruff(s):
             a = math.radians(-30 + i * 30)
             s.circle(70 + 12 * math.cos(a), 60 + 10 * math.sin(a), 6, (252, 230, 150))
         s.ellipse(70, 62, 11, 10, (252, 230, 150))
-        s.circle(64, 34, 5, (252, 230, 150))  # forelock
+        s.circle(64, 34, 5, (252, 230, 150))
 
 
 def _flareon_tail(s):
@@ -374,7 +355,7 @@ def _flareon_tail(s):
         s.circle(124, 44, 8, (252, 230, 150))
 
 
-@card(3, 19)  # Flareon
+@card(3, 19)
 def flareon(s):
     fox(s, (238, 120, 56), _flareon_ruff, _flareon_tail)
 
@@ -393,12 +374,12 @@ def _jolteon_tail(s):
         for i in range(5):
             a = math.radians(-80 + i * 20)
             s.tri((108, 70), (110 + 24 * math.cos(a), 66 + 24 * math.sin(a)), (114, 74), (250, 214, 60))
-    with s.part(outline=False):  # spikes along the back
+    with s.part(outline=False):
         for x in (84, 94, 104):
             s.tri((x - 4, 60), (x, 50), (x + 4, 60), (250, 214, 60))
 
 
-@card(4, 20)  # Jolteon
+@card(4, 20)
 def jolteon(s):
     fox(s, (250, 214, 60), _jolteon_ruff, _jolteon_tail, ears=(1.4, 1.4))
     with s.part(outline=False, shade=False):
@@ -406,11 +387,11 @@ def jolteon(s):
         s.bolt(34, 30, 6, (255, 246, 160), rot=-20)
 
 
-@card(5, 21)  # Kangaskhan
+@card(5, 21)
 def kangaskhan(s):
     brown, belly = (150, 110, 80), (232, 212, 160)
     s.shadow(80, 93, 30)
-    with s.part():  # tail
+    with s.part():
         s.tube([(94, 84), (122, 90), (136, 84)], 8, 4, brown)
     with s.part():
         s.ellipse(68, 88, 11, 6, brown)
@@ -418,7 +399,7 @@ def kangaskhan(s):
     with s.part():
         s.ellipse(80, 60, 22, 28, brown)
         s.ellipse(78, 68, 15, 18, belly)
-    with s.part():  # pouch with the baby
+    with s.part():
         s.ellipse(78, 74, 11, 8, darker(belly, 0.12))
     with s.part():
         s.ellipse(78, 66, 6, 5, brown)
@@ -429,7 +410,7 @@ def kangaskhan(s):
     with s.part():
         s.tube([(62, 50), (52, 58), (50, 68)], 5, 4.5, brown)
         s.tube([(98, 50), (106, 58), (108, 68)], 5, 4.5, brown)
-    with s.part():  # head
+    with s.part():
         s.ellipse(70, 28, 4, 7, brown, rot=-20)
         s.ellipse(86, 26, 4, 7, brown, rot=20)
         s.ellipse(76, 36, 13, 11, brown)
@@ -439,11 +420,11 @@ def kangaskhan(s):
         s.circle(60, 39, 1.3, BLACK)
 
 
-@card(6, 22)  # Mr. Mime
+@card(6, 22)
 def mr_mime(s):
     skin, pink, blue = (246, 236, 236), (240, 140, 160), (90, 130, 220)
     s.shadow(80, 93, 22)
-    with s.part(outline=False, shade=False):  # the invisible wall
+    with s.part(outline=False, shade=False):
         s.rect(34, 18, 46, 86, (200, 230, 250))
     with s.part():
         s.tube([(74, 72), (70, 84), (68, 90)], 3, 2.6, skin)
@@ -453,10 +434,10 @@ def mr_mime(s):
     with s.part():
         s.ellipse(80, 62, 14, 14, skin)
         s.circle(80, 64, 6, pink)
-    with s.part():  # shoulders and knees
+    with s.part():
         s.circle(66, 52, 5, pink)
         s.circle(94, 52, 5, pink)
-    with s.part():  # arms, miming against the wall
+    with s.part():
         s.tube([(66, 52), (56, 46), (50, 40)], 2.6, 2.4, skin)
         s.tube([(94, 52), (104, 58), (110, 66)], 2.6, 2.4, skin)
         for x, y in ((48, 38), (112, 68)):
@@ -464,7 +445,7 @@ def mr_mime(s):
             for i in range(4):
                 a = math.radians(-90 + i * 40 - (0 if x < 80 else 60))
                 s.circle(x + 5 * math.cos(a), y + 5 * math.sin(a), 1.8, WHITE)
-    with s.part():  # hair
+    with s.part():
         s.circle(70, 24, 6, blue)
         s.circle(90, 24, 6, blue)
     with s.part():
@@ -476,21 +457,21 @@ def mr_mime(s):
         s.ellipse(80, 40, 3, 1.6, (200, 70, 90))
 
 
-@card(7, 23)  # Nidoqueen
+@card(7, 23)
 def nidoqueen(s):
     nido(s, (96, 150, 190), (236, 222, 180), size=1.1)
 
 
-@card(8, 24)  # Pidgeot
+@card(8, 24)
 def pidgeot(s):
     bird(s, (178, 124, 72), (244, 222, 172), (166, 112, 66), crest=[(230, 62, 50), (246, 196, 70), (230, 62, 50)], size=1.1)
 
 
-@card(9, 25)  # Pinsir
+@card(9, 25)
 def pinsir(s):
     brown = (176, 140, 110)
     s.shadow(80, 93, 26)
-    with s.part():  # pincers
+    with s.part():
         for side in (-1, 1):
             pts = [(80 + side * 6, 40), (80 + side * 22, 26), (80 + side * 26, 8), (80 + side * 18, 4), (80 + side * 16, 18), (80 + side * 4, 30)]
             s.poly(pts, (232, 228, 214))
@@ -519,24 +500,24 @@ def pinsir(s):
             s.line([(74 + i * 3, 48), (74 + i * 3, 51)], WHITE, 0.8)
 
 
-@card(10, 26)  # Scyther
+@card(10, 26)
 def scyther(s):
     green, cream = (106, 186, 92), (238, 232, 190)
     s.shadow(80, 93, 26)
-    with s.part():  # wings
+    with s.part():
         s.ellipse(100, 44, 20, 8, (236, 244, 250), rot=-30)
         s.ellipse(106, 54, 18, 7, (236, 244, 250), rot=-5)
-    with s.part():  # back legs
+    with s.part():
         s.tube([(88, 74), (98, 84), (96, 91)], 3.5, 3, green)
         s.tube([(78, 74), (74, 84), (72, 91)], 3.5, 3, green)
-    with s.part():  # abdomen
+    with s.part():
         s.ellipse(96, 70, 16, 10, green, rot=30)
         for t in (-6, 0, 6):
             s.line([(96 + t - 3, 62 + t * 0.6), (96 + t + 3, 76 + t * 0.6)], cream, 1)
     with s.part():
         s.ellipse(78, 58, 10, 13, green)
         s.ellipse(76, 60, 6, 9, cream)
-    with s.part():  # scythes
+    with s.part():
         s.tube([(72, 52), (60, 56), (52, 50)], 3, 3, green)
         s.poly([(52, 50), (30, 30), (24, 36), (40, 48), (50, 56)], (236, 240, 244))
         s.tube([(84, 52), (96, 46), (104, 36)], 3, 3, green)
@@ -550,11 +531,11 @@ def scyther(s):
         s.line([(62, 42), (68, 43)], OUTLINE, 0.7)
 
 
-@card(11, 27)  # Snorlax
+@card(11, 27)
 def snorlax(s):
     teal, cream = (60, 100, 120), (240, 226, 190)
     s.shadow(80, 93, 40)
-    with s.part():  # feet
+    with s.part():
         s.ellipse(56, 86, 12, 8, cream)
         s.ellipse(104, 86, 12, 8, cream)
         s.ellipse(56, 86, 6, 4, darker(cream, 0.12))
@@ -562,10 +543,10 @@ def snorlax(s):
     with s.part():
         s.ellipse(80, 62, 36, 30, teal)
         s.ellipse(80, 66, 26, 24, cream)
-    with s.part():  # arms
+    with s.part():
         s.ellipse(46, 62, 8, 14, teal, rot=20)
         s.ellipse(114, 62, 8, 14, teal, rot=-20)
-    with s.part():  # head
+    with s.part():
         s.tri((62, 26), (58, 14), (70, 22), teal)
         s.tri((98, 26), (102, 14), (90, 22), teal)
         s.ellipse(80, 34, 22, 16, teal)
@@ -576,7 +557,7 @@ def snorlax(s):
         s.curve([(72, 42), (80, 46), (88, 42)], OUTLINE, 0.9)
         s.tri((75, 43), (77, 46), (79, 43), WHITE)
         s.tri((81, 43), (83, 46), (85, 43), WHITE)
-    with s.part(outline=False, shade=False):  # zzz
+    with s.part(outline=False, shade=False):
         for i, (x, y) in enumerate(((108, 26), (116, 18), (126, 10))):
             r = 2.5 + i
             s.line([(x - r, y - r), (x + r, y - r), (x - r, y + r), (x + r, y + r)], (240, 244, 255), 0.9)
@@ -588,7 +569,7 @@ def _vaporeon_ruff(s):
             a = math.radians(-50 + i * 25)
             s.ellipse(70 + 10 * math.cos(a), 62 + 9 * math.sin(a), 7, 4, (246, 246, 232), rot=math.degrees(a))
         s.ellipse(70, 62, 9, 8, (246, 246, 232))
-    with s.part():  # head fin
+    with s.part():
         s.poly([(62, 34), (72, 16), (82, 22), (76, 38)], (246, 246, 232))
 
 
@@ -596,27 +577,27 @@ def _vaporeon_tail(s):
     with s.part():
         s.tube([(104, 72), (122, 70), (128, 54), (122, 40)], 6, 4, (110, 180, 220))
         s.poly([(122, 42), (110, 22), (124, 32), (138, 20), (128, 42)], (70, 120, 200))
-    with s.part(outline=False):  # back fin
+    with s.part(outline=False):
         s.poly([(86, 58), (96, 46), (106, 60)], (70, 120, 200))
 
 
-@card(12, 28)  # Vaporeon
+@card(12, 28)
 def vaporeon(s):
     with s.part(outline=False, shade=False):
         s.ellipse(84, 93, 50, 6, (184, 222, 250))
     fox(s, (110, 180, 220), _vaporeon_ruff, _vaporeon_tail, ears=(0.6, 0.6))
 
 
-@card(13, 29)  # Venomoth
+@card(13, 29)
 def venomoth(s):
     wing = (222, 206, 236)
     s.shadow(80, 93, 22)
-    with s.part():  # wings
+    with s.part():
         s.poly([(80, 52), (36, 14), (22, 26), (30, 46), (70, 60)], wing)
         s.poly([(80, 52), (124, 14), (138, 26), (130, 46), (90, 60)], wing)
         s.poly([(78, 60), (44, 66), (40, 80), (74, 70)], lighter(wing, 0.2))
         s.poly([(82, 60), (116, 66), (120, 80), (86, 70)], lighter(wing, 0.2))
-    with s.part(outline=False):  # dust spots
+    with s.part(outline=False):
         for x, y in ((40, 28), (52, 36), (120, 28), (108, 36), (54, 72), (106, 72)):
             s.circle(x, y, 2.6, (190, 150, 220))
     with s.part():
@@ -633,25 +614,25 @@ def venomoth(s):
         s.circle(84, 45, 1, WHITE)
 
 
-@card(14, 30)  # Victreebel
+@card(14, 30)
 def victreebel(s):
     yellow, green = (230, 214, 84), (90, 170, 80)
     s.shadow(80, 93, 26)
-    with s.part():  # vine
+    with s.part():
         s.curve([(98, 34), (124, 30), (132, 52), (118, 70)], (130, 100, 70), 2)
-    with s.part():  # leaves
+    with s.part():
         s.ellipse(56, 74, 16, 6, green, rot=30)
         s.ellipse(104, 74, 16, 6, green, rot=-30)
-    with s.part():  # pitcher
+    with s.part():
         s.poly([(56, 44), (62, 80), (80, 92), (98, 80), (104, 44)], yellow)
         s.ellipse(80, 82, 18, 10, yellow)
     with s.part(outline=False):
         for x in (66, 74, 86, 94):
             s.circle(x, 70 - (x % 3), 1.8, (176, 160, 60))
-    with s.part():  # mouth
+    with s.part():
         s.ellipse(80, 44, 24, 10, (232, 140, 160))
         s.ellipse(80, 46, 18, 6, (140, 50, 70))
-    with s.part():  # lid leaf
+    with s.part():
         s.poly([(98, 36), (118, 14), (124, 24), (106, 40)], green)
         s.line([(100, 36), (120, 18)], darker(green, 0.3), 0.8)
     with s.part(outline=False, shade=False):
@@ -661,7 +642,7 @@ def victreebel(s):
         s.tri((86, 41), (88, 46), (90, 41), WHITE)
 
 
-@card(15, 31)  # Vileplume
+@card(15, 31)
 def vileplume(s):
     blue, red = (70, 92, 170), (214, 60, 56)
     s.shadow(80, 93, 26)
@@ -677,7 +658,7 @@ def vileplume(s):
         s.eye(75, 70, 2.2, iris=(200, 40, 40))
         s.eye(85, 70, 2.2, iris=(200, 40, 40))
         s.smile(80, 77, 3)
-    with s.part():  # the flower
+    with s.part():
         for i in range(5):
             a = math.radians(-90 + i * 72 + 36)
             s.ellipse(80 + 24 * math.cos(a), 44 + 10 * math.sin(a), 22, 12, red, rot=math.degrees(a))
@@ -689,14 +670,14 @@ def vileplume(s):
                 s.circle(80 + 26 * t * math.cos(a), 44 + 11 * t * math.sin(a), 2.4, (250, 236, 220))
 
 
-@card(16, 32)  # Wigglytuff
+@card(16, 32)
 def wigglytuff(s):
     pink = PINK
     s.shadow(80, 93, 26)
-    with s.part():  # feet
+    with s.part():
         s.ellipse(68, 89, 8, 5, pink)
         s.ellipse(92, 89, 8, 5, pink)
-    with s.part():  # ears
+    with s.part():
         s.tri((58, 34), (52, 6), (72, 24), pink)
         s.tri((102, 34), (108, 6), (88, 24), pink)
         s.tri((58, 26), (54, 10), (66, 22), (70, 40, 50))
@@ -707,7 +688,7 @@ def wigglytuff(s):
     with s.part():
         s.ellipse(52, 66, 6, 9, pink, rot=-30)
         s.ellipse(108, 66, 6, 9, pink, rot=30)
-    with s.part():  # fluffy forelock
+    with s.part():
         s.circle(80, 32, 7, WHITE)
         s.circle(72, 34, 5, WHITE)
         s.circle(88, 34, 5, WHITE)
@@ -717,17 +698,15 @@ def wigglytuff(s):
         s.smile(80, 60, 4)
 
 
-# ------------------------------------------------------------------ 33 - 48 uncommons
-
-@card(33)  # Butterfree
+@card(33)
 def butterfree(s):
     s.shadow(80, 93, 20)
-    with s.part():  # wings
+    with s.part():
         s.poly([(80, 50), (40, 18), (26, 30), (34, 50), (72, 58)], WHITE)
         s.poly([(80, 50), (120, 18), (134, 30), (126, 50), (88, 58)], WHITE)
         s.poly([(78, 58), (46, 64), (44, 80), (74, 68)], WHITE)
         s.poly([(82, 58), (114, 64), (116, 80), (86, 68)], WHITE)
-    with s.part(outline=False):  # vein tips
+    with s.part(outline=False):
         s.poly([(40, 18), (26, 30), (32, 38), (44, 24)], BLACK)
         s.poly([(120, 18), (134, 30), (128, 38), (116, 24)], BLACK)
         s.poly([(46, 64), (44, 80), (50, 76)], BLACK)
@@ -747,14 +726,14 @@ def butterfree(s):
         s.tri((78, 50), (80, 53), (82, 50), WHITE)
 
 
-@card(34)  # Dodrio
+@card(34)
 def dodrio(s):
     brown, neck = (170, 120, 76), (186, 140, 96)
     s.shadow(80, 93, 26)
-    with s.part():  # legs
+    with s.part():
         s.line([(74, 72), (70, 90)], (230, 170, 80), 1.8)
         s.line([(88, 72), (92, 90)], (230, 170, 80), 1.8)
-    with s.part():  # tail feathers
+    with s.part():
         s.poly([(98, 62), (120, 52), (116, 62), (124, 66), (98, 70)], BLACK)
     with s.part():
         s.ellipse(82, 64, 20, 13, brown)
@@ -768,7 +747,7 @@ def dodrio(s):
             s.eye(hx, hy - 1, 1.8)
 
 
-@card(35)  # Exeggutor
+@card(35)
 def exeggutor(s):
     trunk, belly = (196, 160, 100), (240, 222, 176)
     egg = (246, 236, 180)
@@ -778,7 +757,7 @@ def exeggutor(s):
         s.ellipse(90, 89, 9, 5, trunk)
         s.tube([(80, 86), (80, 54)], 12, 10, trunk)
         s.ellipse(80, 72, 8, 12, belly)
-    with s.part():  # palm leaves
+    with s.part():
         for a in (-160, -125, -55, -20, -90):
             r = math.radians(a)
             s.ellipse(80 + 22 * math.cos(r), 34 + 14 * math.sin(r), 20, 5, (70, 160, 70), rot=a)
@@ -794,18 +773,18 @@ def exeggutor(s):
         s.tube([(90, 62), (100, 70), (102, 76)], 4, 3.5, trunk)
 
 
-@card(36)  # Fearow
+@card(36)
 def fearow(s):
     brown, cream = (168, 112, 70), (238, 214, 170)
     s.shadow(80, 93, 26)
-    with s.part():  # wings
+    with s.part():
         s.poly([(78, 52), (30, 26), (22, 36), (34, 44), (24, 50), (66, 64)], brown)
         s.poly([(90, 52), (134, 22), (142, 32), (130, 40), (138, 48), (98, 64)], darker(brown, 0.1))
     with s.part():
         s.poly([(92, 66), (114, 80), (108, 86), (88, 74)], brown)
         s.ellipse(84, 62, 15, 12, brown)
         s.ellipse(80, 66, 9, 7, cream)
-    with s.part():  # neck
+    with s.part():
         s.tube([(80, 56), (72, 44), (64, 36)], 5, 4.5, cream)
     with s.part():
         s.ellipse(62, 32, 8, 7, brown)
@@ -816,7 +795,7 @@ def fearow(s):
         s.line([(58, 26), (66, 28)], OUTLINE, 1)
 
 
-@card(37)  # Gloom
+@card(37)
 def gloom(s):
     blue, leaf = (80, 100, 170), (176, 80, 50)
     s.shadow(80, 93, 22)
@@ -828,7 +807,7 @@ def gloom(s):
     with s.part():
         s.ellipse(62, 70, 4, 6, blue, rot=-20)
         s.ellipse(98, 70, 4, 6, blue, rot=20)
-    with s.part():  # drooping petals
+    with s.part():
         for i, a in enumerate((-160, -120, -60, -20)):
             r = math.radians(a)
             s.ellipse(80 + 16 * math.cos(r), 50 + 10 * math.sin(r), 16, 8, leaf, rot=a + (20 if a < -90 else -20))
@@ -840,11 +819,11 @@ def gloom(s):
         s.tube([(84, 78), (85, 86)], 1.2, 1.8, (180, 220, 250))
 
 
-@card(38)  # Lickitung
+@card(38)
 def lickitung(s):
     pink, cream = (236, 158, 170), (246, 226, 200)
     s.shadow(80, 93, 28)
-    with s.part():  # tail
+    with s.part():
         s.tube([(98, 84), (116, 88), (124, 80)], 6, 3, pink)
     with s.part():
         s.ellipse(68, 88, 10, 6, pink)
@@ -857,7 +836,7 @@ def lickitung(s):
     with s.part():
         s.tube([(62, 58), (52, 66), (52, 74)], 4.5, 4, pink)
         s.tube([(102, 58), (110, 66), (110, 74)], 4.5, 4, pink)
-    with s.part():  # tongue
+    with s.part():
         s.tube([(70, 50), (50, 52), (36, 64), (34, 80), (44, 84)], 4, 3.4, (226, 100, 130))
     with s.part(outline=False, shade=False):
         s.eye(78, 40, 2.6)
@@ -865,26 +844,26 @@ def lickitung(s):
         s.curve([(66, 50), (78, 54), (92, 50)], OUTLINE, 0.9)
 
 
-@card(39)  # Marowak
+@card(39)
 def marowak(s):
     skull_kid(s, 1.15, club=True)
 
 
-@card(40)  # Nidorina
+@card(40)
 def nidorina(s):
     nido(s, (130, 190, 220), (236, 236, 240), size=0.95, upright=False)
 
 
-@card(41)  # Parasect
+@card(41)
 def parasect(s):
     mushroom_bug(s, 84, 70, 1.15, [(4, -14, 28)])
 
 
-@card(42)  # Persian
+@card(42)
 def persian(s):
     cream = (240, 222, 180)
     s.shadow(84, 93, 34)
-    with s.part():  # tail
+    with s.part():
         s.curve([(108, 68), (130, 64), (136, 44), (128, 34)], cream, 2.4)
     with s.part():
         s.tube([(104, 70), (110, 82), (108, 91)], 4, 3.6, darker(cream, 0.06))
@@ -894,7 +873,7 @@ def persian(s):
     with s.part():
         s.tube([(72, 70), (72, 91)], 4, 3.6, cream)
         s.tube([(96, 72), (98, 91)], 4, 3.6, cream)
-    with s.part():  # ears
+    with s.part():
         s.tri((46, 44), (40, 26), (54, 38), cream)
         s.tri((62, 40), (68, 24), (70, 40), cream)
         s.tri((47, 40), (43, 30), (52, 38), (60, 60, 70))
@@ -905,24 +884,24 @@ def persian(s):
         s.ellipse(52, 52, 2.6, 2, (190, 40, 40), rot=-20)
         s.ellipse(62, 52, 2.6, 2, (190, 40, 40), rot=20)
         s.circle(57, 57, 1, BLACK)
-    with s.part(outline=False, shade=False):  # whiskers
+    with s.part(outline=False, shade=False):
         s.curve([(46, 56), (36, 54), (28, 48)], OUTLINE, 0.6)
         s.curve([(66, 56), (76, 54), (82, 48)], OUTLINE, 0.6)
 
 
-@card(43)  # Primeape
+@card(43)
 def primeape(s):
     monkey(s, 1.15, angry=True)
 
 
-@card(44)  # Rapidash
+@card(44)
 def rapidash(s):
     cream = (250, 236, 200)
     s.shadow(80, 93, 34)
     with s.part():
         s.flame(122, 52, 18, rot=60)
         s.flame(116, 42, 12, rot=40)
-    with s.part():  # back legs
+    with s.part():
         s.tube([(104, 64), (112, 78), (114, 90)], 3.6, 3, darker(cream, 0.06))
         s.tube([(70, 64), (64, 78), (62, 90)], 3.6, 3, darker(cream, 0.06))
     with s.part():
@@ -932,7 +911,7 @@ def rapidash(s):
         s.tube([(100, 62), (102, 76), (104, 90)], 3.6, 3, cream)
         for x in (74, 104, 114, 62):
             s.ellipse(x, 91, 3, 1.6, (90, 80, 80))
-    with s.part():  # mane
+    with s.part():
         for i in range(4):
             s.flame(66 + i * 7, 36 + i * 5, 14 - i, rot=50)
     with s.part():
@@ -944,21 +923,21 @@ def rapidash(s):
         s.circle(44, 34, 1, BLACK)
 
 
-@card(45)  # Rhydon
+@card(45)
 def rhydon(s):
     drill_rhino(s, upright=True)
 
 
-@card(46)  # Seaking
+@card(46)
 def seaking(s):
     fish(s, WHITE, (236, 112, 50), (236, 112, 50), size=1.15)
 
 
-@card(47)  # Tauros
+@card(47)
 def tauros(s):
     brown, mane = (186, 140, 90), (110, 80, 60)
     s.shadow(82, 93, 34)
-    with s.part():  # three tails
+    with s.part():
         for i in range(3):
             s.curve([(108, 60), (120, 54 + i * 8), (126, 44 + i * 12)], mane, 1.8)
             s.circle(126, 44 + i * 12, 2.6, mane)
@@ -970,7 +949,7 @@ def tauros(s):
     with s.part():
         s.tube([(76, 66), (76, 91)], 5, 4.5, brown)
         s.tube([(98, 68), (100, 91)], 5, 4.5, brown)
-    with s.part():  # mane
+    with s.part():
         s.ellipse(64, 56, 14, 14, mane)
     with s.part():
         s.curve([(48, 40), (40, 30), (44, 20)], WHITE, 3)
@@ -982,13 +961,13 @@ def tauros(s):
         s.circle(44, 55, 1, BLACK)
 
 
-@card(48)  # Weepinbell
+@card(48)
 def weepinbell(s):
     yellow, green = (232, 214, 86), (80, 166, 72)
     s.shadow(80, 93, 22)
-    with s.part():  # stem
+    with s.part():
         s.curve([(80, 30), (88, 22), (90, 12)], (120, 100, 60), 2)
-    with s.part():  # leaves
+    with s.part():
         s.ellipse(56, 66, 14, 5, green, rot=30)
         s.ellipse(104, 66, 14, 5, green, rot=-30)
     with s.part():
@@ -1005,19 +984,17 @@ def weepinbell(s):
         s.tri((82, 50), (84, 54), (86, 50), WHITE)
 
 
-# ------------------------------------------------------------------ 49 - 63 commons
-
-@card(49)  # Bellsprout
+@card(49)
 def bellsprout(s):
     bell_plant(s, 76, 38, 11)
 
 
-@card(50)  # Cubone
+@card(50)
 def cubone(s):
     skull_kid(s, 0.9)
 
 
-@card(51)  # Eevee
+@card(51)
 def eevee(s):
     def ruff(s):
         with s.part():
@@ -1034,7 +1011,7 @@ def eevee(s):
     fox(s, (176, 120, 72), ruff, tail, ears=(1.1, 1.1))
 
 
-@card(52)  # Exeggcute
+@card(52)
 def exeggcute(s):
     egg, cracked = (244, 196, 200), (220, 170, 120)
     s.shadow(80, 93, 34)
@@ -1049,30 +1026,30 @@ def exeggcute(s):
             s.smile(x, y + 4, 2.4)
 
 
-@card(53)  # Goldeen
+@card(53)
 def goldeen(s):
     fish(s, WHITE, (236, 112, 50), (236, 112, 50), size=0.85)
 
 
-@card(54)  # Jigglypuff
+@card(54)
 def jigglypuff(s):
     puff(s, 26)
-    with s.part(outline=False, shade=False):  # singing
+    with s.part(outline=False, shade=False):
         for x, y in ((120, 30), (130, 44), (34, 34)):
             s.circle(x, y, 2.4, (60, 60, 80))
             s.line([(x + 2, y), (x + 2, y - 9), (x + 6, y - 7)], (60, 60, 80), 0.8)
 
 
-@card(55)  # Mankey
+@card(55)
 def mankey(s):
     monkey(s, 0.9)
 
 
-@card(56)  # Meowth
+@card(56)
 def meowth(s):
     cream, brown = (240, 224, 186), (150, 106, 70)
     s.shadow(80, 93, 20)
-    with s.part():  # tail
+    with s.part():
         s.curve([(90, 82), (110, 84), (118, 66), (110, 58)], cream, 2)
         s.circle(110, 58, 2.6, brown)
     with s.part():
@@ -1085,10 +1062,10 @@ def meowth(s):
     with s.part():
         s.tube([(70, 66), (62, 62), (58, 56)], 3, 2.6, cream)
         s.tube([(90, 66), (98, 70), (102, 72)], 3, 2.6, cream)
-    with s.part():  # coin
+    with s.part():
         s.circle(58, 52, 6, (244, 204, 70))
         s.circle(58, 52, 3.6, (228, 180, 50))
-    with s.part():  # ears
+    with s.part():
         s.tri((66, 40), (62, 22), (74, 34), cream)
         s.tri((94, 40), (98, 22), (86, 34), cream)
         s.tri((66, 36), (63, 26), (71, 34), BLACK)
@@ -1104,19 +1081,19 @@ def meowth(s):
         s.line([(94, 50), (104, 48)], OUTLINE, 0.6)
 
 
-@card(57)  # Nidoran female
+@card(57)
 def nidoran_f(s):
     nido(s, (140, 196, 226), (236, 236, 240), size=0.8, upright=False, spikes=False)
 
 
-@card(58)  # Oddish
+@card(58)
 def oddish(s):
     blue, green = (80, 104, 180), (80, 170, 76)
     s.shadow(80, 93, 18)
     with s.part():
         s.ellipse(72, 90, 6, 3.5, blue)
         s.ellipse(88, 90, 6, 3.5, blue)
-    with s.part():  # leaves
+    with s.part():
         for a in (-150, -115, -90, -65, -30):
             r = math.radians(a)
             s.ellipse(80 + 18 * math.cos(r), 50 + 18 * math.sin(r), 16, 5.5, green, rot=a)
@@ -1132,12 +1109,12 @@ def oddish(s):
         s.smile(80, 75, 2.6)
 
 
-@card(59)  # Paras
+@card(59)
 def paras(s):
     mushroom_bug(s, 80, 76, 0.85, [(-6, -12, 12), (10, -12, 12)])
 
 
-@card(60)  # Pikachu
+@card(60)
 def pikachu(s):
     with s.part(outline=False, shade=False):
         s.bolt(36, 30, 7, (255, 236, 120), rot=-15)
@@ -1145,19 +1122,19 @@ def pikachu(s):
     base1.pikachu(s)
 
 
-@card(61)  # Rhyhorn
+@card(61)
 def rhyhorn(s):
     drill_rhino(s)
 
 
-@card(62)  # Spearow
+@card(62)
 def spearow(s):
     brown, red = (170, 116, 76), (200, 70, 56)
     s.shadow(80, 93, 20)
     with s.part():
         s.line([(76, 76), (74, 90)], (230, 170, 100), 1.4)
         s.line([(86, 76), (88, 90)], (230, 170, 100), 1.4)
-    with s.part():  # raised wings
+    with s.part():
         s.poly([(84, 58), (110, 32), (122, 38), (100, 62)], red)
         s.poly([(74, 58), (46, 34), (38, 42), (64, 64)], darker(red, 0.1))
     with s.part():
@@ -1173,19 +1150,19 @@ def spearow(s):
         s.line([(64, 44), (71, 45)], OUTLINE, 1)
 
 
-@card(63)  # Venonat
+@card(63)
 def venonat(s):
     fur = (140, 100, 170)
     s.shadow(80, 93, 22)
     with s.part():
         s.ellipse(70, 90, 7, 4, (220, 210, 230))
         s.ellipse(90, 90, 7, 4, (220, 210, 230))
-    with s.part():  # antennae
+    with s.part():
         s.curve([(72, 44), (66, 30), (60, 26)], fur, 1.2)
         s.curve([(88, 44), (94, 30), (100, 26)], fur, 1.2)
         s.circle(60, 26, 2.4, fur)
         s.circle(100, 26, 2.4, fur)
-    with s.part():  # fuzzy body
+    with s.part():
         for i in range(16):
             a = math.radians(i * 360 / 16)
             s.circle(80 + 21 * math.cos(a), 66 + 20 * math.sin(a), 4.5, fur)
@@ -1193,7 +1170,7 @@ def venonat(s):
     with s.part():
         s.ellipse(58, 72, 4, 6, fur, rot=-20)
         s.ellipse(102, 72, 4, 6, fur, rot=20)
-    with s.part():  # compound eyes
+    with s.part():
         for x in (71, 89):
             s.circle(x, 60, 7, (220, 50, 60))
     with s.part(outline=False, shade=False):

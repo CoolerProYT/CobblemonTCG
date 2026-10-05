@@ -41,6 +41,8 @@ jobs:
       # Served from https://<user>.github.io/CobblemonTCG/. For a custom (sub)domain, set DOCS_BASE: /
       # here and add a CNAME in the Pages settings.
       - run: npm run build
+        env:
+          DOCS_BASE: /
 
       - uses: actions/upload-pages-artifact@v3
         with:

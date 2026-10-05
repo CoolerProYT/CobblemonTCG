@@ -11,14 +11,8 @@ import java.util.function.DoubleSupplier;
 import java.util.function.Predicate;
 import java.util.function.ToIntFunction;
 
-/**
- * The loaded reward rules, and the dispatch from a fired trigger to {@link PackRewardService}.
- */
-public final class RewardRules {
+public class RewardRules {
     private static volatile List<RewardRule> rules = List.of();
-
-    private RewardRules() {
-    }
 
     static void replace(List<RewardRule> newRules) {
         rules = List.copyOf(newRules);
@@ -32,11 +26,6 @@ public final class RewardRules {
         return rules.stream().filter(rule -> rule.trigger().equals(triggerId)).toList();
     }
 
-    /**
-     * Called by a {@link RewardTrigger} when its event happens.
-     *
-     * @return total packs granted
-     */
     public static int fire(RewardTrigger trigger, RewardContext context) {
         if (!trigger.enabled()) {
             return 0;
@@ -57,15 +46,6 @@ public final class RewardRules {
         return granted;
     }
 
-    /**
-     * Runs the rules of one trigger. A milestone rule is skipped when its milestone was claimed before this
-     * call; otherwise the milestone is claimed as soon as the rule gets to roll its chance, win or lose, so it
-     * never pays out twice. When no pack can be given (rewards off, unknown set, daily cap reached) the
-     * milestone stays open for a later event.
-     *
-     * @param newlyClaimed receives the milestone ids to store
-     * @return total packs granted
-     */
     static int evaluate(ResourceLocation triggerId, List<RewardRule> rules, RewardContext context, MilestoneData claimed,
                         Set<String> newlyClaimed, Predicate<RewardRule> canReward, DoubleSupplier random, ToIntFunction<RewardRule> grant) {
         int granted = 0;

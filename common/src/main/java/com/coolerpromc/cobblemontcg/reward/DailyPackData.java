@@ -3,9 +3,6 @@ package com.coolerpromc.cobblemontcg.reward;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
-/**
- * How many reward packs a player received on a given day (UTC epoch day).
- */
 public record DailyPackData(long day, int count) {
     public static final DailyPackData EMPTY = new DailyPackData(0L, 0);
 

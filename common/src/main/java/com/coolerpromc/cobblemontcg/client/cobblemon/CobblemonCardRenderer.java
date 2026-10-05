@@ -19,19 +19,13 @@ import org.joml.Quaternionf;
 
 import java.util.Optional;
 
-/**
- * Draws Cobblemon's own Pokémon models for the card art, the way Cobblemon's Pokédex shows them.
- */
-public final class CobblemonCardRenderer implements CardArtPatcher.PortraitRenderer {
+public class CobblemonCardRenderer implements CardArtPatcher.PortraitRenderer {
     // the Pokédex portrait is 137 x 68 GUI units with the model at scale 2 and its origin 12 units above
     // the top; the canvas keeps that width and takes the height from the requested image's shape
     private static final float CANVAS_W = 137.0F;
     private static final float POKEDEX_H = 68.0F;
     private static final float MODEL_SCALE = 2.0F;
     private static final Quaternionf ROTATION = new Quaternionf().rotateXYZ((float) Math.toRadians(13), (float) Math.toRadians(35), 0);
-
-    private CobblemonCardRenderer() {
-    }
 
     public static CardArtPatcher.PortraitRenderer create() {
         return new CobblemonCardRenderer();
@@ -60,14 +54,12 @@ public final class CobblemonCardRenderer implements CardArtPatcher.PortraitRende
             target.clear(Minecraft.ON_OSX);
             target.bindWrite(true);
 
-            // same projection as the GUI, on a canvas the shape of the requested image
             float canvasH = CANVAS_W * height / width;
             RenderSystem.setProjectionMatrix(new Matrix4f().setOrtho(0, CANVAS_W, canvasH, 0, 1000, 21000), VertexSorting.ORTHOGRAPHIC_Z);
             modelView.identity().translate(0, 0, -11000);
             RenderSystem.applyModelViewMatrix();
 
             PoseStack pose = new PoseStack();
-            // the model's profile origin, placed so the Pokédex framing sits in the middle of the canvas
             pose.translate(CANVAS_W / 2, (canvasH - POKEDEX_H) / 2 - 12, 1000);
             pose.scale(MODEL_SCALE, MODEL_SCALE, MODEL_SCALE);
             PokemonGuiUtilsKt.drawProfilePokemon(species.getResourceIdentifier(), pose, new Quaternionf(ROTATION), PoseType.PROFILE,

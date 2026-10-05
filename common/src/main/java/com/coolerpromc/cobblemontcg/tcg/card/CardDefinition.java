@@ -6,12 +6,6 @@ import net.minecraft.util.ExtraCodecs;
 
 import java.util.Optional;
 
-/**
- * One card as defined in {@code data/<namespace>/tcg/cards/<set>/<number>.json}.
- * The set a card belongs to comes from the folder it is in, not from the JSON.
- * {@code pokedex} and {@code evolves_from_pokedex} are National Pokédex numbers; the client
- * draws those species' Cobblemon models into the card art.
- */
 public record CardDefinition(String id, int number, String name, CardSupertype supertype, Optional<String> type, Optional<Integer> hp, CardRarity rarity,
                              Optional<Integer> pokedex, Optional<Integer> evolvesFromPokedex) {
     public static final Codec<CardDefinition> CODEC = RecordCodecBuilder.create(instance -> instance.group(

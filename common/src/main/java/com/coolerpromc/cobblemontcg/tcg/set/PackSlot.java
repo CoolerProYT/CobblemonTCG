@@ -7,12 +7,6 @@ import net.minecraft.util.ExtraCodecs;
 
 import java.util.Map;
 
-/**
- * A group of cards in a booster pack. Each of the {@code count} cards first rolls a rarity from the
- * {@code rarities} weight table, then a card of that rarity.
- * When {@code use_config_holo_chance} is set, the chance of rolling {@link CardRarity#RARE_HOLO}
- * comes from the config instead of the weight table.
- */
 public record PackSlot(int count, Map<CardRarity, Integer> rarities, boolean useConfigHoloChance) {
     public static final Codec<PackSlot> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             ExtraCodecs.POSITIVE_INT.fieldOf("count").forGetter(PackSlot::count),

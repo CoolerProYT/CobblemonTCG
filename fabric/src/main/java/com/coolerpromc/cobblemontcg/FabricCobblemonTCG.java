@@ -24,7 +24,6 @@ public class FabricCobblemonTCG implements ModInitializer {
                 ResourceManagerHelper.get(PackType.SERVER_DATA).registerReloadListener(new FabricIdentifiableReloadListener(id, listener)));
         Services.VILLAGER_TRADES.applyVillagerTradeRegistrations((profession, level, listing) ->
                 TradeOfferHelper.registerVillagerOffers(profession, level, listings -> listings.add(listing)));
-        // level 1 is the generic pool, level 2 the rare one
         Services.VILLAGER_TRADES.applyWanderingTradeRegistrations((rare, listing) ->
                 TradeOfferHelper.registerWanderingTraderOffers(rare ? 2 : 1, listings -> listings.add(listing)));
 

@@ -8,9 +8,6 @@ import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 
-/**
- * The Card Dealer's job site. It has no behaviour of its own, like the vanilla workstations without a menu.
- */
 public class CardDealerTableBlock extends HorizontalDirectionalBlock {
     public static final MapCodec<CardDealerTableBlock> CODEC = simpleCodec(CardDealerTableBlock::new);
 

@@ -8,18 +8,7 @@ import net.minecraft.util.RandomSource;
 
 import java.util.*;
 
-/**
- * Rolls the contents of one booster pack from a set's slot table. Pure logic, no game state.
- */
-public final class PackRoller {
-    private PackRoller() {
-    }
-
-    /**
-     * @param holoChance chance of a holo in slots marked {@code use_config_holo_chance}, 0 to 1
-     * @param packSize   total cards in the pack; the difference to the set's own slot total is
-     *                   added to or removed from the last slots
-     */
+public class PackRoller {
     public static List<RolledCard> roll(TcgSet set, RandomSource random, double holoChance, int packSize) {
         List<PackSlot> slots = set.definition().packSlots();
         int[] counts = resize(slots, packSize);
@@ -76,10 +65,6 @@ public final class PackRoller {
         return pool.get(random.nextInt(pool.size()));
     }
 
-    /**
-     * Scales the weights so {@link CardRarity#RARE_HOLO} has exactly {@code holoChance} and the
-     * other rarities share the rest in their original ratio.
-     */
     private static void applyHoloChance(Map<CardRarity, Double> weights, double holoChance) {
         if (!weights.containsKey(CardRarity.RARE_HOLO)) {
             return;

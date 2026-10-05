@@ -12,7 +12,7 @@ The models are drawn a few cards per tick after you join a world, so give it a m
 
 Check, in order:
 
-1. A first catch only has a **10% chance** of a pack, and each species only gets that one roll.
+1. Packs from catching are a chance, not a sure thing: **25%** for the first catch of a species (one roll per species) and **5%** for any catch. Every pack you get is announced in chat.
 2. You may have hit the **daily limit** of 10 reward packs (resets at midnight UTC).
 3. The server may have turned rewards off; see [Configuration](./guide/configuration#rewards).
 

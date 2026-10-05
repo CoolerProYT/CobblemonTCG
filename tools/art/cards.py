@@ -1,12 +1,3 @@
-"""
-Builds the per-card layer (everything that differs between cards): stage line, name, HP,
-illustration, Pokemon Powers and attacks, weakness / resistance / retreat, level, number and
-rarity. The frame layer (border, face, art window background, static labels) comes from
-layout.py and is shared per type.
-
-Game text (attack names, costs, damage, rules) comes from tools/<set>_text.json. Drawings come from
-art/pokemon_<set>.py and art/trainers_<set>.py, one function per card number.
-"""
 import math
 
 from PIL import Image, ImageDraw
@@ -16,7 +7,6 @@ from . import layout as L
 from .canvas import Sprite
 from . import pokemon_base1, pokemon_base2, trainers_base1, trainers_base2
 
-# set -> card number -> drawing
 POKEMON = {"base1": pokemon_base1.DRAW, "base2": pokemon_base2.DRAW}
 TRAINERS = {"base1": trainers_base1.DRAW, "base2": trainers_base2.DRAW}
 
@@ -51,16 +41,12 @@ def _symbol(img, kind, cx, cy, size):
     L.paste_symbol(img, kind, cx, cy, size)
 
 
-# ---------------------------------------------------------------- pokemon
-
-def _header(img, card, text, by_name):  # noqa: ARG001 (by_name kept for custom sets)
+def _header(img, card, text, by_name):
     face = L.FACE_COLORS[card["type"]]
     stage = (text.get("subtypes") or ["Basic"])[0]
     evolves = text.get("evolvesFrom")
     x = L.FACE[0] + 7
     if evolves:
-        # portrait of the previous stage, like the little window on real evolution cards; the
-        # creature itself is its own layer on top (evolution_portrait), so it can be swapped out
         box = L.EVOLUTION_BOX
         d = ImageDraw.Draw(img, "RGBA")
         d.rectangle((box[0] - 1, box[1] - 1, box[2] + 1, box[3] + 1), fill=L.rgba((232, 198, 92)))
@@ -99,7 +85,6 @@ def _body_blocks(text):
 
 
 def _layout_body(img, card, text, size, draw_it):
-    """Lays out powers and attacks at a text size; returns the total height."""
     x0, y0, x1, y1 = L.BODY
     face = L.FACE_COLORS[card["type"]]
     blocks = _body_blocks(text)
@@ -145,8 +130,6 @@ def _layout_body(img, card, text, size, draw_it):
 
 
 def evolution_portrait(prev: tuple[str, int]) -> Image.Image:
-    """The previous stage, close up, for the portrait window (32x32 texture, picture in the top 32x24).
-    prev is the (set, number) of a card showing it, which may be in an earlier set."""
     box = L.EVOLUTION_BOX
     bw, bh = box[2] - box[0] + 1, box[3] - box[1] + 1
     out = Image.new("RGBA", (32, 32), (0, 0, 0, 0))
@@ -170,7 +153,6 @@ def pokemon_card(card: dict, total: int, text: dict, by_name: dict) -> Image.Ima
     F.draw(img, ((L.STRIP[0] + L.STRIP[2]) / 2, (L.STRIP[1] + L.STRIP[3]) / 2 + 0.5), strip, F.font("Italic", 7),
            (70, 52, 20), anchor="mm")
 
-    # powers and attacks: pick the largest text that fits, then centre vertically
     avail = L.BODY[3] - L.BODY[1]
     size = 8.0
     while size > 5.5 and _layout_body(Image.new("RGBA", (L.W, L.H)), card, text, size, False) > avail:
@@ -200,8 +182,6 @@ def pokemon_card(card: dict, total: int, text: dict, by_name: dict) -> Image.Ima
     return F.grain(img, 3, seed=card["number"])
 
 
-# ---------------------------------------------------------------- trainers and energy
-
 def _rules(img, text, box, size=9.0):
     rules = [r for r in text.get("rules", []) if not r.startswith("This card stays in play")]
     s = "\n".join(F.energy_text(r) for r in rules)
@@ -229,7 +209,6 @@ def energy_card(card: dict, total: int, text: dict) -> Image.Image:
     face = L.FACE_COLORS["energy"]
     special = "Special" in (text.get("subtypes") or [])
 
-    # sunburst in the type colour behind the symbol
     burst = Image.new("RGBA", (L.W * L.SS, L.H * L.SS), (0, 0, 0, 0))
     bd = ImageDraw.Draw(burst)
     cx, cy = L.W / 2 * L.SS, (130 if special else 176) * L.SS
@@ -260,11 +239,6 @@ def energy_card(card: dict, total: int, text: dict) -> Image.Image:
 
 
 def card_layers(card: dict, total: int, text: dict, by_name: dict) -> dict:
-    """Every texture of one card: 'card' always, plus 'illustration' (the Pokemon in the art
-    window, 208x144) and 'evolution' (the previous stage in the portrait window) for Pokemon.
-    Those two are separate layers so the mod can swap in Cobblemon's models at runtime.
-    card holds 'set' (e.g. base1) and 'set_title' (e.g. Base Set) next to the CSV columns;
-    by_name maps a Pokemon name to the (set, number) of a card that shows it."""
     layers = {"card": card_art(card, total, text, by_name)}
     if card["supertype"] == "pokemon":
         layers["illustration"] = illustration(POKEMON[card["set"]], card["number"])

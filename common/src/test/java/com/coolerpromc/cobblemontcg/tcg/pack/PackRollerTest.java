@@ -23,9 +23,6 @@ import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/**
- * Rolls packs from the real Base Set and Jungle data shipped in src/main/resources.
- */
 class PackRollerTest {
     private static final Path DATA = Path.of("src/main/resources/data/cobblemontcg/tcg");
     private static final int PACKS = 20_000;

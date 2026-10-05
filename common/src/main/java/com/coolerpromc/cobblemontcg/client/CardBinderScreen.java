@@ -15,9 +15,6 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import org.lwjgl.glfw.GLFW;
 
-/**
- * The open binder: two pages of card pockets that show each card big, with page turning and sorting.
- */
 public class CardBinderScreen extends AbstractContainerScreen<CardBinderMenu> {
     private static final ResourceLocation TEXTURE = Constants.id("textures/gui/card_binder.png");
     private static final String KEY = "screen." + Constants.MODID + ".card_binder.";
@@ -97,13 +94,9 @@ public class CardBinderScreen extends AbstractContainerScreen<CardBinderMenu> {
         graphics.pose().translate(-8.0F, -8.0F, 0.0F);
         graphics.renderItem(stack, 0, 0);
         graphics.pose().popPose();
-        // the count goes in the pocket's bottom right corner
         graphics.renderItemDecorations(font, stack, slot.x + 1, slot.y + 5);
     }
 
-    /**
-     * The whole pocket acts as its slot: positions inside a pocket move onto the slot it holds.
-     */
     private double[] toSlot(double mouseX, double mouseY) {
         for (Slot slot : menu.slots) {
             if (slot instanceof CardBinderMenu.PocketSlot) {
@@ -123,7 +116,6 @@ public class CardBinderScreen extends AbstractContainerScreen<CardBinderMenu> {
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
-        // pages can be turned while holding a card, to carry it to another page
         if (button == GLFW.GLFW_MOUSE_BUTTON_LEFT) {
             if (isOver(PREVIOUS_X, ARROW_Y, ARROW_W, ARROW_H, mouseX, mouseY)) {
                 return press(CardBinderMenu.BUTTON_PREVIOUS);
@@ -173,10 +165,6 @@ public class CardBinderScreen extends AbstractContainerScreen<CardBinderMenu> {
         return super.keyPressed(keyCode, scanCode, modifiers);
     }
 
-    /**
-     * Page turns happen on the client right away so the pockets match the clicks it sends next;
-     * the server turns too and resends the pockets. Sorting only happens on the server.
-     */
     private boolean press(int button) {
         Minecraft minecraft = Minecraft.getInstance();
         if (minecraft.player == null || minecraft.gameMode == null || !menu.clickMenuButton(minecraft.player, button)) {

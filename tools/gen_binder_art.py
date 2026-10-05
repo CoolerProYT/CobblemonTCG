@@ -1,15 +1,4 @@
 #!/usr/bin/env python3
-"""
-Draws the card binder textures.
-
-Writes into common/src/main/resources/assets/cobblemontcg/textures/:
-  gui/card_binder.png    the open binder screen (256x256); the layout matches CardBinderMenu / CardBinderScreen:
-                         cover 200x128, two pages of 3x3 pockets (22x30), the player inventory below,
-                         and the button sprites at x 200+
-  item/card_binder.png   the item (16x16)
-
-Usage: python tools/gen_binder_art.py
-"""
 from pathlib import Path
 
 from PIL import Image, ImageDraw
@@ -17,7 +6,6 @@ from PIL import Image, ImageDraw
 TOOLS = Path(__file__).resolve().parent
 TEXTURES = TOOLS.parent / "common" / "src" / "main" / "resources" / "assets" / "cobblemontcg" / "textures"
 
-# must match CardBinderMenu
 POCKET_W, POCKET_H = 22, 30
 POCKET_X = (13, 39, 65, 113, 139, 165)
 POCKET_Y = (12, 45, 78)
@@ -51,13 +39,11 @@ def cover(img: Image.Image):
     d = ImageDraw.Draw(img)
     x0, y0, x1, y1 = COVER
     d.rounded_rectangle((x0, y0, x1 - 1, y1 - 1), radius=6, fill=LEATHER, outline=LEATHER_DARK)
-    # leather grain
     for y in range(y0 + 1, y1 - 1):
         for x in range(x0 + 1, x1 - 1):
             if img.getpixel((x, y))[3] and (x * 7 + y * 13 + (x * y) % 5) % 11 == 0:
                 img.putpixel((x, y), (*lerp(LEATHER, LEATHER_DARK, 0.35), 255))
     d.line((x0 + 3, y0 + 1, x1 - 4, y0 + 1), fill=LEATHER_LIGHT)
-    # stitching
     for x in range(x0 + 4, x1 - 4, 3):
         d.point((x, y0 + 3), fill=STITCH)
         d.point((x, y1 - 4), fill=STITCH)
@@ -70,12 +56,10 @@ def page(img: Image.Image, box, left: bool):
     d = ImageDraw.Draw(img)
     x0, y0, x1, y1 = box
     for x in range(x0, x1):
-        # darker toward the spine
         t = (x - x0) / (x1 - x0 - 1)
         shade = t if left else 1 - t
         d.line((x, y0, x, y1 - 1), fill=lerp(PAGE, PAGE_SHADE, max(0.0, shade - 0.75) * 4))
     d.rectangle((x0, y0, x1 - 1, y1 - 1), outline=PAGE_SHADE)
-    # stacked pages underneath
     d.line((x0 + 1, y1, x1 - 2, y1), fill=(200, 192, 172))
     for px in (POCKET_X[:3] if left else POCKET_X[3:]):
         for py in POCKET_Y:
@@ -86,9 +70,7 @@ def pocket(d: ImageDraw.ImageDraw, x, y):
     d.rectangle((x, y, x + POCKET_W - 1, y + POCKET_H - 1), fill=SLEEVE, outline=SLEEVE_EDGE)
     d.line((x + 1, y + 1, x + POCKET_W - 2, y + 1), fill=(250, 248, 242))
     d.line((x + 1, y + 1, x + 1, y + POCKET_H - 2), fill=(250, 248, 242))
-    # the sleeve's opening
     d.line((x + 2, y + 4, x + POCKET_W - 3, y + 4), fill=(206, 201, 187))
-    # glare
     d.line((x + POCKET_W - 7, y + 7, x + POCKET_W - 4, y + 4), fill=(248, 247, 242))
 
 
@@ -97,7 +79,6 @@ def spine(img: Image.Image):
     d.rectangle((94, 4, 105, 123), fill=LEATHER_DARK)
     d.line((99, 4, 99, 123), fill=lerp(LEATHER_DARK, (0, 0, 0), 0.4))
     for y in (24, 64, 104):
-        # a ring through both pages
         d.rounded_rectangle((88, y - 3, 111, y + 3), radius=3, fill=RING_DARK)
         d.rounded_rectangle((88, y - 3, 111, y + 1), radius=3, fill=RING)
         d.line((91, y - 2, 108, y - 2), fill=RING_LIGHT)
@@ -129,7 +110,6 @@ def slot(d: ImageDraw.ImageDraw, x, y):
 
 
 def arrow(d: ImageDraw.ImageDraw, x, y, right: bool, color):
-    # 12x10 page-turn arrow: a triangle head and a shaft
     for i in range(5):
         ax = x + 1 + i if not right else x + 10 - i
         d.line((ax, y + 4 - i, ax, y + 5 + i), fill=color)
@@ -140,7 +120,6 @@ def arrow(d: ImageDraw.ImageDraw, x, y, right: bool, color):
 
 
 def sort_icon(d: ImageDraw.ImageDraw, x, y, hovered: bool):
-    # 12x12 button: three bars of growing length
     d.rounded_rectangle((x, y, x + 11, y + 11), radius=2, fill=(160, 160, 160) if not hovered else (190, 200, 230),
                         outline=(55, 55, 55))
     d.line((x + 1, y + 1, x + 10, y + 1), fill=(240, 240, 240))
@@ -163,7 +142,6 @@ def gui() -> Image.Image:
     spine(img)
     page(img, PAGES[0], True)
     page(img, PAGES[1], False)
-    # rings go over the inner page edges
     spine_rings = Image.new("RGBA", img.size, (0, 0, 0, 0))
     spine(spine_rings)
     ring_mask = Image.new("L", img.size, 0)
@@ -179,19 +157,15 @@ def gui() -> Image.Image:
 def item() -> Image.Image:
     img = Image.new("RGBA", (16, 16), (0, 0, 0, 0))
     d = ImageDraw.Draw(img)
-    # a card sticking out of the top
     d.rectangle((6, 0, 12, 4), fill=(250, 214, 64), outline=(160, 120, 30))
     d.rectangle((8, 1, 10, 3), fill=(120, 170, 230))
-    # cover
     d.rectangle((2, 2, 14, 15), fill=LEATHER, outline=LEATHER_DARK)
     d.line((3, 3, 13, 3), fill=LEATHER_LIGHT)
     d.line((3, 3, 3, 14), fill=LEATHER_LIGHT)
-    # spine with rings
     d.rectangle((2, 2, 4, 15), fill=LEATHER_DARK)
     for y in (5, 9, 13):
         d.line((1, y, 5, y), fill=RING)
         d.point((1, y), fill=RING_DARK)
-    # label
     d.rectangle((7, 7, 12, 10), fill=STITCH)
     d.line((8, 8, 11, 8), fill=LEATHER_DARK)
     return img

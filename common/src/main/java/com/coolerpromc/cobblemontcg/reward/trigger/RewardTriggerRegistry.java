@@ -9,14 +9,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
 
-/**
- * Triggers register themselves here, so integrations can add new ones without touching core code.
- */
-public final class RewardTriggerRegistry {
+public class RewardTriggerRegistry {
     private static final Map<ResourceLocation, RewardTrigger> TRIGGERS = new LinkedHashMap<>();
-
-    private RewardTriggerRegistry() {
-    }
 
     public static synchronized <T extends RewardTrigger> T register(T trigger) {
         RewardTrigger previous = TRIGGERS.putIfAbsent(trigger.id(), trigger);

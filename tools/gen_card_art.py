@@ -1,37 +1,4 @@
 #!/usr/bin/env python3
-"""
-Draws the card textures: original illustrations in a layout inspired by the 1999 Base Set.
-No official card art, scans, logos or set symbols are used. Replace any file with your own
-drawing of the same size and name, no code changes needed.
-
-Writes into common/src/main/resources/assets/cobblemontcg/textures/tcg/:
-  frame/<set>/pokemon_<type>.png, trainer.png, energy.png
-                            card frame, face and art window background in the set's style (256x352),
-                            only the kinds the set uses
-  holo_overlay.png(.mcmeta) animated foil over the art window, holo prints only (208x144 per frame)
-  <set>/<number>.png        everything specific to one card: name, HP, attacks, weakness /
-                            resistance / retreat, number, rarity; trainer and energy art (256x352)
-  <set>/illustration/<number>.png
-                            the Pokemon in the art window, Pokemon cards only (208x144)
-  <set>/evolution/<number>.png
-                            the previous stage in the portrait window, evolution cards only (32x32)
-  card_back.png             back of every card (256x352)
-  pack/<set>_<wrapper>.png  booster pack fronts listed in the set json: foil and light burst (240x368),
-  pack/<set>_<wrapper>_mascot.png
-                            the mascot, drawn at y 96 of the pack (240x208)
-  pack/<set>_<wrapper>_overlay.png
-                            set name plate, badges, seals and foil sheen over the mascot (240x368)
-  pack/back.png             back of every pack (240x368)
-  pack/default*.png         pack without set data (same three layers)
-and the mod icon common/src/main/resources/cobblemontcg.png.
-
-Card text (attacks, costs, damage, rules) is read from tools/<set>_text.json.
-
-Usage: python tools/gen_card_art.py [--skip-existing-art] [--set base2] [--only 4,58]
-  --skip-existing-art  keep card textures that already exist, so your own drawings are never overwritten
-  --set                only redraw the cards of this set
-  --only               only redraw these card numbers
-"""
 import argparse
 import csv
 import json
@@ -41,9 +8,9 @@ from pathlib import Path
 from PIL import Image, ImageDraw
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from art import layout as L  # noqa: E402
-from art.cards import card_layers, frame_name  # noqa: E402
-from art.wrapper import DEFAULT, SETS, make_card_back, make_pack_back, make_wrapper, make_wrapper_layers  # noqa: E402
+from art import layout as L
+from art.cards import card_layers, frame_name
+from art.wrapper import DEFAULT, SETS, make_card_back, make_pack_back, make_wrapper, make_wrapper_layers
 
 NAMESPACE = "cobblemontcg"
 TOOLS = Path(__file__).resolve().parent
@@ -73,7 +40,6 @@ def save(img: Image.Image, path: Path) -> None:
 
 
 def save_pack(layers: dict, name: str) -> None:
-    """A pack front is three textures: <name>.png (foil), <name>_mascot.png and <name>_overlay.png."""
     save(layers["base"], TCG / "pack" / f"{name}.png")
     save(layers["mascot"], TCG / "pack" / f"{name}_mascot.png")
     save(layers["overlay"], TCG / "pack" / f"{name}_overlay.png")
@@ -100,7 +66,7 @@ def main() -> None:
     args = parser.parse_args()
     only = {int(n) for n in args.only.split(",") if n}
 
-    frames = {f"pokemon_{kind}": L.pokemon_frame(kind) for kind in L.TYPE_COLORS}   # for the mod icon
+    frames = {f"pokemon_{kind}": L.pokemon_frame(kind) for kind in L.TYPE_COLORS}
 
     overlay, meta = L.holo_overlay()
     save(overlay, TCG / "holo_overlay.png")
@@ -112,8 +78,6 @@ def main() -> None:
     save(make_icon(frames), RESOURCES / f"{NAMESPACE}.png")
 
     csv_paths = sorted(TOOLS.glob("*.csv"))
-    # Pokemon name -> (set, number) of a card showing it, so an evolution card can show a previous
-    # stage from an earlier set (Jungle's Clefable evolves from Base Set's Clefairy)
     everywhere = {}
     for csv_path in csv_paths:
         for c in read_cards(csv_path):

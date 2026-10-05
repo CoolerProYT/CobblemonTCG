@@ -5,10 +5,6 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.ExtraCodecs;
 
-/**
- * One entry from {@code data/<namespace>/tcg/rewards/*.json}: when {@code trigger} fires and the
- * conditions pass, give {@code amount} packs of {@code set} with probability {@code chance}.
- */
 public record RewardRule(ResourceLocation trigger, ResourceLocation set, int amount, float chance, RewardConditions conditions) {
     public static final Codec<RewardRule> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             ResourceLocation.CODEC.fieldOf("trigger").forGetter(RewardRule::trigger),

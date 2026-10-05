@@ -9,22 +9,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
-/**
- * Conditions a {@link RewardRule} checks against a {@link RewardContext}.
- * <p>
- * {@code level}, {@code dex_every}, {@code dex_percent} and {@code first_catch_of_species: true} make the rule
- * a milestone: it pays out at most once per player for each milestone it reaches (see {@link #milestone}).
- *
- * @param species            the species must be one of these (any species when empty)
- * @param excludeSpecies     the species must not be one of these, so two rules can split species between them
- * @param level              milestone: a Pokémon reached at least this level
- * @param firstCatch         whether the capture must (or must not) be the player's first of the species
- * @param dexEvery           milestone: the player's Pokédex entry count is a multiple of this
- * @param dexPercent         milestone: the player has at least this percentage of the Pokédex
- */
 public record RewardConditions(Optional<Integer> minLevel, List<String> species, List<String> excludeSpecies, Optional<Boolean> shiny,
-                               Optional<Integer> level, Optional<Boolean> firstCatch, Optional<Integer> dexEvery, Optional<Integer> dexPercent) {
-    public static final RewardConditions NONE = new RewardConditions(Optional.empty(), List.of(), List.of(), Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty());
+                               Optional<Integer> level, Optional<Boolean> firstCatch, Optional<Integer> dexEvery, Optional<Integer> dexPercent, boolean perPokemon) {
+    public static final RewardConditions NONE = new RewardConditions(Optional.empty(), List.of(), List.of(), Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(), false);
 
     public static final Codec<RewardConditions> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             Codec.INT.optionalFieldOf("min_level").forGetter(RewardConditions::minLevel),
@@ -34,7 +21,8 @@ public record RewardConditions(Optional<Integer> minLevel, List<String> species,
             ExtraCodecs.POSITIVE_INT.optionalFieldOf("level").forGetter(RewardConditions::level),
             Codec.BOOL.optionalFieldOf("first_catch_of_species").forGetter(RewardConditions::firstCatch),
             ExtraCodecs.POSITIVE_INT.optionalFieldOf("dex_every").forGetter(RewardConditions::dexEvery),
-            Codec.intRange(1, 100).optionalFieldOf("dex_percent").forGetter(RewardConditions::dexPercent)
+            Codec.intRange(1, 100).optionalFieldOf("dex_percent").forGetter(RewardConditions::dexPercent),
+            Codec.BOOL.optionalFieldOf("per_pokemon", false).forGetter(RewardConditions::perPokemon)
     ).apply(instance, RewardConditions::new));
 
     public boolean test(RewardContext context) {
@@ -51,6 +39,9 @@ public record RewardConditions(Optional<Integer> minLevel, List<String> species,
             return false;
         }
         if (level.isPresent() && context.level().map(l -> l < level.get()).orElse(true)) {
+            return false;
+        }
+        if (level.isPresent() && context.previousLevel().map(previous -> previous >= level.get()).orElse(false)) {
             return false;
         }
         if (firstCatch.isPresent() && !context.firstCatch().map(f -> f.equals(firstCatch.get())).orElse(false)) {
@@ -70,19 +61,17 @@ public record RewardConditions(Optional<Integer> minLevel, List<String> species,
     }
 
     public boolean isMilestone() {
-        return level.isPresent() || dexEvery.isPresent() || dexPercent.isPresent() || firstCatch.orElse(false);
+        return (level.isPresent() && !perPokemon) || dexEvery.isPresent() || dexPercent.isPresent() || firstCatch.orElse(false);
     }
 
-    /**
-     * The id of the milestone this rule reaches for the context (only meaningful when {@link #test} passed),
-     * or empty if the rule is not a milestone and may pay out every time.
-     */
     public Optional<String> milestone(RewardContext context) {
         if (!isMilestone()) {
             return Optional.empty();
         }
         List<String> parts = new ArrayList<>();
-        level.ifPresent(l -> parts.add("level/" + l));
+        if (!perPokemon) {
+            level.ifPresent(l -> parts.add("level/" + l));
+        }
         if (firstCatch.orElse(false)) {
             parts.add("first_catch/" + context.species().map(s -> s.toLowerCase(Locale.ROOT)).orElse("unknown"));
         }

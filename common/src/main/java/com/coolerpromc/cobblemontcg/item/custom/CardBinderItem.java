@@ -22,9 +22,6 @@ import net.minecraft.world.level.Level;
 
 import java.util.List;
 
-/**
- * Right-click to open; keeps up to {@link CardBinderMenu#CAPACITY} stacks of cards in its container component.
- */
 public class CardBinderItem extends Item {
     private static final String TOOLTIP = "tooltip." + Constants.MODID + ".card_binder.";
     private static final int OFFHAND_SLOT = Inventory.SLOT_OFFHAND;

@@ -21,10 +21,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-/**
- * A binder held in the hand: 24 pages of 3x3 card pockets, shown two pages (one spread) at a time.
- * The cards live in the binder stack's container component and are written back on every change.
- */
 public class CardBinderMenu extends AbstractContainerMenu {
     public static final int PAGE_SLOTS = 9;
     public static final int PAGES = 24;
@@ -36,7 +32,6 @@ public class CardBinderMenu extends AbstractContainerMenu {
     public static final int BUTTON_NEXT = 1;
     public static final int BUTTON_SORT = 2;
 
-    // GUI layout, shared with CardBinderScreen
     public static final int POCKET_WIDTH = 22;
     public static final int POCKET_HEIGHT = 30;
     public static final int[] POCKET_X = {13, 39, 65, 113, 139, 165};
@@ -51,15 +46,11 @@ public class CardBinderMenu extends AbstractContainerMenu {
 
     private final SimpleContainer cards;
     private final SpreadView view;
-    /** Inventory index of the open binder (0-8 hotbar, 40 offhand, the swap button ids too); synced so the client locks it too. */
     private final DataSlot binderSlot = DataSlot.standalone();
     private final ItemStack binder;
     private int spread;
     private boolean suspendSave;
 
-    /**
-     * Client side; the contents and the binder's slot arrive from the server.
-     */
     public CardBinderMenu(int containerId, Inventory inventory) {
         this(containerId, inventory, -1, ItemStack.EMPTY);
     }
@@ -130,15 +121,11 @@ public class CardBinderMenu extends AbstractContainerMenu {
             }
         }
         if (!player.level().isClientSide()) {
-            // the pockets now show other cards; send every slot so the client never shows stale ones
             sendAllDataToRemote();
         }
         return true;
     }
 
-    /**
-     * Merges duplicates and orders the cards by set, number and holo, from the first pocket on.
-     */
     private void sort() {
         List<ItemStack> merged = new ArrayList<>();
         for (int i = 0; i < CAPACITY; i++) {
@@ -186,10 +173,6 @@ public class CardBinderMenu extends AbstractContainerMenu {
         binder.set(DataComponents.CONTAINER, ItemContainerContents.fromItems(items));
     }
 
-    /**
-     * Puts a card into the binder: onto matching cards first, then the first free pocket from the
-     * open spread on. Returns what did not fit.
-     */
     private ItemStack insert(ItemStack stack) {
         for (int i = 0; i < CAPACITY && !stack.isEmpty(); i++) {
             ItemStack existing = cards.getItem(i);
@@ -224,7 +207,6 @@ public class CardBinderMenu extends AbstractContainerMenu {
             }
         } else if (isCard(stack)) {
             if (player.level().isClientSide()) {
-                // the client only knows the open spread; the server fills the rest and syncs
                 return ItemStack.EMPTY;
             }
             insert(stack);
@@ -261,9 +243,6 @@ public class CardBinderMenu extends AbstractContainerMenu {
         return player.isAlive() && slot >= 0 && player.getInventory().getItem(slot) == binder && binder.getItem() instanceof CardBinderItem;
     }
 
-    /**
-     * The 18 pockets of the open spread, looking into the full binder.
-     */
     private class SpreadView implements Container {
         private int index(int slot) {
             return spread * SPREAD_SLOTS + slot;
@@ -327,9 +306,6 @@ public class CardBinderMenu extends AbstractContainerMenu {
         }
     }
 
-    /**
-     * A card pocket. Drawn by CardBinderScreen as a big card instead of a 16x16 item.
-     */
     public static class PocketSlot extends Slot {
         public PocketSlot(Container container, int slot, int x, int y) {
             super(container, slot, x, y);

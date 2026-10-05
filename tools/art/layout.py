@@ -1,16 +1,3 @@
-"""
-Card layout in the style of the 1999 Base Set (original drawing, no official assets):
-yellow border, a card face coloured by type, stage line, name and HP on top, framed art window,
-Pokemon Powers and attacks with energy costs, weakness / resistance / retreat bar, level and
-Pokedex number, card number and rarity at the bottom.
-
-All coordinates are pixels in a 256x352 texture (the card is the whole texture, 63 x 88 mm).
-The frame layer (border, face, art window and its background, static labels) is shared per set and
-type; everything that differs between cards is drawn by cards.py on a transparent layer on top.
-
-Every set has a STYLE so its cards can be told apart at a glance: the colour of the art window rim
-and the Pokedex strip, the scenery in the art window and an optional set mark next to the strip.
-"""
 import math
 import random
 
@@ -21,18 +8,18 @@ from . import finish as F
 
 W, H = 256, 352
 SS = 4
-RADIUS = 13                          # corner radius
-FACE = (11, 11, 244, 340)            # inside the yellow border
+RADIUS = 13
+FACE = (11, 11, 244, 340)
 STAGE_Y = 13
-NAME_Y = 34                          # baseline of the name
-ART = (24, 40, 231, 183)             # art window, inclusive (208 x 144)
-STRIP = (30, 188, 225, 198)          # Pokedex strip under the art
-BODY = (22, 203, 233, 292)           # powers and attacks
-WRR = (18, 296, 237, 311)            # weakness / resistance / retreat
+NAME_Y = 34
+ART = (24, 40, 231, 183)
+STRIP = (30, 188, 225, 198)
+BODY = (22, 203, 233, 292)
+WRR = (18, 296, 237, 311)
 FLAVOR = (22, 314, 233, 328)
 FOOTER_Y = 332
-RULES = (22, 194, 233, 326)          # trainer / special energy text box
-EVOLUTION_BOX = (14, 13, 45, 36)     # previous stage portrait on evolution cards, inclusive (32 x 24)
+RULES = (22, 194, 233, 326)
+EVOLUTION_BOX = (14, 13, 45, 36)
 
 YELLOW = (246, 212, 70)
 YELLOW_LIGHT = (255, 236, 130)
@@ -61,8 +48,6 @@ FACE_COLORS = {
 }
 
 
-# set -> look of its cards. Base Set is the plain 1999 look; later sets change the details around the
-# art, like the real expansions did, and carry an original set mark (no official expansion symbols).
 STYLES = {
     "base1": {
         "rim": (232, 198, 92), "trainer_rim": (204, 206, 216),
@@ -100,10 +85,7 @@ def card_mask(scale: int = 1) -> Image.Image:
     return m.resize((W, H), Image.LANCZOS) if scale > 1 else m
 
 
-# ---------------------------------------------------------------- symbols
-
 def type_symbol(kind: str, diameter: float) -> Image.Image:
-    """Round, glossy energy symbol of a type, drawn from simple shapes."""
     size = max(4, round(diameter))
     n = size * SS * 2
     img = Image.new("RGBA", (n, n), (0, 0, 0, 0))
@@ -111,7 +93,6 @@ def type_symbol(kind: str, diameter: float) -> Image.Image:
     base = TYPE_COLORS[kind]
     d.ellipse((0, 0, n - 1, n - 1), fill=rgba(mix(base, (0, 0, 0), 0.5)))
     d.ellipse((n * 0.05, n * 0.05, n * 0.95, n * 0.95), fill=rgba(base))
-    # soft dome: lighter top left, darker bottom right
     yy, xx = np.mgrid[0:n, 0:n].astype(np.float32) / n
     dome = np.clip(1.0 - np.hypot(xx - 0.35, yy - 0.3) * 1.25, 0, 1)
     arr = np.asarray(img).astype(np.float32)
@@ -147,14 +128,13 @@ def type_symbol(kind: str, diameter: float) -> Image.Image:
         for i in range(3):
             x = -0.5 + i * 0.5
             d.line([P(x, -0.55), P(x, 0.1)], fill=rgba(base), width=max(1, n // 22))
-    else:  # colorless
+    else:
         pts = []
         for i in range(10):
             r = 0.95 if i % 2 == 0 else 0.4
             a = math.radians(-90 + i * 36)
             pts.append(P(r * math.cos(a), r * math.sin(a)))
         d.polygon(pts, fill=g)
-    # specular glint
     d.ellipse((n * 0.2, n * 0.14, n * 0.46, n * 0.3), fill=(255, 255, 255, 70))
     return img.resize((size, size), Image.LANCZOS)
 
@@ -165,7 +145,6 @@ def paste_symbol(img, kind, cx, cy, diameter):
 
 
 def rarity_symbol(img, rarity, cx, cy, size=9):
-    """Circle = common, diamond = uncommon, star = rare (holo rares carry a star too)."""
     n = size * SS
     s = Image.new("RGBA", (n, n), (0, 0, 0, 0))
     d = ImageDraw.Draw(s)
@@ -184,10 +163,7 @@ def rarity_symbol(img, rarity, cx, cy, size=9):
     img.alpha_composite(s.resize((size, size), Image.LANCZOS), (round(cx - size / 2), round(cy - size / 2)))
 
 
-# ---------------------------------------------------------------- frames
-
 def _card_base(face_color, seed: int) -> Image.Image:
-    """Yellow border with a bevel, a printed face with a soft mottled texture, rounded corners."""
     big = Image.new("RGBA", (W * SS, H * SS), (0, 0, 0, 0))
     d = ImageDraw.Draw(big)
     d.rounded_rectangle((0, 0, W * SS - 1, H * SS - 1), radius=RADIUS * SS, fill=rgba(YELLOW_DARK))
@@ -197,7 +173,6 @@ def _card_base(face_color, seed: int) -> Image.Image:
     d.rounded_rectangle((fx0, fy0, fx1, fy1), radius=4 * SS, fill=rgba(face_color))
     img = big.resize((W, H), Image.LANCZOS)
 
-    # border: lighter towards the top, faint vertical brushing
     arr = np.asarray(img).astype(np.float32)
     yy, xx = np.mgrid[0:H, 0:W].astype(np.float32)
     on_face = (xx >= FACE[0]) & (xx <= FACE[2]) & (yy >= FACE[1]) & (yy <= FACE[3])
@@ -205,14 +180,12 @@ def _card_base(face_color, seed: int) -> Image.Image:
     light = 1.06 - yy / H * 0.12
     arr[border, :3] = np.clip(arr[border, :3] * light[border, None], 0, 255)
 
-    # face: mottled print texture and a gentle light falloff from the top left
     mottle = F.noise(W, H, 40, seed, 4)
     fine = F.noise(W, H, 4, seed + 1, 2)
     shade = 1.04 - (xx / W * 0.04 + yy / H * 0.08) + (mottle - 0.5) * 0.10 + (fine - 0.5) * 0.05
     arr[on_face, :3] = np.clip(arr[on_face, :3] * shade[on_face, None], 0, 255)
     img = Image.fromarray(arr.astype(np.uint8), "RGBA")
 
-    # inner bevel along the face edge
     d = ImageDraw.Draw(img, "RGBA")
     d.rounded_rectangle(FACE, radius=4, outline=(255, 255, 255, 60))
     d.rounded_rectangle((FACE[0] - 2, FACE[1] - 2, FACE[2] + 2, FACE[3] + 2), radius=6, outline=rgba(YELLOW_LIGHT, 120))
@@ -220,7 +193,6 @@ def _card_base(face_color, seed: int) -> Image.Image:
 
 
 def _art_frame(img, kind, set_name, silver=False):
-    """Bevelled metallic frame around the art window, then the painted background."""
     x0, y0, x1, y1 = ART
     rim = style(set_name)["trainer_rim" if silver else "rim"]
     dark = mix(rim, (40, 30, 20), 0.55)
@@ -229,14 +201,12 @@ def _art_frame(img, kind, set_name, silver=False):
     for i in range(4, 0, -1):
         t = i / 4
         d.rectangle((x0 - i, y0 - i, x1 + i, y1 + i), outline=rgba(mix(rim, (255, 255, 255), 0.35 * t) if i > 2 else mix(rim, dark, 0.3)))
-    # light on the top / left edges, shade on the bottom / right edges
     d.line((x0 - 4, y0 - 4, x1 + 4, y0 - 4), fill=(255, 255, 255, 120))
     d.line((x0 - 4, y0 - 4, x0 - 4, y1 + 4), fill=(255, 255, 255, 90))
     d.line((x0 - 4, y1 + 4, x1 + 4, y1 + 4), fill=(0, 0, 0, 70))
     d.line((x1 + 4, y0 - 4, x1 + 4, y1 + 4), fill=(0, 0, 0, 60))
     d.rectangle((x0 - 1, y0 - 1, x1 + 1, y1 + 1), outline=rgba(dark))
     img.alpha_composite(background(kind, set_name), (x0, y0))
-    # inner shadow at the top of the window so the art sits behind the frame
     sh = Image.new("RGBA", (x1 - x0 + 1, y1 - y0 + 1), (0, 0, 0, 0))
     sd = ImageDraw.Draw(sh)
     for i in range(5):
@@ -251,7 +221,6 @@ def pokemon_frame(kind: str, set_name: str = DEFAULT_STYLE) -> Image.Image:
     _art_frame(img, kind, set_name)
     d = ImageDraw.Draw(img, "RGBA")
 
-    # Pokedex strip under the art, gold on Base Set
     sx0, sy0, sx1, sy1 = STRIP
     d.polygon([(sx0 + 4, sy0), (sx1 - 4, sy0), (sx1, (sy0 + sy1) / 2), (sx1 - 4, sy1), (sx0 + 4, sy1), (sx0, (sy0 + sy1) / 2)],
               fill=rgba(look["strip"]), outline=rgba(look["strip_edge"]))
@@ -259,7 +228,6 @@ def pokemon_frame(kind: str, set_name: str = DEFAULT_STYLE) -> Image.Image:
     if look["mark"]:
         set_mark(img, look["mark"], sx1 + 8, (sy0 + sy1) / 2, 13)
 
-    # weakness / resistance / retreat bar
     line_col = rgba(mix(face, (0, 0, 0), 0.35))
     d.line((BODY[0] + 4, WRR[1] - 2, BODY[2] - 4, WRR[1] - 2), fill=line_col)
     cell = (WRR[2] - WRR[0]) / 3
@@ -267,7 +235,6 @@ def pokemon_frame(kind: str, set_name: str = DEFAULT_STYLE) -> Image.Image:
     for i, label in enumerate(("weakness", "resistance", "retreat cost")):
         F.draw(img, (WRR[0] + cell * i + cell / 2, WRR[1] - 0.5), label, f, mix(TEXT, face, 0.2), anchor="ma")
 
-    # flavour box with a thin gold rule
     d.rounded_rectangle(FLAVOR, radius=2, fill=rgba(mix(face, (255, 255, 255), 0.35), 150), outline=rgba(mix(face, (0, 0, 0), 0.25)))
     return F.grain(img, 4, seed=_seed(kind))
 
@@ -295,7 +262,6 @@ def energy_frame(set_name: str = DEFAULT_STYLE) -> Image.Image:
 
 
 def _leaf(d, cx, cy, length, width, angle, fill, vein=None):
-    """A pointed leaf centred on (cx, cy), pointing along angle (degrees)."""
     a = math.radians(angle)
     ca, sa = math.cos(a), math.sin(a)
     pts = []
@@ -311,7 +277,6 @@ def _leaf(d, cx, cy, length, width, angle, fill, vein=None):
 
 
 def set_mark(img, mark: str, cx, cy, size):
-    """Original set mark (not an official expansion symbol): a dark silhouette on a light disc."""
     big = Image.new("RGBA", (round(size * SS), round(size * SS)), (0, 0, 0, 0))
     d = ImageDraw.Draw(big)
     n = size * SS
@@ -322,8 +287,6 @@ def set_mark(img, mark: str, cx, cy, size):
         d.line((n * 0.26, n * 0.8, n * 0.36, n * 0.68), fill=(34, 70, 38, 255), width=round(SS * 0.9))
     img.alpha_composite(big.resize((round(size), round(size)), Image.LANCZOS), (round(cx - size / 2), round(cy - size / 2)))
 
-
-# ---------------------------------------------------------------- backgrounds
 
 def _gradient(w, h, top, bottom, power=1.0):
     t = (np.arange(h, dtype=np.float32) / max(h - 1, 1)) ** power
@@ -340,33 +303,27 @@ def _paint(arr, mask, colour, alpha=1.0):
 
 
 def _ridge(w, horizon, height, seed, rough=0.5):
-    """Height of a hill / mountain line per column."""
     n = F.noise(w, 1, w * 0.35, seed, 4)[0]
     r = F.noise(w, 1, w * 0.06, seed + 9, 3)[0]
     return horizon - height * (0.4 + 0.6 * n) - (r - 0.5) * height * rough
 
 
 def _jungle(arr, w, h, seed):
-    """Jungle scenery laid over a type's background: a canopy of leaves hanging into the top corners,
-    vines, a dense wall of trees on the horizon and ferns in the bottom corners. The middle stays open
-    so the Pokemon stands out."""
     rng = random.Random(seed * 7 + 3)
     sky = arr[: int(h * 0.3), :, :3].mean() / 255
-    dark = 0.55 + 0.45 * min(1.0, sky * 1.3)          # night-time types get a darker canopy
+    dark = 0.55 + 0.45 * min(1.0, sky * 1.3)
     greens = [tuple(int(c * dark) for c in col) for col in ((30, 86, 44), (44, 112, 52), (62, 136, 60), (24, 70, 40))]
     layer = Image.new("RGBA", (w * SS // 2, h * SS // 2), (0, 0, 0, 0))
     k = SS / 2
     d = ImageDraw.Draw(layer)
     horizon = h * 0.64
 
-    # wall of jungle trees on the horizon
     for _ in range(26):
         x = rng.uniform(-0.05, 1.05) * w
         r = rng.uniform(h * 0.06, h * 0.12)
         y = horizon - r * rng.uniform(0.2, 0.9)
         col = (*greens[rng.randrange(4)], 235)
         d.ellipse(((x - r * 1.2) * k, (y - r) * k, (x + r * 1.2) * k, (y + r) * k), fill=col)
-    # a palm leaning in from each side
     for side in (0, 1):
         bx = w * (0.04 if side == 0 else 0.96)
         top = (w * (0.16 if side == 0 else 0.84), h * 0.3)
@@ -377,7 +334,6 @@ def _jungle(arr, w, h, seed):
             length = rng.uniform(h * 0.16, h * 0.22)
             _leaf(d, (top[0] + math.cos(r) * length * 0.5) * k, (top[1] + math.sin(r) * length * 0.5) * k,
                   length * k, length * 0.28 * k, ang, (*greens[(i + side) % 3], 255))
-    # canopy hanging into the top edge, heavier in the corners
     for _ in range(70):
         u = rng.random()
         x = (u ** 1.8 * 0.45 if rng.random() < 0.5 else 1 - u ** 1.8 * 0.45) * w
@@ -385,7 +341,6 @@ def _jungle(arr, w, h, seed):
         length = rng.uniform(h * 0.09, h * 0.17)
         _leaf(d, x * k, y * k, length * k, length * 0.38 * k, rng.uniform(40, 140), (*greens[rng.randrange(4)], 255),
               vein=(*tuple(int(c * 1.25) for c in greens[2]), 255))
-    # vines
     for x0 in (w * rng.uniform(0.08, 0.2), w * rng.uniform(0.8, 0.92), w * rng.uniform(0.3, 0.4)):
         length = rng.uniform(h * 0.22, h * 0.42)
         pts = [((x0 + math.sin(t / 8 * math.pi + seed) * 4) * k, (t / 16 * length) * k) for t in range(17)]
@@ -393,7 +348,6 @@ def _jungle(arr, w, h, seed):
         for j in range(2, 17, 3):
             px, py = pts[j]
             _leaf(d, px + 4 * k * (1 if j % 2 else -1), py, 9 * k, 4 * k, 30 if j % 2 else 150, (*greens[1], 255))
-    # ferns in the bottom corners
     for cx in (0, w):
         for i in range(9):
             ang = (-80 + i * 9) if cx == 0 else (-100 - i * 9)
@@ -403,7 +357,6 @@ def _jungle(arr, w, h, seed):
                   length * k, length * 0.2 * k, ang, (*greens[i % 3], 255), vein=(*greens[3], 255))
 
     leaves = layer.resize((w, h), Image.LANCZOS)
-    # soft dappled light falling through the canopy
     light = np.clip((F.noise(w, h, w * 0.06, seed + 21, 3) - 0.6) * 3, 0, 1) * np.clip(1 - np.abs(np.arange(h)[:, None] / h - 0.45) * 2, 0, 1)
     _paint(arr, light, (255, 250, 210), 0.18)
     la = np.asarray(leaves).astype(np.float32)
@@ -412,8 +365,6 @@ def _jungle(arr, w, h, seed):
 
 
 def background(kind: str, set_name: str = DEFAULT_STYLE) -> Image.Image:
-    """Painted scenery per type and set, shared by every card of that type in the set: sky, distant
-    land in atmospheric haze, textured ground, all slightly soft so the creature stands out."""
     w, h = (ART[2] - ART[0] + 1) * 2, (ART[3] - ART[1] + 1) * 2
     seed = sum(map(ord, kind))
     rng = random.Random(seed)
@@ -445,7 +396,6 @@ def background(kind: str, set_name: str = DEFAULT_STYLE) -> Image.Image:
         soft_clouds(arr, (255, 236, 200), 0.5)
         land(arr, (150, 80, 66), h * 0.42, seed, 0.9)
         land(arr, (112, 52, 44), h * 0.22, seed + 1, 0.7)
-        # lava glow at a peak
         glow = np.exp(-(((xx - w * 0.78) / (w * 0.08)) ** 2 + ((yy - h * 0.2) / (h * 0.1)) ** 2))
         _paint(arr, glow, (255, 170, 60), 0.7)
         ground(arr, (140, 70, 46), (176, 96, 60))
@@ -466,7 +416,6 @@ def background(kind: str, set_name: str = DEFAULT_STYLE) -> Image.Image:
         soft_clouds(arr, (255, 255, 255))
         land(arr, (140, 184, 150), h * 0.22, seed, 0.5)
         land(arr, (98, 160, 88), h * 0.12, seed + 1, 0.8)
-        # tree line
         for _ in range(9):
             cx, r = rng.uniform(0, w), rng.uniform(h * 0.07, h * 0.13)
             cy = horizon - r * 0.6
@@ -511,7 +460,7 @@ def background(kind: str, set_name: str = DEFAULT_STYLE) -> Image.Image:
         stripes = (np.sin((xx + yy * 0.6) / 10) > 0.6)
         arr[stripes, :3] *= 1.04
         _paint(arr, np.exp(-((xx - w / 2) / (w * 0.4)) ** 2 - ((yy - h * 0.45) / (h * 0.45)) ** 2), (255, 255, 255), 0.6)
-    else:  # colorless
+    else:
         arr = _gradient(w, h, (130, 190, 246), (220, 238, 252), 1.2)
         soft_clouds(arr, (255, 255, 255), 0.95, 0.48)
         land(arr, (150, 190, 170), h * 0.16, seed, 0.5)
@@ -520,7 +469,6 @@ def background(kind: str, set_name: str = DEFAULT_STYLE) -> Image.Image:
     if style(set_name)["scenery"] == "jungle" and kind != "trainer":
         _jungle(arr, w, h, seed)
 
-    # vignette for depth
     v = np.hypot((xx - w / 2) / (w * 0.7), (yy - h / 2) / (h * 0.7))
     arr[..., :3] *= np.clip(1.08 - v * 0.22, 0.75, 1.05)[..., None]
     img = Image.fromarray(np.clip(arr, 0, 255).astype(np.uint8), "RGBA")
@@ -528,11 +476,7 @@ def background(kind: str, set_name: str = DEFAULT_STYLE) -> Image.Image:
     return img.resize((ART[2] - ART[0] + 1, ART[3] - ART[1] + 1), Image.LANCZOS)
 
 
-# ---------------------------------------------------------------- holo foil
-
 def holo_overlay(frames: int = 8):
-    """Animated foil for the art window (holo prints only), like the 1999 'starlight' holo: a
-    rainbow sheen sweeping diagonally over a field of twinkling stars and a faint swirl."""
     w, h = ART[2] - ART[0] + 1, ART[3] - ART[1] + 1
     strip = np.zeros((h * frames, w, 4), np.uint8)
     yy, xx = np.mgrid[0:h, 0:w].astype(np.float32)
@@ -553,7 +497,6 @@ def holo_overlay(frames: int = 8):
         tile = np.zeros((h, w, 4), np.float32)
         tile[..., :3] = np.clip(rgb * (0.85 + 0.3 * band[..., None]), 0, 1) * 255
         tile[..., 3] = alpha
-        # twinkling four-point stars
         for x, y, rad, p in zip(star_x, star_y, star_r, star_p):
             tw = max(0.0, math.sin((phase + p) * 2 * math.pi))
             if tw < 0.2:

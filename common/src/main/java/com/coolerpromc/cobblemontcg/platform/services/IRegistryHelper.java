@@ -37,9 +37,6 @@ public interface IRegistryHelper {
     <T> RegistryHandler.Components<T> registerDataComponent(String name, UnaryOperator<DataComponentType.Builder<T>> builder);
     RegistryHandler<SoundEvent, SoundEvent> registerSoundEvent(String name);
     <T extends AbstractContainerMenu> RegistryHandler<MenuType<?>, MenuType<T>> registerMenuType(String name, MenuFactory<T> factory);
-    /**
-     * A point of interest claiming every block state of {@code block}, like the vanilla job sites.
-     */
     RegistryHandler<PoiType, PoiType> registerPoiType(String name, Supplier<? extends Block> block, int maxTickets, int validRange);
     RegistryHandler<VillagerProfession, VillagerProfession> registerVillagerProfession(String name, ResourceKey<PoiType> jobSite, @Nullable SoundEvent workSound);
     RegistryHandler<CreativeModeTab, CreativeModeTab> registerCreativeTab(String name, Supplier<ItemStack> icon, Component title, BiConsumer<CreativeTabOutput, CreativeModeTab.ItemDisplayParameters> entries);

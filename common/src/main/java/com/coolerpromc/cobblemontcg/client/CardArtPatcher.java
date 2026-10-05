@@ -24,17 +24,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-/**
- * Replaces the drawn Pokémon on card textures with renders from another mod (Cobblemon) at runtime.
- * <p>
- * Every Pokémon card has its illustration in its own sprite ({@code tcg/<set>/illustration/<number>}),
- * evolution cards the previous stage in {@code tcg/<set>/evolution/<number>} and every pack wrapper its
- * mascot in {@code tcg/pack/<set>_<wrapper>_mascot}. Once a {@link PortraitRenderer}
- * is ready, each of those sprites is redrawn and uploaded straight into the block atlas, so cards show the
- * new art everywhere (inventory, hand, item frames, the opening animation). A resource reload restores the
- * drawn art; it is redrawn on the next ticks. Only a few sprites are redrawn per tick to avoid a hitch.
- */
-public final class CardArtPatcher {
+public class CardArtPatcher {
     public static final CardArtPatcher INSTANCE = new CardArtPatcher();
 
     private static final int PER_TICK = 4;
@@ -42,25 +32,11 @@ public final class CardArtPatcher {
     // the portrait window shows 32x24 of its 32x32 texture, see tools/art/layout.py
     private static final int PORTRAIT_W = 32;
     private static final int PORTRAIT_H = 24;
-    /**
-     * Dev tool: with {@code -Dcobblemontcg.exportArt=<dir>}, every redrawn sprite is also saved to
-     * {@code <dir>/<namespace>/<sprite path>.png} and the game quits once all of them are drawn. The wiki
-     * in {@code docs/} shows these renders on its cards.
-     */
     private static final String EXPORT_DIR = System.getProperty(Constants.MODID + ".exportArt");
 
-    /**
-     * Draws one species on a transparent background, full body, centred and standing on the bottom third.
-     */
     public interface PortraitRenderer {
-        /**
-         * True once species data is available (Cobblemon syncs species when joining a world).
-         */
         boolean ready();
 
-        /**
-         * @return the render as RGBA, or empty to keep the drawn art (unknown species, render error)
-         */
         Optional<NativeImage> render(int pokedex, int width, int height);
     }
 
@@ -72,7 +48,6 @@ public final class CardArtPatcher {
     private PortraitRenderer renderer;
     private List<Job> jobs = List.of();
     private boolean jobsDirty = true;
-    // the sprite contents each job was drawn into; a reload creates new contents, which marks it as pending again
     private final Map<ResourceLocation, SpriteContents> done = new HashMap<>();
 
     private CardArtPatcher() {
@@ -99,7 +74,7 @@ public final class CardArtPatcher {
             TextureAtlasSprite sprite = atlas.getSprite(job.sprite());
             SpriteContents contents = sprite.contents();
             if (!contents.name().equals(job.sprite()) || done.get(job.sprite()) == contents) {
-                continue;   // missing texture (custom set without one) or already drawn
+                continue;
             }
             done.put(job.sprite(), contents);
             draw(atlas, sprite, job);
@@ -108,7 +83,6 @@ public final class CardArtPatcher {
             }
         }
         if (EXPORT_DIR != null && budget == PER_TICK && !jobs.isEmpty() && minecraft.isRunning()) {
-            // a whole pass without drawing anything: every sprite is done
             Constants.LOG.info("Exported the card art to {}, quitting", EXPORT_DIR);
             minecraft.stop();
         }
@@ -131,12 +105,9 @@ public final class CardArtPatcher {
         return list;
     }
 
-    // ------------------------------------------------------------------ drawing
-
     private void draw(TextureAtlas atlas, TextureAtlasSprite sprite, Job job) {
         int width = sprite.contents().width();
         int height = sprite.contents().height();
-        // portraits are a close up of a full body render the size of a card illustration
         boolean portrait = job.framing() == Framing.PORTRAIT;
         int renderW = portrait ? 208 : width;
         int renderH = portrait ? 144 : height;
@@ -160,7 +131,6 @@ public final class CardArtPatcher {
                 switch (job.framing()) {
                     case PORTRAIT -> portrait(big, bounds, image);
                     case ILLUSTRATION -> fit(big, bounds, image, 0.74F, 0.9F, 0.88F, true);
-                    // the mascot is much bigger on the pack and stands on the booster banner, without a shadow
                     case PACK -> fit(big, bounds, image, 0.86F, 0.98F, 0.97F, false);
                 }
                 upload(atlas, sprite, image);
@@ -173,9 +143,6 @@ public final class CardArtPatcher {
         }
     }
 
-    /**
-     * Head and shoulders: a 4:3 crop around the top of the body, scaled into the portrait window.
-     */
     private static void portrait(NativeImage big, int[] b, NativeImage out) {
         float bodyH = b[3] - b[1];
         float cropH = Math.max(bodyH * 0.62F, big.getHeight() * 0.3F);
@@ -186,21 +153,14 @@ public final class CardArtPatcher {
         downscale(big, x0, y0, cropW, cropH, out, 0, 0, PORTRAIT_W, PORTRAIT_H);
     }
 
-    /**
-     * Fits the Pokémon into the image the same way for every species: as large as fits in {@code heightShare}
-     * of the height and {@code widthShare} of the width, centred, feet at {@code feetAt} of the height,
-     * optionally standing on a soft contact shadow like the drawn art.
-     */
     private static void fit(NativeImage big, int[] b, NativeImage out, float heightShare, float widthShare, float feetAt, boolean withShadow) {
         float w = out.getWidth();
         float h = out.getHeight();
         float bodyW = b[2] - b[0];
         float bodyH = b[3] - b[1];
-        // output pixels per source pixel; never above 1, so the supersampled render is only ever scaled down
         float scale = Math.min(Math.min(h * heightShare / bodyH, w * widthShare / bodyW), 1.0F);
         float feetY = h * feetAt;
         float cx = (b[0] + b[2]) / 2.0F;
-        // the source region that lands on the whole image
         float sx = cx - w / 2 / scale;
         float sy = b[3] - feetY / scale;
         if (withShadow) {
@@ -222,10 +182,6 @@ public final class CardArtPatcher {
         }
     }
 
-    /**
-     * Box-filters a region of {@code src} into a region of {@code dst} (alpha-weighted, so edges don't go
-     * dark), drawing it over what {@code dst} already holds.
-     */
     private static void downscale(NativeImage src, float sx, float sy, float sw, float sh, NativeImage dst, int dx, int dy, int dw, int dh) {
         float fx = sw / dw;
         float fy = sh / dh;
@@ -260,9 +216,6 @@ public final class CardArtPatcher {
         }
     }
 
-    /**
-     * Draws a colour over a pixel (source over, straight alpha).
-     */
     private static void over(NativeImage dst, int x, int y, int r, int g, int b, float a) {
         int p = dst.getPixelRGBA(x, y);   // ABGR
         float da = (p >>> 24) / 255.0F;
@@ -277,9 +230,6 @@ public final class CardArtPatcher {
         dst.setPixelRGBA(x, y, Math.round(oa * 255) << 24 | ob << 16 | og << 8 | or);
     }
 
-    /**
-     * Bounding box {x0, y0, x1, y1} of the visible pixels, or null when the render is empty.
-     */
     private static int[] bounds(NativeImage image) {
         int x0 = Integer.MAX_VALUE, y0 = Integer.MAX_VALUE, x1 = -1, y1 = -1;
         for (int y = 0; y < image.getHeight(); y++) {
@@ -305,9 +255,6 @@ public final class CardArtPatcher {
         }
     }
 
-    /**
-     * Writes the image and its mipmaps into the atlas where the sprite lives.
-     */
     private static void upload(TextureAtlas atlas, TextureAtlasSprite sprite, NativeImage image) {
         RenderSystem.bindTexture(atlas.getId());
         int mipLevels = GL11.glGetTexParameteri(GL11.GL_TEXTURE_2D, GL12.GL_TEXTURE_MAX_LEVEL);

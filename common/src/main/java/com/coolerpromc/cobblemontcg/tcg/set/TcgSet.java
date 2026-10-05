@@ -6,10 +6,7 @@ import net.minecraft.resources.ResourceLocation;
 
 import java.util.*;
 
-/**
- * A loaded set together with its cards, indexed for lookups and pack rolls.
- */
-public final class TcgSet {
+public class TcgSet {
     private final ResourceLocation id;
     private final SetDefinition definition;
     private final List<CardDefinition> cards;
@@ -53,10 +50,6 @@ public final class TcgSet {
         return byRarity.getOrDefault(rarity, List.of());
     }
 
-    /**
-     * The {@code custom_model_data} value for a booster pack wrapper: the set's base plus the
-     * wrapper's position in {@code wrappers}. Packs are a different item from cards, so the ranges never clash.
-     */
     public int packModelData(String wrapper) {
         return definition.modelDataBase() + Math.max(0, definition.wrappers().indexOf(wrapper));
     }
@@ -65,10 +58,6 @@ public final class TcgSet {
         return definition.wrappers().isEmpty() ? List.of(SetDefinition.DEFAULT_WRAPPER) : definition.wrappers();
     }
 
-    /**
-     * The {@code custom_model_data} value for a card of this set. Every card number gets two values:
-     * an even one for the regular print and the next odd one for the holo print.
-     */
     public int modelData(int number, boolean holo) {
         return definition.modelDataBase() + number * 2 + (holo ? 1 : 0);
     }

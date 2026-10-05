@@ -1,8 +1,3 @@
-"""
-Booster pack wrappers in the spirit of the 1999 Base Set packs (original drawing, no official
-logo): a tall foil pack with crimped silver seals, a big mascot illustration and the set name,
-plus the back of the pack (seam, blurb, barcode) and the card back.
-"""
 import math
 
 import numpy as np
@@ -13,12 +8,11 @@ from . import layout as L
 from .canvas import Sprite
 from .cards import POKEMON
 
-PACK_W, PACK_H = 240, 368          # whole texture is the pack
+PACK_W, PACK_H = 240, 368
 SS = 4
-SEAL = 26                          # height of the crimped seals
-TOOTH = 6                          # zig-zag width at the crimped edge
+SEAL = 26
+TOOTH = 6
 
-# set -> (name on the pack, {wrapper name -> (mascot card number, background type, top colour, bottom colour, accent)})
 SETS = {
     "base1": ("BASE SET", {
         "charizard": (4, "fire", (34, 38, 104), (196, 66, 34), (255, 170, 60)),
@@ -31,7 +25,7 @@ SETS = {
         "flareon": (3, "fire", (74, 26, 30), (226, 108, 40), (255, 206, 96)),
     }),
 }
-DEFAULT = ("base1", "charizard")   # wrapper used for packs without set data and the mod icon
+DEFAULT = ("base1", "charizard")
 BACK = ((26, 34, 96), (40, 70, 150), (250, 214, 64))
 
 
@@ -40,7 +34,6 @@ def mix(a, b, t):
 
 
 def _pack_mask() -> Image.Image:
-    """Pack silhouette: zig-zag edges where the seals are crimped, slightly pinched seals."""
     w, h = PACK_W * SS, PACK_H * SS
     mask = Image.new("L", (w, h), 0)
     d = ImageDraw.Draw(mask)
@@ -55,7 +48,6 @@ def _pack_mask() -> Image.Image:
 
 
 def _foil(top_col, bottom_col, seed) -> Image.Image:
-    """Metallic body: colour gradient, crinkles, a soft pillow shape and diagonal reflections."""
     w, h = PACK_W, PACK_H
     yy, xx = np.mgrid[0:h, 0:w].astype(np.float32)
     t = (yy / h) ** 1.3
@@ -63,7 +55,6 @@ def _foil(top_col, bottom_col, seed) -> Image.Image:
     for i in range(3):
         arr[..., i] = top_col[i] + (bottom_col[i] - top_col[i]) * t
     arr[..., 3] = 255
-    # pillow: the filled pack bulges, darker towards the side edges
     bulge = 1 - ((xx / w - 0.5) * 2) ** 4 * 0.35
     crinkle = F.noise(w, h, 18, seed, 4)
     fine = F.noise(w, h, 3, seed + 1, 2)
@@ -73,7 +64,6 @@ def _foil(top_col, bottom_col, seed) -> Image.Image:
 
 
 def _sheen(img: Image.Image, seed: int) -> Image.Image:
-    """Diagonal bands of reflected light with crinkly edges, like light on a foil wrapper."""
     w, h = img.size
     yy, xx = np.mgrid[0:h, 0:w].astype(np.float32)
     crinkle = F.noise(w, h, 22, seed + 5, 4)
@@ -85,7 +75,6 @@ def _sheen(img: Image.Image, seed: int) -> Image.Image:
 
 
 def _sheen_layer(w: int, h: int, seed: int) -> Image.Image:
-    """The foil reflections of _sheen as translucent white, to lay over the mascot layer too."""
     yy, xx = np.mgrid[0:h, 0:w].astype(np.float32)
     crinkle = F.noise(w, h, 22, seed + 5, 4)
     d = (xx * 0.9 - yy * 0.45) / w + (crinkle - 0.5) * 0.05
@@ -97,7 +86,6 @@ def _sheen_layer(w: int, h: int, seed: int) -> Image.Image:
 
 
 def _seals(img: Image.Image, seed: int):
-    """Crimped silver seals at the top and bottom: vertical ridges with a metallic gradient."""
     w, h = img.size
     arr = np.asarray(img).astype(np.float32)
     xx = np.arange(w, dtype=np.float32)
@@ -121,7 +109,6 @@ def _seals(img: Image.Image, seed: int):
 
 
 def _finish(img: Image.Image) -> Image.Image:
-    """Cut to the pack silhouette and add a thin dark edge."""
     mask = _pack_mask()
     edge = Image.new("RGBA", img.size, (24, 22, 34, 255))
     edge.putalpha(mask)
@@ -131,21 +118,17 @@ def _finish(img: Image.Image) -> Image.Image:
     return F.grain(edge, 3)
 
 
-MASCOT_Y = 96          # the mascot layer covers the pack from y 96 to 304 (240x208 texture)
+MASCOT_Y = 96
 MASCOT_H = 208
 
 
 def make_wrapper_layers(set_name: str, name: str) -> dict:
-    """A pack front as three layers, back to front, so the mascot can be swapped out at runtime:
-    'base' (foil and light burst), 'mascot' (240x208, placed at y MASCOT_Y) and 'overlay'
-    (set name plate, badges, seals and the foil sheen, which also lies over the mascot)."""
     title, wrappers = SETS[set_name]
     number, kind, top_col, bottom_col, accent = wrappers[name]
     w, h = PACK_W, PACK_H
     seed = sum(map(ord, name))
     inner = _pack_mask().filter(ImageFilter.MinFilter(3))
 
-    # base: foil with a light burst behind the mascot
     img = _foil(top_col, bottom_col, seed)
     burst = Image.new("RGBA", (w * SS, h * SS), (0, 0, 0, 0))
     bd = ImageDraw.Draw(burst)
@@ -161,14 +144,12 @@ def make_wrapper_layers(set_name: str, name: str) -> dict:
     img.alpha_composite(glow.filter(ImageFilter.GaussianBlur(28)))
     base = _finish(img)
 
-    # mascot: much bigger than on the card, bursting out of the frame
     sprite = Sprite(300, 200)
     POKEMON[set_name][number](sprite)
     mascot = Image.new("RGBA", (w, MASCOT_H), (0, 0, 0, 0))
     mascot.alpha_composite(sprite.render(), (int(w / 2 - 150), 104 - MASCOT_Y))
     mascot = F.clip_to(mascot, inner.crop((0, MASCOT_Y, w, MASCOT_Y + MASCOT_H)))
 
-    # overlay: set name plate, "11 cards" badge, booster banner, sheen and seals
     overlay = Image.new("RGBA", (w, h), (0, 0, 0, 0))
     plate = (22, SEAL + 12, w - 22, SEAL + 64)
     d = ImageDraw.Draw(overlay, "RGBA")
@@ -198,17 +179,14 @@ def flatten(layers: dict) -> Image.Image:
 
 
 def make_wrapper(set_name: str, name: str) -> Image.Image:
-    """The whole pack front in one image (mod icon, previews)."""
     return flatten(make_wrapper_layers(set_name, name))
 
 
 def make_pack_back() -> Image.Image:
-    """Back of every pack, shared by all sets: vertical glued seam, a short blurb and a barcode panel."""
     top_col, bottom_col, accent = BACK
     w, h = PACK_W, PACK_H
     img = _foil(top_col, bottom_col, 404)
 
-    # the glued fin seam down the middle
     d = ImageDraw.Draw(img, "RGBA")
     sx = w / 2
     d.rectangle((sx - 9, SEAL, sx + 9, h - SEAL), fill=(*mix(bottom_col, (0, 0, 0), 0.2), 255))
@@ -217,7 +195,6 @@ def make_pack_back() -> Image.Image:
     d.line((sx - 10, SEAL, sx - 10, h - SEAL), fill=(0, 0, 0, 120), width=2)
     d.line((sx + 10, SEAL, sx + 10, h - SEAL), fill=(255, 255, 255, 60), width=1)
 
-    # blurb panel on the left half
     panel = (16, SEAL + 22, int(sx) - 16, SEAL + 196)
     d.rounded_rectangle(panel, radius=6, fill=(12, 16, 50, 190), outline=(*accent, 255), width=2)
     F.draw(img, ((panel[0] + panel[2]) / 2, panel[1] + 8), "BOOSTER", F.font("Bold", 14), accent, anchor="ma")
@@ -226,7 +203,6 @@ def make_pack_back() -> Image.Image:
                 "holo rare instead! Collect every card of every set.",
                 "Regular", 8, (236, 236, 250), L.paste_symbol)
 
-    # right half: card fan and barcode
     for i, kind in enumerate(("grass", "water", "fire")):
         c = Image.new("RGBA", (34, 47), (0, 0, 0, 0))
         cd = ImageDraw.Draw(c)
@@ -253,7 +229,6 @@ def make_pack_back() -> Image.Image:
 
 
 def make_card_back() -> Image.Image:
-    """Original card back (not the official one): a blue swirl with a gold emblem."""
     w, h = L.W, L.H
     yy, xx = np.mgrid[0:h, 0:w].astype(np.float32)
     cx, cy = w / 2, h / 2
@@ -268,12 +243,10 @@ def make_card_back() -> Image.Image:
     arr[..., 3] = 255
     img = Image.fromarray(np.clip(arr, 0, 255).astype(np.uint8), "RGBA")
 
-    # darker blue border, like the border on the back of real cards
     d = ImageDraw.Draw(img, "RGBA")
     d.rounded_rectangle((0, 0, w - 1, h - 1), radius=L.RADIUS, outline=(18, 34, 110, 255), width=12)
     d.rounded_rectangle((11, 11, w - 12, h - 12), radius=5, outline=(120, 170, 240, 160), width=1)
 
-    # emblem: gold ring, a ring of stars and the name
     ring = Image.new("RGBA", (w * SS, h * SS), (0, 0, 0, 0))
     rd = ImageDraw.Draw(ring)
     r = 62 * SS
@@ -291,7 +264,6 @@ def make_card_back() -> Image.Image:
     F.draw(img, (w / 2, h / 2 - 12), "COBBLEMON", F.font("Bold", 18), (252, 214, 64), anchor="mm", stroke=2, stroke_color=(28, 50, 150))
     F.draw(img, (w / 2, h / 2 + 12), "TRADING CARD GAME", F.font("CondensedBold", 9), (236, 240, 255), anchor="mm")
 
-    # gloss
     gloss = np.clip(np.cos(((xx - yy * 0.6) / w - 0.15) * np.pi * 1.6), 0, 1) ** 6 * 0.12
     arr = np.asarray(img).astype(np.float32)
     arr[..., :3] = arr[..., :3] + (255 - arr[..., :3]) * gloss[..., None]

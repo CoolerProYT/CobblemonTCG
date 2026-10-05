@@ -13,9 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Loads reward rules from {@code tcg/rewards}. A file may hold one rule or a list of rules.
- */
 public class RewardRuleReloadListener extends SimpleJsonResourceReloadListener {
     public static final ResourceLocation ID = Constants.id("tcg_rewards");
 

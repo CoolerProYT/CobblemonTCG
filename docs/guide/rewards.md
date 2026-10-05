@@ -12,6 +12,8 @@ Pokémon that appear in Jungle but not in Base Set (Scyther, Snorlax, Eevee and 
 
 <RewardTable file="level_up" />
 
+Every Pokémon pays for each of these levels as it reaches them, so training a new Pokémon earns packs again. A Pokémon caught above a level does not pay for it.
+
 ## Filling the Pokédex
 
 <RewardTable file="dex_progress" />
@@ -20,9 +22,11 @@ The percentage counts the species you own out of every species in Cobblemon's Po
 
 ## Milestones pay once
 
-Level and Pokédex milestones, and first catches, are paid **once per player**. A milestone is used up when its rule rolls its chance, win or lose, so a first catch that missed its 10% does not try again. Claimed milestones are saved on the player.
+Pokédex milestones and first catches are paid **once per player**. A milestone is used up when its rule rolls its chance, win or lose, so a first catch that missed its 25% does not try again. Claimed milestones are saved on the player.
 
-Shiny catches are not milestones: every shiny pays out.
+Level rewards are paid once per Pokémon, and the any-catch and shiny rules pay out every time.
+
+Every reward pack is announced in chat.
 
 ## Daily limit
 

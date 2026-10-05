@@ -18,10 +18,6 @@ import java.io.Reader;
 import java.util.*;
 import java.util.function.BiConsumer;
 
-/**
- * Loads {@code tcg/sets/<set>.json} and {@code tcg/cards/<set>/<number>.json} from data packs.
- * A card in {@code data/foo/tcg/cards/bar/4.json} belongs to the set {@code foo:bar}.
- */
 public class TcgDataReloadListener extends SimplePreparableReloadListener<TcgDataReloadListener.Loaded> {
     public static final ResourceLocation ID = Constants.id("tcg_data");
 

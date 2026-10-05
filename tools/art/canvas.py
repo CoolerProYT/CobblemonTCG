@@ -1,10 +1,3 @@
-"""
-Small vector drawing kit for card illustrations.
-
-Shapes are drawn in "units" on a 160 x 100 stage (x right, y down) at 4x resolution and
-downscaled at the end. Shapes are grouped in parts; each part is lit as a rounded volume, casts a
-soft shadow on the parts behind it and gets a thin outline, so overlapping limbs stay readable.
-"""
 import math
 from contextlib import contextmanager
 
@@ -29,7 +22,6 @@ def darker(c, t=0.35):
 
 
 def bezier(points, n=40):
-    """Points along a Bezier curve of any degree."""
     out = []
     for i in range(n + 1):
         t = i / n
@@ -51,7 +43,6 @@ class Sprite:
         self._current = None
         self._new_part(outline=True, shade=True)
 
-    # ------------------------------------------------------------ parts
 
     def _new_part(self, outline, shade):
         layer = Image.new("RGBA", (self.w, self.h), (0, 0, 0, 0))
@@ -64,7 +55,6 @@ class Sprite:
         yield self
         self._new_part(True, True)
 
-    # ------------------------------------------------------------ coordinates
 
     def P(self, x, y):
         return (self.ox + x * self.k, self.oy + y * self.k)
@@ -76,7 +66,6 @@ class Sprite:
     def d(self):
         return self._current["draw"]
 
-    # ------------------------------------------------------------ shapes
 
     def ellipse(self, cx, cy, rx, ry, col, rot=0.0):
         if rot == 0:
@@ -113,7 +102,6 @@ class Sprite:
         self.line(bezier(ctrl), col, w)
 
     def tube(self, ctrl, r0, r1, col, n=60):
-        """A thick body along a curve, tapering from r0 to r1 (tails, serpents, necks)."""
         pts = bezier(ctrl, n)
         for i, (x, y) in enumerate(pts):
             r = r0 + (r1 - r0) * i / n
@@ -147,11 +135,9 @@ class Sprite:
         self.poly(pts, col)
 
     def flame(self, cx, cy, size, rot=0.0):
-        """A three-tone flame, tip pointing up (rot rotates it)."""
         a = math.radians(rot)
 
         def tear(scale, col):
-            # round bottom, pointed tip at the top
             local = [(0.0, -scale)]
             for deg in range(-25, 206, 10):
                 t = math.radians(deg)
@@ -187,11 +173,8 @@ class Sprite:
             x1, y1 = self.P(cx + rx, cy + (ry or rx * 0.18))
             self.d.ellipse((x0, y0, x1, y1), fill=(0, 0, 0, 90))
 
-    # ------------------------------------------------------------ render
 
     def render(self) -> Image.Image:
-        """Each part is lit like a rounded volume (light from the top left), casts a soft shadow
-        on the parts below it and gets a thin outline in a darker shade of its own colour."""
         out = Image.new("RGBA", (self.w, self.h), (0, 0, 0, 0))
         outline_px = max(2, round(self.k * 0.55))
         for part in self.parts:
@@ -222,8 +205,6 @@ def _edge_colour(img: Image.Image):
 
 
 def _shade(img: Image.Image, k: float) -> Image.Image:
-    """Treats the blurred silhouette as a height field and lights it: soft diffuse light from the
-    top left, a core shadow towards the bottom right, a faint specular highlight and bounce light."""
     arr = np.asarray(img).astype(np.float32)
     alpha = arr[..., 3] / 255
     bbox = img.getchannel("A").getbbox()
@@ -242,7 +223,7 @@ def _shade(img: Image.Image, k: float) -> Image.Image:
     hx, hy, hz = lx / ll, ly / ll, lz / ll + 1
     hl = math.sqrt(hx * hx + hy * hy + hz * hz)
     spec = np.clip((nx * hx + ny * hy + nz * hz) / hl, 0, 1) ** 28
-    bounce = np.clip(nx * 0.4 + ny * 0.7, 0, 1) * 0.12      # warm light bouncing up from the ground
+    bounce = np.clip(nx * 0.4 + ny * 0.7, 0, 1) * 0.12
     light = 0.62 + 0.5 * diffuse + bounce
     rgb = arr[..., :3] * light[..., None]
     rgb = rgb + (255 - np.clip(rgb, 0, 255)) * (spec * 0.35)[..., None]
@@ -252,7 +233,6 @@ def _shade(img: Image.Image, k: float) -> Image.Image:
 
 
 def _occlude(below: Image.Image, alpha: Image.Image, k: float) -> Image.Image:
-    """Soft contact shadow of a part onto everything drawn before it."""
     off = round(k * 0.9)
     shadow = Image.new("L", alpha.size, 0)
     shadow.paste(alpha, (off, off))

@@ -9,22 +9,12 @@ import net.minecraft.server.level.ServerPlayer;
 
 import java.util.function.BooleanSupplier;
 
-/**
- * The Pokémon reward triggers, registered by each loader's Cobblemon bridge; the bridge turns
- * Cobblemon's events into the calls below, so this class knows nothing about Cobblemon itself.
- */
-public final class PokemonRewardTriggers {
-    /** Conditions: {@code species}, {@code shiny}, {@code min_level}, {@code first_catch_of_species}. */
+public class PokemonRewardTriggers {
     public static final SimpleTrigger CAPTURE = new SimpleTrigger(Constants.id("capture"), PackSource.CAPTURE, TcgConfig::captureRewardsEnabled);
-    /** Conditions: {@code level} (milestone), {@code species}, {@code shiny}. */
     public static final SimpleTrigger LEVEL_UP = new SimpleTrigger(Constants.id("level_up"), PackSource.LEVEL_UP, TcgConfig::levelUpRewardsEnabled);
-    /** Conditions: {@code dex_every}, {@code dex_percent} (milestones), {@code species}. */
     public static final SimpleTrigger DEX_PROGRESS = new SimpleTrigger(Constants.id("dex_progress"), PackSource.DEX_PROGRESS, TcgConfig::dexRewardsEnabled);
 
     private static boolean registered;
-
-    private PokemonRewardTriggers() {
-    }
 
     public static synchronized void register() {
         if (registered) {
@@ -41,14 +31,10 @@ public final class PokemonRewardTriggers {
         CAPTURE.fire(RewardContext.capture(player, species, level, shiny, firstCatch));
     }
 
-    public static void onLevelUp(ServerPlayer player, String species, int newLevel, boolean shiny) {
-        LEVEL_UP.fire(RewardContext.levelUp(player, species, newLevel, shiny));
+    public static void onLevelUp(ServerPlayer player, String species, int oldLevel, int newLevel, boolean shiny) {
+        LEVEL_UP.fire(RewardContext.levelUp(player, species, oldLevel, newLevel, shiny));
     }
 
-    /**
-     * @param entries the player's Pokédex entries after the new one
-     * @param total   all Pokédex entries
-     */
     public static void onDexProgress(ServerPlayer player, String species, int entries, int total) {
         DEX_PROGRESS.fire(RewardContext.dexProgress(player, species, entries, total));
     }

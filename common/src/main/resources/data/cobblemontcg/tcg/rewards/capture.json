@@ -3,14 +3,28 @@
     "trigger": "cobblemontcg:capture",
     "set": "cobblemontcg:base1",
     "amount": 1,
-    "chance": 0.1,
+    "chance": 0.05,
+    "conditions": { "exclude_species": ["clefable", "flareon", "jolteon", "kangaskhan", "mrmime", "nidoqueen", "pidgeot", "pinsir", "scyther", "snorlax", "vaporeon", "venomoth", "victreebel", "vileplume", "wigglytuff", "butterfree", "dodrio", "exeggutor", "fearow", "gloom", "lickitung", "marowak", "nidorina", "parasect", "persian", "primeape", "rapidash", "rhydon", "seaking", "tauros", "weepinbell", "bellsprout", "cubone", "eevee", "exeggcute", "goldeen", "jigglypuff", "mankey", "meowth", "nidoranf", "oddish", "paras", "rhyhorn", "spearow", "venonat"] }
+  },
+  {
+    "trigger": "cobblemontcg:capture",
+    "set": "cobblemontcg:base2",
+    "amount": 1,
+    "chance": 0.05,
+    "conditions": { "species": ["clefable", "flareon", "jolteon", "kangaskhan", "mrmime", "nidoqueen", "pidgeot", "pinsir", "scyther", "snorlax", "vaporeon", "venomoth", "victreebel", "vileplume", "wigglytuff", "butterfree", "dodrio", "exeggutor", "fearow", "gloom", "lickitung", "marowak", "nidorina", "parasect", "persian", "primeape", "rapidash", "rhydon", "seaking", "tauros", "weepinbell", "bellsprout", "cubone", "eevee", "exeggcute", "goldeen", "jigglypuff", "mankey", "meowth", "nidoranf", "oddish", "paras", "rhyhorn", "spearow", "venonat"] }
+  },
+  {
+    "trigger": "cobblemontcg:capture",
+    "set": "cobblemontcg:base1",
+    "amount": 1,
+    "chance": 0.25,
     "conditions": { "first_catch_of_species": true, "exclude_species": ["clefable", "flareon", "jolteon", "kangaskhan", "mrmime", "nidoqueen", "pidgeot", "pinsir", "scyther", "snorlax", "vaporeon", "venomoth", "victreebel", "vileplume", "wigglytuff", "butterfree", "dodrio", "exeggutor", "fearow", "gloom", "lickitung", "marowak", "nidorina", "parasect", "persian", "primeape", "rapidash", "rhydon", "seaking", "tauros", "weepinbell", "bellsprout", "cubone", "eevee", "exeggcute", "goldeen", "jigglypuff", "mankey", "meowth", "nidoranf", "oddish", "paras", "rhyhorn", "spearow", "venonat"] }
   },
   {
     "trigger": "cobblemontcg:capture",
     "set": "cobblemontcg:base2",
     "amount": 1,
-    "chance": 0.1,
+    "chance": 0.25,
     "conditions": { "first_catch_of_species": true, "species": ["clefable", "flareon", "jolteon", "kangaskhan", "mrmime", "nidoqueen", "pidgeot", "pinsir", "scyther", "snorlax", "vaporeon", "venomoth", "victreebel", "vileplume", "wigglytuff", "butterfree", "dodrio", "exeggutor", "fearow", "gloom", "lickitung", "marowak", "nidorina", "parasect", "persian", "primeape", "rapidash", "rhydon", "seaking", "tauros", "weepinbell", "bellsprout", "cubone", "eevee", "exeggcute", "goldeen", "jigglypuff", "mankey", "meowth", "nidoranf", "oddish", "paras", "rhyhorn", "spearow", "venonat"] }
   },
   {

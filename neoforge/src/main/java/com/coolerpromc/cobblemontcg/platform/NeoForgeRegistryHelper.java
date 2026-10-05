@@ -84,7 +84,6 @@ public class NeoForgeRegistryHelper implements IRegistryHelper {
 
     @Override
     public RegistryHandler<PoiType, PoiType> registerPoiType(String name, Supplier<? extends Block> block, int maxTickets, int validRange) {
-        // NeoForge fills the block state -> POI map from the registered PoiType
         DeferredHolder<PoiType, PoiType> deferredHolder = POI_TYPES.register(name, () -> new PoiType(ImmutableSet.copyOf(block.get().getStateDefinition().getPossibleStates()), maxTickets, validRange));
         return () -> deferredHolder;
     }

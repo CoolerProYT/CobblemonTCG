@@ -16,9 +16,10 @@ function when(conditions: Record<string, unknown>): string[] {
   if (conditions.first_catch_of_species) parts.push('First catch of a species')
   if (conditions.shiny) parts.push('Shiny')
   if (conditions.min_level !== undefined) parts.push(`Level ${conditions.min_level}+`)
-  if (conditions.level !== undefined) parts.push(`A Pokémon reaches level ${conditions.level}`)
+  if (conditions.level !== undefined) parts.push(`${conditions.per_pokemon ? 'Each' : 'A'} Pokémon reaches level ${conditions.level}`)
   if (conditions.dex_every !== undefined) parts.push(`Every ${conditions.dex_every} species owned`)
   if (conditions.dex_percent !== undefined) parts.push(`${conditions.dex_percent}% of the Pokédex owned`)
+  if (parts.length === 0) parts.push('Every time')
   if (conditions.species) parts.push(`Only ${species(conditions.species)}`)
   if (conditions.exclude_species) parts.push(`Not ${species(conditions.exclude_species)}`)
   return parts

@@ -28,11 +28,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * Pack opening animation: the pack drops in, tears open, and the cards are swiped away one by one,
- * commons first and the rare last like a real pack. Ends on a summary of every pull.
- * Purely visual; the server has already given the cards.
- */
 public class PackOpeningScreen extends Screen {
     private static final String KEY = "screen." + Constants.MODID + ".pack_opening.";
     private static final long PACK_IN_MS = 380;
@@ -74,10 +69,6 @@ public class PackOpeningScreen extends Screen {
         this.sounds = sounds;
     }
 
-    /**
-     * Shows the animation for a pack the server just opened, or only plays the sounds when the
-     * animation is turned off in the client config.
-     */
     public static void show(ClientboundPackOpenedPacket packet) {
         Minecraft minecraft = Minecraft.getInstance();
         Optional<TcgSet> set = TcgDataManager.CLIENT.set(packet.setId());
@@ -90,7 +81,6 @@ public class PackOpeningScreen extends Screen {
             return;
         }
 
-        // Rolled order is rare, uncommons, commons; a real pack is opened from the back, rare last.
         List<Reveal> reveals = new ArrayList<>();
         List<ClientboundPackOpenedPacket.Pull> pulls = packet.cards();
         for (int i = pulls.size() - 1; i >= 0; i--) {
@@ -100,8 +90,6 @@ public class PackOpeningScreen extends Screen {
         }
         minecraft.setScreen(new PackOpeningScreen(TcgStacks.pack(set.get(), packet.wrapper(), 1), reveals, packet.sounds()));
     }
-
-    // ------------------------------------------------------------------ layout
 
     private float cardHeight() {
         return Math.min(height * 0.62F, 190.0F);
@@ -114,8 +102,6 @@ public class PackOpeningScreen extends Screen {
     private float centerY() {
         return height / 2.0F - 10.0F;
     }
-
-    // ------------------------------------------------------------------ render
 
     @Override
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
@@ -146,21 +132,18 @@ public class PackOpeningScreen extends Screen {
         float size = cardHeight() * 1.1F;
         float packTop = centerY() - size / 2;
 
-        if (t < 0.25F) {  // shake
+        if (t < 0.25F) {
             float shake = (float) Math.sin(t * 90) * 5.0F * (1 - t * 2);
             drawItem(graphics, pack, centerX(), centerY(), shake, size, 100);
             return;
         }
         float u = (t - 0.25F) / 0.75F;
 
-        // the cards rise out of the pack
         float rise = easeOutCubic(Math.min(1, u * 1.3F));
         drawItem(graphics, cardBack, centerX(), centerY() + (1 - rise) * size * 0.35F, 0, cardHeight(), 60);
 
-        // the pack drops away
         drawItem(graphics, pack, centerX(), centerY() + easeInCubic(u) * height, 0, size, 100);
 
-        // the torn-off top strip flies up and fades
         float stripW = size * 0.66F;
         float stripH = size * 0.09F;
         float sy = packTop - easeOutCubic(u) * 70.0F;
@@ -186,17 +169,14 @@ public class PackOpeningScreen extends Screen {
         float h = cardHeight();
         Reveal top = reveals.get(index);
 
-        // the top card is dealt face down and flips over; the model's back face shows the card back
         float flip = easeOutCubic(Mth.clamp((now - revealStart) / (float) FLIP_MS, 0, 1));
 
-        // rarity glow behind the top card, once it is face up
         if (top.holo() || top.rarity() == CardRarity.RARE) {
             float grow = easeOutCubic(Mth.clamp((now - revealStart - FLIP_MS / 2) / 400.0F, 0, 1));
             int color = top.holo() ? 0xFFD54A : 0x7FD0FF;
             rays(graphics, centerX(), centerY(), h * 0.85F * grow, now / 40.0F, color, top.holo() ? 16 : 10);
         }
 
-        // the rest of the pile, face down
         int behind = Math.min(3, reveals.size() - index - 1);
         for (int i = behind; i >= 1; i--) {
             drawItem(graphics, cardBack, centerX() + i * 3.0F, centerY() + i * 3.0F, 0, h, 40 + (3 - i) * 10);
@@ -232,7 +212,6 @@ public class PackOpeningScreen extends Screen {
             float rowWidth = inRow * w + (inRow - 1) * gap;
             float x = (width - rowWidth) / 2 + (i % perRow) * (w + gap) + w / 2;
             float y = top + row * (h + gap) + h / 2;
-            // most valuable pull first
             Reveal reveal = reveals.get(count - 1 - i);
             drawItem(graphics, reveal.stack(), x, y, 0, h, 100);
             if (Math.abs(mouseX - x) < w / 2 && Math.abs(mouseY - y) < h / 2) {
@@ -256,8 +235,6 @@ public class PackOpeningScreen extends Screen {
             drawItem(graphics, card.stack(), x, y, card.rot() + card.dir() * 35.0F * e, h, 200);
         }
     }
-
-    // ------------------------------------------------------------------ input
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
@@ -329,8 +306,6 @@ public class PackOpeningScreen extends Screen {
         return false;
     }
 
-    // ------------------------------------------------------------------ steps
-
     private void startTear() {
         if (phase != Phase.PACK) {
             return;
@@ -382,16 +357,10 @@ public class PackOpeningScreen extends Screen {
         }
     }
 
-    // ------------------------------------------------------------------ helpers
-
     private void drawItem(GuiGraphics graphics, ItemStack stack, float x, float y, float rot, float size, float z) {
         drawItem(graphics, stack, x, y, rot, 0, size, z);
     }
 
-    /**
-     * Draws an item model centred at (x, y), {@code size} pixels tall, rotated by {@code rot} degrees
-     * in the screen plane and turned by {@code turn} degrees around its vertical axis (180 shows its back).
-     */
     private void drawItem(GuiGraphics graphics, ItemStack stack, float x, float y, float rot, float turn, float size, float z) {
         graphics.pose().pushPose();
         graphics.pose().translate(x, y, z);

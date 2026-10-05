@@ -1,7 +1,3 @@
-"""
-Original illustrations for the Base Set Trainer cards, one function per card number.
-Stage is 160 x 100 units.
-"""
 import math
 
 from .canvas import OUTLINE, Sprite, darker, lighter
@@ -23,12 +19,9 @@ def card(number):
     return wrap
 
 
-# ------------------------------------------------------------------ helpers
-
 def person(s: Sprite, x, coat, pants, hair, hair_style="short", glasses=False, grin=False, holding=None, skirt=False, apron=None):
-    """A simple standing person, head around y = 26, feet at y = 92."""
     s.shadow(x, 93, 18)
-    with s.part():  # legs
+    with s.part():
         if skirt:
             s.tube([(x - 4, 74), (x - 5, 91)], 3, 2.6, SKIN)
             s.tube([(x + 4, 74), (x + 5, 91)], 3, 2.6, SKIN)
@@ -37,7 +30,7 @@ def person(s: Sprite, x, coat, pants, hair, hair_style="short", glasses=False, g
             s.tube([(x + 5, 66), (x + 6, 91)], 4, 3.6, pants)
         s.ellipse(x - 7, 92, 5, 2.4, BLACK)
         s.ellipse(x + 7, 92, 5, 2.4, BLACK)
-    with s.part():  # body
+    with s.part():
         if skirt:
             s.poly([(x - 10, 44), (x + 10, 44), (x + 16, 76), (x - 16, 76)], coat)
         else:
@@ -45,14 +38,14 @@ def person(s: Sprite, x, coat, pants, hair, hair_style="short", glasses=False, g
             s.line([(x, 44), (x, 74)], darker(coat, 0.25), 0.8)
         if apron:
             s.poly([(x - 9, 52), (x + 9, 52), (x + 11, 76), (x - 11, 76)], apron)
-    with s.part():  # arms
+    with s.part():
         s.tube([(x - 12, 46), (x - 16, 58), (x - 14, 68)], 3.4, 3, coat)
         s.tube([(x + 12, 46), (x + 18, 56), (x + 20, 60)], 3.4, 3, coat)
         s.circle(x - 14, 69, 2.6, SKIN)
         s.circle(x + 21, 61, 2.6, SKIN)
     if holding:
         holding(s, x + 23, 60)
-    with s.part():  # head and hair
+    with s.part():
         if hair_style == "long":
             s.poly([(x - 11, 22), (x + 11, 22), (x + 12, 46), (x - 12, 46)], hair)
         s.ellipse(x, 28, 10, 11, SKIN)
@@ -119,7 +112,6 @@ def arrows_circle(s, cx, cy, r, col):
 
 
 def capsule(s, cx, cy, r, top, bottom=WHITE):
-    """A generic monster capsule: two coloured halves and a button."""
     with s.part():
         s.circle(cx, cy, r, bottom)
         s.poly([(cx + r * math.cos(math.radians(a)), cy - r * math.sin(math.radians(a))) for a in range(0, 181, 6)], top)
@@ -129,9 +121,7 @@ def capsule(s, cx, cy, r, top, bottom=WHITE):
         s.circle(cx, cy, r * 0.18, WHITE)
 
 
-# ------------------------------------------------------------------ rares
-
-@card(70)  # Clefairy Doll
+@card(70)
 def clefairy_doll(s):
     pink = (236, 176, 186)
     s.shadow(80, 93, 22)
@@ -150,12 +140,12 @@ def clefairy_doll(s):
         s.circle(72, 55, 0.8, WHITE)
         s.circle(86, 55, 0.8, WHITE)
         s.line([(77, 63), (83, 63)], darker(pink, 0.5), 0.7)
-    with s.part():  # price tag
+    with s.part():
         s.poly([(98, 72), (112, 66), (116, 76), (102, 82)], (250, 240, 200))
         s.circle(101, 75, 1, BLACK)
 
 
-@card(71)  # Computer Search
+@card(71)
 def computer_search(s):
     beige = (226, 220, 200)
     s.shadow(80, 93, 36)
@@ -174,20 +164,20 @@ def computer_search(s):
         s.line([(95, 59), (99, 63)], (120, 240, 160), 1.4)
 
 
-@card(72)  # Devolution Spray
+@card(72)
 def devolution_spray(s):
     s.shadow(80, 93, 18)
     spray_bottle(s, 84, 58, (150, 90, 190), (90, 60, 120), scale=1.3)
 
 
-@card(73)  # Impostor Professor Oak
+@card(73)
 def impostor_oak(s):
     person(s, 80, WHITE, (110, 110, 140), (60, 50, 60), glasses=True, grin=True)
-    with s.part():  # false moustache
+    with s.part():
         s.ellipse(80, 31, 6, 1.8, (90, 70, 60))
 
 
-@card(74)  # Item Finder
+@card(74)
 def item_finder(s):
     s.shadow(80, 93, 22)
     with s.part():
@@ -205,12 +195,12 @@ def item_finder(s):
         s.circle(90, 58, 1.6, (250, 250, 120))
 
 
-@card(75)  # Lass
+@card(75)
 def lass(s):
     person(s, 80, (240, 120, 150), (60, 60, 80), (120, 70, 40), hair_style="long", skirt=True)
 
 
-@card(76)  # Pokemon Breeder
+@card(76)
 def breeder(s):
     def egg(s, x, y):
         with s.part():
@@ -220,7 +210,7 @@ def breeder(s):
     person(s, 74, (120, 170, 120), (90, 80, 70), (90, 60, 40), apron=(250, 246, 230), holding=egg)
 
 
-@card(77)  # Pokemon Trader
+@card(77)
 def trader(s):
     person(s, 52, (90, 120, 190), (60, 60, 80), (60, 40, 30), hair_style="spiky")
     capsule(s, 100, 46, 10, (70, 130, 220))
@@ -232,7 +222,7 @@ def trader(s):
         s.tri((94, 60), (102, 60), (98, 54), (250, 200, 60))
 
 
-@card(78)  # Scoop Up
+@card(78)
 def scoop_up(s):
     s.shadow(80, 93, 28)
     with s.part():
@@ -247,7 +237,7 @@ def scoop_up(s):
     capsule(s, 94, 68, 8, RED)
 
 
-@card(79)  # Super Energy Removal
+@card(79)
 def super_energy_removal(s):
     energy_orb(s, 60, 54, 18, (240, 200, 70))
     energy_orb(s, 100, 54, 18, (100, 160, 230))
@@ -255,9 +245,7 @@ def super_energy_removal(s):
     big_x(s, 100, 54, 16)
 
 
-# ------------------------------------------------------------------ uncommons
-
-@card(80)  # Defender
+@card(80)
 def defender(s):
     s.shadow(80, 93, 20)
     with s.part():
@@ -266,13 +254,13 @@ def defender(s):
         s.star(80, 50, 10, 4, (250, 220, 90))
 
 
-@card(81)  # Energy Retrieval
+@card(81)
 def energy_retrieval(s):
     arrows_circle(s, 80, 54, 30, (90, 180, 110))
     energy_orb(s, 80, 54, 14, (232, 104, 64))
 
 
-@card(82)  # Full Heal
+@card(82)
 def full_heal(s):
     s.shadow(80, 93, 16)
     with s.part():
@@ -285,7 +273,7 @@ def full_heal(s):
         s.rect(73, 63, 87, 67, RED)
 
 
-@card(83)  # Maintenance
+@card(83)
 def maintenance(s):
     with s.part():
         s.line([(50, 80), (106, 30)], SILVER, 4)
@@ -296,7 +284,7 @@ def maintenance(s):
         s.line([(96, 74), (110, 88)], SILVER, 1.6)
 
 
-@card(84)  # PlusPower
+@card(84)
 def pluspower(s):
     s.shadow(80, 93, 20)
     with s.part():
@@ -306,7 +294,7 @@ def pluspower(s):
         s.rect(66, 50, 94, 58, WHITE)
 
 
-@card(85)  # Pokemon Center
+@card(85)
 def center(s):
     s.shadow(80, 93, 50)
     with s.part():
@@ -322,7 +310,7 @@ def center(s):
         s.rect(76, 34, 84, 38, RED)
 
 
-@card(86)  # Pokemon Flute
+@card(86)
 def flute(s):
     with s.part():
         s.line([(38, 70), (118, 40)], (226, 214, 180), 6)
@@ -336,7 +324,7 @@ def flute(s):
             s.line([(x + 3, y), (x + 3, y - 10)], BLACK, 0.8)
 
 
-@card(87)  # Pokedex
+@card(87)
 def pokedex(s):
     s.shadow(80, 93, 24)
     with s.part():
@@ -353,12 +341,12 @@ def pokedex(s):
         s.circle(90, 74, 3, (60, 40, 40))
 
 
-@card(88)  # Professor Oak
+@card(88)
 def oak(s):
     person(s, 80, WHITE, (140, 110, 80), (196, 196, 200))
 
 
-@card(89)  # Revive
+@card(89)
 def revive(s):
     s.shadow(80, 93, 18)
     with s.part():
@@ -369,26 +357,24 @@ def revive(s):
         s.star(56, 76, 4, 1.6, WHITE)
 
 
-@card(90)  # Super Potion
+@card(90)
 def super_potion(s):
     s.shadow(80, 93, 18)
     spray_bottle(s, 84, 58, (250, 200, 70), (220, 90, 60), scale=1.3)
 
 
-# ------------------------------------------------------------------ commons
-
-@card(91)  # Bill
+@card(91)
 def bill(s):
     person(s, 80, (110, 150, 120), (90, 90, 110), (130, 80, 40), glasses=True)
 
 
-@card(92)  # Energy Removal
+@card(92)
 def energy_removal(s):
     energy_orb(s, 80, 54, 22, (240, 200, 70))
     big_x(s, 80, 54, 20)
 
 
-@card(93)  # Gust of Wind
+@card(93)
 def gust_of_wind(s):
     with s.part():
         for i, (y, w) in enumerate(((34, 70), (52, 90), (70, 60))):
@@ -399,13 +385,13 @@ def gust_of_wind(s):
             s.ellipse(x, y, 5, 2.4, (110, 180, 80), rot=a)
 
 
-@card(94)  # Potion
+@card(94)
 def potion(s):
     s.shadow(80, 93, 18)
     spray_bottle(s, 84, 58, (150, 100, 200), (90, 160, 220), scale=1.3)
 
 
-@card(95)  # Switch
+@card(95)
 def switch(s):
     with s.part():
         s.poly([(40, 40), (100, 40), (100, 30), (122, 48), (100, 66), (100, 56), (40, 56)], (250, 200, 60))

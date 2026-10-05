@@ -8,9 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
-/**
- * Trades are collected once and handed to every {@code VillagerTradesEvent}, which fires on each server start.
- */
 public class NeoForgeVillagerTradeRegistrar implements IVillagerTradeRegistrar {
     private final List<VillagerTradeEntry> villagerTrades = new ArrayList<>();
     private final List<WanderingTradeEntry> wanderingTrades = new ArrayList<>();

@@ -1,10 +1,13 @@
 package com.coolerpromc.cobblemontcg.reward;
 
+import com.coolerpromc.cobblemontcg.Constants;
 import com.coolerpromc.cobblemontcg.config.TcgConfig;
 import com.coolerpromc.cobblemontcg.platform.Services;
 import com.coolerpromc.cobblemontcg.tcg.data.TcgDataManager;
 import com.coolerpromc.cobblemontcg.tcg.set.TcgSet;
 import com.coolerpromc.cobblemontcg.util.TcgStacks;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
@@ -13,19 +16,11 @@ import java.time.LocalDate;
 import java.time.ZoneOffset;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 
-/**
- * Single entry point for handing booster packs to players, used by commands and reward triggers.
- */
-public final class PackRewardService {
-    private PackRewardService() {
-    }
-
-    /**
-     * @return how many packs the player actually received
-     */
+public class PackRewardService {
     public static int grantPack(ServerPlayer player, ResourceLocation setId, int amount, PackSource source) {
         Optional<TcgSet> set = TcgDataManager.SERVER.set(setId);
         if (set.isEmpty() || amount <= 0) {
@@ -43,7 +38,6 @@ public final class PackRewardService {
             }
         }
 
-        // Like real packs, every pack gets a random wrapper; packs with the same wrapper stack.
         List<String> wrappers = set.get().wrappers();
         Map<String, Integer> perWrapper = new LinkedHashMap<>();
         for (int i = 0; i < granted; i++) {
@@ -59,13 +53,13 @@ public final class PackRewardService {
                 remaining -= size;
             }
         });
+        if (source.isReward()) {
+            String key = "message." + Constants.MODID + ".reward." + source.name().toLowerCase(Locale.ROOT);
+            player.sendSystemMessage(Component.translatable(key, granted, set.get().definition().name()).withStyle(ChatFormatting.GOLD));
+        }
         return granted;
     }
 
-    /**
-     * Whether a reward pack of {@code setId} could be given to the player right now: rewards are enabled,
-     * the set exists and the player has not reached the daily cap.
-     */
     public static boolean canReward(ServerPlayer player, ResourceLocation setId) {
         if (!TcgConfig.rewardsEnabled() || TcgDataManager.SERVER.set(setId).isEmpty()) {
             return false;

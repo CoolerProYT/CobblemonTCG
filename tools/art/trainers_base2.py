@@ -1,7 +1,3 @@
-"""
-Original illustrations for the Jungle Trainer cards, one function per card number.
-Stage is 160 x 100 units.
-"""
 import math
 
 from .trainers_base1 import RED, capsule
@@ -16,10 +12,10 @@ def card(number):
     return wrap
 
 
-@card(64)  # Poke Ball
+@card(64)
 def poke_ball(s):
     s.shadow(80, 93, 30)
-    with s.part(outline=False, shade=False):  # a coin flip above the ball
+    with s.part(outline=False, shade=False):
         s.circle(122, 24, 7, (244, 204, 70))
         s.circle(122, 24, 4.5, (228, 180, 50))
         for i in range(3):

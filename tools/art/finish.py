@@ -1,7 +1,3 @@
-"""
-Shared helpers that make the textures look printed rather than drawn: value noise, card stock
-grain, fonts and text layout with inline energy symbols.
-"""
 from functools import lru_cache
 from pathlib import Path
 
@@ -11,10 +7,7 @@ from PIL import Image, ImageDraw, ImageFont
 FONTS = Path(__file__).resolve().parent.parent / "fonts"
 
 
-# ---------------------------------------------------------------- noise
-
 def noise(w: int, h: int, scale: float, seed: int, octaves: int = 4) -> np.ndarray:
-    """Smooth fractal value noise in 0..1, `scale` is the size of the largest blobs in pixels."""
     rng = np.random.default_rng(seed)
     out = np.zeros((h, w), np.float32)
     amp, total = 1.0, 0.0
@@ -30,7 +23,6 @@ def noise(w: int, h: int, scale: float, seed: int, octaves: int = 4) -> np.ndarr
 
 
 def grain(img: Image.Image, strength: float = 6.0, seed: int = 0) -> Image.Image:
-    """Fine print grain on every visible pixel."""
     arr = np.asarray(img).astype(np.float32)
     rng = np.random.default_rng(seed)
     n = (rng.random(arr.shape[:2]) - 0.5) * 2 * strength
@@ -39,7 +31,6 @@ def grain(img: Image.Image, strength: float = 6.0, seed: int = 0) -> Image.Image
 
 
 def tint(img: Image.Image, field: np.ndarray, amount: float) -> Image.Image:
-    """Brightens / darkens by a 0..1 field around 0.5 (mottled paint, foil wrinkles)."""
     arr = np.asarray(img).astype(np.float32)
     f = (field - 0.5)[..., None] * 2 * amount
     rgb = arr[..., :3]
@@ -53,11 +44,8 @@ def clip_to(img: Image.Image, mask: Image.Image) -> Image.Image:
     return out
 
 
-# ---------------------------------------------------------------- text
-
 @lru_cache(maxsize=None)
 def font(name: str, size: float) -> ImageFont.FreeTypeFont:
-    """Cabin (SIL Open Font License, tools/fonts/OFL.txt): Regular, Bold, Italic, CondensedBold, CondensedSemiBold."""
     return ImageFont.truetype(str(FONTS / f"Cabin-{name}.ttf"), size)
 
 
@@ -71,7 +59,6 @@ TEXT_SS = 4
 
 
 def draw(img: Image.Image, xy, s: str, f: ImageFont.FreeTypeFont, color, anchor="la", stroke=0, stroke_color=None):
-    """Draws text supersampled 4x and scaled down, so small sizes keep even spacing and soft edges."""
     if not s:
         return
     if "♂" in s or "♀" in s:
@@ -83,7 +70,6 @@ def draw(img: Image.Image, xy, s: str, f: ImageFont.FreeTypeFont, color, anchor=
     pad = 2 * TEXT_SS
     ox = xy[0] * TEXT_SS
     oy = xy[1] * TEXT_SS
-    # align the temporary canvas to the output pixel grid so nothing shifts when scaling down
     x0 = int(np.floor((ox + bbox[0] - pad) / TEXT_SS)) * TEXT_SS
     y0 = int(np.floor((oy + bbox[1] - pad) / TEXT_SS)) * TEXT_SS
     x1 = int(np.ceil((ox + bbox[2] + pad) / TEXT_SS)) * TEXT_SS
@@ -96,7 +82,6 @@ def draw(img: Image.Image, xy, s: str, f: ImageFont.FreeTypeFont, color, anchor=
 
 
 def _draw_gender(img, xy, s, f, color, anchor):
-    """Cabin has no male / female signs: draw the text before the sign, then the sign by hand."""
     sign = "♂" if "♂" in s else "♀"
     before, after = s.split(sign, 1)
     size = f.size
@@ -104,7 +89,6 @@ def _draw_gender(img, xy, s, f, color, anchor):
     total = length(before, f) + sign_w + length(after, f)
     x = xy[0] - (total / 2 if anchor[0] == "m" else total if anchor[0] == "r" else 0)
     draw(img, (x, xy[1]), before, f, color, anchor="l" + anchor[1])
-    # vertical centre of lowercase letters relative to the anchor's baseline / middle / top
     ascent, descent = f.getmetrics()
     base_y = {"s": xy[1], "m": xy[1] + (ascent - descent) / 2, "a": xy[1] + ascent, "t": xy[1] + ascent}.get(anchor[1], xy[1] + ascent)
     sx = x + length(before, f) + sign_w * 0.5
@@ -137,7 +121,6 @@ def font_like(f: ImageFont.FreeTypeFont, scale: float) -> ImageFont.FreeTypeFont
 
 
 def length(s: str, f: ImageFont.FreeTypeFont) -> float:
-    """Text width measured at 4x, so it matches what draw() produces."""
     return ImageDraw.Draw(Image.new("L", (1, 1))).textlength(s, font=font_like(f, TEXT_SS)) / TEXT_SS
 
 
@@ -145,7 +128,6 @@ ENERGY_WORDS = ("Grass", "Fire", "Water", "Lightning", "Psychic", "Fighting", "C
 
 
 def tokens(s: str):
-    """Splits rules text into words; '{fire}' style tokens become energy symbols."""
     out = []
     for word in s.replace("\n", " \n ").split(" "):
         if not word:
@@ -158,7 +140,6 @@ def tokens(s: str):
 
 
 def wrap(s: str, f: ImageFont.FreeTypeFont, width: float, sym: float):
-    """Greedy word wrap; returns lines of tokens."""
     space = length(" ", f)
     lines, line, x = [], [], 0.0
     for tok in tokens(s):
@@ -178,7 +159,6 @@ def wrap(s: str, f: ImageFont.FreeTypeFont, width: float, sym: float):
 
 
 def paragraph(img, box, s: str, name: str, size: float, color, symbol_fn, leading=1.12, min_size=5.5, draw_it=True):
-    """Draws wrapped text into box (x0, y0, x1, y1), shrinking until it fits. Returns the height used."""
     x0, y0, x1, y1 = box
     while True:
         f = font(name, size)
@@ -218,7 +198,6 @@ def paragraph(img, box, s: str, name: str, size: float, color, symbol_fn, leadin
 
 
 def energy_text(s: str) -> str:
-    """'Provides ColorlessColorless energy.' -> 'Provides {colorless}{colorless} energy.'"""
     for word in ENERGY_WORDS:
         s = s.replace(word + word, "{" + word.lower() + "} {" + word.lower() + "}")
     return s

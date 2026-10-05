@@ -24,14 +24,11 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 
-public final class TcgCommands {
+public class TcgCommands {
     private static final String PREFIX = "commands." + Constants.MODID + ".";
     private static final DynamicCommandExceptionType UNKNOWN_SET = new DynamicCommandExceptionType(id -> Component.translatable(PREFIX + "unknown_set", id));
     private static final Dynamic2CommandExceptionType UNKNOWN_CARD = new Dynamic2CommandExceptionType((set, number) -> Component.translatable(PREFIX + "unknown_card", set, number));
     private static final SuggestionProvider<CommandSourceStack> SETS = (context, builder) -> SharedSuggestionProvider.suggestResource(TcgDataManager.SERVER.setIds(), builder);
-
-    private TcgCommands() {
-    }
 
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         dispatcher.register(Commands.literal("tcg")
@@ -70,9 +67,6 @@ public final class TcgCommands {
         return 1;
     }
 
-    /**
-     * Accepts full ids ({@code cobblemontcg:base1}) and, for convenience, bare set names ({@code base1}).
-     */
     private static TcgSet getSet(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
         ResourceLocation id = ResourceLocationArgument.getId(context, "set");
         TcgSet set = TcgDataManager.SERVER.set(id).orElse(null);

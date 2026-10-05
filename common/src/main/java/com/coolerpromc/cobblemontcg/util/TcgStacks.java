@@ -9,13 +9,7 @@ import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.CustomModelData;
 
-/**
- * The only place booster pack and card stacks are created, so the components always match.
- */
-public final class TcgStacks {
-    private TcgStacks() {
-    }
-
+public class TcgStacks {
     public static ItemStack pack(TcgSet set, String variant, int count) {
         ItemStack stack = new ItemStack(ModItems.BOOSTER_PACK, count);
         stack.set(ModDataComponents.BOOSTER_PACK.get(), new BoosterPackData(set.id(), variant));

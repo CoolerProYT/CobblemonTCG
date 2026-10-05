@@ -6,9 +6,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-/**
- * The milestone ids (for example {@code cobblemontcg:level_up/level/10}) a player has already been rewarded for.
- */
 public record MilestoneData(Set<String> claimed) {
     public static final MilestoneData EMPTY = new MilestoneData(Set.of());
 

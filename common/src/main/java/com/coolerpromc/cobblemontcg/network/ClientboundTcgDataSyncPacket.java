@@ -15,9 +15,6 @@ import net.minecraft.resources.ResourceLocation;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Sends the server's sets and cards to a client so tooltips and the creative tab work on dedicated servers.
- */
 public record ClientboundTcgDataSyncPacket(Map<ResourceLocation, SetDefinition> sets, Map<ResourceLocation, List<CardDefinition>> cards) implements HandledCustomPacketPayload {
     public static final Type<ClientboundTcgDataSyncPacket> TYPE = new Type<>(Constants.id("tcg_data_sync"));
     public static final StreamCodec<RegistryFriendlyByteBuf, ClientboundTcgDataSyncPacket> STREAM_CODEC = StreamCodec.composite(

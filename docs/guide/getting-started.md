@@ -12,7 +12,7 @@ Cobblemon: TCG adds trading cards to Cobblemon. You get booster packs by playing
 
 There are three ways to get packs in survival:
 
-- **Catch Pokémon.** Your first catch of a species has a 10% chance to give a pack, and every shiny catch gives one. Levelling your Pokémon and filling the Pokédex give packs too. See [Pokémon rewards](./rewards).
+- **Catch Pokémon.** Every catch has a small chance to give a pack, the first catch of a species a bigger one, and every shiny catch gives one. Levelling your Pokémon and filling the Pokédex give packs too. See [Pokémon rewards](./rewards).
 - **Buy them from a Card Dealer.** Any unemployed villager next to a Card Dealer Table becomes one, and sells packs for 5 emeralds. See [Card Dealer & traders](./card-dealer).
 - **Wandering traders** sometimes have a pack for 8 emeralds.
 

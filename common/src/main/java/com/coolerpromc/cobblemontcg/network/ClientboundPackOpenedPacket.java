@@ -11,10 +11,6 @@ import net.minecraft.resources.ResourceLocation;
 
 import java.util.List;
 
-/**
- * Tells the opening player what came out of a pack so the client can play the opening animation.
- * The cards are already in the player's inventory when this arrives; the animation is only a reveal.
- */
 public record ClientboundPackOpenedPacket(ResourceLocation setId, String wrapper, List<Pull> cards, boolean sounds) implements HandledCustomPacketPayload {
     public static final Type<ClientboundPackOpenedPacket> TYPE = new Type<>(Constants.id("pack_opened"));
 

@@ -7,9 +7,6 @@ import net.minecraft.server.packs.resources.PreparableReloadListener;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-/**
- * Listeners are collected once and handed to every {@code AddReloadListenerEvent}, which fires on each reload.
- */
 public class NeoForgeReloadListenerRegistrar implements IReloadListenerRegistrar {
     private final Map<ResourceLocation, PreparableReloadListener> serverReloadListeners = new LinkedHashMap<>();
 

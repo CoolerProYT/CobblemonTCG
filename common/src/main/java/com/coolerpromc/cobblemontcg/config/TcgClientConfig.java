@@ -7,16 +7,10 @@ import com.coolerpromc.coolerconfig.config.ConfigSide;
 import com.coolerpromc.coolerconfig.config.ConfigSpec;
 import com.coolerpromc.coolerconfig.config.ConfigValue;
 
-/**
- * Client-only settings ({@code config/cobblemontcg-client.toml}). Getters return the defaults until {@link #init()} has run.
- */
-public final class TcgClientConfig {
+public class TcgClientConfig {
     public static ConfigSpec CONFIG_SPEC;
 
     private static ConfigValue<Boolean> animation;
-
-    private TcgClientConfig() {
-    }
 
     public static void init() {
         if (CONFIG_SPEC != null) {

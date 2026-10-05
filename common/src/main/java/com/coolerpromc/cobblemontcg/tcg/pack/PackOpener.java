@@ -16,15 +16,7 @@ import net.minecraft.sounds.SoundSource;
 
 import java.util.List;
 
-public final class PackOpener {
-    private PackOpener() {
-    }
-
-    /**
-     * Rolls a pack of {@code set}, puts the cards in the player's inventory (overflow is dropped at
-     * their feet), plays the opening effects and tells the player's client to show the opening animation.
-     * The cards are given right away, so closing the animation or disconnecting never loses a pull.
-     */
+public class PackOpener {
     public static List<RolledCard> open(ServerPlayer player, TcgSet set, String wrapper) {
         List<RolledCard> cards = PackRoller.roll(set, player.getRandom(), TcgConfig.holoChance(), TcgConfig.packSize());
         for (RolledCard rolled : cards) {
@@ -44,7 +36,6 @@ public final class PackOpener {
         double z = player.getZ();
 
         if (TcgConfig.soundsEnabled()) {
-            // The opener hears the sounds from their own client, timed with the animation; this is for everyone else.
             SoundEvent sound = holo ? ModSounds.BOOSTER_PACK_OPEN_RARE.get() : ModSounds.BOOSTER_PACK_OPEN.get();
             level.playSound(player, x, y, z, sound, SoundSource.PLAYERS, 1.0F, 0.9F + level.getRandom().nextFloat() * 0.2F);
         }
