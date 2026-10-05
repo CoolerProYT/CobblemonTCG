@@ -10,7 +10,10 @@ import com.cobblemon.mod.common.pokemon.Pokemon;
 import com.coolerpromc.cobblemontcg.Constants;
 import com.coolerpromc.cobblemontcg.component.ModDataComponents;
 import com.coolerpromc.cobblemontcg.component.custom.BoosterPackData;
+import com.coolerpromc.cobblemontcg.config.TcgConfig;
 import com.coolerpromc.cobblemontcg.platform.Services;
+import com.coolerpromc.cobblemontcg.reward.DailyPackData;
+import com.coolerpromc.cobblemontcg.reward.PackRewardService;
 import com.mojang.authlib.GameProfile;
 import io.netty.channel.embedded.EmbeddedChannel;
 import net.minecraft.gametest.framework.GameTest;
@@ -109,6 +112,23 @@ public class PackRewardGameTests {
             check(helper, totalPacks(player) == expected, "after " + (i + 1) + " species expected " + expected + " pack(s), got " + totalPacks(player));
         }
         check(helper, packs(player, BASE_SET) == 1, "the 10th species pays a Base Set pack");
+        helper.succeed();
+    }
+
+    @GameTest(template = EMPTY)
+    public static void aDexMilestoneHeldBackByTheCapPaysOnTheNextSpecies(GameTestHelper helper) {
+        ServerPlayer player = mockPlayer(helper);
+        Services.PLAYER_DATA.setDailyPackData(player, new DailyPackData(PackRewardService.today(), TcgConfig.dailyPackCap()));
+        String[] species = {"bulbasaur", "charmander", "squirtle", "caterpie", "weedle", "pidgey", "rattata", "spearow", "ekans", "sandshrew"};
+        for (String name : species) {
+            give(player, name + " level=5");
+        }
+        check(helper, totalPacks(player) == 0, "the capped 10th species pays nothing, got " + totalPacks(player));
+        Services.PLAYER_DATA.setDailyPackData(player, DailyPackData.EMPTY);
+        give(player, "pikachu level=5");
+        check(helper, packs(player, BASE_SET) == 1, "the 11th species pays the 10 species milestone, got " + totalPacks(player));
+        give(player, "zubat level=5");
+        check(helper, totalPacks(player) == 1, "the milestone pays only once, got " + totalPacks(player));
         helper.succeed();
     }
 

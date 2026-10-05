@@ -1,4 +1,4 @@
-// Reads the mod's sets, cards, reward rules, recipes and textures into the wiki, so the pages always
+// Reads the mod's sets, cards, reward rules, recipes and card textures into the wiki, so the pages always
 // match the mod. Run by `npm run dev` and `npm run build`; the outputs are git-ignored.
 import { cpSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { basename, dirname, join } from 'node:path'
@@ -127,24 +127,12 @@ if (existsSync(renders)) cpSync(renders, publicTcg, { recursive: true })
 const publicItems = join(docs, 'public/items')
 rmSync(publicItems, { recursive: true, force: true })
 mkdirSync(publicItems, { recursive: true })
-const textures = {}
-const copyIcon = (id, source) => {
-  if (!existsSync(source)) return
-  cpSync(source, join(publicItems, `${id}.png`))
-  textures[`cobblemontcg:${id}`] = `/items/${id}.png`
-}
-for (const file of readdirSync(join(assets, 'textures/item')).filter((f) => f.endsWith('.png'))) {
-  copyIcon(basename(file, '.png'), join(assets, 'textures/item', file))
-}
-// Block items have no flat texture; the table's front stands in for it.
-copyIcon('card_dealer_table', join(assets, 'textures/block/card_dealer_table_front.png'))
-copyIcon('card_dealer', join(assets, 'textures/entity/villager/profession/card_dealer.png'))
-cpSync(join(assets, 'textures/gui/card_binder.png'), join(publicItems, 'card_binder_gui.png'))
+// Item and block icons are hosted on GCS (see itemIcon in .vitepress/theme/tcg.ts).
 // The mod's icon doubles as the wiki's logo and favicon.
 cpSync(join(resources, 'cobblemontcg.png'), join(publicItems, 'icon.png'))
 
 mkdirSync(join(docs, '.vitepress/data'), { recursive: true })
-writeFileSync(join(docs, '.vitepress/data/data.json'), JSON.stringify({ names, textures, sets, rewards, recipes }, null, 2))
+writeFileSync(join(docs, '.vitepress/data/data.json'), JSON.stringify({ names, sets, rewards, recipes }, null, 2))
 console.log(
-  `Synced ${sets.length} sets (${sets.reduce((n, s) => n + s.cards.length, 0)} cards), ${rewards.length} reward files, ${recipes.length} recipes, ${Object.keys(textures).length} icons.`,
+  `Synced ${sets.length} sets (${sets.reduce((n, s) => n + s.cards.length, 0)} cards), ${rewards.length} reward files, ${recipes.length} recipes.`,
 )

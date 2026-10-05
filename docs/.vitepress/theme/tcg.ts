@@ -73,7 +73,6 @@ export interface Recipe {
 
 export const data = raw as unknown as {
   names: Record<string, string>
-  textures: Record<string, string>
   sets: CardSet[]
   rewards: { file: string; rules: RewardRule[] }[]
   recipes: Recipe[]
@@ -210,8 +209,12 @@ export function itemName(id: string): string {
     .join(' ')
 }
 
-/** Hosted renders of vanilla items, one PNG per item id. Mojang's textures are not bundled here. */
-const VANILLA_ICONS = 'https://storage.googleapis.com/coolerpromc/textures'
+/**
+ * Hosted item icons, one 1024px PNG per item id at <namespace>/<path>.png: vanilla items (Mojang's textures are
+ * not bundled here) and the mod's own (uploaded from textures/item, and the table's render from tools/gen_table_art.py).
+ */
+const ICONS = 'https://storage.googleapis.com/coolerpromc/textures'
+const HOSTED_NAMESPACES = ['minecraft', 'cobblemontcg']
 
 const TAG_ICONS: Record<string, string> = {
   '#minecraft:planks': 'minecraft:oak_planks',
@@ -219,8 +222,7 @@ const TAG_ICONS: Record<string, string> = {
 
 export function itemIcon(id: string): string | null {
   const itemId = TAG_ICONS[id] ?? id
-  if (data.textures[itemId]) return withBase(data.textures[itemId])
   const [namespace, path] = itemId.includes(':') ? itemId.split(':') : ['minecraft', itemId]
-  if (namespace !== 'minecraft') return null
-  return `${VANILLA_ICONS}/${namespace}/${path}.png`
+  if (!HOSTED_NAMESPACES.includes(namespace)) return null
+  return `${ICONS}/${namespace}/${path}.png`
 }

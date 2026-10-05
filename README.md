@@ -35,8 +35,12 @@ card art, flavour text, pack wrappers, set logos, card backs or expansion symbol
   - `/tcg give card <set> <number> [holo]`
 
   `<set>` accepts `cobblemontcg:base1` or just `base1` (Base Set), `base2` for Jungle.
-- **Card Dealer**: a villager profession whose job site is the Card Dealer Table (2 paper, 1
-  booster pack, 5 planks: paper / pack / paper on top, planks below in a table shape). It sells
+- **Card Binder**: 24 pages of 9 pockets (216 card stacks), two pages shown at a time with every card
+  drawn big in its pocket. Shift-click cards in, sort by set and number with one button. Only cards fit.
+  Crafted from a book, leather and 3 iron nuggets. If the binder burns, its cards drop out.
+- **Card Dealer**: a villager profession whose job site is the Card Dealer Table, a shop counter with a
+  glass display of packs and a rack of cards (2 paper, 1 booster pack, 5 planks: paper / pack / paper on
+  top, planks below in a table shape). It sells
   booster packs for 5 emeralds, 3 times per restock (configurable), and unlocks newer sets as it levels
   up, like the real sets came out: Base Set packs as a Novice, Jungle packs from Apprentice (about 5
   pack purchases). The sets and their order come from `shop.sets`.
@@ -166,29 +170,33 @@ These triggers come from Cobblemon's events:
 | Trigger | When | Conditions |
 | --- | --- | --- |
 | `cobblemontcg:capture` | the player catches a Pokémon | `species`, `exclude_species`, `shiny`, `min_level`, `first_catch_of_species` |
-| `cobblemontcg:level_up` | one of the player's Pokémon levels up | `level`, `species`, `exclude_species`, `shiny` |
+| `cobblemontcg:level_up` | one of the player's Pokémon levels up | `level`, `per_pokemon`, `species`, `exclude_species`, `shiny` |
 | `cobblemontcg:dex_progress` | the player owns a new species in the Pokédex | `dex_every`, `dex_percent` |
 
 - `species`: species names like `pikachu` (any of them matches).
 - `exclude_species`: species names that never match, so two rules can split the species between them.
 - `first_catch_of_species: true`: the player has never owned this species before.
-- `level: 25`: a Pokémon of the player reached level 25 or higher.
-- `dex_every: 10`: the player now owns a multiple of 10 species.
+- `level: 25`: a Pokémon of the player reached level 25 or higher; on a level up it must have just crossed 25.
+- `per_pokemon: true`: with `level`, the level pays for every Pokémon that reaches it, not once per player.
+- `dex_every: 10`: the player owns at least 10 species; pays once for every multiple of 10 reached.
 - `dex_percent: 50`: the player owns at least 50% of the species in Cobblemon's Pokédex.
 
-`level`, `dex_every`, `dex_percent` and `first_catch_of_species: true` are milestones: each pays out
-at most once per player (claimed milestones are saved on the player). A milestone is claimed when its
-rule rolls its chance, win or lose; when no pack can be given because of the daily cap it stays open for
-the next event. Other rules (like shiny catches) pay out every time.
+`level` (without `per_pokemon`), `dex_every`, `dex_percent` and `first_catch_of_species: true` are
+milestones: each pays out at most once per player (claimed milestones are saved on the player). A
+milestone is claimed when its rule rolls its chance, win or lose; when no pack can be given because of
+the daily cap it stays open and pays on the next event of its trigger (a `dex_every` multiple held back
+at 20 species pays when the 21st is added). Other rules (like shiny catches) pay out every time. A
+`per_pokemon` level is not stored: a Pokémon crosses each level only once, so a level the daily cap held
+back is not paid later.
 
 Default rules shipped in `data/cobblemontcg/tcg/rewards/` (override a file with the same path in a
 data pack, or replace it with `[]`, to change or remove them):
 
 | File | Rule |
 | --- | --- |
-| `capture.json` | first catch of a species: 10% chance of 1 pack; shiny catch: 1 pack. Pokémon that are in Jungle but not in Base Set (Scyther, Snorlax, Eevee and its evolutions...) give Jungle packs, every other species gives Base Set packs |
-| `level_up.json` | level 10, 25, 50 and 100: 1 Base Set pack each |
-| `dex_progress.json` | 25% and 50% of the Pokédex: 1 Base Set pack; 75% and 100%: 2 Base Set packs |
+| `capture.json` | any catch: 5% chance of 1 pack; first catch of a species: 25% chance of 1 pack; shiny catch: 1 pack. Pokémon that are in Jungle but not in Base Set (Scyther, Snorlax, Eevee and its evolutions...) give Jungle packs, every other species gives Base Set packs |
+| `level_up.json` | for every Pokémon: level 10, 50% chance of 1 Base Set pack; level 25, 1 Base Set pack; level 50, 1 Jungle pack; level 100, 2 Jungle packs |
+| `dex_progress.json` | every 10 species owned: 1 Base Set pack; 25% of the Pokédex: 1 Base Set pack; 50%: 1 Jungle pack; 75% and 100%: 2 Jungle packs |
 
 Other mods can add triggers through `RewardTriggerRegistry`.
 
@@ -267,6 +275,11 @@ Requires Python 3.10+, Pillow 10.1+ and numpy (`pip install pillow numpy`).
   `tools/art/pokemon_<set>.py` and `tools/art/trainers_<set>.py`, one small function per card, lit and shaded by
   `tools/art/canvas.py`; the layout and each set's style (`STYLES`) are in `tools/art/layout.py`, the per-card text in
   `tools/art/cards.py`.
+
+- `python tools/gen_binder_art.py`: draws the Card Binder's item texture and screen.
+- `python tools/gen_table_art.py`: draws the Card Dealer Table's textures, writes its block model and
+  renders it to `docs/renders/items/card_dealer_table.png`, the wiki's icon for it (hosted on GCS, see
+  `docs/README.md`).
 
 Card stacks use `custom_model_data = model_data_base + number * 2` for the regular print and `+ 1`
 for the holo print, so give every set its own `model_data_base` range (Base Set uses 1000, Jungle 2000). Packs use

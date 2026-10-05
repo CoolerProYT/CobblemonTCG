@@ -9,7 +9,18 @@ npm run dev     # syncs data, then serves http://localhost:5173/CobblemonTCG/
 npm run build   # syncs data, then builds to .vitepress/dist
 ```
 
-`npm run sync` (run automatically by `dev` and `build`) writes `.vitepress/data/data.json` from `common/src/main/resources` and `tools/<set>_text.json`, and copies the mod's card and pack textures to `public/tcg/` and its item icons to `public/items/`. All three are git-ignored.
+`npm run sync` (run automatically by `dev` and `build`) writes `.vitepress/data/data.json` from `common/src/main/resources` and `tools/<set>_text.json`, and copies the mod's card and pack textures to `public/tcg/` and its logo to `public/items/`. All three are git-ignored.
+
+## Item icons
+
+Recipe slots show item icons hosted at `https://storage.googleapis.com/coolerpromc/textures/<namespace>/<item>.png`
+(1024×1024): vanilla items under `minecraft/`, the mod's under `cobblemontcg/`. A new or redrawn mod item needs its
+icon uploaded there: the item texture from `textures/item/` scaled up with nearest-neighbour, or for a block its
+inventory render (the Card Dealer Table's is `renders/items/card_dealer_table.png`, drawn by `tools/gen_table_art.py`).
+
+```bash
+gcloud storage cp renders/items/card_dealer_table.png gs://coolerpromc/textures/cobblemontcg/card_dealer_table.png
+```
 
 ## Cobblemon renders
 

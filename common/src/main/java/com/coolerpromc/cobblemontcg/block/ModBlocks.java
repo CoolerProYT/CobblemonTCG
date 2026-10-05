@@ -16,7 +16,7 @@ import java.util.function.Function;
 
 public class ModBlocks {
     public static final RegistryHandler.Blocks<CardDealerTableBlock> CARD_DEALER_TABLE = registerBlock("card_dealer_table", CardDealerTableBlock::new,
-            BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).instrument(NoteBlockInstrument.BASS).strength(2.5F).sound(SoundType.WOOD).ignitedByLava());
+            BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).instrument(NoteBlockInstrument.BASS).strength(2.5F).sound(SoundType.WOOD).ignitedByLava().noOcclusion());
     public static final RegistryHandler.Items<BlockItem> CARD_DEALER_TABLE_ITEM = ModItems.registerItem("card_dealer_table", p -> new BlockItem(CARD_DEALER_TABLE.get(), p));
 
     public static <T extends Block> RegistryHandler.Blocks<T> registerBlock(String name, Function<BlockBehaviour.Properties, T> func, BlockBehaviour.Properties p){

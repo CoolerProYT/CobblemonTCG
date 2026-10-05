@@ -16,7 +16,7 @@ RARITIES = {"common", "uncommon", "rare", "rare_holo"}
 
 def write_json(path: Path, value) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(value, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    path.write_text(json.dumps(value, indent=2, ensure_ascii=False) + "\n", encoding="utf-8", newline="\n")
 
 
 def read_cards(csv_path: Path) -> list[dict]:
@@ -104,6 +104,45 @@ def body(width_px: int, height_px: int, thickness: float, front: str, back: str)
     }
 
 
+def pack_body(thickness: float, front: str, back: str) -> list[dict]:
+    width_px, height_px = PACK_PX
+    k = 16 / height_px
+    u = lambda px: r(16 * px / width_px)
+    v = lambda px: r(16 * px / height_px)
+    x0, x1 = 8 - width_px * k / 2, 8 + width_px * k / 2
+    z0, z1 = 8 - thickness / 2, 8 + thickness / 2
+    crimp, inset = PACK_CRIMP_PX, PACK_CRIMP_INSET_PX
+    seal_top, seal_bottom = height_px - crimp, crimp
+    silver_row = {"uv": [4, v(crimp - 6), 12, v(crimp - 5)], "texture": back}
+
+    def seal(y0: float, y1: float, v0: int, v1: int, outer: str) -> dict:
+        silver_side = {"uv": [8, v(v0), 8.1, v(v1)], "texture": back}
+        return {
+            "from": [r(x0 + inset * k), r(y0), r(z0)], "to": [r(x1 - inset * k), r(y1), r(z1)],
+            "faces": {
+                "south": {"uv": [u(inset), v(v0), u(width_px - inset), v(v1)], "texture": front},
+                "north": {"uv": [u(inset), v(v0), u(width_px - inset), v(v1)], "texture": back},
+                "east": silver_side, "west": silver_side,
+                outer: {"uv": [4, v(5), 12, v(6)], "texture": back},
+            },
+        }
+
+    body_side = {"uv": [u(4), v(crimp), u(5), v(height_px - crimp)], "texture": back}
+    return [
+        {
+            "from": [r(x0), r(seal_bottom * k), r(z0)], "to": [r(x1), r(seal_top * k), r(z1)],
+            "faces": {
+                "south": {"uv": [0, v(crimp), 16, v(height_px - crimp)], "texture": front},
+                "north": {"uv": [0, v(crimp), 16, v(height_px - crimp)], "texture": back},
+                "east": body_side, "west": body_side,
+                "up": silver_row, "down": silver_row,
+            },
+        },
+        seal(seal_top * k, 16, 2, crimp, "up"),
+        seal(0, seal_bottom * k, height_px - crimp, height_px - 2, "down"),
+    ]
+
+
 def plane(x0_px, y0_px, x1_px, y1_px, z: float, texture: str, size_px=CARD_PX) -> dict:
     k = 16 / size_px[1]
     left = 8 - 16 * size_px[0] / size_px[1] / 2
@@ -119,6 +158,8 @@ def template(textures: dict, elements: list) -> dict:
 
 CARD_THICKNESS = 0.2
 PACK_THICKNESS = 0.8
+PACK_CRIMP_PX = 26
+PACK_CRIMP_INSET_PX = 3
 MASCOT_Y_PX = 96
 LAYER_GAP = 0.03
 EVOLUTION_PX = (14, 13, 46, 37)
@@ -149,7 +190,7 @@ def write_templates() -> None:
     pack_front_z = 8 + PACK_THICKNESS / 2
     write_json(MODELS / "tcg" / "pack.json", template(
         {"back": f"{NAMESPACE}:tcg/pack/back", "particle": "#front"}, [
-            body(*PACK_PX, PACK_THICKNESS, "#front", "#back"),
+            *pack_body(PACK_THICKNESS, "#front", "#back"),
             plane(0, MASCOT_Y_PX, PACK_PX[0], MASCOT_Y_PX + 208, pack_front_z + LAYER_GAP, "#mascot", PACK_PX),
             plane(0, 0, *PACK_PX, pack_front_z + LAYER_GAP * 2, "#overlay", PACK_PX),
         ]))

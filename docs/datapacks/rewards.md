@@ -41,12 +41,12 @@ Rules only fire when `rewards.enabled` and the trigger's toggle are on, and are 
 | `first_catch_of_species: true` | the player has never owned this species before |
 | `level: 25` | a Pokémon of the player reached level 25 or higher; on a level up it must have just crossed 25 |
 | `per_pokemon: true` | with `level`: the level pays for every Pokémon that reaches it, not once per player |
-| `dex_every: 10` | the player now owns a multiple of 10 species |
+| `dex_every: 10` | the player owns at least 10 species; pays once for every multiple of 10 reached (10, 20, 30...) |
 | `dex_percent: 50` | the player owns at least 50% of the species in Cobblemon's Pokédex |
 
 ### Milestones
 
-`level` (without `per_pokemon`), `dex_every`, `dex_percent` and `first_catch_of_species: true` are milestones: each pays out at most once per player, and claimed milestones are saved on the player. A milestone is claimed when its rule rolls its chance, win or lose. When no pack can be given because of the daily cap it stays open for the next event. Other rules, like shiny catches, pay out every time. A `per_pokemon` level is not stored: a Pokémon crosses each level only once.
+`level` (without `per_pokemon`), `dex_every`, `dex_percent` and `first_catch_of_species: true` are milestones: each pays out at most once per player, and claimed milestones are saved on the player. A milestone is claimed when its rule rolls its chance, win or lose. When no pack can be given because of the daily cap it stays open and pays on the next event of its trigger: a `dex_every` multiple held back at 20 species pays when the 21st species is added. Other rules, like shiny catches, pay out every time. A `per_pokemon` level is not stored: a Pokémon crosses each level only once, so a level the daily cap held back is not paid later.
 
 ## Default rules
 

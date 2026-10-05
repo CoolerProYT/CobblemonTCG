@@ -6,7 +6,7 @@ The Card Dealer is a villager profession. Its job site block is the **Card Deale
 
 <RecipeCard id="card_dealer_table" />
 
-Place the table near an unemployed villager (not a nitwit) and it becomes a Card Dealer, the same way a lectern makes a librarian. The table can be mined with an axe.
+Place the table near an unemployed villager (not a nitwit) and it becomes a Card Dealer, the same way a lectern makes a librarian. The table is a shop counter: a glass display of packs at the front, a felt top with a rack of cards at the back. It faces you when placed and can be mined with an axe.
 
 ### What it sells
 

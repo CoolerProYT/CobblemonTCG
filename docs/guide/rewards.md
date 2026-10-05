@@ -30,7 +30,7 @@ Every reward pack is announced in chat.
 
 ## Daily limit
 
-A player can get at most **10 reward packs per day** (UTC). Packs from commands, villagers and traders do not count. When the limit stops a milestone pack, the milestone stays open and pays on a later event once the limit resets.
+A player can get at most **10 reward packs per day** (UTC). Packs from commands, villagers and traders do not count. When the limit stops a Pokédex or first-catch milestone, the milestone stays open and pays on a later event once the limit resets. Level rewards are not held over: a Pokémon that reaches a level while you are at the limit does not pay for it later.
 
 ## Turning rewards off
 

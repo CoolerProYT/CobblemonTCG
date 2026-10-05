@@ -47,7 +47,9 @@ public record RewardConditions(Optional<Integer> minLevel, List<String> species,
         if (firstCatch.isPresent() && !context.firstCatch().map(f -> f.equals(firstCatch.get())).orElse(false)) {
             return false;
         }
-        if (dexEvery.isPresent() && context.dexEntries().map(entries -> entries <= 0 || entries % dexEvery.get() != 0).orElse(true)) {
+        // passes from the first multiple on; the milestone below is the latest multiple reached, so one the daily
+        // cap held back still pays on the next new species
+        if (dexEvery.isPresent() && context.dexEntries().map(entries -> entries < dexEvery.get()).orElse(true)) {
             return false;
         }
         return dexPercent.isEmpty() || reachedPercent(context, dexPercent.get());
@@ -75,7 +77,7 @@ public record RewardConditions(Optional<Integer> minLevel, List<String> species,
         if (firstCatch.orElse(false)) {
             parts.add("first_catch/" + context.species().map(s -> s.toLowerCase(Locale.ROOT)).orElse("unknown"));
         }
-        dexEvery.ifPresent(n -> parts.add("dex_every/" + n + "/" + context.dexEntries().orElse(0)));
+        dexEvery.ifPresent(n -> parts.add("dex_every/" + n + "/" + context.dexEntries().orElse(0) / n * n));
         dexPercent.ifPresent(p -> parts.add("dex_percent/" + p));
         return Optional.of(String.join("+", parts));
     }

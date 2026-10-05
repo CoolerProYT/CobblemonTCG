@@ -113,9 +113,12 @@ class RewardRuleTest {
     @Test
     void dexMilestones() {
         RewardConditions every = parse("{\"trigger\": \"a:b\", \"set\": \"a:c\", \"conditions\": {\"dex_every\": 10}}").conditions();
+        assertFalse(every.test(RewardContext.dexProgress(null, "eevee", 9, 1025)));
         assertTrue(every.test(RewardContext.dexProgress(null, "eevee", 30, 1025)));
-        assertFalse(every.test(RewardContext.dexProgress(null, "eevee", 31, 1025)));
         assertEquals(Optional.of("dex_every/10/30"), every.milestone(RewardContext.dexProgress(null, "eevee", 30, 1025)));
+        // a multiple the daily cap held back is still open on the next species, under the same key
+        assertTrue(every.test(RewardContext.dexProgress(null, "eevee", 31, 1025)));
+        assertEquals(Optional.of("dex_every/10/30"), every.milestone(RewardContext.dexProgress(null, "eevee", 31, 1025)));
 
         RewardConditions quarter = parse("{\"trigger\": \"a:b\", \"set\": \"a:c\", \"conditions\": {\"dex_percent\": 25}}").conditions();
         assertFalse(quarter.test(RewardContext.dexProgress(null, "eevee", 24, 100)));
