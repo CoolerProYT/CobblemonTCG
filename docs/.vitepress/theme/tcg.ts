@@ -32,6 +32,8 @@ export interface Card {
   rules: string[]
   illustration: boolean
   evolution: boolean
+  /** Frame texture under tcg/, from the card's item model */
+  frame: string | null
 }
 
 export interface PackSlot {
@@ -133,6 +135,7 @@ export function tcgTexture(path: string): string {
 }
 
 export function frameTexture(card: Card): string {
+  if (card.frame) return tcgTexture(card.frame)
   if (card.supertype === 'pokemon') return tcgTexture(`frame/pokemon_${card.type ?? 'colorless'}.png`)
   return tcgTexture(`frame/${card.supertype}.png`)
 }
