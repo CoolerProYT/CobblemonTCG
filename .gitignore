@@ -27,3 +27,5 @@ __pycache__
 
 # test screenshots
 .playwright-mcp/
+**/launch.json
+**/settings.local.json

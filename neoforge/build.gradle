@@ -1,6 +1,7 @@
 plugins {
     id 'multiloader-loader'
     id 'net.neoforged.moddev'
+    id 'me.modmuss50.mod-publish-plugin'
 }
 
 sourceSets {
@@ -67,4 +68,28 @@ dependencies {
     compileOnly "org.jetbrains.kotlin:kotlin-stdlib:${kotlin_version}"
     runtimeOnly("com.cobblemon:neoforge:${cobblemon_version}") { transitive = false }
     runtimeOnly "thedarkcolour:kotlinforforge-neoforge:${kotlin_for_forge_version}"
+}
+
+publishMods {
+    file.set(jar.archiveFile)
+    type = STABLE
+    modLoaders.add("neoforge")
+    changelog = rootProject.file("changelog.md").text
+    displayName = mod_id + "-" + project.version + "+" + minecraft_version + "-neoforge"
+
+    curseforge {
+        projectId = "1728366"
+        accessToken = findProperty("CF_TOKEN")
+        minecraftVersions.add(minecraft_version)
+        requires("cobblemon")
+        client=true
+        server=true
+    }
+
+    modrinth {
+        projectId = "G49gRlMM"
+        accessToken = findProperty("MODRINTH_TOKEN")
+        minecraftVersions.add(minecraft_version)
+        requires("cobblemon")
+    }
 }

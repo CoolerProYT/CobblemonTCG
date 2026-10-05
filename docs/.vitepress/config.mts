@@ -56,7 +56,7 @@ export default defineConfig({
     search: { provider: 'local' },
     outline: { level: [2, 3] },
     footer: {
-      message: 'Released under the CC0-1.0 License. Unofficial fan project, not affiliated with Nintendo, The Pokémon Company, Game Freak or Creatures Inc.',
+      message: 'Released under the MIT License. Unofficial fan project, not affiliated with Nintendo, The Pokémon Company, Game Freak or Creatures Inc.',
     },
   },
 })
