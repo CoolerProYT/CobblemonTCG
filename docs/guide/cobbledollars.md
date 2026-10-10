@@ -28,5 +28,6 @@ The `cobblemontcg:booster_pack` component is required: a pack without it does no
 | --- | --- | --- |
 | Base Set | `cobblemontcg:base1` | `charizard` 1000, `blastoise` 1001, `venusaur` 1002 |
 | Jungle | `cobblemontcg:base2` | `scyther` 2000, `wigglytuff` 2001, `flareon` 2002 |
+| Wizards Black Star Promos | `cobblemontcg:basep` | `pikachu` 3000, `mew` 3001, `hooh` 3002 |
 
 Add one offer per wrapper to sell them all. For a datapack set, `custom_model_data` is the set's `model_data_base` plus the wrapper's position in its `wrappers` list (starting at 0).

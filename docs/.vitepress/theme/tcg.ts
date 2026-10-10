@@ -104,7 +104,7 @@ export const SUPERTYPE_NAMES: Record<Supertype, string> = {
   energy: 'Energy',
 }
 
-export const TYPES = ['grass', 'fire', 'water', 'lightning', 'psychic', 'fighting', 'colorless']
+export const TYPES = ['grass', 'fire', 'water', 'lightning', 'psychic', 'fighting', 'metal', 'colorless']
 
 export const TYPE_COLORS: Record<string, string> = {
   grass: '#60aa46',
@@ -113,6 +113,7 @@ export const TYPE_COLORS: Record<string, string> = {
   lightning: '#f6c828',
   psychic: '#965cb0',
   fighting: '#ba6838',
+  metal: '#969caa',
   colorless: '#c8c4b8',
 }
 

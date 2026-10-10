@@ -13,6 +13,7 @@ All commands need operator permission (level 2) and give the item to the player 
 | --- | --- |
 | Base Set | `base1` |
 | Jungle | `base2` |
+| Wizards Black Star Promos | `basep` |
 
 Examples:
 

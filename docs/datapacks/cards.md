@@ -12,7 +12,7 @@
 | `number` | yes | Number in the set. Two cards with the same number replace each other |
 | `name` | yes | Card name, shown in the tooltip |
 | `supertype` | yes | `pokemon`, `trainer` or `energy` |
-| `type` | no | `grass`, `fire`, `water`, `lightning`, `psychic`, `fighting` or `colorless` |
+| `type` | no | `grass`, `fire`, `water`, `lightning`, `psychic`, `fighting`, `metal` or `colorless` |
 | `hp` | no | Hit points |
 | `rarity` | yes | `common`, `uncommon`, `rare` or `rare_holo` |
 | `pokedex` | no | National Pokédex number: Cobblemon's model of this Pokémon is drawn in the art window |

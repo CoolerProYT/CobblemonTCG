@@ -20,7 +20,11 @@ Like the real sets, every pack comes in one of three wrappers, picked at random.
 
 **Jungle**
 
-<PackWrappers set="base2" :width="120" back />
+<PackWrappers set="base2" :width="120" />
+
+**Wizards Black Star Promos**
+
+<PackWrappers set="basep" :width="120" back />
 
 The Pokémon on the wrapper is Cobblemon's own model of it, drawn into the pack like on the cards.
 
@@ -41,6 +45,6 @@ Set `packOpening.animation = false` in `config/cobblemontcg-client.toml` and the
 
 ## Odds
 
-The exact odds of every set are on its page: [Base Set](/sets/base1#pack-odds), [Jungle](/sets/base2#pack-odds). With the default settings:
+The exact odds of every set are on its page: [Base Set](/sets/base1#pack-odds), [Jungle](/sets/base2#pack-odds), [Black Star Promos](/sets/basep#pack-odds). With the default settings:
 
 <PackOdds set="base1" />

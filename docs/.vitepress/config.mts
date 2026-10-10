@@ -38,6 +38,7 @@ export default defineConfig({
           { text: 'All sets', link: '/sets/' },
           { text: 'Base Set', link: '/sets/base1' },
           { text: 'Jungle', link: '/sets/base2' },
+          { text: 'Black Star Promos', link: '/sets/basep' },
         ],
       },
       {
