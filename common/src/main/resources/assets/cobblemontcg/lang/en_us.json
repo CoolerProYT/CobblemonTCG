@@ -31,6 +31,7 @@
   "type.cobblemontcg.lightning": "Lightning",
   "type.cobblemontcg.psychic": "Psychic",
   "type.cobblemontcg.fighting": "Fighting",
+  "type.cobblemontcg.metal": "Metal",
   "type.cobblemontcg.colorless": "Colorless",
   "message.cobblemontcg.unknown_set": "This pack belongs to an unknown set (%s)",
   "message.cobblemontcg.reward.loot": "You found %s %s booster pack(s)!",

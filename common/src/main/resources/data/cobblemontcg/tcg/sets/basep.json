@@ -1,0 +1,37 @@
+{
+  "name": "Wizards Black Star Promos",
+  "total": 53,
+  "model_data_base": 3000,
+  "wrappers": [
+    "pikachu",
+    "mew",
+    "hooh"
+  ],
+  "wrapper_pokedex": {
+    "pikachu": 25,
+    "mew": 151,
+    "hooh": 250
+  },
+  "pack_slots": [
+    {
+      "count": 1,
+      "rarities": {
+        "rare_holo": 1,
+        "rare": 2
+      },
+      "use_config_holo_chance": true
+    },
+    {
+      "count": 3,
+      "rarities": {
+        "uncommon": 1
+      }
+    },
+    {
+      "count": 7,
+      "rarities": {
+        "common": 1
+      }
+    }
+  ]
+}

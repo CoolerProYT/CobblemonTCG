@@ -1,0 +1,10 @@
+{
+  "id": "basep-48",
+  "number": 48,
+  "name": "Articuno",
+  "supertype": "pokemon",
+  "type": "water",
+  "hp": 80,
+  "rarity": "rare",
+  "pokedex": 144
+}

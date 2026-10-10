@@ -41,6 +41,24 @@
         "custom_model_data": 2002
       },
       "model": "cobblemontcg:item/booster_pack/base2_flareon"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 3000
+      },
+      "model": "cobblemontcg:item/booster_pack/basep_pikachu"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 3001
+      },
+      "model": "cobblemontcg:item/booster_pack/basep_mew"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 3002
+      },
+      "model": "cobblemontcg:item/booster_pack/basep_hooh"
     }
   ]
 }

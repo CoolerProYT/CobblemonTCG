@@ -1,0 +1,11 @@
+{
+  "id": "basep-6",
+  "number": 6,
+  "name": "Arcanine",
+  "supertype": "pokemon",
+  "type": "fire",
+  "hp": 70,
+  "rarity": "rare",
+  "pokedex": 59,
+  "evolves_from_pokedex": 58
+}

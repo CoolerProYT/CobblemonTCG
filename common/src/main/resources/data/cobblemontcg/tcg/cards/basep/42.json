@@ -1,0 +1,7 @@
+{
+  "id": "basep-42",
+  "number": 42,
+  "name": "Pokémon Tower",
+  "supertype": "trainer",
+  "rarity": "uncommon"
+}

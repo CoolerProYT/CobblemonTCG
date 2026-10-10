@@ -184,7 +184,7 @@ class RewardRuleTest {
                 total += rules.size();
             }
         }
-        assertEquals(15, total);
+        assertEquals(18, total);
     }
 
     @Test
@@ -208,6 +208,19 @@ class RewardRuleTest {
                 "a shiny Jungle Pokemon pays Jungle packs");
         assertEquals(List.of(ResourceLocation.parse("cobblemontcg:base1"), ResourceLocation.parse("cobblemontcg:base1"), ResourceLocation.parse("cobblemontcg:base1")),
                 paidSets(trigger, rules, RewardContext.capture(null, "charmander", 5, true, true)), "first shiny catch pays every Base Set rule");
+    }
+
+    @Test
+    void promoSpeciesGivePromoPacks() throws Exception {
+        ResourceLocation trigger = ResourceLocation.parse("cobblemontcg:capture");
+        List<RewardRule> rules = RewardRule.CODEC.listOf().parse(JsonOps.INSTANCE, JsonParser.parseString(java.nio.file.Files.readString(
+                java.nio.file.Path.of("src/main/resources/data/cobblemontcg/tcg/rewards/capture.json")))).getOrThrow();
+        ResourceLocation promos = ResourceLocation.parse("cobblemontcg:basep");
+        assertEquals(List.of(promos, promos), paidSets(trigger, rules, RewardContext.capture(null, "mew", 5, false, true)));
+        assertEquals(List.of(promos, promos, promos), paidSets(trigger, rules, RewardContext.capture(null, "hooh", 5, true, true)),
+                "a first shiny promo Pokemon pays every promo rule and no Base Set rule");
+        assertEquals(List.of(ResourceLocation.parse("cobblemontcg:base1"), ResourceLocation.parse("cobblemontcg:base1")),
+                paidSets(trigger, rules, RewardContext.capture(null, "pikachu", 5, false, true)), "Pokemon in an earlier set keep that set's packs");
     }
 
     private static List<ResourceLocation> paidSets(ResourceLocation trigger, List<RewardRule> rules, RewardContext context) {

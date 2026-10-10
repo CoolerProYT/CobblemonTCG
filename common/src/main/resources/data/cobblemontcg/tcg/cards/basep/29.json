@@ -1,0 +1,10 @@
+{
+  "id": "basep-29",
+  "number": 29,
+  "name": "Marill",
+  "supertype": "pokemon",
+  "type": "water",
+  "hp": 50,
+  "rarity": "common",
+  "pokedex": 183
+}

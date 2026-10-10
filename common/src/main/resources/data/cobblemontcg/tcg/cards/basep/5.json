@@ -1,0 +1,11 @@
+{
+  "id": "basep-5",
+  "number": 5,
+  "name": "Dragonite",
+  "supertype": "pokemon",
+  "type": "colorless",
+  "hp": 90,
+  "rarity": "rare_holo",
+  "pokedex": 149,
+  "evolves_from_pokedex": 148
+}

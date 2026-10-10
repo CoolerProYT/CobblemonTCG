@@ -1,0 +1,10 @@
+{
+  "id": "basep-53",
+  "number": 53,
+  "name": "Suicune",
+  "supertype": "pokemon",
+  "type": "water",
+  "hp": 70,
+  "rarity": "rare_holo",
+  "pokedex": 245
+}

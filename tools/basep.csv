@@ -1,0 +1,54 @@
+number,name,supertype,type,hp,rarity
+1,Pikachu,pokemon,lightning,60,common
+2,Electabuzz,pokemon,lightning,60,uncommon
+3,Mewtwo,pokemon,psychic,70,rare
+4,Pikachu,pokemon,lightning,50,common
+5,Dragonite,pokemon,colorless,90,rare_holo
+6,Arcanine,pokemon,fire,70,rare
+7,Jigglypuff,pokemon,colorless,50,common
+8,Mew,pokemon,psychic,50,rare_holo
+9,Mew,pokemon,psychic,50,rare
+10,Meowth,pokemon,colorless,50,common
+11,Eevee,pokemon,colorless,30,common
+12,Mewtwo,pokemon,psychic,60,rare
+13,Venusaur,pokemon,grass,100,rare_holo
+14,Mewtwo,pokemon,psychic,70,rare_holo
+15,Cool Porygon,pokemon,colorless,50,uncommon
+16,Computer Error,trainer,,,uncommon
+17,Dark Persian,pokemon,colorless,60,rare
+18,Team Rocket's Meowth,pokemon,colorless,40,uncommon
+19,Sabrina's Abra,pokemon,psychic,40,uncommon
+20,Psyduck,pokemon,water,50,common
+21,Moltres,pokemon,fire,70,rare_holo
+22,Articuno,pokemon,water,70,rare_holo
+23,Zapdos,pokemon,lightning,70,rare_holo
+24,_____'s Pikachu,pokemon,lightning,50,rare
+25,Flying Pikachu,pokemon,lightning,40,rare
+26,Pikachu,pokemon,lightning,40,common
+27,Pikachu,pokemon,lightning,30,common
+28,Surfing Pikachu,pokemon,lightning,50,rare
+29,Marill,pokemon,water,50,common
+30,Togepi,pokemon,colorless,30,common
+31,Cleffa,pokemon,colorless,30,common
+32,Smeargle,pokemon,colorless,40,uncommon
+33,Scizor,pokemon,metal,70,rare
+34,Entei,pokemon,fire,80,rare_holo
+35,Pichu,pokemon,lightning,30,common
+36,Igglybuff,pokemon,colorless,30,common
+37,Hitmontop,pokemon,fighting,60,uncommon
+38,Unown [J],pokemon,psychic,40,uncommon
+39,Misdreavus,pokemon,psychic,50,uncommon
+40,Pokémon Center,trainer,,,uncommon
+41,Lucky Stadium,trainer,,,uncommon
+42,Pokémon Tower,trainer,,,uncommon
+43,Machamp,pokemon,fighting,90,rare
+44,Magmar,pokemon,fire,60,uncommon
+45,Scyther,pokemon,grass,60,uncommon
+46,Electabuzz,pokemon,lightning,60,uncommon
+47,Mew,pokemon,psychic,40,rare
+48,Articuno,pokemon,water,80,rare
+49,Snorlax,pokemon,colorless,90,rare
+50,Celebi,pokemon,grass,50,rare_holo
+51,Rapidash,pokemon,fire,60,uncommon
+52,Ho-oh,pokemon,fire,80,rare_holo
+53,Suicune,pokemon,water,70,rare_holo

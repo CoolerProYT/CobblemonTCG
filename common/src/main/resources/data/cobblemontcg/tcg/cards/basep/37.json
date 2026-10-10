@@ -1,0 +1,10 @@
+{
+  "id": "basep-37",
+  "number": 37,
+  "name": "Hitmontop",
+  "supertype": "pokemon",
+  "type": "fighting",
+  "hp": 60,
+  "rarity": "uncommon",
+  "pokedex": 237
+}

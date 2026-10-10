@@ -1,0 +1,10 @@
+{
+  "id": "basep-50",
+  "number": 50,
+  "name": "Celebi",
+  "supertype": "pokemon",
+  "type": "grass",
+  "hp": 50,
+  "rarity": "rare_holo",
+  "pokedex": 251
+}

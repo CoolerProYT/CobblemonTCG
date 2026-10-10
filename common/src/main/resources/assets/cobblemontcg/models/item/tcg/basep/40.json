@@ -1,0 +1,7 @@
+{
+  "parent": "cobblemontcg:item/tcg/card",
+  "textures": {
+    "frame": "cobblemontcg:tcg/frame/basep/trainer",
+    "art": "cobblemontcg:tcg/basep/40"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "id": "basep-33",
+  "number": 33,
+  "name": "Scizor",
+  "supertype": "pokemon",
+  "type": "metal",
+  "hp": 70,
+  "rarity": "rare",
+  "pokedex": 212,
+  "evolves_from_pokedex": 123
+}

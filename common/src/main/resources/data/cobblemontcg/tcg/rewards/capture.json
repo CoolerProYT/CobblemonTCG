@@ -4,7 +4,7 @@
     "set": "cobblemontcg:base1",
     "amount": 1,
     "chance": 0.05,
-    "conditions": { "exclude_species": ["clefable", "flareon", "jolteon", "kangaskhan", "mrmime", "nidoqueen", "pidgeot", "pinsir", "scyther", "snorlax", "vaporeon", "venomoth", "victreebel", "vileplume", "wigglytuff", "butterfree", "dodrio", "exeggutor", "fearow", "gloom", "lickitung", "marowak", "nidorina", "parasect", "persian", "primeape", "rapidash", "rhydon", "seaking", "tauros", "weepinbell", "bellsprout", "cubone", "eevee", "exeggcute", "goldeen", "jigglypuff", "mankey", "meowth", "nidoranf", "oddish", "paras", "rhyhorn", "spearow", "venonat"] }
+    "conditions": { "exclude_species": ["clefable", "flareon", "jolteon", "kangaskhan", "mrmime", "nidoqueen", "pidgeot", "pinsir", "scyther", "snorlax", "vaporeon", "venomoth", "victreebel", "vileplume", "wigglytuff", "butterfree", "dodrio", "exeggutor", "fearow", "gloom", "lickitung", "marowak", "nidorina", "parasect", "persian", "primeape", "rapidash", "rhydon", "seaking", "tauros", "weepinbell", "bellsprout", "cubone", "eevee", "exeggcute", "goldeen", "jigglypuff", "mankey", "meowth", "nidoranf", "oddish", "paras", "rhyhorn", "spearow", "venonat", "mew", "dragonite", "psyduck", "moltres", "articuno", "marill", "togepi", "cleffa", "smeargle", "scizor", "entei", "pichu", "igglybuff", "hitmontop", "unown", "misdreavus", "celebi", "hooh", "suicune"] }
   },
   {
     "trigger": "cobblemontcg:capture",
@@ -15,10 +15,17 @@
   },
   {
     "trigger": "cobblemontcg:capture",
+    "set": "cobblemontcg:basep",
+    "amount": 1,
+    "chance": 0.05,
+    "conditions": { "species": ["mew", "dragonite", "psyduck", "moltres", "articuno", "marill", "togepi", "cleffa", "smeargle", "scizor", "entei", "pichu", "igglybuff", "hitmontop", "unown", "misdreavus", "celebi", "hooh", "suicune"] }
+  },
+  {
+    "trigger": "cobblemontcg:capture",
     "set": "cobblemontcg:base1",
     "amount": 1,
     "chance": 0.25,
-    "conditions": { "first_catch_of_species": true, "exclude_species": ["clefable", "flareon", "jolteon", "kangaskhan", "mrmime", "nidoqueen", "pidgeot", "pinsir", "scyther", "snorlax", "vaporeon", "venomoth", "victreebel", "vileplume", "wigglytuff", "butterfree", "dodrio", "exeggutor", "fearow", "gloom", "lickitung", "marowak", "nidorina", "parasect", "persian", "primeape", "rapidash", "rhydon", "seaking", "tauros", "weepinbell", "bellsprout", "cubone", "eevee", "exeggcute", "goldeen", "jigglypuff", "mankey", "meowth", "nidoranf", "oddish", "paras", "rhyhorn", "spearow", "venonat"] }
+    "conditions": { "first_catch_of_species": true, "exclude_species": ["clefable", "flareon", "jolteon", "kangaskhan", "mrmime", "nidoqueen", "pidgeot", "pinsir", "scyther", "snorlax", "vaporeon", "venomoth", "victreebel", "vileplume", "wigglytuff", "butterfree", "dodrio", "exeggutor", "fearow", "gloom", "lickitung", "marowak", "nidorina", "parasect", "persian", "primeape", "rapidash", "rhydon", "seaking", "tauros", "weepinbell", "bellsprout", "cubone", "eevee", "exeggcute", "goldeen", "jigglypuff", "mankey", "meowth", "nidoranf", "oddish", "paras", "rhyhorn", "spearow", "venonat", "mew", "dragonite", "psyduck", "moltres", "articuno", "marill", "togepi", "cleffa", "smeargle", "scizor", "entei", "pichu", "igglybuff", "hitmontop", "unown", "misdreavus", "celebi", "hooh", "suicune"] }
   },
   {
     "trigger": "cobblemontcg:capture",
@@ -29,14 +36,27 @@
   },
   {
     "trigger": "cobblemontcg:capture",
+    "set": "cobblemontcg:basep",
+    "amount": 1,
+    "chance": 0.25,
+    "conditions": { "first_catch_of_species": true, "species": ["mew", "dragonite", "psyduck", "moltres", "articuno", "marill", "togepi", "cleffa", "smeargle", "scizor", "entei", "pichu", "igglybuff", "hitmontop", "unown", "misdreavus", "celebi", "hooh", "suicune"] }
+  },
+  {
+    "trigger": "cobblemontcg:capture",
     "set": "cobblemontcg:base1",
     "amount": 1,
-    "conditions": { "shiny": true, "exclude_species": ["clefable", "flareon", "jolteon", "kangaskhan", "mrmime", "nidoqueen", "pidgeot", "pinsir", "scyther", "snorlax", "vaporeon", "venomoth", "victreebel", "vileplume", "wigglytuff", "butterfree", "dodrio", "exeggutor", "fearow", "gloom", "lickitung", "marowak", "nidorina", "parasect", "persian", "primeape", "rapidash", "rhydon", "seaking", "tauros", "weepinbell", "bellsprout", "cubone", "eevee", "exeggcute", "goldeen", "jigglypuff", "mankey", "meowth", "nidoranf", "oddish", "paras", "rhyhorn", "spearow", "venonat"] }
+    "conditions": { "shiny": true, "exclude_species": ["clefable", "flareon", "jolteon", "kangaskhan", "mrmime", "nidoqueen", "pidgeot", "pinsir", "scyther", "snorlax", "vaporeon", "venomoth", "victreebel", "vileplume", "wigglytuff", "butterfree", "dodrio", "exeggutor", "fearow", "gloom", "lickitung", "marowak", "nidorina", "parasect", "persian", "primeape", "rapidash", "rhydon", "seaking", "tauros", "weepinbell", "bellsprout", "cubone", "eevee", "exeggcute", "goldeen", "jigglypuff", "mankey", "meowth", "nidoranf", "oddish", "paras", "rhyhorn", "spearow", "venonat", "mew", "dragonite", "psyduck", "moltres", "articuno", "marill", "togepi", "cleffa", "smeargle", "scizor", "entei", "pichu", "igglybuff", "hitmontop", "unown", "misdreavus", "celebi", "hooh", "suicune"] }
   },
   {
     "trigger": "cobblemontcg:capture",
     "set": "cobblemontcg:base2",
     "amount": 1,
     "conditions": { "shiny": true, "species": ["clefable", "flareon", "jolteon", "kangaskhan", "mrmime", "nidoqueen", "pidgeot", "pinsir", "scyther", "snorlax", "vaporeon", "venomoth", "victreebel", "vileplume", "wigglytuff", "butterfree", "dodrio", "exeggutor", "fearow", "gloom", "lickitung", "marowak", "nidorina", "parasect", "persian", "primeape", "rapidash", "rhydon", "seaking", "tauros", "weepinbell", "bellsprout", "cubone", "eevee", "exeggcute", "goldeen", "jigglypuff", "mankey", "meowth", "nidoranf", "oddish", "paras", "rhyhorn", "spearow", "venonat"] }
+  },
+  {
+    "trigger": "cobblemontcg:capture",
+    "set": "cobblemontcg:basep",
+    "amount": 1,
+    "conditions": { "shiny": true, "species": ["mew", "dragonite", "psyduck", "moltres", "articuno", "marill", "togepi", "cleffa", "smeargle", "scizor", "entei", "pichu", "igglybuff", "hitmontop", "unown", "misdreavus", "celebi", "hooh", "suicune"] }
   }
 ]

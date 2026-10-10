@@ -1,0 +1,10 @@
+{
+  "id": "basep-7",
+  "number": 7,
+  "name": "Jigglypuff",
+  "supertype": "pokemon",
+  "type": "colorless",
+  "hp": 50,
+  "rarity": "common",
+  "pokedex": 39
+}

@@ -1,0 +1,11 @@
+{
+  "id": "basep-51",
+  "number": 51,
+  "name": "Rapidash",
+  "supertype": "pokemon",
+  "type": "fire",
+  "hp": 60,
+  "rarity": "uncommon",
+  "pokedex": 78,
+  "evolves_from_pokedex": 77
+}

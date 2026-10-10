@@ -1,0 +1,10 @@
+{
+  "id": "basep-46",
+  "number": 46,
+  "name": "Electabuzz",
+  "supertype": "pokemon",
+  "type": "lightning",
+  "hp": 60,
+  "rarity": "uncommon",
+  "pokedex": 125
+}

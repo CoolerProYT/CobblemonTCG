@@ -1,0 +1,10 @@
+{
+  "id": "basep-39",
+  "number": 39,
+  "name": "Misdreavus",
+  "supertype": "pokemon",
+  "type": "psychic",
+  "hp": 50,
+  "rarity": "uncommon",
+  "pokedex": 200
+}

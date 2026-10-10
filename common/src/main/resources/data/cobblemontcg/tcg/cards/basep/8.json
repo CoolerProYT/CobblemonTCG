@@ -1,0 +1,10 @@
+{
+  "id": "basep-8",
+  "number": 8,
+  "name": "Mew",
+  "supertype": "pokemon",
+  "type": "psychic",
+  "hp": 50,
+  "rarity": "rare_holo",
+  "pokedex": 151
+}

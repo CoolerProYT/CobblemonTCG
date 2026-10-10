@@ -29,11 +29,13 @@ class PackRollerTest {
 
     private static TcgSet base1;
     private static TcgSet base2;
+    private static TcgSet basep;
 
     @BeforeAll
     static void loadSets() throws IOException {
         base1 = loadSet("base1");
         base2 = loadSet("base2");
+        basep = loadSet("basep");
     }
 
     private static TcgSet loadSet(String name) throws IOException {
@@ -67,10 +69,27 @@ class PackRollerTest {
     }
 
     @Test
+    void promosFillEveryPackSlot() {
+        assertEquals(53, basep.cards().size());
+        assertEquals(11, basep.cardsOfRarity(CardRarity.RARE_HOLO).size());
+        assertEquals(13, basep.cardsOfRarity(CardRarity.RARE).size());
+        assertEquals(16, basep.cardsOfRarity(CardRarity.UNCOMMON).size());
+        assertEquals(13, basep.cardsOfRarity(CardRarity.COMMON).size());
+        assertEquals(List.of("pikachu", "mew", "hooh"), basep.wrappers());
+        RandomSource random = RandomSource.create(3L);
+        for (int i = 0; i < PACKS; i++) {
+            List<RolledCard> pack = PackRoller.roll(basep, random, 1.0 / 3.0, 11);
+            assertEquals(11, pack.size());
+            assertEquals(11, pack.stream().map(card -> card.card().number()).distinct().count(), "duplicate card in a promo pack");
+        }
+    }
+
+    @Test
     void setsUseSeparateModelDataRanges() {
         int base1Last = base1.modelData(base1.definition().total(), true);
         int base2First = base2.modelData(1, false);
         assertTrue(base1Last < base2First, "Jungle's custom_model_data range overlaps Base Set's");
+        assertTrue(base2.modelData(base2.definition().total(), true) < basep.modelData(1, false), "the promos' custom_model_data range overlaps Jungle's");
     }
 
     @Test

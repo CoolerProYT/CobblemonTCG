@@ -1,0 +1,10 @@
+{
+  "id": "basep-3",
+  "number": 3,
+  "name": "Mewtwo",
+  "supertype": "pokemon",
+  "type": "psychic",
+  "hp": 70,
+  "rarity": "rare",
+  "pokedex": 150
+}

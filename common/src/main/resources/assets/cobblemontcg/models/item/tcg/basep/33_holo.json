@@ -1,0 +1,9 @@
+{
+  "parent": "cobblemontcg:item/tcg/card_evolution_holo",
+  "textures": {
+    "frame": "cobblemontcg:tcg/frame/basep/pokemon_metal",
+    "art": "cobblemontcg:tcg/basep/33",
+    "illustration": "cobblemontcg:tcg/basep/illustration/33",
+    "evolution": "cobblemontcg:tcg/basep/evolution/33"
+  }
+}

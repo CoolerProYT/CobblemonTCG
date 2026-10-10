@@ -13,7 +13,7 @@ public class TcgConfig {
     public static final double DEFAULT_HOLO_CHANCE = 1.0 / 3.0;
     public static final int DEFAULT_PACK_SIZE = 11;
     public static final int DEFAULT_DAILY_PACK_CAP = 10;
-    public static final List<String> DEFAULT_SHOP_SETS = List.of("cobblemontcg:base1", "cobblemontcg:base2");
+    public static final List<String> DEFAULT_SHOP_SETS = List.of("cobblemontcg:base1", "cobblemontcg:base2", "cobblemontcg:basep");
     public static final int DEFAULT_CARD_DEALER_PRICE = 5;
     public static final int DEFAULT_CARD_DEALER_MAX_USES = 3;
     public static final int DEFAULT_WANDERING_TRADER_PRICE = 8;

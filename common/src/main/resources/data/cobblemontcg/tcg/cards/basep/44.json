@@ -1,0 +1,10 @@
+{
+  "id": "basep-44",
+  "number": 44,
+  "name": "Magmar",
+  "supertype": "pokemon",
+  "type": "fire",
+  "hp": 60,
+  "rarity": "uncommon",
+  "pokedex": 126
+}

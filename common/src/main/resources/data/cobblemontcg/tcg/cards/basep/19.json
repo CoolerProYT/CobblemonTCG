@@ -1,0 +1,10 @@
+{
+  "id": "basep-19",
+  "number": 19,
+  "name": "Sabrina's Abra",
+  "supertype": "pokemon",
+  "type": "psychic",
+  "hp": 40,
+  "rarity": "uncommon",
+  "pokedex": 63
+}

@@ -5,10 +5,10 @@ from PIL import Image, ImageDraw
 from . import finish as F
 from . import layout as L
 from .canvas import Sprite
-from . import pokemon_base1, pokemon_base2, trainers_base1, trainers_base2
+from . import pokemon_base1, pokemon_base2, pokemon_basep, trainers_base1, trainers_base2, trainers_basep
 
-POKEMON = {"base1": pokemon_base1.DRAW, "base2": pokemon_base2.DRAW}
-TRAINERS = {"base1": trainers_base1.DRAW, "base2": trainers_base2.DRAW}
+POKEMON = {"base1": pokemon_base1.DRAW, "base2": pokemon_base2.DRAW, "basep": pokemon_basep.DRAW}
+TRAINERS = {"base1": trainers_base1.DRAW, "base2": trainers_base2.DRAW, "basep": trainers_basep.DRAW}
 
 HP_RED = (198, 34, 30)
 POWER_RED = (188, 34, 30)
@@ -196,7 +196,8 @@ def trainer_card(card: dict, total: int, text: dict) -> Image.Image:
     name_font = F.fit("Bold", 16, card["name"], L.FACE[2] - L.FACE[0] - 20)
     F.draw(img, (L.FACE[0] + 7, L.NAME_Y), card["name"], name_font, L.TEXT, anchor="ls")
     x0, y0, x1, y1 = L.RULES
-    F.draw(img, ((x0 + x1) / 2, y0 + 6), "Trainer", F.font("Bold", 9), (196, 30, 36), anchor="ma")
+    kind = (text.get("subtypes") or ["Trainer"])[0]
+    F.draw(img, ((x0 + x1) / 2, y0 + 6), kind, F.fit("Bold", 9, kind, x1 - x0 - 60), (196, 30, 36), anchor="ma")
     ImageDraw.Draw(img).line((x0 + 30, y0 + 19, x1 - 30, y0 + 19), fill=(200, 200, 208, 255))
     _rules(img, text, (x0 + 8, y0 + 24, x1 - 8, y1 - 6), 9.5)
     _footer(img, card, total, face)

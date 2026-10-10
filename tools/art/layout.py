@@ -33,6 +33,7 @@ TYPE_COLORS = {
     "lightning": (246, 200, 40),
     "psychic": (150, 92, 176),
     "fighting": (186, 104, 56),
+    "metal": (150, 156, 170),
     "colorless": (226, 224, 214),
 }
 FACE_COLORS = {
@@ -42,6 +43,7 @@ FACE_COLORS = {
     "lightning": (246, 222, 128),
     "psychic": (196, 160, 210),
     "fighting": (214, 166, 124),
+    "metal": (204, 208, 218),
     "colorless": (232, 230, 222),
     "trainer": (226, 226, 230),
     "energy": (240, 236, 222),
@@ -58,6 +60,11 @@ STYLES = {
         "rim": (150, 164, 92), "trainer_rim": (178, 196, 170),
         "strip": (188, 214, 138), "strip_edge": (92, 128, 58), "strip_shine": (236, 250, 210),
         "scenery": "jungle", "mark": "leaf",
+    },
+    "basep": {
+        "rim": (74, 74, 88), "trainer_rim": (150, 152, 168),
+        "strip": (208, 210, 222), "strip_edge": (44, 44, 56), "strip_shine": (250, 250, 255),
+        "scenery": "starlight", "mark": "star",
     },
 }
 DEFAULT_STYLE = "base1"
@@ -100,7 +107,7 @@ def type_symbol(kind: str, diameter: float) -> Image.Image:
     arr[inside, :3] = np.clip(arr[inside, :3] * (0.78 + dome[inside, None] * 0.45), 0, 255)
     img = Image.fromarray(arr.astype(np.uint8), "RGBA")
     d = ImageDraw.Draw(img)
-    glyph = (40, 34, 36) if kind in ("lightning", "colorless") else (255, 255, 255)
+    glyph = (40, 34, 36) if kind in ("lightning", "colorless", "metal") else (255, 255, 255)
     g = rgba(glyph)
     c = n / 2
     s = n * 0.3
@@ -123,6 +130,9 @@ def type_symbol(kind: str, diameter: float) -> Image.Image:
     elif kind == "psychic":
         d.ellipse((*P(-0.95, -0.55), *P(0.95, 0.55)), fill=g)
         d.ellipse((*P(-0.4, -0.4), *P(0.4, 0.4)), fill=rgba(mix(base, (0, 0, 0), 0.4)))
+    elif kind == "metal":
+        d.polygon([P(0.95 * math.cos(math.radians(30 + i * 60)), 0.95 * math.sin(math.radians(30 + i * 60))) for i in range(6)], fill=g)
+        d.ellipse((*P(-0.38, -0.38), *P(0.38, 0.38)), fill=rgba(base))
     elif kind == "fighting":
         d.rounded_rectangle((*P(-0.75, -0.55), *P(0.75, 0.75)), radius=s * 0.3, fill=g)
         for i in range(3):
@@ -285,6 +295,14 @@ def set_mark(img, mark: str, cx, cy, size):
     if mark == "leaf":
         _leaf(d, n * 0.5, n * 0.52, n * 0.72, n * 0.36, -50, (34, 70, 38, 255), vein=(248, 246, 234, 255))
         d.line((n * 0.26, n * 0.8, n * 0.36, n * 0.68), fill=(34, 70, 38, 255), width=round(SS * 0.9))
+    elif mark == "star":
+        d.ellipse((SS * 0.9, SS * 0.9, n - 1 - SS * 0.9, n - 1 - SS * 0.9), fill=(30, 30, 36, 255))
+        pts = []
+        for i in range(10):
+            r = n * (0.36 if i % 2 == 0 else 0.15)
+            a = math.radians(-90 + i * 36)
+            pts.append((n / 2 + r * math.cos(a), n * 0.53 + r * math.sin(a)))
+        d.polygon(pts, fill=(248, 246, 234, 255))
     img.alpha_composite(big.resize((round(size), round(size)), Image.LANCZOS), (round(cx - size / 2), round(cy - size / 2)))
 
 
@@ -362,6 +380,21 @@ def _jungle(arr, w, h, seed):
     la = np.asarray(leaves).astype(np.float32)
     a = la[..., 3:] / 255
     arr[..., :3] = arr[..., :3] * (1 - a) + la[..., :3] * a
+
+
+def _starlight(arr, w, h, seed):
+    rng = random.Random(seed * 5 + 11)
+    yy, xx = np.mgrid[0:h, 0:w].astype(np.float32)
+    horizon = h * 0.64
+    _paint(arr, np.exp(-((xx - w / 2) / (w * 0.32)) ** 2 - ((yy - h * 0.42) / (h * 0.36)) ** 2), (255, 252, 236), 0.22)
+    beams = np.clip(np.cos((np.arctan2(yy - h * 1.1, xx - w / 2) * 7)), 0, 1) ** 6 * np.clip(1 - yy / horizon, 0, 1)
+    _paint(arr, beams, (255, 255, 255), 0.1)
+    for _ in range(16):
+        x, y = rng.uniform(0.04, 0.96) * w, rng.uniform(0.04, 0.55) * h
+        r = rng.uniform(2.5, 6.0)
+        glow = np.exp(-((xx - x) ** 2 + (yy - y) ** 2) / (r * 1.4) ** 2)
+        cross = np.exp(-np.abs(xx - x) / (r * 0.12)) * np.exp(-np.abs(yy - y) / (r * 1.6))             + np.exp(-np.abs(yy - y) / (r * 0.12)) * np.exp(-np.abs(xx - x) / (r * 1.6))
+        _paint(arr, np.clip(glow * 0.6 + cross, 0, 1), (255, 250, 220), 0.85)
 
 
 def background(kind: str, set_name: str = DEFAULT_STYLE) -> Image.Image:
@@ -455,6 +488,14 @@ def background(kind: str, set_name: str = DEFAULT_STYLE) -> Image.Image:
         land(arr, (184, 124, 86), h * 0.36, seed, 1.0)
         land(arr, (150, 92, 60), h * 0.2, seed + 1, 0.8)
         ground(arr, (160, 106, 66), (196, 140, 92))
+    elif kind == "metal":
+        arr = _gradient(w, h, (150, 160, 184), (220, 224, 232), 1.1)
+        soft_clouds(arr, (236, 238, 246), 0.7)
+        land(arr, (130, 134, 150), h * 0.34, seed, 1.0)
+        land(arr, (100, 104, 120), h * 0.18, seed + 1, 0.8)
+        ground(arr, (112, 114, 128), (150, 154, 168))
+        plates = (np.abs(np.sin(xx / w * 18)) < 0.04) & (yy > horizon + 4)
+        arr[plates, :3] *= 0.85
     elif kind == "trainer":
         arr = _gradient(w, h, (238, 238, 244), (196, 204, 222), 1.0)
         stripes = (np.sin((xx + yy * 0.6) / 10) > 0.6)
@@ -468,6 +509,8 @@ def background(kind: str, set_name: str = DEFAULT_STYLE) -> Image.Image:
 
     if style(set_name)["scenery"] == "jungle" and kind != "trainer":
         _jungle(arr, w, h, seed)
+    if style(set_name)["scenery"] == "starlight" and kind != "trainer":
+        _starlight(arr, w, h, seed)
 
     v = np.hypot((xx - w / 2) / (w * 0.7), (yy - h / 2) / (h * 0.7))
     arr[..., :3] *= np.clip(1.08 - v * 0.22, 0.75, 1.05)[..., None]

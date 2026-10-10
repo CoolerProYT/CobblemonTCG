@@ -1,0 +1,10 @@
+{
+  "id": "basep-31",
+  "number": 31,
+  "name": "Cleffa",
+  "supertype": "pokemon",
+  "type": "colorless",
+  "hp": 30,
+  "rarity": "common",
+  "pokedex": 173
+}

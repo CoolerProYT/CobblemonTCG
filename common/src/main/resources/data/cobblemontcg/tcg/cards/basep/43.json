@@ -1,0 +1,11 @@
+{
+  "id": "basep-43",
+  "number": 43,
+  "name": "Machamp",
+  "supertype": "pokemon",
+  "type": "fighting",
+  "hp": 90,
+  "rarity": "rare",
+  "pokedex": 68,
+  "evolves_from_pokedex": 67
+}

@@ -1,0 +1,10 @@
+{
+  "id": "basep-27",
+  "number": 27,
+  "name": "Pikachu",
+  "supertype": "pokemon",
+  "type": "lightning",
+  "hp": 30,
+  "rarity": "common",
+  "pokedex": 25
+}

@@ -1,0 +1,11 @@
+{
+  "id": "basep-17",
+  "number": 17,
+  "name": "Dark Persian",
+  "supertype": "pokemon",
+  "type": "colorless",
+  "hp": 60,
+  "rarity": "rare",
+  "pokedex": 53,
+  "evolves_from_pokedex": 52
+}

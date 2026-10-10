@@ -1,0 +1,10 @@
+{
+  "id": "basep-32",
+  "number": 32,
+  "name": "Smeargle",
+  "supertype": "pokemon",
+  "type": "colorless",
+  "hp": 40,
+  "rarity": "uncommon",
+  "pokedex": 235
+}

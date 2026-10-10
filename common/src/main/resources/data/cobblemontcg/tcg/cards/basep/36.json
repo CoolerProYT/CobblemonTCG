@@ -1,0 +1,10 @@
+{
+  "id": "basep-36",
+  "number": 36,
+  "name": "Igglybuff",
+  "supertype": "pokemon",
+  "type": "colorless",
+  "hp": 30,
+  "rarity": "common",
+  "pokedex": 174
+}

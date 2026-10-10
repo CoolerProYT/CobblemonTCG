@@ -1,0 +1,10 @@
+{
+  "id": "basep-20",
+  "number": 20,
+  "name": "Psyduck",
+  "supertype": "pokemon",
+  "type": "water",
+  "hp": 50,
+  "rarity": "common",
+  "pokedex": 54
+}

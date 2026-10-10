@@ -1,0 +1,8 @@
+{
+  "parent": "cobblemontcg:item/tcg/card_pokemon",
+  "textures": {
+    "frame": "cobblemontcg:tcg/frame/basep/pokemon_fire",
+    "art": "cobblemontcg:tcg/basep/34",
+    "illustration": "cobblemontcg:tcg/basep/illustration/34"
+  }
+}

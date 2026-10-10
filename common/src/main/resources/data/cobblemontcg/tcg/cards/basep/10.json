@@ -1,0 +1,10 @@
+{
+  "id": "basep-10",
+  "number": 10,
+  "name": "Meowth",
+  "supertype": "pokemon",
+  "type": "colorless",
+  "hp": 50,
+  "rarity": "common",
+  "pokedex": 52
+}

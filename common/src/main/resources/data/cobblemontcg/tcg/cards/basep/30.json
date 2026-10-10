@@ -1,0 +1,10 @@
+{
+  "id": "basep-30",
+  "number": 30,
+  "name": "Togepi",
+  "supertype": "pokemon",
+  "type": "colorless",
+  "hp": 30,
+  "rarity": "common",
+  "pokedex": 175
+}

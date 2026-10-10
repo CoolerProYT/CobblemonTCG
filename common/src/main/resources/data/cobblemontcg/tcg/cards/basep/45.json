@@ -1,0 +1,10 @@
+{
+  "id": "basep-45",
+  "number": 45,
+  "name": "Scyther",
+  "supertype": "pokemon",
+  "type": "grass",
+  "hp": 60,
+  "rarity": "uncommon",
+  "pokedex": 123
+}
