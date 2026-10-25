@@ -1,0 +1,11 @@
+{
+  "id": "base4-31",
+  "number": 31,
+  "name": "Venomoth",
+  "supertype": "pokemon",
+  "type": "grass",
+  "hp": 70,
+  "rarity": "rare",
+  "pokedex": 49,
+  "evolves_from_pokedex": 48
+}

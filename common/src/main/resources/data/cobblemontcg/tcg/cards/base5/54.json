@@ -1,0 +1,10 @@
+{
+  "id": "base5-54",
+  "number": 54,
+  "name": "Drowzee",
+  "supertype": "pokemon",
+  "type": "psychic",
+  "hp": 50,
+  "rarity": "common",
+  "pokedex": 96
+}

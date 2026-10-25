@@ -1,0 +1,10 @@
+{
+  "id": "base5-48",
+  "number": 48,
+  "name": "Porygon",
+  "supertype": "pokemon",
+  "type": "colorless",
+  "hp": 40,
+  "rarity": "uncommon",
+  "pokedex": 137
+}

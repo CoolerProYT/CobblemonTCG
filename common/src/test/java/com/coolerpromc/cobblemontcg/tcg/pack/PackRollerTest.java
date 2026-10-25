@@ -30,12 +30,18 @@ class PackRollerTest {
     private static TcgSet base1;
     private static TcgSet base2;
     private static TcgSet basep;
+    private static TcgSet base3;
+    private static TcgSet base4;
+    private static TcgSet base5;
 
     @BeforeAll
     static void loadSets() throws IOException {
         base1 = loadSet("base1");
         base2 = loadSet("base2");
         basep = loadSet("basep");
+        base3 = loadSet("base3");
+        base4 = loadSet("base4");
+        base5 = loadSet("base5");
     }
 
     private static TcgSet loadSet(String name) throws IOException {
@@ -69,6 +75,35 @@ class PackRollerTest {
     }
 
     @Test
+    void wizardsSetsMatchTheRealSetLists() {
+        assertCounts(base3, 62, 15, 15, 16, 16);
+        assertCounts(base4, 130, 20, 20, 42, 48);
+        assertCounts(base5, 83, 18, 17, 24, 24);
+        assertEquals(List.of("aerodactyl", "lapras", "gengar"), base3.wrappers());
+        assertEquals(List.of("mewtwo", "gyarados", "ninetales"), base4.wrappers());
+        assertEquals(List.of("dark_charizard", "dark_blastoise", "dark_dragonite"), base5.wrappers());
+        RandomSource random = RandomSource.create(5L);
+        for (TcgSet set : List.of(base3, base4, base5)) {
+            for (int i = 0; i < PACKS / 4; i++) {
+                List<RolledCard> pack = PackRoller.roll(set, random, 1.0 / 3.0, 11);
+                assertEquals(11, pack.size());
+                assertEquals(11, pack.stream().map(card -> card.card().number()).distinct().count(), "duplicate card in a " + set.definition().name() + " pack");
+            }
+        }
+    }
+
+    private static void assertCounts(TcgSet set, int total, int holo, int rare, int uncommon, int common) {
+        String name = set.definition().name();
+        assertEquals(total, set.cards().size(), name);
+        assertEquals(total, set.definition().total(), name);
+        assertEquals(holo, set.cardsOfRarity(CardRarity.RARE_HOLO).size(), name + " holo rares");
+        assertEquals(rare, set.cardsOfRarity(CardRarity.RARE).size(), name + " rares");
+        assertEquals(uncommon, set.cardsOfRarity(CardRarity.UNCOMMON).size(), name + " uncommons");
+        assertEquals(common, set.cardsOfRarity(CardRarity.COMMON).size(), name + " commons");
+        assertEquals(11, set.definition().packSize(), name);
+    }
+
+    @Test
     void promosFillEveryPackSlot() {
         assertEquals(53, basep.cards().size());
         assertEquals(11, basep.cardsOfRarity(CardRarity.RARE_HOLO).size());
@@ -89,7 +124,13 @@ class PackRollerTest {
         int base1Last = base1.modelData(base1.definition().total(), true);
         int base2First = base2.modelData(1, false);
         assertTrue(base1Last < base2First, "Jungle's custom_model_data range overlaps Base Set's");
-        assertTrue(base2.modelData(base2.definition().total(), true) < basep.modelData(1, false), "the promos' custom_model_data range overlaps Jungle's");
+        List<TcgSet> byRange = List.of(base1, base2, basep, base3, base4, base5);
+        for (int i = 1; i < byRange.size(); i++) {
+            TcgSet before = byRange.get(i - 1);
+            TcgSet after = byRange.get(i);
+            assertTrue(before.modelData(before.definition().total(), true) < after.modelData(1, false),
+                    after.definition().name() + "'s custom_model_data range overlaps " + before.definition().name() + "'s");
+        }
     }
 
     @Test

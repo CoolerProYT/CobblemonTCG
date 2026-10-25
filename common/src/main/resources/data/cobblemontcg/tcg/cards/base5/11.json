@@ -1,0 +1,11 @@
+{
+  "id": "base5-11",
+  "number": 11,
+  "name": "Dark Magneton",
+  "supertype": "pokemon",
+  "type": "lightning",
+  "hp": 60,
+  "rarity": "rare_holo",
+  "pokedex": 82,
+  "evolves_from_pokedex": 81
+}

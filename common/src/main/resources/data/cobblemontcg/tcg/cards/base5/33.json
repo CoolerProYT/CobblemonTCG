@@ -1,0 +1,11 @@
+{
+  "id": "base5-33",
+  "number": 33,
+  "name": "Dark Dragonair",
+  "supertype": "pokemon",
+  "type": "colorless",
+  "hp": 60,
+  "rarity": "uncommon",
+  "pokedex": 148,
+  "evolves_from_pokedex": 147
+}

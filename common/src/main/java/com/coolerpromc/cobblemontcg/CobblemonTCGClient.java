@@ -31,6 +31,6 @@ public class CobblemonTCGClient {
                 minecraft.level.enabledFeatures(),
                 minecraft.player.canUseGameMasterBlocks() && minecraft.options.operatorItemsTab().get(),
                 minecraft.level.registryAccess());
-        ModCreativeTabs.TAB.get().buildContents(parameters);
+        ModCreativeTabs.all().forEach(tab -> tab.get().buildContents(parameters));
     }
 }

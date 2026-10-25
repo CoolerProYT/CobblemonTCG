@@ -1,0 +1,10 @@
+{
+  "id": "base5-61",
+  "number": 61,
+  "name": "Mankey",
+  "supertype": "pokemon",
+  "type": "fighting",
+  "hp": 40,
+  "rarity": "common",
+  "pokedex": 56
+}

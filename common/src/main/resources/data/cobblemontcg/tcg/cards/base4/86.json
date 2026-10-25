@@ -1,0 +1,10 @@
+{
+  "id": "base4-86",
+  "number": 86,
+  "name": "Pidgey",
+  "supertype": "pokemon",
+  "type": "colorless",
+  "hp": 40,
+  "rarity": "common",
+  "pokedex": 16
+}

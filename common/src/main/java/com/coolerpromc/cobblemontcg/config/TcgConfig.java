@@ -13,7 +13,8 @@ public class TcgConfig {
     public static final double DEFAULT_HOLO_CHANCE = 1.0 / 3.0;
     public static final int DEFAULT_PACK_SIZE = 11;
     public static final int DEFAULT_DAILY_PACK_CAP = 10;
-    public static final List<String> DEFAULT_SHOP_SETS = List.of("cobblemontcg:base1", "cobblemontcg:base2", "cobblemontcg:basep");
+    public static final List<String> DEFAULT_SHOP_SETS = List.of("cobblemontcg:base1", "cobblemontcg:base2", "cobblemontcg:base3",
+            "cobblemontcg:base4", "cobblemontcg:base5", "cobblemontcg:basep");
     public static final int DEFAULT_CARD_DEALER_PRICE = 5;
     public static final int DEFAULT_CARD_DEALER_MAX_USES = 3;
     public static final int DEFAULT_WANDERING_TRADER_PRICE = 8;
@@ -55,7 +56,7 @@ public class TcgConfig {
         dexRewards = builder.defineBoolean("rewards.triggers.dexProgress", true, "Give packs for Pokédex progress milestones (needs Cobblemon)");
 
         shopSets = builder.defineList("shop.sets", DEFAULT_SHOP_SETS, "Sets of the booster packs sold by villagers, oldest first. The Card Dealer sells the first set as a Novice, "
-                + "the second from Apprentice, the third from Journeyman and so on (up to 5 sets, one per villager level). Wandering traders offer one of them at random",
+                + "the second from Apprentice, the third from Journeyman and so on, one per villager level, and the Master sells the fifth and sixth (up to 6 sets). Wandering traders offer one of them at random",
                 v -> v instanceof String s && ResourceLocation.tryParse(s) != null);
         cardDealerEnabled = builder.defineBoolean("shop.cardDealer.enabled", true, "Card Dealer villagers sell booster packs. Only affects villagers that get their trades after the change");
         cardDealerPrice = builder.defineInt("shop.cardDealer.price", DEFAULT_CARD_DEALER_PRICE, 1, 64, "Emeralds per booster pack at the Card Dealer");

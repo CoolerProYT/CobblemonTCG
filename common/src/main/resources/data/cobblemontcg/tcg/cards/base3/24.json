@@ -1,0 +1,11 @@
+{
+  "id": "base3-24",
+  "number": 24,
+  "name": "Kabutops",
+  "supertype": "pokemon",
+  "type": "fighting",
+  "hp": 60,
+  "rarity": "rare",
+  "pokedex": 141,
+  "evolves_from_pokedex": 140
+}

@@ -17,6 +17,10 @@ dependencies {
     modCompileOnly("com.cobblemon:fabric:${cobblemon_version}") { transitive = false }
     modLocalRuntime("com.cobblemon:fabric:${cobblemon_version}")
     modLocalRuntime "net.fabricmc:fabric-language-kotlin:${fabric_kotlin_version}"
+    modCompileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
+    modLocalRuntime "mezz.jei:jei-${minecraft_version}-fabric:${jei_version}"
+    modCompileOnly "curse.maven:jade-324717:${jade_fabric_file}"
+    modLocalRuntime "curse.maven:jade-324717:${jade_fabric_file}"
 
     runtimeOnly "org.graalvm.js:js:22.3.0"
     runtimeOnly "org.graalvm.sdk:graal-sdk:22.3.0"

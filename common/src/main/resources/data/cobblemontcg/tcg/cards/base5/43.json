@@ -1,0 +1,11 @@
+{
+  "id": "base5-43",
+  "number": 43,
+  "name": "Dark Primeape",
+  "supertype": "pokemon",
+  "type": "fighting",
+  "hp": 60,
+  "rarity": "uncommon",
+  "pokedex": 57,
+  "evolves_from_pokedex": 56
+}

@@ -1,0 +1,10 @@
+{
+  "id": "base3-50",
+  "number": 50,
+  "name": "Kabuto",
+  "supertype": "pokemon",
+  "type": "fighting",
+  "hp": 30,
+  "rarity": "common",
+  "pokedex": 140
+}

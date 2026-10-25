@@ -19,7 +19,6 @@ import java.util.Map;
 public class CardDealerTableBlock extends HorizontalDirectionalBlock {
     public static final MapCodec<CardDealerTableBlock> CODEC = simpleCodec(CardDealerTableBlock::new);
 
-    // the counter, and the card rack along its back (drawn facing north, see tools/gen_table_art.py)
     private static final Map<Direction, VoxelShape> SHAPES = new EnumMap<>(Direction.class);
 
     static {
@@ -33,7 +32,7 @@ public class CardDealerTableBlock extends HorizontalDirectionalBlock {
         registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH));
     }
 
-    private static VoxelShape rotated(Direction facing, double x1, double y1, double z1, double x2, double y2, double z2) {
+    static VoxelShape rotated(Direction facing, double x1, double y1, double z1, double x2, double y2, double z2) {
         return switch (facing) {
             case EAST -> Block.box(16 - z2, y1, x1, 16 - z1, y2, x2);
             case SOUTH -> Block.box(16 - x2, y1, 16 - z2, 16 - x1, y2, 16 - z1);

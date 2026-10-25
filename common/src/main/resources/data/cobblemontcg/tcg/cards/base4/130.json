@@ -1,0 +1,8 @@
+{
+  "id": "base4-130",
+  "number": 130,
+  "name": "Water Energy",
+  "supertype": "energy",
+  "type": "water",
+  "rarity": "common"
+}

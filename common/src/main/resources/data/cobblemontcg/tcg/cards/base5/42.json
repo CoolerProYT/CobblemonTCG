@@ -1,0 +1,11 @@
+{
+  "id": "base5-42",
+  "number": 42,
+  "name": "Dark Persian",
+  "supertype": "pokemon",
+  "type": "colorless",
+  "hp": 60,
+  "rarity": "uncommon",
+  "pokedex": 53,
+  "evolves_from_pokedex": 52
+}

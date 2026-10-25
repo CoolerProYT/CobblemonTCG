@@ -142,7 +142,7 @@ public class PackRewardGameTests {
         helper.succeed();
     }
 
-    private static ServerPlayer mockPlayer(GameTestHelper helper) {
+    static ServerPlayer mockPlayer(GameTestHelper helper) {
         MinecraftServer server = helper.getLevel().getServer();
         CommonListenerCookie cookie = CommonListenerCookie.createInitial(new GameProfile(UUID.randomUUID(), "tcg-test-" + nextPlayer++), false);
         ServerPlayer player = new ServerPlayer(server, helper.getLevel(), cookie.gameProfile(), cookie.clientInformation());

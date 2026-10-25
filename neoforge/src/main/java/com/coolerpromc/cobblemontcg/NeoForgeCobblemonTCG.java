@@ -1,5 +1,6 @@
 package com.coolerpromc.cobblemontcg;
 
+import com.coolerpromc.cobblemontcg.block.custom.CardDisplayStandBlock;
 import com.coolerpromc.cobblemontcg.command.TcgCommands;
 import com.coolerpromc.cobblemontcg.compat.NeoForgeCobblemonBridge;
 import com.coolerpromc.cobblemontcg.network.HandledCustomPacketPayload;
@@ -10,12 +11,14 @@ import com.coolerpromc.cobblemontcg.platform.util.NeoForgePayloadContext;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.world.level.Level;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.AddReloadListenerEvent;
 import net.neoforged.neoforge.event.OnDatapackSyncEvent;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
+import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.neoforge.event.village.VillagerTradesEvent;
 import net.neoforged.neoforge.event.village.WandererTradesEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
@@ -34,6 +37,7 @@ public class NeoForgeCobblemonTCG {
         NeoForge.EVENT_BUS.addListener(NeoForgeCobblemonTCG::onDatapackSync);
         NeoForge.EVENT_BUS.addListener(NeoForgeCobblemonTCG::onVillagerTrades);
         NeoForge.EVENT_BUS.addListener(NeoForgeCobblemonTCG::onWandererTrades);
+        NeoForge.EVENT_BUS.addListener(NeoForgeCobblemonTCG::onBlockBreak);
         NeoForgeCobblemonBridge.init();
     }
 
@@ -41,6 +45,7 @@ public class NeoForgeCobblemonTCG {
         CobblemonTCG.initPayloadType();
         NeoForgePayloadRegistrar registrar = new NeoForgePayloadRegistrar(event.registrar("1"));
         Services.REGISTRY.applyClientboundPayloadRegistrations(registrar::registerClientbound);
+        Services.REGISTRY.applyServerboundPayloadRegistrations(registrar::registerServerbound);
     }
 
     private static void onAddReloadListeners(AddReloadListenerEvent event) {
@@ -69,9 +74,20 @@ public class NeoForgeCobblemonTCG {
                 (rare ? event.getRareTrades() : event.getGenericTrades()).add(listing));
     }
 
+    private static void onBlockBreak(BlockEvent.BreakEvent event) {
+        if (event.getLevel() instanceof Level level && !CardDisplayStandBlock.canBreak(level, event.getPos(), event.getPlayer())) {
+            CardDisplayStandBlock.refuseBreak(level, event.getPos(), event.getPlayer());
+            event.setCanceled(true);
+        }
+    }
+
     private record NeoForgePayloadRegistrar(PayloadRegistrar registrar) {
         private <T extends HandledCustomPacketPayload> void registerClientbound(CustomPacketPayload.Type<T> type, StreamCodec<? super RegistryFriendlyByteBuf, T> streamCodec) {
             registrar.playToClient(type, streamCodec, (payload, context) -> payload.handle(new NeoForgePayloadContext(context)));
+        }
+
+        private <T extends HandledCustomPacketPayload> void registerServerbound(CustomPacketPayload.Type<T> type, StreamCodec<? super RegistryFriendlyByteBuf, T> streamCodec) {
+            registrar.playToServer(type, streamCodec, (payload, context) -> payload.handle(new NeoForgePayloadContext(context)));
         }
     }
 }

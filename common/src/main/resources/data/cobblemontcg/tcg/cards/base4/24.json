@@ -1,0 +1,10 @@
+{
+  "id": "base4-24",
+  "number": 24,
+  "name": "Electabuzz",
+  "supertype": "pokemon",
+  "type": "lightning",
+  "hp": 70,
+  "rarity": "rare",
+  "pokedex": 125
+}

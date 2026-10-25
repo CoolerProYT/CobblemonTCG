@@ -1,0 +1,10 @@
+{
+  "id": "base3-47",
+  "number": 47,
+  "name": "Geodude",
+  "supertype": "pokemon",
+  "type": "fighting",
+  "hp": 50,
+  "rarity": "common",
+  "pokedex": 74
+}

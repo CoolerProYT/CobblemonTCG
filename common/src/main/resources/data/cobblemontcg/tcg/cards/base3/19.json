@@ -1,0 +1,11 @@
+{
+  "id": "base3-19",
+  "number": 19,
+  "name": "Dragonite",
+  "supertype": "pokemon",
+  "type": "colorless",
+  "hp": 100,
+  "rarity": "rare",
+  "pokedex": 149,
+  "evolves_from_pokedex": 148
+}

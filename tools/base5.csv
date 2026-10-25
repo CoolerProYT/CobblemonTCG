@@ -1,0 +1,84 @@
+number,name,supertype,type,hp,rarity
+1,Dark Alakazam,pokemon,psychic,60,rare_holo
+2,Dark Arbok,pokemon,grass,60,rare_holo
+3,Dark Blastoise,pokemon,water,70,rare_holo
+4,Dark Charizard,pokemon,fire,80,rare_holo
+5,Dark Dragonite,pokemon,colorless,70,rare_holo
+6,Dark Dugtrio,pokemon,fighting,50,rare_holo
+7,Dark Golbat,pokemon,grass,50,rare_holo
+8,Dark Gyarados,pokemon,water,70,rare_holo
+9,Dark Hypno,pokemon,psychic,60,rare_holo
+10,Dark Machamp,pokemon,fighting,70,rare_holo
+11,Dark Magneton,pokemon,lightning,60,rare_holo
+12,Dark Slowbro,pokemon,psychic,60,rare_holo
+13,Dark Vileplume,pokemon,grass,60,rare_holo
+14,Dark Weezing,pokemon,grass,60,rare_holo
+15,Here Comes Team Rocket!,trainer,,,rare_holo
+16,Rocket's Sneak Attack,trainer,,,rare_holo
+17,Rainbow Energy,energy,colorless,,rare_holo
+18,Dark Alakazam,pokemon,psychic,60,rare
+19,Dark Arbok,pokemon,grass,60,rare
+20,Dark Blastoise,pokemon,water,70,rare
+21,Dark Charizard,pokemon,fire,80,rare
+22,Dark Dragonite,pokemon,colorless,70,rare
+23,Dark Dugtrio,pokemon,fighting,50,rare
+24,Dark Golbat,pokemon,grass,50,rare
+25,Dark Gyarados,pokemon,water,70,rare
+26,Dark Hypno,pokemon,psychic,60,rare
+27,Dark Machamp,pokemon,fighting,70,rare
+28,Dark Magneton,pokemon,lightning,60,rare
+29,Dark Slowbro,pokemon,psychic,60,rare
+30,Dark Vileplume,pokemon,grass,60,rare
+31,Dark Weezing,pokemon,grass,60,rare
+32,Dark Charmeleon,pokemon,fire,50,uncommon
+33,Dark Dragonair,pokemon,colorless,60,uncommon
+34,Dark Electrode,pokemon,lightning,60,uncommon
+35,Dark Flareon,pokemon,fire,50,uncommon
+36,Dark Gloom,pokemon,grass,50,uncommon
+37,Dark Golduck,pokemon,water,60,uncommon
+38,Dark Jolteon,pokemon,lightning,50,uncommon
+39,Dark Kadabra,pokemon,psychic,50,uncommon
+40,Dark Machoke,pokemon,fighting,60,uncommon
+41,Dark Muk,pokemon,grass,60,uncommon
+42,Dark Persian,pokemon,colorless,60,uncommon
+43,Dark Primeape,pokemon,fighting,60,uncommon
+44,Dark Rapidash,pokemon,fire,60,uncommon
+45,Dark Vaporeon,pokemon,water,60,uncommon
+46,Dark Wartortle,pokemon,water,60,uncommon
+47,Magikarp,pokemon,water,30,uncommon
+48,Porygon,pokemon,colorless,40,uncommon
+49,Abra,pokemon,psychic,40,common
+50,Charmander,pokemon,fire,40,common
+51,Dark Raticate,pokemon,colorless,50,common
+52,Diglett,pokemon,fighting,40,common
+53,Dratini,pokemon,colorless,40,common
+54,Drowzee,pokemon,psychic,50,common
+55,Eevee,pokemon,colorless,40,common
+56,Ekans,pokemon,grass,50,common
+57,Grimer,pokemon,grass,40,common
+58,Koffing,pokemon,grass,40,common
+59,Machop,pokemon,fighting,50,common
+60,Magnemite,pokemon,lightning,40,common
+61,Mankey,pokemon,fighting,40,common
+62,Meowth,pokemon,colorless,40,common
+63,Oddish,pokemon,grass,50,common
+64,Ponyta,pokemon,fire,50,common
+65,Psyduck,pokemon,water,50,common
+66,Rattata,pokemon,colorless,40,common
+67,Slowpoke,pokemon,psychic,50,common
+68,Squirtle,pokemon,water,50,common
+69,Voltorb,pokemon,lightning,40,common
+70,Zubat,pokemon,grass,40,common
+71,Here Comes Team Rocket!,trainer,,,rare
+72,Rocket's Sneak Attack,trainer,,,rare
+73,The Boss's Way,trainer,,,uncommon
+74,Challenge!,trainer,,,uncommon
+75,Digger,trainer,,,uncommon
+76,Imposter Oak's Revenge,trainer,,,uncommon
+77,Nightly Garbage Run,trainer,,,uncommon
+78,Goop Gas Attack,trainer,,,common
+79,Sleep!,trainer,,,common
+80,Rainbow Energy,energy,colorless,,rare
+81,Full Heal Energy,energy,colorless,,uncommon
+82,Potion Energy,energy,colorless,,uncommon
+83,Dark Raichu,pokemon,lightning,70,rare_holo

@@ -1,0 +1,11 @@
+{
+  "id": "base5-21",
+  "number": 21,
+  "name": "Dark Charizard",
+  "supertype": "pokemon",
+  "type": "fire",
+  "hp": 80,
+  "rarity": "rare",
+  "pokedex": 6,
+  "evolves_from_pokedex": 5
+}

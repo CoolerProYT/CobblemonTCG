@@ -1,0 +1,10 @@
+{
+  "id": "base3-22",
+  "number": 22,
+  "name": "Hitmonlee",
+  "supertype": "pokemon",
+  "type": "fighting",
+  "hp": 60,
+  "rarity": "rare",
+  "pokedex": 106
+}

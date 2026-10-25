@@ -1,0 +1,10 @@
+{
+  "id": "base4-68",
+  "number": 68,
+  "name": "Caterpie",
+  "supertype": "pokemon",
+  "type": "grass",
+  "hp": 40,
+  "rarity": "common",
+  "pokedex": 10
+}

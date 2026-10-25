@@ -54,7 +54,7 @@ The mod ships three files in `data/cobblemontcg/tcg/rewards/`. Override a file w
 
 | File | Rules |
 | --- | --- |
-| `capture.json` | Any catch: 5% chance of 1 pack. First catch of a species: 25% chance of 1 pack. Shiny catch: 1 pack. Jungle-only Pokémon give Jungle packs, promo-only Pokémon (Mew, Johto Pokémon...) Black Star Promos packs, every other species Base Set packs |
+| `capture.json` | Any catch: 5% chance of 1 pack. First catch of a species: 25% chance of 1 pack. Shiny catch: 1 pack. Jungle-only Pokémon give Jungle packs, Pokémon first printed in Fossil give Fossil packs, promo-only Pokémon (Mew, Johto Pokémon...) Black Star Promos packs, every other species Base Set packs |
 | `level_up.json` | For every Pokémon: level 10, 50% chance of 1 Base Set pack; level 25, 1 Base Set pack; level 50, 1 Jungle pack; level 100, 2 Jungle packs |
 | `dex_progress.json` | Every 10 species owned: 1 Base Set pack. 25%: 1 Base Set pack. 50%: 1 Jungle pack. 75% and 100%: 2 Jungle packs |
 

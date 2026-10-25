@@ -1,0 +1,11 @@
+{
+  "id": "base5-1",
+  "number": 1,
+  "name": "Dark Alakazam",
+  "supertype": "pokemon",
+  "type": "psychic",
+  "hp": 60,
+  "rarity": "rare_holo",
+  "pokedex": 65,
+  "evolves_from_pokedex": 64
+}

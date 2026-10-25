@@ -1,0 +1,11 @@
+{
+  "id": "base3-28",
+  "number": 28,
+  "name": "Muk",
+  "supertype": "pokemon",
+  "type": "grass",
+  "hp": 70,
+  "rarity": "rare",
+  "pokedex": 89,
+  "evolves_from_pokedex": 88
+}

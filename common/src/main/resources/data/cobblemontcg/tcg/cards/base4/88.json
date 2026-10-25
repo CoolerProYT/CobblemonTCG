@@ -1,0 +1,10 @@
+{
+  "id": "base4-88",
+  "number": 88,
+  "name": "Poliwag",
+  "supertype": "pokemon",
+  "type": "water",
+  "hp": 40,
+  "rarity": "common",
+  "pokedex": 60
+}

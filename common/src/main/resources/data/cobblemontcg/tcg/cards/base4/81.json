@@ -1,0 +1,11 @@
+{
+  "id": "base4-81",
+  "number": 81,
+  "name": "Metapod",
+  "supertype": "pokemon",
+  "type": "grass",
+  "hp": 70,
+  "rarity": "common",
+  "pokedex": 11,
+  "evolves_from_pokedex": 10
+}

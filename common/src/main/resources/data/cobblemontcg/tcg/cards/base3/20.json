@@ -1,0 +1,11 @@
+{
+  "id": "base3-20",
+  "number": 20,
+  "name": "Gengar",
+  "supertype": "pokemon",
+  "type": "psychic",
+  "hp": 80,
+  "rarity": "rare",
+  "pokedex": 94,
+  "evolves_from_pokedex": 93
+}

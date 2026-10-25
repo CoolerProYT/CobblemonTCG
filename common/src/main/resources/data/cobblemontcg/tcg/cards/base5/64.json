@@ -1,0 +1,10 @@
+{
+  "id": "base5-64",
+  "number": 64,
+  "name": "Ponyta",
+  "supertype": "pokemon",
+  "type": "fire",
+  "hp": 50,
+  "rarity": "common",
+  "pokedex": 77
+}

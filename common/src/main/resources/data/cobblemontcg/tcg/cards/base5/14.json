@@ -1,0 +1,11 @@
+{
+  "id": "base5-14",
+  "number": 14,
+  "name": "Dark Weezing",
+  "supertype": "pokemon",
+  "type": "grass",
+  "hp": 60,
+  "rarity": "rare_holo",
+  "pokedex": 110,
+  "evolves_from_pokedex": 109
+}

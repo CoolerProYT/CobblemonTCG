@@ -1,0 +1,11 @@
+{
+  "id": "base5-2",
+  "number": 2,
+  "name": "Dark Arbok",
+  "supertype": "pokemon",
+  "type": "grass",
+  "hp": 60,
+  "rarity": "rare_holo",
+  "pokedex": 24,
+  "evolves_from_pokedex": 23
+}

@@ -1,0 +1,11 @@
+{
+  "id": "base3-21",
+  "number": 21,
+  "name": "Haunter",
+  "supertype": "pokemon",
+  "type": "psychic",
+  "hp": 50,
+  "rarity": "rare",
+  "pokedex": 93,
+  "evolves_from_pokedex": 92
+}

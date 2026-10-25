@@ -1,0 +1,10 @@
+{
+  "id": "base3-16",
+  "number": 16,
+  "name": "Aerodactyl",
+  "supertype": "pokemon",
+  "type": "fighting",
+  "hp": 60,
+  "rarity": "rare",
+  "pokedex": 142
+}

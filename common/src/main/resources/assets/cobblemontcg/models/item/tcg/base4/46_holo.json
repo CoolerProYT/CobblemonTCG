@@ -1,0 +1,9 @@
+{
+  "parent": "cobblemontcg:item/tcg/card_evolution_holo",
+  "textures": {
+    "frame": "cobblemontcg:tcg/frame/base4/pokemon_psychic",
+    "art": "cobblemontcg:tcg/base4/46",
+    "illustration": "cobblemontcg:tcg/base4/illustration/46",
+    "evolution": "cobblemontcg:tcg/base4/evolution/46"
+  }
+}

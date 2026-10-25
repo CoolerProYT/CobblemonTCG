@@ -21,7 +21,7 @@
 | --- | --- | --- |
 | `name` | yes | Shown on packs (`Base Set Booster Pack`), tooltips and in commands |
 | `total` | yes | Printed card count, shown as `4/102` |
-| `model_data_base` | yes | Start of the set's `custom_model_data` range. Give every set its own range: Base Set uses 1000, Jungle 2000, the Black Star Promos 3000 |
+| `model_data_base` | yes | Start of the set's `custom_model_data` range. Give every set its own range: Base Set uses 1000, Jungle 2000, the Black Star Promos 3000, Fossil 4000, Base Set 2 5000, Team Rocket 6000 |
 | `wrappers` | no | The pack designs, picked at random for each pack. Default `["default"]` |
 | `wrapper_pokedex` | no | National Pokédex number per wrapper: Cobblemon's model of that Pokémon is drawn as the pack's mascot |
 | `pack_slots` | yes | What a pack holds, see below |

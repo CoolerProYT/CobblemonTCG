@@ -5,10 +5,12 @@ from PIL import Image, ImageDraw
 from . import finish as F
 from . import layout as L
 from .canvas import Sprite
-from . import pokemon_base1, pokemon_base2, pokemon_basep, trainers_base1, trainers_base2, trainers_basep
+from . import pokemon_base1, pokemon_base2, pokemon_basep, trainers_base1, trainers_base2, trainers_base3, trainers_base5, trainers_basep
 
-POKEMON = {"base1": pokemon_base1.DRAW, "base2": pokemon_base2.DRAW, "basep": pokemon_basep.DRAW}
-TRAINERS = {"base1": trainers_base1.DRAW, "base2": trainers_base2.DRAW, "basep": trainers_basep.DRAW}
+POKEMON = {"base1": pokemon_base1.DRAW, "base2": pokemon_base2.DRAW, "base3": {}, "base4": {}, "base5": {}, "basep": pokemon_basep.DRAW}
+TRAINERS = {"base1": trainers_base1.DRAW, "base2": trainers_base2.DRAW, "base3": trainers_base3.DRAW, "base4": {},
+            "base5": trainers_base5.DRAW, "basep": trainers_basep.DRAW}
+SPELLINGS = {"Imposter Professor Oak": "Impostor Professor Oak"}
 
 HP_RED = (198, 34, 30)
 POWER_RED = (188, 34, 30)
@@ -18,6 +20,30 @@ def frame_name(card: dict) -> str:
     if card["supertype"] == "pokemon":
         return f"pokemon_{card['type']}"
     return card["supertype"]
+
+
+def _species(name: str) -> str:
+    name = SPELLINGS.get(name, name)
+    return name[len("Dark "):] if name.startswith("Dark ") else name
+
+
+def _placeholder(s: Sprite):
+    s.shadow(80, 93, 22)
+    trainers_base1.capsule(s, 80, 66, 22, (200, 200, 210))
+
+
+def link_drawings(cards_by_set: dict) -> None:
+    for kind, table in (("pokemon", POKEMON), ("trainer", TRAINERS)):
+        drawn = {}
+        for set_name, cards in cards_by_set.items():
+            for card in cards:
+                if card["supertype"] == kind and card["number"] in table.get(set_name, {}):
+                    drawn.setdefault(_species(card["name"]), table[set_name][card["number"]])
+        for set_name, cards in cards_by_set.items():
+            own = table.setdefault(set_name, {})
+            for card in cards:
+                if card["supertype"] == kind and card["number"] not in own:
+                    own[card["number"]] = drawn.get(_species(card["name"]), _placeholder)
 
 
 def illustration(drawings: dict, number: int, w=None, h=None) -> Image.Image:

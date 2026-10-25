@@ -34,7 +34,7 @@ public class PackOpeningScreen extends Screen {
     private static final long TEAR_MS = 900;
     private static final long FLY_MS = 280;
     private static final long FLIP_MS = 320;
-    private static final float ITEM_DEPTH = 150.0F;  // z offset GuiGraphics#renderItem adds
+    private static final float ITEM_DEPTH = 150.0F;
     private static final float SWIPE_DISTANCE = 50.0F;
 
     private enum Phase { PACK, TEARING, REVEAL, SUMMARY }
@@ -367,7 +367,6 @@ public class PackOpeningScreen extends Screen {
         graphics.pose().mulPose(Axis.ZP.rotationDegrees(rot));
         float scale = size / 16.0F;
         if (turn != 0) {
-            // renderItem pushes the model 150 deep; do that before turning so the card turns in place
             graphics.pose().translate(0, 0, ITEM_DEPTH);
             graphics.pose().mulPose(Axis.YP.rotationDegrees(turn));
             graphics.pose().scale(scale, scale, 1.0F);

@@ -1,8 +1,8 @@
 # Cobblemon: TCG
 
 A trading card addon for [Cobblemon](https://cobblemon.com) on Minecraft 1.21.1 (Fabric and NeoForge).
-Open booster packs and collect cards. Three sets so far, with real pack odds: the 1999 Base Set (102 cards),
-Jungle (64 cards) and the Wizards Black Star Promos (53 cards).
+Open booster packs and collect cards. Six sets so far, with real pack odds: Base Set (102 cards), Jungle (64 cards), Fossil (62 cards),
+Base Set 2 (130 cards), Team Rocket (83 cards) and the Wizards Black Star Promos (53 cards).
 
 **Requires Cobblemon 1.8.1 or newer**: the game will not start if Cobblemon is missing.
 
@@ -23,30 +23,40 @@ card art, flavour text, pack wrappers, set logos, card backs or expansion symbol
   about 1 in 3 packs, configurable), 3 uncommons and 7 commons (basic Energy is part of the
   commons). No card appears twice in the same pack. Like the real sets, every pack comes in one of
   three wrappers, picked at random: Charizard, Blastoise or Venusaur art for Base Set, Scyther,
-  Wigglytuff or Flareon art for Jungle, Pikachu, Mew or Ho-Oh art for the Black Star Promos.
+  Wigglytuff or Flareon art for Jungle, Aerodactyl, Lapras or Gengar for Fossil, Mewtwo, Gyarados or
+  Ninetales for Base Set 2, Dark Charizard, Dark Blastoise or Dark Dragonite for Team Rocket and Pikachu,
+  Mew or Ho-Oh for the Black Star Promos.
 - **Opening animation**: right-click a pack and it tears open; swipe the cards away one by one
   (drag, click, or Space / arrow keys). Commons come first and the rare last, with a burst of light
   and a sound for rares and holos, then a summary of every pull. The cards are already in your
   inventory when the animation starts, so closing it early never loses anything.
-- **Cards**: 102 Base Set cards, 64 Jungle cards and 53 Wizards Black Star Promos, each with a regular and a holo print. Holo prints have an animated
+- **Cards**: 494 cards over six sets, each with a regular and a holo print. Holo prints have an animated
   shimmer. Tooltips show number, rarity, card type, HP, energy type and holo.
 - **Commands** (operators only):
   - `/tcg give pack <set> [amount]`
   - `/tcg give card <set> <number> [holo]`
 
-  `<set>` accepts `cobblemontcg:base1` or just `base1` (Base Set), `base2` for Jungle, `basep` for the Wizards Black Star Promos.
+  `<set>` accepts `cobblemontcg:base1` or just `base1` (Base Set), `base2` for Jungle, `base3` for Fossil, `base4` for Base Set 2,
+  `base5` for Team Rocket, `basep` for the Wizards Black Star Promos.
 - **Card Binder**: 24 pages of 9 pockets (216 card stacks), two pages shown at a time with every card
   drawn big in its pocket. Shift-click cards in, sort by set and number with one button. Only cards fit.
   Crafted from a book, leather and 3 iron nuggets. If the binder burns, its cards drop out.
+- **Card Display Stand**: a pedestal that sells one card to other players for any item, in any amount (1-9999),
+  set by its owner. Right-click it with a card to put it on show and set the price, crouch and right-click empty-handed
+  to take the cards back. Other players get a shop screen with a Buy button; payments collect in the stand's till.
+  Only the owner (or an operator in creative) can break it. With JEI, drag any item onto the price slot to ask for it;
+  with Jade, looking at a stand shows its card, stock, price and seller. Crafted from planks, red wool, 2 gold nuggets and 3 wooden slabs.
 - **Card Dealer**: a villager profession whose job site is the Card Dealer Table, a shop counter with a
   glass display of packs and a rack of cards (2 paper, 1 booster pack, 5 planks: paper / pack / paper on
   top, planks below in a table shape). It sells
   booster packs for 5 emeralds, 3 times per restock (configurable), and unlocks newer sets as it levels
   up, like the real sets came out: Base Set packs as a Novice, Jungle packs from Apprentice (about 5
-  pack purchases), Black Star Promos packs from Journeyman (about 35). The sets and their order come from `shop.sets`.
+  pack purchases), Fossil from Journeyman (about 35), Base Set 2 from Expert (about 75), and Team Rocket and the
+  Black Star Promos at Master (about 125). The sets and their order come from `shop.sets`.
 - **Wandering trader**: may offer one booster pack of a random `shop.sets` set for 8 emeralds
   (configurable). The pack offer joins the trader's common pool, so not every trader has it.
-- **Creative tab** "Cobblemon: TCG" with every pack and card.
+- **Creative tabs**: one per set ("Cobblemon: TCG - Base Set", "Cobblemon: TCG - Jungle"...) with its packs and cards,
+  and "Cobblemon: TCG" with the Card Binder, the Card Dealer Table, the Card Display Stand and the packs and cards of datapack sets.
 
 ## Configuration
 
@@ -62,7 +72,7 @@ card art, flavour text, pack wrappers, set logos, card backs or expansion symbol
 | `rewards.triggers.capture` | `true` | Packs for catching Pokémon (Cobblemon) |
 | `rewards.triggers.levelUp` | `true` | Packs for level milestones (Cobblemon) |
 | `rewards.triggers.dexProgress` | `true` | Packs for Pokédex milestones (Cobblemon) |
-| `shop.sets` | `["cobblemontcg:base1", "cobblemontcg:base2", "cobblemontcg:basep"]` | Sets villagers sell, oldest first: the Card Dealer unlocks one per villager level (Novice to Master, up to 5 sets) |
+| `shop.sets` | `["cobblemontcg:base1", "cobblemontcg:base2", "cobblemontcg:base3", "cobblemontcg:base4", "cobblemontcg:base5", "cobblemontcg:basep"]` | Sets villagers sell, oldest first: the Card Dealer unlocks one per villager level (Novice to Expert, two at Master: up to 6 sets) |
 | `shop.cardDealer.enabled` | `true` | Card Dealer villagers sell booster packs |
 | `shop.cardDealer.price` | `5` | Emeralds per pack at the Card Dealer |
 | `shop.cardDealer.maxUses` | `3` | Packs a Card Dealer sells before restocking |
@@ -106,6 +116,9 @@ the wrapper and `custom_model_data` picks its texture:
 | Base Set | `cobblemontcg:base1` | `charizard` 1000, `blastoise` 1001, `venusaur` 1002 |
 | Jungle | `cobblemontcg:base2` | `scyther` 2000, `wigglytuff` 2001, `flareon` 2002 |
 | Wizards Black Star Promos | `cobblemontcg:basep` | `pikachu` 3000, `mew` 3001, `hooh` 3002 |
+| Fossil | `cobblemontcg:base3` | `aerodactyl` 4000, `lapras` 4001, `gengar` 4002 |
+| Base Set 2 | `cobblemontcg:base4` | `mewtwo` 5000, `gyarados` 5001, `ninetales` 5002 |
+| Team Rocket | `cobblemontcg:base5` | `dark_charizard` 6000, `dark_blastoise` 6001, `dark_dragonite` 6002 |
 
 Add one offer per wrapper to sell them all.
 
@@ -195,7 +208,7 @@ data pack, or replace it with `[]`, to change or remove them):
 
 | File | Rule |
 | --- | --- |
-| `capture.json` | any catch: 5% chance of 1 pack; first catch of a species: 25% chance of 1 pack; shiny catch: 1 pack. Pokémon that are in Jungle but not in Base Set (Scyther, Snorlax, Eevee and its evolutions...) give Jungle packs, Pokémon that only appear in the promos (Mew, Dragonite, Johto Pokémon...) give Black Star Promos packs, every other species gives Base Set packs |
+| `capture.json` | any catch: 5% chance of 1 pack; first catch of a species: 25% chance of 1 pack; shiny catch: 1 pack. Pokémon that are in Jungle but not in Base Set (Scyther, Snorlax, Eevee and its evolutions...) give Jungle packs, Pokémon first printed in Fossil (Aerodactyl, Lapras, Gengar, Dragonite...) give Fossil packs, Pokémon that only appear in the promos (Mew, Johto Pokémon...) give Black Star Promos packs, every other species gives Base Set packs. Base Set 2 and Team Rocket bring no new species |
 | `level_up.json` | for every Pokémon: level 10, 50% chance of 1 Base Set pack; level 25, 1 Base Set pack; level 50, 1 Jungle pack; level 100, 2 Jungle packs |
 | `dex_progress.json` | every 10 species owned: 1 Base Set pack; 25% of the Pokédex: 1 Base Set pack; 50%: 1 Jungle pack; 75% and 100%: 2 Jungle packs |
 
@@ -213,6 +226,9 @@ Every set has its own card style so its cards can be told apart at a glance:
 | --- | --- | --- | --- | --- |
 | Base Set | gold (silver on Trainers) | gold | open landscapes per type | none |
 | Jungle | mossy green | leaf green | the same landscapes overgrown with jungle canopy, vines, palms and ferns | a leaf, right of the strip (top right of the rules box on Trainers) |
+| Fossil | sandstone | sand | the same landscapes in sepia, with rock strata and ammonites in the ground | a fossil spiral |
+| Base Set 2 | orange gold | orange gold | open landscapes per type, like Base Set | a 2 |
+| Team Rocket | dark maroon | rose | the same landscapes at night, with searchlights and a red glow on the horizon | a red R |
 | Wizards Black Star Promos | slate | silver | the same landscapes under a spotlight with twinkling stars | a black star, like the real promos |
 
 The set marks are original drawings, not the official expansion symbols.
@@ -263,7 +279,7 @@ Requires Python 3.10+, Pillow 10.1+ and numpy (`pip install pillow numpy`).
 - `tools/<set>.csv`: the card list (`number,name,supertype,type,hp,rarity`).
 - `tools/<set>_text.json`: game text drawn on the cards (stage, evolves from, level, Pokédex number,
   Pokémon Powers, attacks, weakness, resistance, retreat cost, trainer and energy rules).
-  For `base1` (Base Set), `base2` (Jungle) and `basep` (Wizards Black Star Promos) it was taken from the community card database
+  For every set it was taken from the community card database
   [PokemonTCG/pokemon-tcg-data](https://github.com/PokemonTCG/pokemon-tcg-data).
 - `tools/fonts/`: Cabin by Pablo Impallari and Rodrigo Fuenzalida, under the SIL Open Font License
   (`tools/fonts/OFL.txt`), used only to draw the textures.
@@ -282,9 +298,12 @@ Requires Python 3.10+, Pillow 10.1+ and numpy (`pip install pillow numpy`).
 - `python tools/gen_table_art.py`: draws the Card Dealer Table's textures, writes its block model and
   renders it to `docs/renders/items/card_dealer_table.png`, the wiki's icon for it (hosted on GCS, see
   `docs/README.md`).
+- `python tools/gen_stand_art.py`: draws the Card Display Stand's textures and both of its screens, writes its block
+  and item models and renders it to `docs/renders/items/card_display_stand.png`.
 
 Card stacks use `custom_model_data = model_data_base + number * 2` for the regular print and `+ 1`
-for the holo print, so give every set its own `model_data_base` range (Base Set uses 1000, Jungle 2000, the Black Star Promos 3000). Packs use
+for the holo print, so give every set its own `model_data_base` range (Base Set uses 1000, Jungle 2000, the Black Star Promos 3000, Fossil 4000, Base Set 2 5000,
+Team Rocket 6000). Packs use
 `model_data_base + wrapper index`.
 
 ## Building

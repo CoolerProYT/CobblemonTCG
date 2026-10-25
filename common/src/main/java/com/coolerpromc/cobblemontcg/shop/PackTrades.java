@@ -19,16 +19,21 @@ import java.util.Optional;
 
 public class PackTrades {
     public static final int MAX_LEVEL = 5;
+    public static final int MAX_SETS = MAX_LEVEL + 1;
     private static final int CARD_DEALER_XP = 2;
     private static final int WANDERING_TRADER_XP = 1;
     private static final float PRICE_MULTIPLIER = 0.05F;
 
     public static void init() {
-        for (int level = 1; level <= MAX_LEVEL; level++) {
-            int index = level - 1;
-            Services.VILLAGER_TRADES.registerVillagerTrade(ModVillagers.CARD_DEALER, level, (trader, random) -> cardDealerOffer(index, random));
+        for (int index = 0; index < MAX_SETS; index++) {
+            int i = index;
+            Services.VILLAGER_TRADES.registerVillagerTrade(ModVillagers.CARD_DEALER, levelOf(index), (trader, random) -> cardDealerOffer(i, random));
         }
         Services.VILLAGER_TRADES.registerWanderingTrade(false, (trader, random) -> wanderingTraderOffer(random));
+    }
+
+    public static int levelOf(int index) {
+        return Math.min(index + 1, MAX_LEVEL);
     }
 
     @Nullable

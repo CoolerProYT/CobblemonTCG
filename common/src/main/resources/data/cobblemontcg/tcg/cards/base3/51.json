@@ -1,0 +1,10 @@
+{
+  "id": "base3-51",
+  "number": 51,
+  "name": "Krabby",
+  "supertype": "pokemon",
+  "type": "water",
+  "hp": 50,
+  "rarity": "common",
+  "pokedex": 98
+}

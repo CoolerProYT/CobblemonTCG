@@ -1,0 +1,11 @@
+{
+  "id": "base5-22",
+  "number": 22,
+  "name": "Dark Dragonite",
+  "supertype": "pokemon",
+  "type": "colorless",
+  "hp": 70,
+  "rarity": "rare",
+  "pokedex": 149,
+  "evolves_from_pokedex": 148
+}

@@ -1,0 +1,11 @@
+{
+  "id": "base4-54",
+  "number": 54,
+  "name": "Nidorino",
+  "supertype": "pokemon",
+  "type": "grass",
+  "hp": 60,
+  "rarity": "uncommon",
+  "pokedex": 33,
+  "evolves_from_pokedex": 32
+}

@@ -1,0 +1,11 @@
+{
+  "id": "base5-41",
+  "number": 41,
+  "name": "Dark Muk",
+  "supertype": "pokemon",
+  "type": "grass",
+  "hp": 60,
+  "rarity": "uncommon",
+  "pokedex": 89,
+  "evolves_from_pokedex": 88
+}

@@ -20,8 +20,6 @@ import org.joml.Quaternionf;
 import java.util.Optional;
 
 public class CobblemonCardRenderer implements CardArtPatcher.PortraitRenderer {
-    // the Pokédex portrait is 137 x 68 GUI units with the model at scale 2 and its origin 12 units above
-    // the top; the canvas keeps that width and takes the height from the requested image's shape
     private static final float CANVAS_W = 137.0F;
     private static final float POKEDEX_H = 68.0F;
     private static final float MODEL_SCALE = 2.0F;

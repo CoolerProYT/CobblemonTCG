@@ -1,0 +1,10 @@
+{
+  "id": "base4-95",
+  "number": 95,
+  "name": "Staryu",
+  "supertype": "pokemon",
+  "type": "water",
+  "hp": 40,
+  "rarity": "common",
+  "pokedex": 120
+}

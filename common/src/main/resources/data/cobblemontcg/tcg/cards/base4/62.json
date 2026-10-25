@@ -1,0 +1,10 @@
+{
+  "id": "base4-62",
+  "number": 62,
+  "name": "Tauros",
+  "supertype": "pokemon",
+  "type": "colorless",
+  "hp": 60,
+  "rarity": "uncommon",
+  "pokedex": 128
+}

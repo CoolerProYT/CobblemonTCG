@@ -116,7 +116,6 @@ class RewardRuleTest {
         assertFalse(every.test(RewardContext.dexProgress(null, "eevee", 9, 1025)));
         assertTrue(every.test(RewardContext.dexProgress(null, "eevee", 30, 1025)));
         assertEquals(Optional.of("dex_every/10/30"), every.milestone(RewardContext.dexProgress(null, "eevee", 30, 1025)));
-        // a multiple the daily cap held back is still open on the next species, under the same key
         assertTrue(every.test(RewardContext.dexProgress(null, "eevee", 31, 1025)));
         assertEquals(Optional.of("dex_every/10/30"), every.milestone(RewardContext.dexProgress(null, "eevee", 31, 1025)));
 
@@ -184,7 +183,7 @@ class RewardRuleTest {
                 total += rules.size();
             }
         }
-        assertEquals(18, total);
+        assertEquals(21, total);
     }
 
     @Test
@@ -208,6 +207,17 @@ class RewardRuleTest {
                 "a shiny Jungle Pokemon pays Jungle packs");
         assertEquals(List.of(ResourceLocation.parse("cobblemontcg:base1"), ResourceLocation.parse("cobblemontcg:base1"), ResourceLocation.parse("cobblemontcg:base1")),
                 paidSets(trigger, rules, RewardContext.capture(null, "charmander", 5, true, true)), "first shiny catch pays every Base Set rule");
+    }
+
+    @Test
+    void fossilSpeciesGiveFossilPacks() throws Exception {
+        ResourceLocation trigger = ResourceLocation.parse("cobblemontcg:capture");
+        List<RewardRule> rules = RewardRule.CODEC.listOf().parse(JsonOps.INSTANCE, JsonParser.parseString(java.nio.file.Files.readString(
+                java.nio.file.Path.of("src/main/resources/data/cobblemontcg/tcg/rewards/capture.json")))).getOrThrow();
+        ResourceLocation fossil = ResourceLocation.parse("cobblemontcg:base3");
+        assertEquals(List.of(fossil, fossil), paidSets(trigger, rules, RewardContext.capture(null, "aerodactyl", 5, false, true)));
+        assertEquals(List.of(fossil, fossil), paidSets(trigger, rules, RewardContext.capture(null, "dragonite", 5, false, true)),
+                "Dragonite was first printed in Fossil, not in the promos");
     }
 
     @Test

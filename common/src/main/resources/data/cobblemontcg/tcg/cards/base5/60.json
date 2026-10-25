@@ -1,0 +1,10 @@
+{
+  "id": "base5-60",
+  "number": 60,
+  "name": "Magnemite",
+  "supertype": "pokemon",
+  "type": "lightning",
+  "hp": 40,
+  "rarity": "common",
+  "pokedex": 81
+}

@@ -1,0 +1,11 @@
+{
+  "id": "base5-30",
+  "number": 30,
+  "name": "Dark Vileplume",
+  "supertype": "pokemon",
+  "type": "grass",
+  "hp": 60,
+  "rarity": "rare",
+  "pokedex": 45,
+  "evolves_from_pokedex": 44
+}

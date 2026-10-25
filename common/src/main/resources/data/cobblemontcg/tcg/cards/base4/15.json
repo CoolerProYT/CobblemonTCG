@@ -1,0 +1,11 @@
+{
+  "id": "base4-15",
+  "number": 15,
+  "name": "Poliwrath",
+  "supertype": "pokemon",
+  "type": "water",
+  "hp": 90,
+  "rarity": "rare_holo",
+  "pokedex": 62,
+  "evolves_from_pokedex": 61
+}

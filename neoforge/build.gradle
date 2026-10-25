@@ -68,6 +68,11 @@ dependencies {
     compileOnly "org.jetbrains.kotlin:kotlin-stdlib:${kotlin_version}"
     runtimeOnly("com.cobblemon:neoforge:${cobblemon_version}") { transitive = false }
     runtimeOnly "thedarkcolour:kotlinforforge-neoforge:${kotlin_for_forge_version}"
+    compileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
+    compileOnly "mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}"
+    runtimeOnly "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
+    compileOnly "curse.maven:jade-324717:${jade_neoforge_file}"
+    runtimeOnly "curse.maven:jade-324717:${jade_neoforge_file}"
 }
 
 publishMods {

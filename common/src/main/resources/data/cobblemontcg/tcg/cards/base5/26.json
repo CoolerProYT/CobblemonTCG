@@ -1,0 +1,11 @@
+{
+  "id": "base5-26",
+  "number": 26,
+  "name": "Dark Hypno",
+  "supertype": "pokemon",
+  "type": "psychic",
+  "hp": 60,
+  "rarity": "rare",
+  "pokedex": 97,
+  "evolves_from_pokedex": 96
+}

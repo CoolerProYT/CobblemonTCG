@@ -9,7 +9,7 @@ from PIL import Image, ImageDraw
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from art import layout as L
-from art.cards import card_layers, frame_name
+from art.cards import card_layers, frame_name, link_drawings
 from art.wrapper import DEFAULT, SETS, make_card_back, make_pack_back, make_wrapper, make_wrapper_layers
 
 NAMESPACE = "cobblemontcg"
@@ -78,6 +78,7 @@ def main() -> None:
     save(make_icon(frames), RESOURCES / f"{NAMESPACE}.png")
 
     csv_paths = sorted(TOOLS.glob("*.csv"))
+    link_drawings({csv_path.stem: list(read_cards(csv_path)) for csv_path in csv_paths})
     everywhere = {}
     for csv_path in csv_paths:
         for c in read_cards(csv_path):

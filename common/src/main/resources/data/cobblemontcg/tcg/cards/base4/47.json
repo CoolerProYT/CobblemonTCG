@@ -1,0 +1,11 @@
+{
+  "id": "base4-47",
+  "number": 47,
+  "name": "Kakuna",
+  "supertype": "pokemon",
+  "type": "grass",
+  "hp": 80,
+  "rarity": "uncommon",
+  "pokedex": 14,
+  "evolves_from_pokedex": 13
+}

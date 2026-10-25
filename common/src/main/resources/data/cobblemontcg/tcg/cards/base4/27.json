@@ -1,0 +1,10 @@
+{
+  "id": "base4-27",
+  "number": 27,
+  "name": "Mr. Mime",
+  "supertype": "pokemon",
+  "type": "psychic",
+  "hp": 40,
+  "rarity": "rare",
+  "pokedex": 122
+}

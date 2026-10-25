@@ -1,0 +1,10 @@
+{
+  "id": "base4-91",
+  "number": 91,
+  "name": "Sandshrew",
+  "supertype": "pokemon",
+  "type": "fighting",
+  "hp": 40,
+  "rarity": "common",
+  "pokedex": 27
+}

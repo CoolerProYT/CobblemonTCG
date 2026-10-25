@@ -2,8 +2,8 @@ import math
 
 from . import pokemon_base1 as base1
 from . import pokemon_base2 as base2
-from .canvas import OUTLINE, Sprite, darker, lighter
-from .pokemon_base1 import BLACK, CREAM, PINK, RED, WHITE, quadruped_dog
+from .canvas import OUTLINE, Sprite, darker
+from .pokemon_base1 import BLACK, RED, WHITE, quadruped_dog
 
 DRAW = {}
 

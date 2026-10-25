@@ -1,0 +1,10 @@
+{
+  "id": "base3-30",
+  "number": 30,
+  "name": "Zapdos",
+  "supertype": "pokemon",
+  "type": "lightning",
+  "hp": 80,
+  "rarity": "rare",
+  "pokedex": 145
+}

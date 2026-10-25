@@ -1,0 +1,131 @@
+number,name,supertype,type,hp,rarity
+1,Alakazam,pokemon,psychic,80,rare_holo
+2,Blastoise,pokemon,water,100,rare_holo
+3,Chansey,pokemon,colorless,120,rare_holo
+4,Charizard,pokemon,fire,120,rare_holo
+5,Clefable,pokemon,colorless,70,rare_holo
+6,Clefairy,pokemon,colorless,40,rare_holo
+7,Gyarados,pokemon,water,100,rare_holo
+8,Hitmonchan,pokemon,fighting,70,rare_holo
+9,Magneton,pokemon,lightning,60,rare_holo
+10,Mewtwo,pokemon,psychic,60,rare_holo
+11,Nidoking,pokemon,grass,90,rare_holo
+12,Nidoqueen,pokemon,grass,90,rare_holo
+13,Ninetales,pokemon,fire,80,rare_holo
+14,Pidgeot,pokemon,colorless,80,rare_holo
+15,Poliwrath,pokemon,water,90,rare_holo
+16,Raichu,pokemon,lightning,80,rare_holo
+17,Scyther,pokemon,grass,70,rare_holo
+18,Venusaur,pokemon,grass,100,rare_holo
+19,Wigglytuff,pokemon,colorless,80,rare_holo
+20,Zapdos,pokemon,lightning,90,rare_holo
+21,Beedrill,pokemon,grass,80,rare
+22,Dragonair,pokemon,colorless,80,rare
+23,Dugtrio,pokemon,fighting,70,rare
+24,Electabuzz,pokemon,lightning,70,rare
+25,Electrode,pokemon,lightning,80,rare
+26,Kangaskhan,pokemon,colorless,90,rare
+27,Mr. Mime,pokemon,psychic,40,rare
+28,Pidgeotto,pokemon,colorless,60,rare
+29,Pinsir,pokemon,grass,60,rare
+30,Snorlax,pokemon,colorless,90,rare
+31,Venomoth,pokemon,grass,70,rare
+32,Victreebel,pokemon,grass,80,rare
+33,Arcanine,pokemon,fire,100,uncommon
+34,Butterfree,pokemon,grass,70,uncommon
+35,Charmeleon,pokemon,fire,80,uncommon
+36,Dewgong,pokemon,water,80,uncommon
+37,Dodrio,pokemon,colorless,70,uncommon
+38,Dratini,pokemon,colorless,40,uncommon
+39,Exeggutor,pokemon,grass,80,uncommon
+40,Farfetch'd,pokemon,colorless,50,uncommon
+41,Fearow,pokemon,colorless,70,uncommon
+42,Growlithe,pokemon,fire,60,uncommon
+43,Haunter,pokemon,psychic,60,uncommon
+44,Ivysaur,pokemon,grass,60,uncommon
+45,Jynx,pokemon,psychic,70,uncommon
+46,Kadabra,pokemon,psychic,60,uncommon
+47,Kakuna,pokemon,grass,80,uncommon
+48,Lickitung,pokemon,colorless,90,uncommon
+49,Machoke,pokemon,fighting,80,uncommon
+50,Magikarp,pokemon,water,30,uncommon
+51,Magmar,pokemon,fire,50,uncommon
+52,Marowak,pokemon,fighting,60,uncommon
+53,Nidorina,pokemon,grass,70,uncommon
+54,Nidorino,pokemon,grass,60,uncommon
+55,Parasect,pokemon,grass,60,uncommon
+56,Persian,pokemon,colorless,70,uncommon
+57,Poliwhirl,pokemon,water,60,uncommon
+58,Raticate,pokemon,colorless,60,uncommon
+59,Rhydon,pokemon,fighting,100,uncommon
+60,Seaking,pokemon,water,70,uncommon
+61,Seel,pokemon,water,60,uncommon
+62,Tauros,pokemon,colorless,60,uncommon
+63,Wartortle,pokemon,water,70,uncommon
+64,Weepinbell,pokemon,grass,70,uncommon
+65,Abra,pokemon,psychic,30,common
+66,Bellsprout,pokemon,grass,40,common
+67,Bulbasaur,pokemon,grass,40,common
+68,Caterpie,pokemon,grass,40,common
+69,Charmander,pokemon,fire,50,common
+70,Cubone,pokemon,fighting,40,common
+71,Diglett,pokemon,fighting,30,common
+72,Doduo,pokemon,colorless,50,common
+73,Drowzee,pokemon,psychic,50,common
+74,Exeggcute,pokemon,grass,50,common
+75,Gastly,pokemon,psychic,30,common
+76,Goldeen,pokemon,water,40,common
+77,Jigglypuff,pokemon,colorless,60,common
+78,Machop,pokemon,fighting,50,common
+79,Magnemite,pokemon,lightning,40,common
+80,Meowth,pokemon,colorless,50,common
+81,Metapod,pokemon,grass,70,common
+82,Nidoran ♀,pokemon,grass,60,common
+83,Nidoran ♂,pokemon,grass,40,common
+84,Onix,pokemon,fighting,90,common
+85,Paras,pokemon,grass,40,common
+86,Pidgey,pokemon,colorless,40,common
+87,Pikachu,pokemon,lightning,40,common
+88,Poliwag,pokemon,water,40,common
+89,Rattata,pokemon,colorless,30,common
+90,Rhyhorn,pokemon,fighting,70,common
+91,Sandshrew,pokemon,fighting,40,common
+92,Spearow,pokemon,colorless,50,common
+93,Squirtle,pokemon,water,40,common
+94,Starmie,pokemon,water,60,common
+95,Staryu,pokemon,water,40,common
+96,Tangela,pokemon,grass,50,common
+97,Venonat,pokemon,grass,40,common
+98,Voltorb,pokemon,lightning,40,common
+99,Vulpix,pokemon,fire,50,common
+100,Weedle,pokemon,grass,40,common
+101,Computer Search,trainer,,,rare
+102,Imposter Professor Oak,trainer,,,rare
+103,Item Finder,trainer,,,rare
+104,Lass,trainer,,,rare
+105,Pokémon Breeder,trainer,,,rare
+106,Pokémon Trader,trainer,,,rare
+107,Scoop Up,trainer,,,rare
+108,Super Energy Removal,trainer,,,rare
+109,Defender,trainer,,,uncommon
+110,Energy Retrieval,trainer,,,uncommon
+111,Full Heal,trainer,,,uncommon
+112,Maintenance,trainer,,,uncommon
+113,PlusPower,trainer,,,uncommon
+114,Pokémon Center,trainer,,,uncommon
+115,Pokédex,trainer,,,uncommon
+116,Professor Oak,trainer,,,uncommon
+117,Super Potion,trainer,,,uncommon
+118,Bill,trainer,,,common
+119,Energy Removal,trainer,,,common
+120,Gust of Wind,trainer,,,common
+121,Poké Ball,trainer,,,common
+122,Potion,trainer,,,common
+123,Switch,trainer,,,common
+124,Double Colorless Energy,energy,colorless,,uncommon
+125,Fighting Energy,energy,fighting,,common
+126,Fire Energy,energy,fire,,common
+127,Grass Energy,energy,grass,,common
+128,Lightning Energy,energy,lightning,,common
+129,Psychic Energy,energy,psychic,,common
+130,Water Energy,energy,water,,common

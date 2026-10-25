@@ -1,0 +1,11 @@
+{
+  "id": "base4-13",
+  "number": 13,
+  "name": "Ninetales",
+  "supertype": "pokemon",
+  "type": "fire",
+  "hp": 80,
+  "rarity": "rare_holo",
+  "pokedex": 38,
+  "evolves_from_pokedex": 37
+}

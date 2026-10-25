@@ -1,0 +1,10 @@
+{
+  "id": "base5-56",
+  "number": 56,
+  "name": "Ekans",
+  "supertype": "pokemon",
+  "type": "grass",
+  "hp": 50,
+  "rarity": "common",
+  "pokedex": 23
+}

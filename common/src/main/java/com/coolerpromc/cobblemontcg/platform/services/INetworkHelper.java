@@ -5,4 +5,5 @@ import net.minecraft.server.level.ServerPlayer;
 
 public interface INetworkHelper {
     <T extends CustomPacketPayload> void sendToPlayer(ServerPlayer player, T packet);
+    <T extends CustomPacketPayload> void sendToServer(T packet);
 }

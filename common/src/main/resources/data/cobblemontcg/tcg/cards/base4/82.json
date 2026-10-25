@@ -1,0 +1,10 @@
+{
+  "id": "base4-82",
+  "number": 82,
+  "name": "Nidoran ♀",
+  "supertype": "pokemon",
+  "type": "grass",
+  "hp": 60,
+  "rarity": "common",
+  "pokedex": 29
+}

@@ -14,8 +14,8 @@ hero:
       link: /sets/
 
 features:
-  - title: Three sets, 219 cards
-    details: The 1999 Base Set (102 cards), Jungle (64 cards) and the Wizards Black Star Promos (53 cards), each card with a regular and a holo print, all drawn from scratch.
+  - title: Six sets, 494 cards
+    details: Base Set, Jungle, Fossil, Base Set 2, Team Rocket and the Wizards Black Star Promos, each card with a regular and a holo print, all drawn from scratch.
   - title: Real pack odds
     details: 11 cards a pack, 1 rare, 3 uncommons and 7 commons, with a holo about every third pack. No card appears twice in a pack.
   - title: An opening worth watching

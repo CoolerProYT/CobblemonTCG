@@ -1,0 +1,11 @@
+{
+  "id": "base5-23",
+  "number": 23,
+  "name": "Dark Dugtrio",
+  "supertype": "pokemon",
+  "type": "fighting",
+  "hp": 50,
+  "rarity": "rare",
+  "pokedex": 51,
+  "evolves_from_pokedex": 50
+}

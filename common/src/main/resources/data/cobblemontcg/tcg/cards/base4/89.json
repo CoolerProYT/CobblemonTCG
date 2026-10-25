@@ -1,0 +1,10 @@
+{
+  "id": "base4-89",
+  "number": 89,
+  "name": "Rattata",
+  "supertype": "pokemon",
+  "type": "colorless",
+  "hp": 30,
+  "rarity": "common",
+  "pokedex": 19
+}

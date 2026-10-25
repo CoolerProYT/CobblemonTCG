@@ -1,0 +1,11 @@
+{
+  "id": "base3-9",
+  "number": 9,
+  "name": "Kabutops",
+  "supertype": "pokemon",
+  "type": "fighting",
+  "hp": 60,
+  "rarity": "rare_holo",
+  "pokedex": 141,
+  "evolves_from_pokedex": 140
+}

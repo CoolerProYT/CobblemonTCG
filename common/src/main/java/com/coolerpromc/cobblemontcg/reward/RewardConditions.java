@@ -47,8 +47,6 @@ public record RewardConditions(Optional<Integer> minLevel, List<String> species,
         if (firstCatch.isPresent() && !context.firstCatch().map(f -> f.equals(firstCatch.get())).orElse(false)) {
             return false;
         }
-        // passes from the first multiple on; the milestone below is the latest multiple reached, so one the daily
-        // cap held back still pays on the next new species
         if (dexEvery.isPresent() && context.dexEntries().map(entries -> entries < dexEvery.get()).orElse(true)) {
             return false;
         }

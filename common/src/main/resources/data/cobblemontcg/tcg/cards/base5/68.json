@@ -1,0 +1,10 @@
+{
+  "id": "base5-68",
+  "number": 68,
+  "name": "Squirtle",
+  "supertype": "pokemon",
+  "type": "water",
+  "hp": 50,
+  "rarity": "common",
+  "pokedex": 7
+}

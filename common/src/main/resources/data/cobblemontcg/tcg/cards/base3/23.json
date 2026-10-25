@@ -1,0 +1,11 @@
+{
+  "id": "base3-23",
+  "number": 23,
+  "name": "Hypno",
+  "supertype": "pokemon",
+  "type": "psychic",
+  "hp": 90,
+  "rarity": "rare",
+  "pokedex": 97,
+  "evolves_from_pokedex": 96
+}

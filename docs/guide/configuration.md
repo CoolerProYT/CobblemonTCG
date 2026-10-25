@@ -35,7 +35,7 @@ The rules themselves (which events, what chance, which set) are in [reward rule 
 
 | Key | Default | Range | Description |
 | --- | --- | --- | --- |
-| `shop.sets` | `["cobblemontcg:base1", "cobblemontcg:base2", "cobblemontcg:basep"]` | | Sets villagers sell, oldest first. The Card Dealer unlocks one per villager level, Novice to Master (up to 5 sets) |
+| `shop.sets` | `["cobblemontcg:base1", "cobblemontcg:base2", "cobblemontcg:base3", "cobblemontcg:base4", "cobblemontcg:base5", "cobblemontcg:basep"]` | | Sets villagers sell, oldest first. The Card Dealer unlocks one per villager level, Novice to Expert, and the Master sells the fifth and sixth (up to 6 sets) |
 | `shop.cardDealer.enabled` | `true` | | Card Dealer villagers sell booster packs |
 | `shop.cardDealer.price` | `5` | 1 to 64 | Emeralds per pack at the Card Dealer |
 | `shop.cardDealer.maxUses` | `3` | 1 to 64 | Packs a Card Dealer sells before restocking |

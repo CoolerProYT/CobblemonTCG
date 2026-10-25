@@ -1,0 +1,11 @@
+{
+  "id": "base5-51",
+  "number": 51,
+  "name": "Dark Raticate",
+  "supertype": "pokemon",
+  "type": "colorless",
+  "hp": 50,
+  "rarity": "common",
+  "pokedex": 20,
+  "evolves_from_pokedex": 19
+}

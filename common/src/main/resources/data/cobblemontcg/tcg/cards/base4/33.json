@@ -1,0 +1,11 @@
+{
+  "id": "base4-33",
+  "number": 33,
+  "name": "Arcanine",
+  "supertype": "pokemon",
+  "type": "fire",
+  "hp": 100,
+  "rarity": "uncommon",
+  "pokedex": 59,
+  "evolves_from_pokedex": 58
+}

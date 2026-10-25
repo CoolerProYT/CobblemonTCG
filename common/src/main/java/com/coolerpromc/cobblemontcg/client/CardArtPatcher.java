@@ -29,7 +29,6 @@ public class CardArtPatcher {
 
     private static final int PER_TICK = 4;
     private static final int SUPERSAMPLE = 4;
-    // the portrait window shows 32x24 of its 32x32 texture, see tools/art/layout.py
     private static final int PORTRAIT_W = 32;
     private static final int PORTRAIT_H = 24;
     private static final String EXPORT_DIR = System.getProperty(Constants.MODID + ".exportArt");
@@ -195,7 +194,7 @@ public class CardArtPatcher {
                 int n = 0;
                 for (int yy = Math.max(y0, 0); yy < y1 && yy < src.getHeight(); yy++) {
                     for (int xx = Math.max(x0, 0); xx < x1 && xx < src.getWidth(); xx++) {
-                        int p = src.getPixelRGBA(xx, yy);   // ABGR
+                        int p = src.getPixelRGBA(xx, yy);
                         float pa = (p >>> 24) / 255.0F;
                         r += (p & 0xFF) * pa;
                         g += ((p >> 8) & 0xFF) * pa;
@@ -217,7 +216,7 @@ public class CardArtPatcher {
     }
 
     private static void over(NativeImage dst, int x, int y, int r, int g, int b, float a) {
-        int p = dst.getPixelRGBA(x, y);   // ABGR
+        int p = dst.getPixelRGBA(x, y);
         float da = (p >>> 24) / 255.0F;
         float oa = a + da * (1 - a);
         if (oa <= 0) {

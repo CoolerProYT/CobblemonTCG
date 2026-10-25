@@ -1,0 +1,11 @@
+{
+  "id": "base5-29",
+  "number": 29,
+  "name": "Dark Slowbro",
+  "supertype": "pokemon",
+  "type": "psychic",
+  "hp": 60,
+  "rarity": "rare",
+  "pokedex": 80,
+  "evolves_from_pokedex": 79
+}

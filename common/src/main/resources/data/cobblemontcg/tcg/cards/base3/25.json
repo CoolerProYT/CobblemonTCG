@@ -1,0 +1,10 @@
+{
+  "id": "base3-25",
+  "number": 25,
+  "name": "Lapras",
+  "supertype": "pokemon",
+  "type": "water",
+  "hp": 80,
+  "rarity": "rare",
+  "pokedex": 131
+}

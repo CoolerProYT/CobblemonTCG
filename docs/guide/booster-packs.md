@@ -22,6 +22,18 @@ Like the real sets, every pack comes in one of three wrappers, picked at random.
 
 <PackWrappers set="base2" :width="120" />
 
+**Fossil**
+
+<PackWrappers set="base3" :width="120" />
+
+**Base Set 2**
+
+<PackWrappers set="base4" :width="120" />
+
+**Team Rocket**
+
+<PackWrappers set="base5" :width="120" />
+
 **Wizards Black Star Promos**
 
 <PackWrappers set="basep" :width="120" back />
@@ -45,6 +57,6 @@ Set `packOpening.animation = false` in `config/cobblemontcg-client.toml` and the
 
 ## Odds
 
-The exact odds of every set are on its page: [Base Set](/sets/base1#pack-odds), [Jungle](/sets/base2#pack-odds), [Black Star Promos](/sets/basep#pack-odds). With the default settings:
+The exact odds of every set are on its page: [Base Set](/sets/base1#pack-odds), [Jungle](/sets/base2#pack-odds), [Fossil](/sets/base3#pack-odds), [Base Set 2](/sets/base4#pack-odds), [Team Rocket](/sets/base5#pack-odds), [Black Star Promos](/sets/basep#pack-odds). With the default settings:
 
 <PackOdds set="base1" />

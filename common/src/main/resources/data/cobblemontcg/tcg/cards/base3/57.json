@@ -1,0 +1,10 @@
+{
+  "id": "base3-57",
+  "number": 57,
+  "name": "Zubat",
+  "supertype": "pokemon",
+  "type": "grass",
+  "hp": 40,
+  "rarity": "common",
+  "pokedex": 41
+}

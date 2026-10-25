@@ -1,0 +1,11 @@
+{
+  "id": "base5-34",
+  "number": 34,
+  "name": "Dark Electrode",
+  "supertype": "pokemon",
+  "type": "lightning",
+  "hp": 60,
+  "rarity": "uncommon",
+  "pokedex": 101,
+  "evolves_from_pokedex": 100
+}

@@ -1,0 +1,11 @@
+{
+  "id": "base4-28",
+  "number": 28,
+  "name": "Pidgeotto",
+  "supertype": "pokemon",
+  "type": "colorless",
+  "hp": 60,
+  "rarity": "rare",
+  "pokedex": 17,
+  "evolves_from_pokedex": 16
+}

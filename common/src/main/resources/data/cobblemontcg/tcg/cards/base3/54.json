@@ -1,0 +1,10 @@
+{
+  "id": "base3-54",
+  "number": 54,
+  "name": "Shellder",
+  "supertype": "pokemon",
+  "type": "water",
+  "hp": 30,
+  "rarity": "common",
+  "pokedex": 90
+}

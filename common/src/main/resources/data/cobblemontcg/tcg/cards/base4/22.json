@@ -1,0 +1,11 @@
+{
+  "id": "base4-22",
+  "number": 22,
+  "name": "Dragonair",
+  "supertype": "pokemon",
+  "type": "colorless",
+  "hp": 80,
+  "rarity": "rare",
+  "pokedex": 148,
+  "evolves_from_pokedex": 147
+}

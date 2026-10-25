@@ -1,0 +1,11 @@
+{
+  "id": "base4-58",
+  "number": 58,
+  "name": "Raticate",
+  "supertype": "pokemon",
+  "type": "colorless",
+  "hp": 60,
+  "rarity": "uncommon",
+  "pokedex": 20,
+  "evolves_from_pokedex": 19
+}

@@ -1,0 +1,11 @@
+{
+  "id": "base3-36",
+  "number": 36,
+  "name": "Golem",
+  "supertype": "pokemon",
+  "type": "fighting",
+  "hp": 80,
+  "rarity": "uncommon",
+  "pokedex": 76,
+  "evolves_from_pokedex": 75
+}

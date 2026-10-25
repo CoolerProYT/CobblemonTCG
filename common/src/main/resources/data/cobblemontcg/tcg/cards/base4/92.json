@@ -1,0 +1,10 @@
+{
+  "id": "base4-92",
+  "number": 92,
+  "name": "Spearow",
+  "supertype": "pokemon",
+  "type": "colorless",
+  "hp": 50,
+  "rarity": "common",
+  "pokedex": 21
+}

@@ -1,0 +1,10 @@
+{
+  "id": "base3-3",
+  "number": 3,
+  "name": "Ditto",
+  "supertype": "pokemon",
+  "type": "colorless",
+  "hp": 50,
+  "rarity": "rare_holo",
+  "pokedex": 132
+}

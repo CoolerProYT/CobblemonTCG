@@ -1,0 +1,10 @@
+{
+  "id": "base4-42",
+  "number": 42,
+  "name": "Growlithe",
+  "supertype": "pokemon",
+  "type": "fire",
+  "hp": 60,
+  "rarity": "uncommon",
+  "pokedex": 58
+}

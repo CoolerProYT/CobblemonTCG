@@ -1,0 +1,10 @@
+{
+  "id": "base4-96",
+  "number": 96,
+  "name": "Tangela",
+  "supertype": "pokemon",
+  "type": "grass",
+  "hp": 50,
+  "rarity": "common",
+  "pokedex": 114
+}

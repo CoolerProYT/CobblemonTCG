@@ -1,0 +1,10 @@
+{
+  "id": "base5-49",
+  "number": 49,
+  "name": "Abra",
+  "supertype": "pokemon",
+  "type": "psychic",
+  "hp": 40,
+  "rarity": "common",
+  "pokedex": 63
+}

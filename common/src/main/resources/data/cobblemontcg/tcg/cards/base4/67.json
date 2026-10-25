@@ -1,0 +1,10 @@
+{
+  "id": "base4-67",
+  "number": 67,
+  "name": "Bulbasaur",
+  "supertype": "pokemon",
+  "type": "grass",
+  "hp": 40,
+  "rarity": "common",
+  "pokedex": 1
+}

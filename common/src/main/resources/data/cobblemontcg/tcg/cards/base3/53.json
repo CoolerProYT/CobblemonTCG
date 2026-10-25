@@ -1,0 +1,10 @@
+{
+  "id": "base3-53",
+  "number": 53,
+  "name": "Psyduck",
+  "supertype": "pokemon",
+  "type": "water",
+  "hp": 50,
+  "rarity": "common",
+  "pokedex": 54
+}

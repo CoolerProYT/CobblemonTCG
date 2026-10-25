@@ -1,0 +1,10 @@
+{
+  "id": "base5-57",
+  "number": 57,
+  "name": "Grimer",
+  "supertype": "pokemon",
+  "type": "grass",
+  "hp": 40,
+  "rarity": "common",
+  "pokedex": 88
+}

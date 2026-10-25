@@ -1,0 +1,11 @@
+{
+  "id": "base4-23",
+  "number": 23,
+  "name": "Dugtrio",
+  "supertype": "pokemon",
+  "type": "fighting",
+  "hp": 70,
+  "rarity": "rare",
+  "pokedex": 51,
+  "evolves_from_pokedex": 50
+}

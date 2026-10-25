@@ -3,6 +3,7 @@ package com.coolerpromc.cobblemontcg.platform.services;
 import com.coolerpromc.cobblemontcg.network.HandledCustomPacketPayload;
 import com.coolerpromc.cobblemontcg.platform.util.CreativeTabOutput;
 import com.coolerpromc.cobblemontcg.platform.util.RegistryHandler;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -19,11 +20,15 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
 
 import org.jetbrains.annotations.Nullable;
 
 import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
@@ -34,6 +39,7 @@ public interface IRegistryHelper {
     }
     <T extends Item> RegistryHandler.Items<T> registerItem(String name, Function<Item.Properties, T> func, Item.Properties p);
     <T extends Block> RegistryHandler.Blocks<T> registerBlock(String name, Function<BlockBehaviour.Properties, T> func, BlockBehaviour.Properties p);
+    <T extends BlockEntity> RegistryHandler<BlockEntityType<?>, BlockEntityType<T>> registerBlockEntityType(String name, BiFunction<BlockPos, BlockState, T> factory, Supplier<? extends Block> block);
     <T> RegistryHandler.Components<T> registerDataComponent(String name, UnaryOperator<DataComponentType.Builder<T>> builder);
     RegistryHandler<SoundEvent, SoundEvent> registerSoundEvent(String name);
     <T extends AbstractContainerMenu> RegistryHandler<MenuType<?>, MenuType<T>> registerMenuType(String name, MenuFactory<T> factory);
@@ -43,6 +49,8 @@ public interface IRegistryHelper {
 
     <T extends HandledCustomPacketPayload> void registerClientboundPayload(CustomPacketPayload.Type<T> type, StreamCodec<? super RegistryFriendlyByteBuf, T> streamCodec);
     void applyClientboundPayloadRegistrations(PayloadRegistrar registrar);
+    <T extends HandledCustomPacketPayload> void registerServerboundPayload(CustomPacketPayload.Type<T> type, StreamCodec<? super RegistryFriendlyByteBuf, T> streamCodec);
+    void applyServerboundPayloadRegistrations(PayloadRegistrar registrar);
 
     interface MenuFactory<T extends AbstractContainerMenu> {
         T create(int containerId, Inventory inventory);

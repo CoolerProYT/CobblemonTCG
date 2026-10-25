@@ -1,0 +1,11 @@
+{
+  "id": "base3-26",
+  "number": 26,
+  "name": "Magneton",
+  "supertype": "pokemon",
+  "type": "lightning",
+  "hp": 80,
+  "rarity": "rare",
+  "pokedex": 82,
+  "evolves_from_pokedex": 81
+}

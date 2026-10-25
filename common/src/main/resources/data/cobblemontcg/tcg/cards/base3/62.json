@@ -1,0 +1,8 @@
+{
+  "id": "base3-62",
+  "number": 62,
+  "name": "Mysterious Fossil",
+  "supertype": "trainer",
+  "hp": 10,
+  "rarity": "common"
+}

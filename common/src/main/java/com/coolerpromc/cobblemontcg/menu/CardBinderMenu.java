@@ -227,7 +227,6 @@ public class CardBinderMenu extends AbstractContainerMenu {
 
     @Override
     public void clicked(int slotId, int button, ClickType clickType, Player player) {
-        // number keys and the offhand key would swap the open binder out of its slot
         if (clickType == ClickType.SWAP && button == binderSlot.get()) {
             return;
         }

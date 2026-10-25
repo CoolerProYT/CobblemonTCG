@@ -1,0 +1,11 @@
+{
+  "id": "base4-4",
+  "number": 4,
+  "name": "Charizard",
+  "supertype": "pokemon",
+  "type": "fire",
+  "hp": 120,
+  "rarity": "rare_holo",
+  "pokedex": 6,
+  "evolves_from_pokedex": 5
+}

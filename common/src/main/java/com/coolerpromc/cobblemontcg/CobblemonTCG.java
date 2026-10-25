@@ -1,6 +1,7 @@
 package com.coolerpromc.cobblemontcg;
 
 import com.coolerpromc.cobblemontcg.block.ModBlocks;
+import com.coolerpromc.cobblemontcg.block.entity.ModBlockEntities;
 import com.coolerpromc.cobblemontcg.component.ModDataComponents;
 import com.coolerpromc.cobblemontcg.config.TcgConfig;
 import com.coolerpromc.cobblemontcg.creativetab.ModCreativeTabs;
@@ -8,6 +9,7 @@ import com.coolerpromc.cobblemontcg.item.ModItems;
 import com.coolerpromc.cobblemontcg.menu.ModMenuTypes;
 import com.coolerpromc.cobblemontcg.network.ClientboundPackOpenedPacket;
 import com.coolerpromc.cobblemontcg.network.ClientboundTcgDataSyncPacket;
+import com.coolerpromc.cobblemontcg.network.ServerboundSetStandPricePacket;
 import com.coolerpromc.cobblemontcg.platform.Services;
 import com.coolerpromc.cobblemontcg.reward.RewardRuleReloadListener;
 import com.coolerpromc.cobblemontcg.shop.PackTrades;
@@ -23,6 +25,7 @@ public class CobblemonTCG {
         TcgConfig.init();
         ModDataComponents.init();
         ModBlocks.init();
+        ModBlockEntities.init();
         ModItems.init();
         ModVillagers.init();
         ModMenuTypes.init();
@@ -43,6 +46,7 @@ public class CobblemonTCG {
     public static void initPayloadType() {
         Services.REGISTRY.registerClientboundPayload(ClientboundTcgDataSyncPacket.TYPE, ClientboundTcgDataSyncPacket.STREAM_CODEC);
         Services.REGISTRY.registerClientboundPayload(ClientboundPackOpenedPacket.TYPE, ClientboundPackOpenedPacket.STREAM_CODEC);
+        Services.REGISTRY.registerServerboundPayload(ServerboundSetStandPricePacket.TYPE, ServerboundSetStandPricePacket.STREAM_CODEC);
     }
 
     public static void syncTcgData(ServerPlayer player) {

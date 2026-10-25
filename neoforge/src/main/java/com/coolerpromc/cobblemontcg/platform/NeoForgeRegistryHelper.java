@@ -6,6 +6,7 @@ import com.coolerpromc.cobblemontcg.platform.services.IRegistryHelper;
 import com.coolerpromc.cobblemontcg.platform.util.CreativeTabOutput;
 import com.coolerpromc.cobblemontcg.platform.util.RegistryHandler;
 import com.google.common.collect.ImmutableSet;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -24,7 +25,10 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -36,6 +40,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
@@ -43,6 +48,7 @@ import java.util.function.UnaryOperator;
 public class NeoForgeRegistryHelper implements IRegistryHelper {
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(Constants.MODID);
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(Constants.MODID);
+    public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES = DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, Constants.MODID);
     public static final DeferredRegister<DataComponentType<?>> DATA_COMPONENTS = DeferredRegister.create(Registries.DATA_COMPONENT_TYPE, Constants.MODID);
     public static final DeferredRegister<SoundEvent> SOUND_EVENTS = DeferredRegister.create(BuiltInRegistries.SOUND_EVENT, Constants.MODID);
     public static final DeferredRegister<MenuType<?>> MENU_TYPES = DeferredRegister.create(Registries.MENU, Constants.MODID);
@@ -51,6 +57,7 @@ public class NeoForgeRegistryHelper implements IRegistryHelper {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_TABS = DeferredRegister.create(BuiltInRegistries.CREATIVE_MODE_TAB, Constants.MODID);
 
     private final List<PayloadEntry<?>> clientboundPayloads = new ArrayList<>();
+    private final List<PayloadEntry<?>> serverboundPayloads = new ArrayList<>();
 
     @Override
     public <T extends Item> RegistryHandler.Items<T> registerItem(String name, Function<Item.Properties, T> func, Item.Properties p) {
@@ -62,6 +69,12 @@ public class NeoForgeRegistryHelper implements IRegistryHelper {
     public <T extends Block> RegistryHandler.Blocks<T> registerBlock(String name, Function<BlockBehaviour.Properties, T> func, BlockBehaviour.Properties p) {
         DeferredBlock<T> deferredBlock = BLOCKS.registerBlock(name, func, p);
         return () -> deferredBlock;
+    }
+
+    @Override
+    public <T extends BlockEntity> RegistryHandler<BlockEntityType<?>, BlockEntityType<T>> registerBlockEntityType(String name, BiFunction<BlockPos, BlockState, T> factory, Supplier<? extends Block> block) {
+        DeferredHolder<BlockEntityType<?>, BlockEntityType<T>> deferredHolder = BLOCK_ENTITY_TYPES.register(name, () -> BlockEntityType.Builder.<T>of(factory::apply, block.get()).build(null));
+        return () -> deferredHolder;
     }
 
     @Override
@@ -113,6 +126,18 @@ public class NeoForgeRegistryHelper implements IRegistryHelper {
         }
     }
 
+    @Override
+    public <T extends HandledCustomPacketPayload> void registerServerboundPayload(CustomPacketPayload.Type<T> type, StreamCodec<? super RegistryFriendlyByteBuf, T> streamCodec) {
+        this.serverboundPayloads.add(new PayloadEntry<>(type, streamCodec));
+    }
+
+    @Override
+    public void applyServerboundPayloadRegistrations(PayloadRegistrar registrar) {
+        for (PayloadEntry<?> entry : serverboundPayloads) {
+            entry.register(registrar);
+        }
+    }
+
     private record PayloadEntry<T extends HandledCustomPacketPayload>(CustomPacketPayload.Type<T> type, StreamCodec<? super RegistryFriendlyByteBuf, T> streamCodec){
         private void register(PayloadRegistrar registrar){
             registrar.register(this.type, this.streamCodec);
@@ -122,6 +147,7 @@ public class NeoForgeRegistryHelper implements IRegistryHelper {
     public static void register(IEventBus eventBus){
         BLOCKS.register(eventBus);
         ITEMS.register(eventBus);
+        BLOCK_ENTITY_TYPES.register(eventBus);
         DATA_COMPONENTS.register(eventBus);
         SOUND_EVENTS.register(eventBus);
         MENU_TYPES.register(eventBus);

@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "tag": "minecraft:planks"
+    },
+    "N": {
+      "item": "minecraft:gold_nugget"
+    },
+    "W": {
+      "item": "minecraft:red_wool"
+    },
+    "S": {
+      "tag": "minecraft:wooden_slabs"
+    }
+  },
+  "pattern": [
+    " # ",
+    "NWN",
+    "SSS"
+  ],
+  "result": {
+    "count": 1,
+    "id": "cobblemontcg:card_display_stand"
+  }
+}

@@ -20,6 +20,12 @@
         ],
         "client": [
             "com.coolerpromc.cobblemontcg.FabricCobblemonTCGClient"
+        ],
+        "jei_mod_plugin": [
+            "com.coolerpromc.cobblemontcg.compat.jei.CobblemonTCGJeiPlugin"
+        ],
+        "jade": [
+            "com.coolerpromc.cobblemontcg.compat.jade.CobblemonTCGJadePlugin"
         ]
     },
     "depends": {

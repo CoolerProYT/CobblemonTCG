@@ -1,0 +1,11 @@
+{
+  "id": "base5-3",
+  "number": 3,
+  "name": "Dark Blastoise",
+  "supertype": "pokemon",
+  "type": "water",
+  "hp": 70,
+  "rarity": "rare_holo",
+  "pokedex": 9,
+  "evolves_from_pokedex": 8
+}

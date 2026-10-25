@@ -1,0 +1,11 @@
+{
+  "id": "base5-37",
+  "number": 37,
+  "name": "Dark Golduck",
+  "supertype": "pokemon",
+  "type": "water",
+  "hp": 60,
+  "rarity": "uncommon",
+  "pokedex": 55,
+  "evolves_from_pokedex": 54
+}

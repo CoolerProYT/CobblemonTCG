@@ -1,0 +1,10 @@
+{
+  "id": "base4-76",
+  "number": 76,
+  "name": "Goldeen",
+  "supertype": "pokemon",
+  "type": "water",
+  "hp": 40,
+  "rarity": "common",
+  "pokedex": 118
+}

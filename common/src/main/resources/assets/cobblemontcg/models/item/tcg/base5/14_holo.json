@@ -1,0 +1,9 @@
+{
+  "parent": "cobblemontcg:item/tcg/card_evolution_holo",
+  "textures": {
+    "frame": "cobblemontcg:tcg/frame/base5/pokemon_grass",
+    "art": "cobblemontcg:tcg/base5/14",
+    "illustration": "cobblemontcg:tcg/base5/illustration/14",
+    "evolution": "cobblemontcg:tcg/base5/evolution/14"
+  }
+}

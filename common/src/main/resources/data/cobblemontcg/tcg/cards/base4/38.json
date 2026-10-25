@@ -1,0 +1,10 @@
+{
+  "id": "base4-38",
+  "number": 38,
+  "name": "Dratini",
+  "supertype": "pokemon",
+  "type": "colorless",
+  "hp": 40,
+  "rarity": "uncommon",
+  "pokedex": 147
+}

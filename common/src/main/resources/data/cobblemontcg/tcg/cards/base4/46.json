@@ -1,0 +1,11 @@
+{
+  "id": "base4-46",
+  "number": 46,
+  "name": "Kadabra",
+  "supertype": "pokemon",
+  "type": "psychic",
+  "hp": 60,
+  "rarity": "uncommon",
+  "pokedex": 64,
+  "evolves_from_pokedex": 63
+}

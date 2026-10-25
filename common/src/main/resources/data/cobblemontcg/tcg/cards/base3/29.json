@@ -1,0 +1,11 @@
+{
+  "id": "base3-29",
+  "number": 29,
+  "name": "Raichu",
+  "supertype": "pokemon",
+  "type": "lightning",
+  "hp": 90,
+  "rarity": "rare",
+  "pokedex": 26,
+  "evolves_from_pokedex": 25
+}

@@ -6,7 +6,7 @@ Playing Cobblemon earns you packs. The mod listens to Cobblemon's catch, level-u
 
 <RewardTable file="capture" />
 
-Pokémon that appear in Jungle but not in Base Set (Scyther, Snorlax, Eevee and its evolutions, and the rest of the list) give **Jungle** packs; Pokémon that only appear in the Wizards Black Star Promos (Mew, the legendary birds Moltres and Articuno, Dragonite, the Johto Pokémon and the rest of the list) give **Black Star Promos** packs; every other species gives **Base Set** packs.
+Pokémon that appear in Jungle but not in Base Set (Scyther, Snorlax, Eevee and its evolutions, and the rest of the list) give **Jungle** packs; Pokémon first printed in Fossil (Aerodactyl, Lapras, Gengar, the fossil Pokémon, Articuno, Moltres, Dragonite and the rest of the list) give **Fossil** packs; Pokémon that only appear in the Wizards Black Star Promos (Mew and the Johto Pokémon) give **Black Star Promos** packs; every other species gives **Base Set** packs.
 
 ## Levelling up
 

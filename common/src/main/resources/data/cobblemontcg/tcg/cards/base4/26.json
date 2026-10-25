@@ -1,0 +1,10 @@
+{
+  "id": "base4-26",
+  "number": 26,
+  "name": "Kangaskhan",
+  "supertype": "pokemon",
+  "type": "colorless",
+  "hp": 90,
+  "rarity": "rare",
+  "pokedex": 115
+}

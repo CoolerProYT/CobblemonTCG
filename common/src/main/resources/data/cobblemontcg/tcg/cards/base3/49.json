@@ -1,0 +1,10 @@
+{
+  "id": "base3-49",
+  "number": 49,
+  "name": "Horsea",
+  "supertype": "pokemon",
+  "type": "water",
+  "hp": 40,
+  "rarity": "common",
+  "pokedex": 116
+}

@@ -203,6 +203,7 @@ export function cardChance(set: CardSet, rarity: Rarity, holoChance: number): nu
 export function itemName(id: string): string {
   if (data.names[id]) return data.names[id]
   if (id === '#minecraft:planks') return 'Any Planks'
+  if (id === '#minecraft:wooden_slabs') return 'Any Wooden Slab'
   const path = id.replace(/^#/, '').split(':').pop() ?? id
   return path
     .split('_')
@@ -219,6 +220,7 @@ const HOSTED_NAMESPACES = ['minecraft', 'cobblemontcg']
 
 const TAG_ICONS: Record<string, string> = {
   '#minecraft:planks': 'minecraft:oak_planks',
+  '#minecraft:wooden_slabs': 'minecraft:oak_slab',
 }
 
 export function itemIcon(id: string): string | null {

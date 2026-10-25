@@ -1,0 +1,10 @@
+{
+  "id": "base3-17",
+  "number": 17,
+  "name": "Articuno",
+  "supertype": "pokemon",
+  "type": "water",
+  "hp": 70,
+  "rarity": "rare",
+  "pokedex": 144
+}

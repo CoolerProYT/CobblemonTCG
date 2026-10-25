@@ -1,0 +1,11 @@
+{
+  "id": "base4-35",
+  "number": 35,
+  "name": "Charmeleon",
+  "supertype": "pokemon",
+  "type": "fire",
+  "hp": 80,
+  "rarity": "uncommon",
+  "pokedex": 5,
+  "evolves_from_pokedex": 4
+}

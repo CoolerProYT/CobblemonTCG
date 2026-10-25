@@ -1,0 +1,10 @@
+{
+  "id": "base3-12",
+  "number": 12,
+  "name": "Moltres",
+  "supertype": "pokemon",
+  "type": "fire",
+  "hp": 70,
+  "rarity": "rare_holo",
+  "pokedex": 146
+}

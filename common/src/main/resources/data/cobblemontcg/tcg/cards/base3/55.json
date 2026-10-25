@@ -1,0 +1,10 @@
+{
+  "id": "base3-55",
+  "number": 55,
+  "name": "Slowpoke",
+  "supertype": "pokemon",
+  "type": "psychic",
+  "hp": 50,
+  "rarity": "common",
+  "pokedex": 79
+}

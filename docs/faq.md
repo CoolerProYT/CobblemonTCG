@@ -22,9 +22,9 @@ Shiny catches always give a pack while you are under the daily limit.
 
 The villager has to be unemployed and not a nitwit, and needs to reach the Card Dealer Table. A villager that has already traded keeps its profession. See [Card Dealer](./guide/card-dealer).
 
-## The Card Dealer does not sell Jungle or promo packs
+## The Card Dealer does not sell the newer sets
 
-Jungle unlocks at the **Apprentice** level (about 5 packs bought from the dealer) and the Wizards Black Star Promos at **Journeyman** (about 35 packs). Servers can change the order with `shop.sets`.
+Each villager level unlocks the next set: Jungle at **Apprentice** (about 5 packs bought from the dealer), Fossil at **Journeyman** (about 35), Base Set 2 at **Expert** (about 75), and Team Rocket and the Wizards Black Star Promos at **Master** (about 125). Servers can change the order with `shop.sets`.
 
 ## Can I get a holo print of any card?
 

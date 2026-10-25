@@ -1,0 +1,11 @@
+{
+  "id": "base5-40",
+  "number": 40,
+  "name": "Dark Machoke",
+  "supertype": "pokemon",
+  "type": "fighting",
+  "hp": 60,
+  "rarity": "uncommon",
+  "pokedex": 67,
+  "evolves_from_pokedex": 66
+}

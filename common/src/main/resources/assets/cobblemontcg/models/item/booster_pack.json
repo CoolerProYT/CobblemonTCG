@@ -59,6 +59,60 @@
         "custom_model_data": 3002
       },
       "model": "cobblemontcg:item/booster_pack/basep_hooh"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 4000
+      },
+      "model": "cobblemontcg:item/booster_pack/base3_aerodactyl"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 4001
+      },
+      "model": "cobblemontcg:item/booster_pack/base3_lapras"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 4002
+      },
+      "model": "cobblemontcg:item/booster_pack/base3_gengar"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 5000
+      },
+      "model": "cobblemontcg:item/booster_pack/base4_mewtwo"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 5001
+      },
+      "model": "cobblemontcg:item/booster_pack/base4_gyarados"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 5002
+      },
+      "model": "cobblemontcg:item/booster_pack/base4_ninetales"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 6000
+      },
+      "model": "cobblemontcg:item/booster_pack/base5_dark_charizard"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 6001
+      },
+      "model": "cobblemontcg:item/booster_pack/base5_dark_blastoise"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 6002
+      },
+      "model": "cobblemontcg:item/booster_pack/base5_dark_dragonite"
     }
   ]
 }

@@ -4,7 +4,7 @@ outline: [2, 2]
 
 # Wizards Black Star Promos
 
-The promo cards Wizards of the Coast gave out from 1999 to 2003 at events, in magazines, movie theaters and toy boxes: **53 cards**, set id `cobblemontcg:basep`. Sold by Card Dealers from the Journeyman level, and given for catching Pokémon that only appear in the promos (Mew, Dragonite, Moltres, Articuno, Psyduck and the Johto Pokémon like Pichu, Togepi, Scizor, Entei, Suicune, Celebi and Ho-Oh).
+The promo cards Wizards of the Coast gave out from 1999 to 2003 at events, in magazines, movie theaters and toy boxes: **53 cards**, set id `cobblemontcg:basep`. Sold by Card Dealers at the Master level, and given for catching Pokémon that only appear in the promos (Mew and the Johto Pokémon like Pichu, Togepi, Scizor, Entei, Suicune, Celebi and Ho-Oh).
 
 <PackWrappers set="basep" back />
 

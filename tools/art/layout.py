@@ -61,6 +61,21 @@ STYLES = {
         "strip": (188, 214, 138), "strip_edge": (92, 128, 58), "strip_shine": (236, 250, 210),
         "scenery": "jungle", "mark": "leaf",
     },
+    "base3": {
+        "rim": (176, 138, 92), "trainer_rim": (200, 188, 164),
+        "strip": (230, 208, 164), "strip_edge": (128, 92, 52), "strip_shine": (252, 240, 214),
+        "scenery": "fossil", "mark": "fossil",
+    },
+    "base4": {
+        "rim": (226, 166, 70), "trainer_rim": (210, 200, 196),
+        "strip": (244, 196, 120), "strip_edge": (176, 116, 40), "strip_shine": (255, 238, 196),
+        "scenery": None, "mark": "two",
+    },
+    "base5": {
+        "rim": (74, 40, 50), "trainer_rim": (150, 120, 128),
+        "strip": (214, 170, 176), "strip_edge": (96, 30, 44), "strip_shine": (250, 226, 230),
+        "scenery": "rocket", "mark": "rocket",
+    },
     "basep": {
         "rim": (74, 74, 88), "trainer_rim": (150, 152, 168),
         "strip": (208, 210, 222), "strip_edge": (44, 44, 56), "strip_shine": (250, 250, 255),
@@ -295,6 +310,18 @@ def set_mark(img, mark: str, cx, cy, size):
     if mark == "leaf":
         _leaf(d, n * 0.5, n * 0.52, n * 0.72, n * 0.36, -50, (34, 70, 38, 255), vein=(248, 246, 234, 255))
         d.line((n * 0.26, n * 0.8, n * 0.36, n * 0.68), fill=(34, 70, 38, 255), width=round(SS * 0.9))
+    elif mark == "fossil":
+        pts = []
+        for i in range(90):
+            t = i / 89
+            a = t * math.tau * 2.4
+            r = n * 0.36 * (1 - t * 0.85)
+            pts.append((n / 2 + r * math.cos(a), n / 2 + r * math.sin(a)))
+        d.line(pts, fill=(96, 66, 36, 255), width=round(SS * 1.1), joint="curve")
+    elif mark in ("two", "rocket"):
+        glyph, col = ("2", (36, 34, 30)) if mark == "two" else ("R", (196, 30, 40))
+        f = F.font("Bold", n * 0.62)
+        d.text((n / 2, n * 0.54), glyph, font=f, fill=(*col, 255), anchor="mm")
     elif mark == "star":
         d.ellipse((SS * 0.9, SS * 0.9, n - 1 - SS * 0.9, n - 1 - SS * 0.9), fill=(30, 30, 36, 255))
         pts = []
@@ -395,6 +422,42 @@ def _starlight(arr, w, h, seed):
         glow = np.exp(-((xx - x) ** 2 + (yy - y) ** 2) / (r * 1.4) ** 2)
         cross = np.exp(-np.abs(xx - x) / (r * 0.12)) * np.exp(-np.abs(yy - y) / (r * 1.6))             + np.exp(-np.abs(yy - y) / (r * 0.12)) * np.exp(-np.abs(xx - x) / (r * 1.6))
         _paint(arr, np.clip(glow * 0.6 + cross, 0, 1), (255, 250, 220), 0.85)
+
+
+def _fossil(arr, w, h, seed):
+    rng = random.Random(seed * 3 + 5)
+    yy, xx = np.mgrid[0:h, 0:w].astype(np.float32)
+    horizon = h * 0.64
+    _paint(arr, np.ones((h, w), np.float32), (214, 180, 128), 0.22)
+    below = np.clip((yy - horizon) / 2.0, 0, 1)
+    wobble = F.noise(w, h, w * 0.2, seed + 13, 3) * 10
+    bands = (np.sin((yy + wobble) / 3.2) * 0.5 + 0.5) * below
+    _paint(arr, bands, (120, 88, 56), 0.28)
+    layer = Image.new("RGBA", (w * SS // 2, h * SS // 2), (0, 0, 0, 0))
+    d = ImageDraw.Draw(layer)
+    k = SS / 2
+    for _ in range(4):
+        cx, cy, r = rng.uniform(0.08, 0.92) * w, rng.uniform(horizon + 10, h - 8), rng.uniform(5, 9)
+        pts = []
+        for i in range(60):
+            t = i / 59
+            a = t * math.tau * 2.2 + rng.random()
+            pts.append(((cx + r * (1 - t * 0.8) * math.cos(a)) * k, (cy + r * (1 - t * 0.8) * math.sin(a)) * k))
+        d.line(pts, fill=(96, 70, 44, 150), width=round(1.6 * k), joint="curve")
+    la = np.asarray(layer.resize((w, h), Image.LANCZOS)).astype(np.float32)
+    a = la[..., 3:] / 255
+    arr[..., :3] = arr[..., :3] * (1 - a) + la[..., :3] * a
+
+
+def _rocket(arr, w, h, seed):
+    yy, xx = np.mgrid[0:h, 0:w].astype(np.float32)
+    horizon = h * 0.64
+    arr[..., :3] *= np.array((0.52, 0.46, 0.6), np.float32)
+    for x0, slope in ((w * 0.12, 0.55), (w * 0.88, -0.6)):
+        dist = np.abs((xx - x0) - slope * (h - yy)) / (6 + (h - yy) * 0.18)
+        _paint(arr, np.clip(1 - dist, 0, 1) ** 1.5 * np.clip(1 - yy / (horizon + 20), 0, 1), (255, 248, 210), 0.32)
+    glow = np.exp(-((yy - horizon) / (h * 0.08)) ** 2)
+    _paint(arr, glow, (220, 60, 70), 0.25)
 
 
 def background(kind: str, set_name: str = DEFAULT_STYLE) -> Image.Image:
@@ -511,6 +574,10 @@ def background(kind: str, set_name: str = DEFAULT_STYLE) -> Image.Image:
         _jungle(arr, w, h, seed)
     if style(set_name)["scenery"] == "starlight" and kind != "trainer":
         _starlight(arr, w, h, seed)
+    if style(set_name)["scenery"] == "fossil" and kind != "trainer":
+        _fossil(arr, w, h, seed)
+    if style(set_name)["scenery"] == "rocket" and kind != "trainer":
+        _rocket(arr, w, h, seed)
 
     v = np.hypot((xx - w / 2) / (w * 0.7), (yy - h / 2) / (h * 0.7))
     arr[..., :3] *= np.clip(1.08 - v * 0.22, 0.75, 1.05)[..., None]

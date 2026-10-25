@@ -1,0 +1,11 @@
+{
+  "id": "base4-49",
+  "number": 49,
+  "name": "Machoke",
+  "supertype": "pokemon",
+  "type": "fighting",
+  "hp": 80,
+  "rarity": "uncommon",
+  "pokedex": 67,
+  "evolves_from_pokedex": 66
+}

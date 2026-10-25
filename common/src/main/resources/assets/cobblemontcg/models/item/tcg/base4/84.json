@@ -1,0 +1,8 @@
+{
+  "parent": "cobblemontcg:item/tcg/card_pokemon",
+  "textures": {
+    "frame": "cobblemontcg:tcg/frame/base4/pokemon_fighting",
+    "art": "cobblemontcg:tcg/base4/84",
+    "illustration": "cobblemontcg:tcg/base4/illustration/84"
+  }
+}

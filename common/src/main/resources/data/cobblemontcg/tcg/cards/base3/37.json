@@ -1,0 +1,11 @@
+{
+  "id": "base3-37",
+  "number": 37,
+  "name": "Graveler",
+  "supertype": "pokemon",
+  "type": "fighting",
+  "hp": 60,
+  "rarity": "uncommon",
+  "pokedex": 75,
+  "evolves_from_pokedex": 74
+}

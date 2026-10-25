@@ -1,0 +1,10 @@
+{
+  "id": "base3-56",
+  "number": 56,
+  "name": "Tentacool",
+  "supertype": "pokemon",
+  "type": "water",
+  "hp": 30,
+  "rarity": "common",
+  "pokedex": 72
+}

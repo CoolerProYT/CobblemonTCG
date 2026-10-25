@@ -1,0 +1,37 @@
+{
+  "name": "Team Rocket",
+  "total": 83,
+  "model_data_base": 6000,
+  "wrappers": [
+    "dark_charizard",
+    "dark_blastoise",
+    "dark_dragonite"
+  ],
+  "wrapper_pokedex": {
+    "dark_charizard": 6,
+    "dark_blastoise": 9,
+    "dark_dragonite": 149
+  },
+  "pack_slots": [
+    {
+      "count": 1,
+      "rarities": {
+        "rare_holo": 1,
+        "rare": 2
+      },
+      "use_config_holo_chance": true
+    },
+    {
+      "count": 3,
+      "rarities": {
+        "uncommon": 1
+      }
+    },
+    {
+      "count": 7,
+      "rarities": {
+        "common": 1
+      }
+    }
+  ]
+}

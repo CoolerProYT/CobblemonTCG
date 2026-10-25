@@ -18,9 +18,11 @@ It unlocks newer sets as it levels up, like the real sets came out one after the
 | --- | --- | --- |
 | Novice | Base Set packs | 5 emeralds |
 | Apprentice (about 5 pack purchases) | Jungle packs | 5 emeralds |
-| Journeyman (about 35 pack purchases) | Wizards Black Star Promos packs | 5 emeralds |
+| Journeyman (about 35 pack purchases) | Fossil packs | 5 emeralds |
+| Expert (about 75 pack purchases) | Base Set 2 packs | 5 emeralds |
+| Master (about 125 pack purchases) | Team Rocket and Wizards Black Star Promos packs | 5 emeralds |
 
-The sets and their order come from the [`shop.sets`](./configuration) setting, oldest first, one set per villager level from Novice to Master (up to 5 sets). Add a datapack set to that list to have Card Dealers sell it at the next level.
+The sets and their order come from the [`shop.sets`](./configuration) setting, oldest first, one set per villager level from Novice to Expert and two at Master (up to 6 sets). Add a datapack set to that list to have Card Dealers sell it at the next level.
 
 ## Wandering traders
 

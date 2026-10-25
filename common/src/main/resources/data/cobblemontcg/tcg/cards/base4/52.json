@@ -1,0 +1,11 @@
+{
+  "id": "base4-52",
+  "number": 52,
+  "name": "Marowak",
+  "supertype": "pokemon",
+  "type": "fighting",
+  "hp": 60,
+  "rarity": "uncommon",
+  "pokedex": 105,
+  "evolves_from_pokedex": 104
+}

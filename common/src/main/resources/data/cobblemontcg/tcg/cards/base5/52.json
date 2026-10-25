@@ -1,0 +1,10 @@
+{
+  "id": "base5-52",
+  "number": 52,
+  "name": "Diglett",
+  "supertype": "pokemon",
+  "type": "fighting",
+  "hp": 40,
+  "rarity": "common",
+  "pokedex": 50
+}

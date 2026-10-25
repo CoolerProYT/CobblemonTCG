@@ -1,0 +1,11 @@
+{
+  "id": "base5-24",
+  "number": 24,
+  "name": "Dark Golbat",
+  "supertype": "pokemon",
+  "type": "grass",
+  "hp": 50,
+  "rarity": "rare",
+  "pokedex": 42,
+  "evolves_from_pokedex": 41
+}

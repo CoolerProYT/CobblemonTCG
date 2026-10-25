@@ -1,0 +1,10 @@
+{
+  "id": "base3-52",
+  "number": 52,
+  "name": "Omanyte",
+  "supertype": "pokemon",
+  "type": "water",
+  "hp": 40,
+  "rarity": "common",
+  "pokedex": 138
+}

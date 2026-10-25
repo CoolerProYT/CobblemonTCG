@@ -4,7 +4,7 @@
     "set": "cobblemontcg:base1",
     "amount": 1,
     "chance": 0.05,
-    "conditions": { "exclude_species": ["clefable", "flareon", "jolteon", "kangaskhan", "mrmime", "nidoqueen", "pidgeot", "pinsir", "scyther", "snorlax", "vaporeon", "venomoth", "victreebel", "vileplume", "wigglytuff", "butterfree", "dodrio", "exeggutor", "fearow", "gloom", "lickitung", "marowak", "nidorina", "parasect", "persian", "primeape", "rapidash", "rhydon", "seaking", "tauros", "weepinbell", "bellsprout", "cubone", "eevee", "exeggcute", "goldeen", "jigglypuff", "mankey", "meowth", "nidoranf", "oddish", "paras", "rhyhorn", "spearow", "venonat", "mew", "dragonite", "psyduck", "moltres", "articuno", "marill", "togepi", "cleffa", "smeargle", "scizor", "entei", "pichu", "igglybuff", "hitmontop", "unown", "misdreavus", "celebi", "hooh", "suicune"] }
+    "conditions": { "exclude_species": ["clefable", "flareon", "jolteon", "kangaskhan", "mrmime", "nidoqueen", "pidgeot", "pinsir", "scyther", "snorlax", "vaporeon", "venomoth", "victreebel", "vileplume", "wigglytuff", "butterfree", "dodrio", "exeggutor", "fearow", "gloom", "lickitung", "marowak", "nidorina", "parasect", "persian", "primeape", "rapidash", "rhydon", "seaking", "tauros", "weepinbell", "bellsprout", "cubone", "eevee", "exeggcute", "goldeen", "jigglypuff", "mankey", "meowth", "nidoranf", "oddish", "paras", "rhyhorn", "spearow", "venonat", "ekans", "arbok", "sandslash", "zubat", "golbat", "psyduck", "golduck", "tentacool", "tentacruel", "geodude", "graveler", "golem", "slowpoke", "slowbro", "grimer", "muk", "shellder", "cloyster", "gengar", "hypno", "krabby", "kingler", "hitmonlee", "weezing", "horsea", "seadra", "lapras", "ditto", "omanyte", "omastar", "kabuto", "kabutops", "aerodactyl", "articuno", "moltres", "dragonite", "mew", "marill", "togepi", "cleffa", "smeargle", "scizor", "entei", "pichu", "igglybuff", "hitmontop", "unown", "misdreavus", "celebi", "hooh", "suicune"] }
   },
   {
     "trigger": "cobblemontcg:capture",
@@ -15,17 +15,24 @@
   },
   {
     "trigger": "cobblemontcg:capture",
+    "set": "cobblemontcg:base3",
+    "amount": 1,
+    "chance": 0.05,
+    "conditions": { "species": ["ekans", "arbok", "sandslash", "zubat", "golbat", "psyduck", "golduck", "tentacool", "tentacruel", "geodude", "graveler", "golem", "slowpoke", "slowbro", "grimer", "muk", "shellder", "cloyster", "gengar", "hypno", "krabby", "kingler", "hitmonlee", "weezing", "horsea", "seadra", "lapras", "ditto", "omanyte", "omastar", "kabuto", "kabutops", "aerodactyl", "articuno", "moltres", "dragonite"] }
+  },
+  {
+    "trigger": "cobblemontcg:capture",
     "set": "cobblemontcg:basep",
     "amount": 1,
     "chance": 0.05,
-    "conditions": { "species": ["mew", "dragonite", "psyduck", "moltres", "articuno", "marill", "togepi", "cleffa", "smeargle", "scizor", "entei", "pichu", "igglybuff", "hitmontop", "unown", "misdreavus", "celebi", "hooh", "suicune"] }
+    "conditions": { "species": ["mew", "marill", "togepi", "cleffa", "smeargle", "scizor", "entei", "pichu", "igglybuff", "hitmontop", "unown", "misdreavus", "celebi", "hooh", "suicune"] }
   },
   {
     "trigger": "cobblemontcg:capture",
     "set": "cobblemontcg:base1",
     "amount": 1,
     "chance": 0.25,
-    "conditions": { "first_catch_of_species": true, "exclude_species": ["clefable", "flareon", "jolteon", "kangaskhan", "mrmime", "nidoqueen", "pidgeot", "pinsir", "scyther", "snorlax", "vaporeon", "venomoth", "victreebel", "vileplume", "wigglytuff", "butterfree", "dodrio", "exeggutor", "fearow", "gloom", "lickitung", "marowak", "nidorina", "parasect", "persian", "primeape", "rapidash", "rhydon", "seaking", "tauros", "weepinbell", "bellsprout", "cubone", "eevee", "exeggcute", "goldeen", "jigglypuff", "mankey", "meowth", "nidoranf", "oddish", "paras", "rhyhorn", "spearow", "venonat", "mew", "dragonite", "psyduck", "moltres", "articuno", "marill", "togepi", "cleffa", "smeargle", "scizor", "entei", "pichu", "igglybuff", "hitmontop", "unown", "misdreavus", "celebi", "hooh", "suicune"] }
+    "conditions": { "first_catch_of_species": true, "exclude_species": ["clefable", "flareon", "jolteon", "kangaskhan", "mrmime", "nidoqueen", "pidgeot", "pinsir", "scyther", "snorlax", "vaporeon", "venomoth", "victreebel", "vileplume", "wigglytuff", "butterfree", "dodrio", "exeggutor", "fearow", "gloom", "lickitung", "marowak", "nidorina", "parasect", "persian", "primeape", "rapidash", "rhydon", "seaking", "tauros", "weepinbell", "bellsprout", "cubone", "eevee", "exeggcute", "goldeen", "jigglypuff", "mankey", "meowth", "nidoranf", "oddish", "paras", "rhyhorn", "spearow", "venonat", "ekans", "arbok", "sandslash", "zubat", "golbat", "psyduck", "golduck", "tentacool", "tentacruel", "geodude", "graveler", "golem", "slowpoke", "slowbro", "grimer", "muk", "shellder", "cloyster", "gengar", "hypno", "krabby", "kingler", "hitmonlee", "weezing", "horsea", "seadra", "lapras", "ditto", "omanyte", "omastar", "kabuto", "kabutops", "aerodactyl", "articuno", "moltres", "dragonite", "mew", "marill", "togepi", "cleffa", "smeargle", "scizor", "entei", "pichu", "igglybuff", "hitmontop", "unown", "misdreavus", "celebi", "hooh", "suicune"] }
   },
   {
     "trigger": "cobblemontcg:capture",
@@ -36,16 +43,23 @@
   },
   {
     "trigger": "cobblemontcg:capture",
+    "set": "cobblemontcg:base3",
+    "amount": 1,
+    "chance": 0.25,
+    "conditions": { "first_catch_of_species": true, "species": ["ekans", "arbok", "sandslash", "zubat", "golbat", "psyduck", "golduck", "tentacool", "tentacruel", "geodude", "graveler", "golem", "slowpoke", "slowbro", "grimer", "muk", "shellder", "cloyster", "gengar", "hypno", "krabby", "kingler", "hitmonlee", "weezing", "horsea", "seadra", "lapras", "ditto", "omanyte", "omastar", "kabuto", "kabutops", "aerodactyl", "articuno", "moltres", "dragonite"] }
+  },
+  {
+    "trigger": "cobblemontcg:capture",
     "set": "cobblemontcg:basep",
     "amount": 1,
     "chance": 0.25,
-    "conditions": { "first_catch_of_species": true, "species": ["mew", "dragonite", "psyduck", "moltres", "articuno", "marill", "togepi", "cleffa", "smeargle", "scizor", "entei", "pichu", "igglybuff", "hitmontop", "unown", "misdreavus", "celebi", "hooh", "suicune"] }
+    "conditions": { "first_catch_of_species": true, "species": ["mew", "marill", "togepi", "cleffa", "smeargle", "scizor", "entei", "pichu", "igglybuff", "hitmontop", "unown", "misdreavus", "celebi", "hooh", "suicune"] }
   },
   {
     "trigger": "cobblemontcg:capture",
     "set": "cobblemontcg:base1",
     "amount": 1,
-    "conditions": { "shiny": true, "exclude_species": ["clefable", "flareon", "jolteon", "kangaskhan", "mrmime", "nidoqueen", "pidgeot", "pinsir", "scyther", "snorlax", "vaporeon", "venomoth", "victreebel", "vileplume", "wigglytuff", "butterfree", "dodrio", "exeggutor", "fearow", "gloom", "lickitung", "marowak", "nidorina", "parasect", "persian", "primeape", "rapidash", "rhydon", "seaking", "tauros", "weepinbell", "bellsprout", "cubone", "eevee", "exeggcute", "goldeen", "jigglypuff", "mankey", "meowth", "nidoranf", "oddish", "paras", "rhyhorn", "spearow", "venonat", "mew", "dragonite", "psyduck", "moltres", "articuno", "marill", "togepi", "cleffa", "smeargle", "scizor", "entei", "pichu", "igglybuff", "hitmontop", "unown", "misdreavus", "celebi", "hooh", "suicune"] }
+    "conditions": { "shiny": true, "exclude_species": ["clefable", "flareon", "jolteon", "kangaskhan", "mrmime", "nidoqueen", "pidgeot", "pinsir", "scyther", "snorlax", "vaporeon", "venomoth", "victreebel", "vileplume", "wigglytuff", "butterfree", "dodrio", "exeggutor", "fearow", "gloom", "lickitung", "marowak", "nidorina", "parasect", "persian", "primeape", "rapidash", "rhydon", "seaking", "tauros", "weepinbell", "bellsprout", "cubone", "eevee", "exeggcute", "goldeen", "jigglypuff", "mankey", "meowth", "nidoranf", "oddish", "paras", "rhyhorn", "spearow", "venonat", "ekans", "arbok", "sandslash", "zubat", "golbat", "psyduck", "golduck", "tentacool", "tentacruel", "geodude", "graveler", "golem", "slowpoke", "slowbro", "grimer", "muk", "shellder", "cloyster", "gengar", "hypno", "krabby", "kingler", "hitmonlee", "weezing", "horsea", "seadra", "lapras", "ditto", "omanyte", "omastar", "kabuto", "kabutops", "aerodactyl", "articuno", "moltres", "dragonite", "mew", "marill", "togepi", "cleffa", "smeargle", "scizor", "entei", "pichu", "igglybuff", "hitmontop", "unown", "misdreavus", "celebi", "hooh", "suicune"] }
   },
   {
     "trigger": "cobblemontcg:capture",
@@ -55,8 +69,14 @@
   },
   {
     "trigger": "cobblemontcg:capture",
+    "set": "cobblemontcg:base3",
+    "amount": 1,
+    "conditions": { "shiny": true, "species": ["ekans", "arbok", "sandslash", "zubat", "golbat", "psyduck", "golduck", "tentacool", "tentacruel", "geodude", "graveler", "golem", "slowpoke", "slowbro", "grimer", "muk", "shellder", "cloyster", "gengar", "hypno", "krabby", "kingler", "hitmonlee", "weezing", "horsea", "seadra", "lapras", "ditto", "omanyte", "omastar", "kabuto", "kabutops", "aerodactyl", "articuno", "moltres", "dragonite"] }
+  },
+  {
+    "trigger": "cobblemontcg:capture",
     "set": "cobblemontcg:basep",
     "amount": 1,
-    "conditions": { "shiny": true, "species": ["mew", "dragonite", "psyduck", "moltres", "articuno", "marill", "togepi", "cleffa", "smeargle", "scizor", "entei", "pichu", "igglybuff", "hitmontop", "unown", "misdreavus", "celebi", "hooh", "suicune"] }
+    "conditions": { "shiny": true, "species": ["mew", "marill", "togepi", "cleffa", "smeargle", "scizor", "entei", "pichu", "igglybuff", "hitmontop", "unown", "misdreavus", "celebi", "hooh", "suicune"] }
   }
 ]

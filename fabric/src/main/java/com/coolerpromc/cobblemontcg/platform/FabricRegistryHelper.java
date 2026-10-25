@@ -8,6 +8,7 @@ import com.coolerpromc.cobblemontcg.platform.util.RegistryHandler;
 import com.google.common.collect.ImmutableSet;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.object.builder.v1.world.poi.PointOfInterestHelper;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.component.DataComponentType;
@@ -28,18 +29,23 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
 
 public class FabricRegistryHelper implements IRegistryHelper {
     private final List<PayloadEntry<?>> clientboundPayloads = new ArrayList<>();
+    private final List<PayloadEntry<?>> serverboundPayloads = new ArrayList<>();
 
     @Override
     public <T extends Item> RegistryHandler.Items<T> registerItem(String name, Function<Item.Properties, T> func, Item.Properties p) {
@@ -50,6 +56,12 @@ public class FabricRegistryHelper implements IRegistryHelper {
     @Override
     public <T extends Block> RegistryHandler.Blocks<T> registerBlock(String name, Function<BlockBehaviour.Properties, T> func, BlockBehaviour.Properties p) {
         Holder<Block> holder = Registry.registerForHolder(BuiltInRegistries.BLOCK, Constants.id(name), func.apply(p));
+        return () -> holder;
+    }
+
+    @Override
+    public <T extends BlockEntity> RegistryHandler<BlockEntityType<?>, BlockEntityType<T>> registerBlockEntityType(String name, BiFunction<BlockPos, BlockState, T> factory, Supplier<? extends Block> block) {
+        Holder<BlockEntityType<?>> holder = Registry.registerForHolder(BuiltInRegistries.BLOCK_ENTITY_TYPE, Constants.id(name), BlockEntityType.Builder.<T>of(factory::apply, block.get()).build(null));
         return () -> holder;
     }
 
@@ -74,7 +86,6 @@ public class FabricRegistryHelper implements IRegistryHelper {
 
     @Override
     public RegistryHandler<PoiType, PoiType> registerPoiType(String name, Supplier<? extends Block> block, int maxTickets, int validRange) {
-        // PointOfInterestHelper also fills the block state -> POI map, which vanilla keeps private
         PoiType poiType = PointOfInterestHelper.register(Constants.id(name), maxTickets, validRange, block.get());
         Holder<PoiType> holder = BuiltInRegistries.POINT_OF_INTEREST_TYPE.wrapAsHolder(poiType);
         return () -> holder;
@@ -102,6 +113,18 @@ public class FabricRegistryHelper implements IRegistryHelper {
     @Override
     public void applyClientboundPayloadRegistrations(PayloadRegistrar registrar) {
         for (PayloadEntry<?> entry : clientboundPayloads) {
+            entry.register(registrar);
+        }
+    }
+
+    @Override
+    public <T extends HandledCustomPacketPayload> void registerServerboundPayload(CustomPacketPayload.Type<T> type, StreamCodec<? super RegistryFriendlyByteBuf, T> streamCodec) {
+        this.serverboundPayloads.add(new PayloadEntry<>(type, streamCodec));
+    }
+
+    @Override
+    public void applyServerboundPayloadRegistrations(PayloadRegistrar registrar) {
+        for (PayloadEntry<?> entry : serverboundPayloads) {
             entry.register(registrar);
         }
     }

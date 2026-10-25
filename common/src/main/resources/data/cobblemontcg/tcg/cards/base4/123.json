@@ -1,0 +1,7 @@
+{
+  "id": "base4-123",
+  "number": 123,
+  "name": "Switch",
+  "supertype": "trainer",
+  "rarity": "common"
+}
